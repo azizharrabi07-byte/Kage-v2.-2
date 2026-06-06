@@ -1,0 +1,98 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user profile in the Kage system.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "level": { "type": "number" },
+        "streak": { "type": "number" },
+        "honorPoints": { "type": "number" },
+        "avatar": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "name", "level", "streak", "honorPoints", "avatar"]
+    },
+    "UserAchievement": {
+      "title": "User Achievement",
+      "description": "An achievement unlocked by a user.",
+      "type": "object",
+      "properties": {
+        "achievementId": { "type": "string" },
+        "unlockedAt": { "type": "string" }
+      },
+      "required": ["achievementId", "unlockedAt"]
+    },
+    "WorkoutTemplate": {
+      "title": "Workout Template",
+      "description": "A predefined workout program.",
+      "type": "object",
+      "properties": {
+        "nameKanji": { "type": "string" },
+        "nameEnglish": { "type": "string" },
+        "difficulty": { "type": "number" },
+        "duration": { "type": "string" },
+        "workoutCount": { "type": "number" },
+        "equipmentNeeded": { "type": "boolean" },
+        "description": { "type": "string" },
+        "moves": { 
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["nameKanji", "nameEnglish", "difficulty", "duration", "workoutCount", "equipmentNeeded", "description", "moves"]
+    },
+    "WorkoutSession": {
+      "title": "Workout Session",
+      "description": "A completed workout session by a user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "templateId": { "type": "string" },
+        "duration": { "type": "number" },
+        "completedAt": { "type": "string" }
+      },
+      "required": ["userId", "templateId", "duration", "completedAt"]
+    },
+    "Pact": {
+      "title": "Blood Pact",
+      "description": "A workout pact between users.",
+      "type": "object",
+      "properties": {
+        "users": { "type": "array", "items": { "type": "string" } },
+        "sharedStreak": { "type": "number" },
+        "shieldIntact": { "type": "boolean" },
+        "jointWorkoutCount": { "type": "number" },
+        "targetCount": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["users", "sharedStreak", "shieldIntact", "jointWorkoutCount", "targetCount"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles."
+    },
+    "users/{userId}/achievements/{achievementId}": {
+      "schema": { "$ref": "#/entities/UserAchievement" },
+      "description": "Achievements unlocked by the user."
+    },
+    "users/{userId}/workoutSessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/WorkoutSession" },
+      "description": "Workout sessions completed by the user."
+    },
+    "workoutTemplates/{templateId}": {
+      "schema": { "$ref": "#/entities/WorkoutTemplate" },
+      "description": "Global predefined workout programs."
+    },
+    "pacts/{pactId}": {
+      "schema": { "$ref": "#/entities/Pact" },
+      "description": "Blood pacts (teams) between multiple users."
+    }
+  }
+}

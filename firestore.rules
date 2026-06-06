@@ -1,0 +1,133 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() { return request.auth != null; }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'name', 'level', 'streak', 'honorPoints', 'avatar', 'createdAt', 'updatedAt']) &&
+             data.keys().size() == 8 &&
+             data.uid is string && data.uid.size() <= 128 && data.uid == request.auth.uid &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 64 &&
+             data.level is number &&
+             data.streak is number &&
+             data.honorPoints is number &&
+             data.avatar is string && data.avatar.size() > 0 && data.avatar.size() <= 10 &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp;
+    }
+
+    match /users/{userId} {
+      allow get: if isSignedIn() && isValidId(userId);
+      allow list: if isSignedIn() && resource.data.uid == request.auth.uid;
+      
+      allow create: if isSignedIn() && 
+                    isValidId(userId) && 
+                    userId == request.auth.uid && 
+                    isValidUser(incoming()) && 
+                    incoming().createdAt == request.time && 
+                    incoming().updatedAt == request.time && 
+                    incoming().level == 1 &&
+                    incoming().streak == 0 &&
+                    incoming().honorPoints == 0;
+                    
+      allow update: if isSignedIn() && 
+                    isValidId(userId) && 
+                    userId == request.auth.uid && 
+                    isValidUser(incoming()) && 
+                    incoming().uid == existing().uid && 
+                    incoming().createdAt == existing().createdAt && 
+                    incoming().updatedAt == request.time &&
+                    incoming().diff(existing()).affectedKeys().hasOnly([
+                      'name', 'avatar', 'level', 'streak', 'honorPoints', 'updatedAt'
+                    ]);
+    }
+
+    function isValidUserAchievement(data) {
+      return data.keys().hasAll(['achievementId', 'unlockedAt']) &&
+             data.keys().size() == 2 &&
+             data.achievementId is string && data.achievementId.size() <= 128 &&
+             data.unlockedAt is timestamp;
+    }
+
+    match /users/{userId}/achievements/{achievementId} {
+      allow get: if isSignedIn() && isValidId(userId) && userId == request.auth.uid && isValidId(achievementId);
+      allow list: if isSignedIn() && isValidId(userId) && userId == request.auth.uid;
+      
+      allow create: if isSignedIn() && 
+                    isValidId(userId) && 
+                    userId == request.auth.uid && 
+                    isValidId(achievementId) &&
+                    isValidUserAchievement(incoming()) &&
+                    incoming().unlockedAt == request.time &&
+                    exists(/databases/$(database)/documents/users/$(userId));
+    }
+
+    function isValidWorkoutSession(data) {
+      return data.keys().hasAll(['userId', 'templateId', 'duration', 'completedAt']) &&
+             data.keys().size() == 4 &&
+             data.userId is string && data.userId.size() <= 128 && data.userId == request.auth.uid &&
+             data.templateId is string && data.templateId.size() <= 128 &&
+             data.duration is number &&
+             data.completedAt is timestamp;
+    }
+
+    match /users/{userId}/workoutSessions/{sessionId} {
+      allow get: if isSignedIn() && isValidId(userId) && userId == request.auth.uid && isValidId(sessionId);
+      allow list: if isSignedIn() && isValidId(userId) && userId == request.auth.uid;
+      
+      allow create: if isSignedIn() && 
+                    isValidId(userId) && 
+                    userId == request.auth.uid && 
+                    isValidId(sessionId) &&
+                    isValidWorkoutSession(incoming()) &&
+                    incoming().completedAt == request.time &&
+                    exists(/databases/$(database)/documents/users/$(userId)) &&
+                    exists(/databases/$(database)/documents/workoutTemplates/$(incoming().templateId));
+    }
+
+    match /workoutTemplates/{templateId} {
+      allow get: if isSignedIn() && isValidId(templateId);
+      allow list: if isSignedIn();
+      allow write: if false; 
+    }
+
+    function isValidPact(data) {
+      return data.keys().hasAll(['users', 'sharedStreak', 'shieldIntact', 'jointWorkoutCount', 'targetCount', 'createdAt', 'updatedAt']) &&
+             data.keys().size() == 7 &&
+             data.users is list && data.users.size() >= 2 && data.users.size() <= 5 && data.users[0] is string &&
+             data.sharedStreak is number &&
+             data.shieldIntact is bool &&
+             data.jointWorkoutCount is number &&
+             data.targetCount is number &&
+             data.createdAt is timestamp &&
+             data.updatedAt is timestamp;
+    }
+
+    match /pacts/{pactId} {
+      allow get: if isSignedIn() && isValidId(pactId) && request.auth.uid in resource.data.users;
+      allow list: if isSignedIn() && request.auth.uid in resource.data.users;
+      allow create: if isSignedIn() && 
+                    isValidId(pactId) && 
+                    isValidPact(incoming()) && 
+                    request.auth.uid in incoming().users &&
+                    incoming().createdAt == request.time &&
+                    incoming().updatedAt == request.time;
+      allow update: if isSignedIn() && 
+                    isValidId(pactId) && 
+                    request.auth.uid in existing().users &&
+                    isValidPact(incoming()) && 
+                    incoming().createdAt == existing().createdAt &&
+                    incoming().updatedAt == request.time &&
+                    incoming().diff(existing()).affectedKeys().hasOnly([
+                      'users', 'sharedStreak', 'shieldIntact', 'jointWorkoutCount', 'updatedAt'
+                    ]);
+    }
+  }
+}

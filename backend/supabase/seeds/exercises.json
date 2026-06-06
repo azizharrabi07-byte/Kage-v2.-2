@@ -1,0 +1,1009 @@
+[
+  {
+    "slug": "shadow-push",
+    "name": "Shadow Push",
+    "target": "Chest",
+    "category": "push",
+    "kanji": "押",
+    "description": "Explosive push-up variation that builds chest and tricep power",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "chest"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "samurai-row",
+    "name": "Samurai Row",
+    "target": "Back",
+    "category": "pull",
+    "kanji": "引",
+    "description": "Bent-over row with controlled tempo, building back thickness",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "back"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "iron-squat",
+    "name": "Iron Squat",
+    "target": "Quads",
+    "category": "legs",
+    "kanji": "屈",
+    "description": "Deep bodyweight squat for leg strength and mobility",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "crimson-press",
+    "name": "Crimson Press",
+    "target": "Shoulders",
+    "category": "push",
+    "kanji": "肩",
+    "description": "Overhead press for deltoid strength and stability",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "shoulders"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "steel-deadlift",
+    "name": "Steel Deadlift",
+    "target": "Hamstrings",
+    "category": "pull",
+    "kanji": "腰",
+    "description": "Hip hinge movement for posterior chain development",
+    "image_url": "",
+    "difficulty": "warrior",
+    "equipment": "body only",
+    "primary_muscles": [
+      "hamstrings"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "core-strike",
+    "name": "Core Strike",
+    "target": "Abs",
+    "category": "core",
+    "kanji": "腹",
+    "description": "High-rep core exercise targeting the entire midsection",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "abdominals"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "blade-curl",
+    "name": "Blade Curl",
+    "target": "Biceps",
+    "category": "pull",
+    "kanji": "腕",
+    "description": "Isolated bicep curl with strict form",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "biceps"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "dojo-dip",
+    "name": "Dojo Dip",
+    "target": "Triceps",
+    "category": "push",
+    "kanji": "伸",
+    "description": "Tricep dip on parallel bars or bench",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "triceps"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "ronin-lunge",
+    "name": "Ronin Lunge",
+    "target": "Glutes",
+    "category": "legs",
+    "kanji": "突",
+    "description": "Walking lunge for glutes and quad development",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "glutes"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "warrior-pull-up",
+    "name": "Warrior Pull-up",
+    "target": "Lats",
+    "category": "pull",
+    "kanji": "上",
+    "description": "Pull-up or assisted pull-up for lat width",
+    "image_url": "",
+    "difficulty": "warrior",
+    "equipment": "body only",
+    "primary_muscles": [
+      "lats"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "dragon-fly",
+    "name": "Dragon Fly",
+    "target": "Lower Back",
+    "category": "core",
+    "kanji": "龍",
+    "description": "Superman hold for spinal erectors and glutes",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "lower back"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "temple-plank",
+    "name": "Temple Plank",
+    "target": "Core",
+    "category": "core",
+    "kanji": "寺",
+    "description": "Extended plank hold for core endurance",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "abdominals"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "silent-stretch",
+    "name": "Silent Stretch",
+    "target": "Hamstrings",
+    "category": "core",
+    "kanji": "静",
+    "description": "Forward fold with controlled breathing and hamstring stretch",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "hamstrings"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "storm-burpee",
+    "name": "Storm Burpee",
+    "target": "Full Body",
+    "category": "full",
+    "kanji": "嵐",
+    "description": "Full burpee with push-up and explosive jump",
+    "image_url": "",
+    "difficulty": "warrior",
+    "equipment": "body only",
+    "primary_muscles": [
+      "full body"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "rising-sun",
+    "name": "Rising Sun",
+    "target": "Calves",
+    "category": "legs",
+    "kanji": "昇",
+    "description": "Calf raise on elevated surface for lower leg power",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "calves"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "ichiban-closer",
+    "name": "Ichiban Closer",
+    "target": "Chest",
+    "category": "push",
+    "kanji": "一",
+    "description": "Chest fly movement for inner chest definition",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "chest"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "hollow-hold",
+    "name": "Hollow Hold",
+    "target": "Abs",
+    "category": "core",
+    "kanji": "空",
+    "description": "Isometric hollow body hold for core strength",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "abdominals"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "windmill",
+    "name": "Windmill",
+    "target": "Obliques",
+    "category": "core",
+    "kanji": "風",
+    "description": "Standing oblique reach for waist mobility and strength",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "abdominals"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "fudo-stance",
+    "name": "Fudo Stance",
+    "target": "Glutes",
+    "category": "legs",
+    "kanji": "不",
+    "description": "Wall sit hold for isometric leg endurance",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "glutes"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "kensei-press",
+    "name": "Kensei Press",
+    "target": "Shoulders",
+    "category": "push",
+    "kanji": "剣",
+    "description": "Lateral raise for shoulder width and definition",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "shoulders"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "water-flow",
+    "name": "Water Flow",
+    "target": "Back",
+    "category": "pull",
+    "kanji": "水",
+    "description": "Lat pulldown or pull-up variation for back width",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "back"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "mountain-hold",
+    "name": "Mountain Hold",
+    "target": "Core",
+    "category": "core",
+    "kanji": "山",
+    "description": "Static mountain climber hold position",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "abdominals"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "thunder-clap",
+    "name": "Thunder Clap",
+    "target": "Chest",
+    "category": "push",
+    "kanji": "雷",
+    "description": "Explosive clap push-up for power",
+    "image_url": "",
+    "difficulty": "warrior",
+    "equipment": "body only",
+    "primary_muscles": [
+      "chest"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "bamboo-reach",
+    "name": "Bamboo Reach",
+    "target": "Lats",
+    "category": "pull",
+    "kanji": "竹",
+    "description": "Straight-arm pulldown for lat isolation",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "lats"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "crane-balance",
+    "name": "Crane Balance",
+    "target": "Core",
+    "category": "core",
+    "kanji": "鶴",
+    "description": "Single-leg balance hold with core engagement",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "abdominals"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "fire-breath",
+    "name": "Fire Breath",
+    "target": "Conditioning",
+    "category": "cardio",
+    "kanji": "火",
+    "description": "High-knee sprint for cardiovascular conditioning",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "cardiovascular"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "iron-fist",
+    "name": "Iron Fist",
+    "target": "Forearms",
+    "category": "pull",
+    "kanji": "拳",
+    "description": "Wrist curl or farmers carry for grip strength",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "forearms"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "shadow-spar",
+    "name": "Shadow Spar",
+    "target": "Full Body",
+    "category": "full",
+    "kanji": "影",
+    "description": "Shadow boxing circuit combining punches and footwork",
+    "image_url": "",
+    "difficulty": "warrior",
+    "equipment": "body only",
+    "primary_muscles": [
+      "full body"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "stone-wall",
+    "name": "Stone Wall",
+    "target": "Chest",
+    "category": "push",
+    "kanji": "石",
+    "description": "Isometric chest press hold against resistance",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "chest"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "zen-reach",
+    "name": "Zen Reach",
+    "target": "Shoulders",
+    "category": "pull",
+    "kanji": "禅",
+    "description": "Deep shoulder stretch with controlled movement",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "shoulders"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "oni-slam",
+    "name": "Oni Slam",
+    "target": "Full Body",
+    "category": "full",
+    "kanji": "鬼",
+    "description": "Slam a medicine ball or imaginary object for explosive power",
+    "image_url": "",
+    "difficulty": "warrior",
+    "equipment": "body only",
+    "primary_muscles": [
+      "full body"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "serpent-twist",
+    "name": "Serpent Twist",
+    "target": "Obliques",
+    "category": "core",
+    "kanji": "蛇",
+    "description": "Russian twist for oblique carving and rotational power",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "abdominals"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "phoenix-rise",
+    "name": "Phoenix Rise",
+    "target": "Glutes",
+    "category": "legs",
+    "kanji": "鳳",
+    "description": "Glute bridge raise for hip extension and glute activation",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "glutes"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "tiger-stance",
+    "name": "Tiger Stance",
+    "target": "Quads",
+    "category": "legs",
+    "kanji": "虎",
+    "description": "Wide stance squat holding at parallel for isometric burn",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "dragon-punch",
+    "name": "Dragon Punch",
+    "target": "Shoulders",
+    "category": "push",
+    "kanji": "拳",
+    "description": "Alternating shoulder punch-outs for speed and endurance",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "shoulders"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "lotus-hold",
+    "name": "Lotus Hold",
+    "target": "Hips",
+    "category": "core",
+    "kanji": "蓮",
+    "description": "Deep hip flexor stretch hold in lotus position",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "hip flexors"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "wave-crash",
+    "name": "Wave Crash",
+    "target": "Core",
+    "category": "core",
+    "kanji": "波",
+    "description": "Rolling crunch like ocean waves for spinal articulation",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "abdominals"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "moon-crescent",
+    "name": "Moon Crescent",
+    "target": "Obliques",
+    "category": "core",
+    "kanji": "月",
+    "description": "Side bend reaching like a crescent moon",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "abdominals"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "star-burst",
+    "name": "Star Burst",
+    "target": "Full Body",
+    "category": "full",
+    "kanji": "星",
+    "description": "Star jump from squat for explosive full body power",
+    "image_url": "",
+    "difficulty": "warrior",
+    "equipment": "body only",
+    "primary_muscles": [
+      "full body"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "void-pull",
+    "name": "Void Pull",
+    "target": "Back",
+    "category": "pull",
+    "kanji": "虚",
+    "description": "Face pull for rear delts and posture improvement",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "back"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "earth-push",
+    "name": "Earth Push",
+    "target": "Chest",
+    "category": "push",
+    "kanji": "地",
+    "description": "Incline push-up variation targeting upper chest",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "chest"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "heaven-press",
+    "name": "Heaven Press",
+    "target": "Shoulders",
+    "category": "push",
+    "kanji": "天",
+    "description": "Arnold press for full deltoid engagement",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "shoulders"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "spirit-bridge",
+    "name": "Spirit Bridge",
+    "target": "Glutes",
+    "category": "legs",
+    "kanji": "霊",
+    "description": "Single-leg glute bridge for unilateral strength",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "glutes"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "demon-grip",
+    "name": "Demon Grip",
+    "target": "Forearms",
+    "category": "pull",
+    "kanji": "魔",
+    "description": "Dead hang for grip endurance and decompression",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "forearms"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "blade-runner",
+    "name": "Blade Runner",
+    "target": "Quads",
+    "category": "legs",
+    "kanji": "刃",
+    "description": "High knee running in place for leg power and cardio",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "quads"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "night-stalker",
+    "name": "Night Stalker",
+    "target": "Hamstrings",
+    "category": "legs",
+    "kanji": "夜",
+    "description": "Reverse lunge with hamstring focus",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "hamstrings"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "dawn-breaker",
+    "name": "Dawn Breaker",
+    "target": "Full Body",
+    "category": "full",
+    "kanji": "暁",
+    "description": "Burpee with tuck jump for morning explosive activation",
+    "image_url": "",
+    "difficulty": "warrior",
+    "equipment": "body only",
+    "primary_muscles": [
+      "full body"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "storm-caller",
+    "name": "Storm Caller",
+    "target": "Back",
+    "category": "pull",
+    "kanji": "嵐",
+    "description": "Renegade row combining plank with alternating rows",
+    "image_url": "",
+    "difficulty": "warrior",
+    "equipment": "body only",
+    "primary_muscles": [
+      "back"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "wind-cutter",
+    "name": "Wind Cutter",
+    "target": "Core",
+    "category": "core",
+    "kanji": "風",
+    "description": "Bicycle crunch for oblique and rectus abdominis",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "abdominals"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "shadow-step",
+    "name": "Shadow Step",
+    "target": "Glutes",
+    "category": "legs",
+    "kanji": "歩",
+    "description": "Lateral lunge step for hip mobility and outer glutes",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "glutes"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "fist-of-steel",
+    "name": "Fist of Steel",
+    "target": "Biceps",
+    "category": "pull",
+    "kanji": "鋼",
+    "description": "Hammer curl for brachialis and forearm integration",
+    "image_url": "",
+    "difficulty": "intermediate",
+    "equipment": "body only",
+    "primary_muscles": [
+      "biceps"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "rising-dragon",
+    "name": "Rising Dragon",
+    "target": "Full Body",
+    "category": "full",
+    "kanji": "昇",
+    "description": "Standing to sprawl to explosive jump sequence",
+    "image_url": "",
+    "difficulty": "warrior",
+    "equipment": "body only",
+    "primary_muscles": [
+      "full body"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  },
+  {
+    "slug": "silent-night",
+    "name": "Silent Night",
+    "target": "Core",
+    "category": "core",
+    "kanji": "静",
+    "description": "Deep breathing plank hold with meditation focus",
+    "image_url": "",
+    "difficulty": "beginner",
+    "equipment": "body only",
+    "primary_muscles": [
+      "abdominals"
+    ],
+    "secondary_muscles": [],
+    "force": null,
+    "mechanic": null,
+    "instructions": [],
+    "is_active": true
+  }
+]

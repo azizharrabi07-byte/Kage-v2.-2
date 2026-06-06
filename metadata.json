@@ -1,0 +1,6 @@
+{
+  "name": "KAGE Premium V2",
+  "description": "Warrior-theming fitness and accountability companion with 3D aesthetic depth, tactical workout tracking, mutual pact check-ins, leaderboards, and an AI-powered holographic Sensei guide.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

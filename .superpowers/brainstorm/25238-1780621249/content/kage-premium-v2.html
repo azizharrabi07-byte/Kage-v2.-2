@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>KAGE — Premium V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --void:#0D0D1A;--sumi:#1A1A2E;--kachi:#16213E;--indigo:#1E2D5A;
+  --akane:#C8102E;--shu:#E8481A;--sunset:#FF6B35;--kin:#C9A84C;
+  --hisui:#38B48B;--sumire:#8B5CF6;--hagane:#4A6FA5;--sakura:#FF8A9B;--neon:#FF2040;
+  --cream:#F5F0E8;
+  --bg0:#070712;--bg1:#0D0D1A;--bg2:#12122A;--bg3:#1A1A36;
+  --surface0:rgba(255,255,255,0.02);--surface1:rgba(255,255,255,0.04);
+  --surface2:rgba(255,255,255,0.06);--surface3:rgba(255,255,255,0.09);
+  --border0:rgba(255,255,255,0.04);--border1:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);
+  --shadow-sm:0 2px 8px rgba(0,0,0,0.3);--shadow-md:0 4px 16px rgba(0,0,0,0.35);
+  --shadow-lg:0 8px 32px rgba(0,0,0,0.4);--shadow-xl:0 16px 48px rgba(0,0,0,0.5);
+  --glow-akane:0 0 20px rgba(200,16,46,0.2);--glow-kin:0 0 20px rgba(201,168,76,0.2);
+  --glow-sumire:0 0 20px rgba(139,92,246,0.2);--glow-hisui:0 0 20px rgba(56,180,139,0.2);
+  --radius-sm:8px;--radius-md:14px;--radius-lg:20px;--radius-xl:24px;--radius-full:50%;
+  --ff:'Inter',sans-serif;--ff-jp:'Noto Sans JP',sans-serif;--ff-mono:'JetBrains Mono',monospace;
+  --transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+body{background:#050510;font-family:var(--ff);display:flex;justify-content:center;padding:30px 16px;min-height:100vh;color:var(--cream);overflow-x:hidden}
+.phone{width:390px;background:var(--bg1);border-radius:48px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,0.04),0 30px 80px rgba(0,0,0,0.8),0 0 80px rgba(200,16,46,0.04);position:relative}
+.phone-inner{position:relative;overflow:hidden;height:844px;display:flex;flex-direction:column}
+/* Atmosphere */
+.atmos{position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 120% 70% at 50%0%,rgba(200,16,46,0.04)0%,transparent 70%),radial-gradient(ellipse 70% 50% at 80%30%,rgba(201,168,76,0.03)0%,transparent 60%),radial-gradient(ellipse 50% 40% at 20%60%,rgba(139,92,246,0.02)0%,transparent 50%)}
+/* Particles */
+.p{position:absolute;border-radius:50%;pointer-events:none;z-index:1}
+.p1{width:3px;height:3px;background:rgba(255,107,53,0.25);top:15%;left:20%;animation:fp 8s ease-in-out infinite;box-shadow:0 0 8px rgba(255,107,53,0.15)}
+.p2{width:2px;height:2px;background:rgba(200,16,46,0.2);top:35%;right:25%;animation:fp 6s ease-in-out infinite 1s}
+.p3{width:4px;height:4px;background:rgba(201,168,76,0.18);top:55%;left:30%;animation:fp 10s ease-in-out infinite 2s;box-shadow:0 0 10px rgba(201,168,76,0.12)}
+.p4{width:2px;height:2px;background:rgba(139,92,246,0.18);top:70%;right:15%;animation:fp 7s ease-in-out infinite 3s}
+.p5{width:3px;height:3px;background:rgba(200,16,46,0.18);top:8%;left:60%;animation:fp 9s ease-in-out infinite .5s}
+.p6{width:1.5px;height:1.5px;background:rgba(255,255,255,0.12);top:45%;left:50%;animation:fp 11s ease-in-out infinite 4s}
+.p7{width:3px;height:3px;background:rgba(56,180,139,0.12);top:80%;left:70%;animation:fp 8s ease-in-out infinite 1.5s}
+.p8{width:2px;height:2px;background:rgba(201,168,76,0.15);top:25%;left:75%;animation:fp 7s ease-in-out infinite 2.5s}
+@keyframes fp{0%,100%{transform:translateY(0)translateX(0);opacity:0.25}25%{transform:translateY(-24px)translateX(12px);opacity:0.6}50%{transform:translateY(-12px)translateX(-6px);opacity:0.4}75%{transform:translateY(-36px)translateX(18px);opacity:0.7}}
+/* Floating kanji */
+.kf{position:absolute;font-family:var(--ff-jp);font-weight:900;pointer-events:none;z-index:0;opacity:0.035;animation:kd 20s ease-in-out infinite}
+.kf1{font-size:120px;top:5%;right:-10%;color:var(--akane)}.kf2{font-size:80px;bottom:10%;left:-5%;color:var(--kin);animation-delay:-5s}.kf3{font-size:60px;top:40%;right:5%;color:var(--sumire);animation-delay:-10s}
+@keyframes kd{0%,100%{transform:translateY(0)rotate(0deg);opacity:0.03}50%{transform:translateY(-30px)rotate(3deg);opacity:0.055}}
+/* Screens */
+.screen{position:absolute;inset:0;z-index:2;overflow-y:auto;overflow-x:hidden;padding:0 0 90px;display:none;opacity:0;transition:opacity .35s ease}
+.screen.active{display:block;opacity:1}
+.screen::-webkit-scrollbar{width:0}
+/* Scroll gradient */
+.sg{position:sticky;bottom:80px;left:0;right:0;height:40px;background:linear-gradient(to bottom,transparent,rgba(13,13,26,0.7));pointer-events:none;z-index:5}
+/* Landing specific */
+#landing{display:block;opacity:1;z-index:20}
+#landing.hidden{opacity:0;pointer-events:none;transition:opacity .5s ease}
+.landing-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.landing-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(7,7,18,0.3)0%,rgba(7,7,18,0.6)40%,rgba(7,7,18,0.9)70%,rgba(7,7,18,1)95%)}
+.landing-vignette{position:absolute;inset:0;z-index:1;box-shadow:inset 0 0 120px rgba(0,0,0,0.5)}
+.landing-content{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 32px 100px;text-align:center}
+.landing-sub{font-size:7.5px;letter-spacing:5px;text-transform:uppercase;color:rgba(201,168,76,0.5);margin-bottom:8px;animation:fadeUp .8s .4s both}
+.landing-title{font-size:60px;font-weight:900;letter-spacing:8px;background:linear-gradient(135deg,#F5F0E8 20%,var(--kin)50%,var(--akane)80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:8px;text-shadow:none;animation:fadeUp .8s .6s both;filter:drop-shadow(0 0 30px rgba(200,16,46,0.2))}
+.landing-subtitle{font-size:9px;letter-spacing:4px;color:rgba(245,240,232,0.3);font-weight:300;margin-bottom:40px;animation:fadeUp .8s .8s both}
+.landing-btn{display:inline-block;padding:16px 40px;border-radius:14px;border:none;font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--cream);background:linear-gradient(135deg,var(--akane),var(--shu));box-shadow:0 8px 24px rgba(200,16,46,0.35),0 0 0 1px rgba(255,255,255,0.06);cursor:pointer;transition:var(--transition);position:relative;overflow:hidden;animation:fadeUp .8s 1.2s both}
+.landing-btn::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent)}
+.landing-btn:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(200,16,46,0.45)}
+.landing-btn:active{transform:translateY(1px)}
+.landing-ghost{display:inline-block;padding:14px 32px;border-radius:14px;font-family:var(--ff);font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(245,240,232,0.4);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);cursor:pointer;transition:var(--transition);margin-top:12px;animation:fadeUp .8s 1.4s both}
+.landing-ghost:hover{color:rgba(245,240,232,0.6);border-color:rgba(255,255,255,0.12)}
+.landing-tap{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);z-index:4;font-size:8px;letter-spacing:3px;color:rgba(245,240,232,0.15);animation:blink 2s ease-in-out infinite 3s}
+@keyframes blink{0%,100%{opacity:0.15}50%{opacity:0.5}}
+@keyframes fadeUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+/* Tab bar */
+.tab-bar{position:absolute;bottom:0;left:0;right:0;z-index:30;background:rgba(7,7,18,0.95);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,0.04);padding:6px 8px 20px;display:flex;justify-content:space-around}
+.tab-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 6px;cursor:pointer;transition:opacity .2s;position:relative;border:none;background:none;font-family:var(--ff)}
+.tab-kanji{font-family:var(--ff-jp);font-size:18px;font-weight:500;transition:var(--transition);line-height:1.4}
+.tab-label{font-size:6.5px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500;transition:var(--transition)}
+.tab-dot{width:3px;height:3px;border-radius:50%;transition:var(--transition)}
+.tab-item.active .tab-kanji{color:var(--akane)}
+.tab-item.active .tab-label{color:rgba(245,240,232,0.5)}
+.tab-item.active .tab-dot{background:var(--akane);box-shadow:0 0 6px rgba(200,16,46,0.4)}
+.tab-item.inactive{opacity:0.35}
+.tab-item.inactive:hover{opacity:0.5}
+.tab-item.inactive .tab-kanji{color:rgba(245,240,232,0.35)}
+.tab-item.inactive .tab-label{color:rgba(245,240,232,0.15)}
+.tab-item.inactive .tab-dot{background:transparent}
+/* Common components */
+.section{padding:0 20px;margin-bottom:18px}
+.section:first-of-type{padding-top:18px}
+.header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-top:8px}
+.header-row .brand-sub{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(201,168,76,0.45);font-weight:500}
+.bc-badge{display:flex;align-items:center;gap:6px;background:rgba(255,107,53,0.06);border:1px solid rgba(255,107,53,0.12);border-radius:16px;padding:5px 10px 5px 8px;cursor:pointer;animation:gp 3s ease-in-out infinite}
+.bc-dot{width:6px;height:6px;border-radius:50%;background:var(--sunset);box-shadow:0 0 10px rgba(255,107,53,0.5);animation:dp 2s ease-in-out infinite}
+.bc-label{font-size:7px;letter-spacing:1.5px;color:rgba(255,107,53,0.6);font-weight:600}
+@keyframes gp{0%,100%{box-shadow:0 0 0 0 rgba(255,107,53,0.08)}50%{box-shadow:0 0 0 6px rgba(255,107,53,0)}}
+@keyframes dp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+.card{background:linear-gradient(160deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));border-radius:var(--radius-lg);border:1px solid var(--border0);overflow:hidden;box-shadow:var(--shadow-sm);position:relative;transition:var(--transition)}
+.card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;pointer-events:none}
+.card-accent-red::before{background:linear-gradient(90deg,transparent,var(--akane),transparent)}
+.card-accent-gold::before{background:linear-gradient(90deg,transparent,var(--kin),transparent)}
+.card-accent-purple::before{background:linear-gradient(90deg,transparent,var(--sumire),transparent)}
+.card-accent-green::before{background:linear-gradient(90deg,transparent,var(--hisui),transparent)}
+.section-label{font-size:7px;letter-spacing:2.5px;text-transform:uppercase;font-weight:600;margin-bottom:12px}
+/* Flame orb */
+.flame-orb{position:relative;width:64px;height:64px;flex-shrink:0}
+.flame-inner{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 40% 35%,var(--sunset),var(--shu)25%,var(--akane)55%,rgba(200,16,46,0.15));box-shadow:0 0 25px rgba(200,16,46,0.25),0 0 50px rgba(200,16,46,0.1),inset 0 -3px 10px rgba(0,0,0,0.3);animation:fpulse 3s ease-in-out infinite}
+.flame-inner::after{content:'';position:absolute;top:6px;left:10px;right:16px;height:16px;background:radial-gradient(ellipse,rgba(255,255,255,0.25),transparent);border-radius:50%}
+.flame-ring{position:absolute;inset:-3px;border-radius:50%;border:1.5px solid rgba(200,16,46,0.15);animation:spin 8s linear infinite}
+.flame-ring2{position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(201,168,76,0.08);animation:spin 12s linear infinite reverse}
+@keyframes fpulse{0%,100%{transform:scale(1);box-shadow:0 0 25px rgba(200,16,46,0.25),0 0 50px rgba(200,16,46,0.1)}50%{transform:scale(1.04);box-shadow:0 0 35px rgba(200,16,46,0.35),0 0 70px rgba(200,16,46,0.15)}}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+/* Sensei widget */
+.sensei-card{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(139,92,246,0.04),rgba(139,92,246,0.01));border-radius:var(--radius-lg);padding:14px 18px;border:1px solid rgba(139,92,246,0.07);position:relative;overflow:hidden;cursor:pointer;transition:var(--transition)}
+.sensei-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,rgba(139,92,246,0.12),transparent)}
+.sensei-card:hover{border-color:rgba(139,92,246,0.12)}
+.sensei-holo{position:relative;width:42px;height:42px;flex-shrink:0}
+.sensei-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--sumire),#6D28D9);border:2px solid rgba(139,92,246,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;color:rgba(255,255,255,0.8);position:relative;z-index:1;box-shadow:0 0 16px rgba(139,92,246,0.12)}
+.sensei-ring{position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(139,92,246,0.07);animation:spin 6s linear infinite}
+.sensei-ring2{position:absolute;inset:-10px;border-radius:50%;border:1px solid rgba(139,92,246,0.04);animation:spin 10s linear infinite reverse}
+.sensei-quote{font-size:11px;font-style:italic;color:rgba(245,240,232,0.45);font-weight:300;line-height:1.4}
+.sensei-hint{font-size:7px;color:rgba(245,240,232,0.1);letter-spacing:2px;white-space:nowrap}
+/* KPI bento grid */
+.bento{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.kpi-item{border-radius:var(--radius-md);padding:14px;border:1px solid var(--border0);position:relative;overflow:hidden;box-shadow:var(--shadow-sm);transition:var(--transition);cursor:pointer}
+.kpi-item:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.kpi-item::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi-full{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:14px 16px}
+.kpi-val{font-size:22px;font-weight:700;letter-spacing:-0.5px;line-height:1;margin-bottom:2px}
+.kpi-lbl{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;font-weight:500}
+.kpi-full .kpi-val{font-size:28px}
+.kpi-akane{background:linear-gradient(160deg,rgba(200,16,46,0.04),rgba(200,16,46,0.01))}.kpi-akane::before{background:linear-gradient(90deg,var(--akane),rgba(200,16,46,0.2))}.kpi-akane .kpi-val{color:var(--akane)}.kpi-akane .kpi-lbl{color:rgba(200,16,46,0.35)}
+.kpi-green{background:linear-gradient(160deg,rgba(0,204,136,0.04),rgba(0,204,136,0.01))}.kpi-green::before{background:linear-gradient(90deg,#0C8,rgba(0,204,136,0.2))}.kpi-green .kpi-val{color:#0C8}.kpi-green .kpi-lbl{color:rgba(0,204,136,0.35)}
+.kpi-gold{background:linear-gradient(160deg,rgba(201,168,76,0.04),rgba(201,168,76,0.01))}.kpi-gold::before{background:linear-gradient(90deg,var(--kin),rgba(201,168,76,0.2))}.kpi-gold .kpi-val{color:var(--kin)}.kpi-gold .kpi-lbl{color:rgba(201,168,76,0.35)}
+.kpi-purple{background:linear-gradient(160deg,rgba(139,92,246,0.04),rgba(139,92,246,0.01))}.kpi-purple::before{background:linear-gradient(90deg,var(--sumire),rgba(139,92,246,0.2))}.kpi-purple .kpi-val{color:var(--sumire)}.kpi-purple .kpi-lbl{color:rgba(139,92,246,0.35)}
+.kpi-hisui{background:linear-gradient(160deg,rgba(56,180,139,0.04),rgba(56,180,139,0.01))}.kpi-hisui::before{background:linear-gradient(90deg,var(--hisui),rgba(56,180,139,0.2))}.kpi-hisui .kpi-val{color:var(--hisui)}.kpi-hisui .kpi-lbl{color:rgba(56,180,139,0.35)}
+.kpi-shu{background:linear-gradient(160deg,rgba(232,72,26,0.04),rgba(232,72,26,0.01))}.kpi-shu::before{background:linear-gradient(90deg,var(--shu),rgba(232,72,26,0.2))}.kpi-shu .kpi-val{color:var(--shu)}.kpi-shu .kpi-lbl{color:rgba(232,72,26,0.35)}
+/* Week */
+.week-card{background:linear-gradient(160deg,rgba(255,255,255,0.025),rgba(255,255,255,0.01));border-radius:var(--radius-lg);padding:18px;border:1px solid var(--border0);box-shadow:var(--shadow-sm)}
+.week-days{display:flex;justify-content:space-between}
+.day{display:flex;flex-direction:column;align-items:center;gap:6px}
+.day-letter{font-size:6.5px;letter-spacing:1.5px;color:rgba(245,240,232,0.15);text-transform:uppercase;font-weight:500}
+.day-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;transition:var(--transition)}
+.day-dot.done{background:linear-gradient(135deg,#0C8,rgba(0,204,136,0.2));color:var(--bg1);box-shadow:0 0 10px rgba(0,204,136,0.12)}
+.day-dot.now{background:linear-gradient(135deg,var(--akane),rgba(200,16,46,0.3));color:var(--cream);box-shadow:0 0 14px rgba(200,16,46,0.2);border:1px solid rgba(200,16,46,0.15)}
+.day-dot.empty{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);color:rgba(245,240,232,0.1)}
+.day-dot.rest{background:rgba(56,180,139,0.06);border:1px solid rgba(56,180,139,0.1);color:rgba(56,180,139,0.3)}
+/* CTA */
+.cta-btn{display:block;width:100%;padding:16px;border-radius:var(--radius-md);background:linear-gradient(135deg,var(--akane),var(--shu));border:none;font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:3px;color:var(--cream);box-shadow:0 8px 24px rgba(200,16,46,0.3),0 0 0 1px rgba(255,255,255,0.05);cursor:pointer;transition:var(--transition);text-transform:uppercase;position:relative;overflow:hidden}
+.cta-btn::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent)}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(200,16,46,0.35)}
+.cta-btn:active{transform:translateY(1px)}
+.cta-sub{font-size:7.5px;letter-spacing:3px;color:rgba(245,240,232,0.1);margin-top:8px;font-weight:300;text-align:center}
+
+/* ===== HOME TAB SPECIFICS ===== */
+.streak-card{padding:22px 20px;margin-bottom:14px}
+.streak-visual{display:flex;align-items:center;gap:16px}
+.streak-num{font-size:38px;font-weight:800;color:var(--cream);line-height:1;letter-spacing:-1px}
+.streak-lbl{font-size:8px;letter-spacing:2.5px;color:rgba(245,240,232,0.25);text-transform:uppercase;margin-top:2px}
+.partner-row{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.03)}
+.partner-av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--kachi));border:1.5px solid rgba(0,204,136,0.25);display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(245,240,232,0.6)}
+.partner-dot-g{width:4px;height:4px;border-radius:50%;background:#0C8;box-shadow:0 0 6px rgba(0,204,136,0.3)}
+.shield-bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+.shield-track{flex:1;height:3px;background:rgba(255,255,255,0.03);border-radius:2px;overflow:hidden}
+.shield-fill{height:100%;width:40%;background:linear-gradient(90deg,var(--kin),rgba(201,168,76,0.4));border-radius:2px;box-shadow:0 0 6px rgba(201,168,76,0.15)}
+.shield-lbl{font-size:7px;color:rgba(245,240,232,0.2);letter-spacing:1px}
+
+/* ===== TRAIN TAB ===== */
+.program-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:4px;-webkit-overflow-scrolling:touch}
+.program-row::-webkit-scrollbar{display:none}
+.program-card{min-width:210px;border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border0);box-shadow:var(--shadow-sm);transition:var(--transition);cursor:pointer;flex-shrink:0;position:relative}
+.program-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.program-img{height:120px;background-size:cover;background-position:center;position:relative}
+.program-badge{position:absolute;top:8px;right:8px;padding:3px 8px;border-radius:6px;font-size:6px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.badge-body{background:rgba(56,180,139,0.2);color:var(--hisui);border:1px solid rgba(56,180,139,0.2)}
+.badge-gym{background:rgba(200,16,46,0.15);color:var(--akane);border:1px solid rgba(200,16,46,0.15)}
+.program-info{padding:12px 14px;background:var(--bg2)}
+.program-name{font-size:13px;font-weight:700;margin-bottom:2px}
+.program-meta{font-size:8px;color:rgba(245,240,232,0.3);display:flex;gap:10px;align-items:center}
+.program-meta span{display:flex;align-items:center;gap:3px}
+.section-tabs{display:flex;gap:8px;margin-bottom:14px}
+.section-tab{padding:6px 14px;border-radius:var(--radius-sm);font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:var(--transition);border:1px solid transparent;font-family:var(--ff)}
+.section-tab.active{background:rgba(200,16,46,0.1);border-color:rgba(200,16,46,0.2);color:var(--akane)}
+.section-tab.inactive{color:rgba(245,240,232,0.2);border-color:var(--border0)}
+.section-tab.inactive:hover{color:rgba(245,240,232,0.4)}
+.diet-view{display:none}
+.diet-view.active{display:block}
+.program-view{display:none}
+.program-view.active{display:block}
+.macro-ring{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;position:relative}
+.macro-ring-inner{position:absolute;inset:3px;border-radius:50%;background:var(--bg2);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.macro-ring-val{font-size:14px;font-weight:700;line-height:1}
+.macro-ring-lbl{font-size:5.5px;letter-spacing:1px;text-transform:uppercase;color:rgba(245,240,232,0.3)}
+.water-glass{width:20px;height:26px;border-radius:4px 4px 3px 3px;border:1.5px solid rgba(56,180,139,0.3);cursor:pointer;transition:var(--transition);position:relative}
+.water-glass.filled{background:rgba(56,180,139,0.2);border-color:rgba(56,180,139,0.5);box-shadow:0 0 8px rgba(56,180,139,0.1)}
+.water-glass.filled::after{content:'';position:absolute;top:3px;left:3px;right:3px;height:8px;background:rgba(56,180,139,0.15);border-radius:1px}
+
+/* ===== DOJO TAB ===== */
+.pact-card{padding:16px;display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.pact-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--kachi));border:2px solid rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--kin);position:relative;flex-shrink:0}
+.pact-info{flex:1}
+.pact-name{font-size:12px;font-weight:600}
+.pact-streak{font-size:8px;color:var(--kin);display:flex;align-items:center;gap:4px}
+.pact-status-dot{width:4px;height:4px;border-radius:50%;display:inline-block}
+.pact-meta{font-size:7.5px;color:rgba(245,240,232,0.25)}
+.bc-active-card{padding:18px;text-align:center;background:linear-gradient(135deg,rgba(255,107,53,0.06),rgba(255,107,53,0.02));border:1px solid rgba(255,107,53,0.15);border-radius:var(--radius-lg);position:relative;overflow:hidden;animation:gp 3s ease-in-out infinite;margin-bottom:12px}
+.bc-timer{font-family:var(--ff-mono);font-size:28px;font-weight:700;color:var(--sunset);letter-spacing:2px}
+.bc-timer-lbl{font-size:8px;letter-spacing:2px;color:rgba(255,107,53,0.4);text-transform:uppercase;margin-top:2px}
+.bc-btn{display:inline-block;padding:10px 24px;border-radius:var(--radius-sm);background:var(--sunset);border:none;font-family:var(--ff);font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cream);cursor:pointer;margin-top:10px;transition:var(--transition);box-shadow:0 4px 16px rgba(255,107,53,0.25)}
+.bc-btn:hover{transform:translateY(-2px)}
+.leaderboard-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+.leaderboard-rank{width:20px;text-align:center;font-size:12px;font-weight:700;color:var(--kin);font-family:var(--ff-mono)}
+.leaderboard-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px}
+
+/* ===== EVOLVE TAB ===== */
+.rank-hero{text-align:center;padding:20px;margin-bottom:14px}
+.rank-badge-lg{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.03));border:2px solid rgba(201,168,76,0.15);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 8px;box-shadow:0 0 30px rgba(201,168,76,0.08)}
+.rank-title{font-size:16px;font-weight:700;letter-spacing:1px}
+.rank-sub{font-size:8px;color:rgba(245,240,232,0.25);letter-spacing:2px}
+.xp-bar{height:4px;border-radius:2px;background:rgba(255,255,255,0.04);overflow:hidden;margin:10px 0 4px}
+.xp-fill{height:100%;width:72%;background:linear-gradient(90deg,var(--akane),var(--shu));border-radius:2px;box-shadow:0 0 8px rgba(200,16,46,0.2)}
+.xp-text{font-size:7px;color:rgba(245,240,232,0.2);display:flex;justify-content:space-between}
+/* Hexagon */
+.hex-container{display:flex;justify-content:center;margin:10px 0}
+.hex-svg{width:200px;height:180px}
+.ach-badge{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;transition:var(--transition)}
+.ach-badge.unlocked{background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(201,168,76,0.05));border:1.5px solid rgba(201,168,76,0.2);box-shadow:0 0 12px rgba(201,168,76,0.08)}
+.ach-badge.locked{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);opacity:0.3}
+
+/* ===== SOUL TAB ===== */
+.profile-header{display:flex;align-items:center;gap:16px;padding:18px;margin-bottom:14px}
+.profile-av{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--kachi));border:2px solid var(--kin);display:flex;align-items:center;justify-content:center;font-size:24px;position:relative;box-shadow:0 0 20px rgba(201,168,76,0.1)}
+.profile-rank-dot{position:absolute;bottom:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:var(--kin);border:2px solid var(--bg1);display:flex;align-items:center;justify-content:center;font-size:7px;color:var(--bg1);font-weight:700}
+.profile-name{font-size:16px;font-weight:700}
+.profile-title{font-size:8px;color:rgba(245,240,232,0.25);letter-spacing:2px;text-transform:uppercase}
+
+/* ===== SENSEI TAB ===== */
+.chat-bubble{padding:12px 14px;border-radius:var(--radius-md);margin-bottom:8px;font-size:11px;line-height:1.5;max-width:85%}
+.chat-sensei{background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.08);border-bottom-left-radius:4px;align-self:flex-start}
+.chat-user{background:rgba(200,16,46,0.06);border:1px solid rgba(200,16,46,0.08);border-bottom-right-radius:4px;align-self:flex-end}
+.chat-input{display:flex;gap:8px;padding:10px 14px;background:var(--bg2);border-radius:var(--radius-md);border:1px solid var(--border1);margin-top:8px}
+.chat-input input{flex:1;background:none;border:none;color:var(--cream);font-family:var(--ff);font-size:11px;outline:none}
+.chat-input input::placeholder{color:rgba(245,240,232,0.15)}
+.chat-send{width:32px;height:32px;border-radius:50%;background:var(--sumire);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition);color:var(--cream);font-size:14px}
+.chat-send:hover{background:#7C3AED}
+
+/* Quick action gems */
+.gem-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.gem{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--radius-sm);border:1px solid var(--border0);cursor:pointer;transition:var(--transition);font-size:9px;font-weight:500;font-family:var(--ff)}
+.gem:hover{border-color:var(--border2);transform:translateY(-2px)}
+.gem-red{background:rgba(200,16,46,0.04);color:var(--akane)}
+.gem-purple{background:rgba(139,92,246,0.04);color:var(--sumire)}
+.gem-gold{background:rgba(201,168,76,0.04);color:var(--kin)}
+.gem-green{background:rgba(56,180,139,0.04);color:var(--hisui)}
+
+/* ===== STAGGERED ANIMATION ===== */
+@keyframes fadeSlide{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:translateY(0)}}
+.anim{animation:fadeSlide .6s both}
+.d1{animation-delay:.05s}.d2{animation-delay:.1s}.d3{animation-delay:.15s}.d4{animation-delay:.2s}
+.d5{animation-delay:.25s}.d6{animation-delay:.3s}.d7{animation-delay:.35s}.d8{animation-delay:.4s}
+.d9{animation-delay:.45s}.d10{animation-delay:.5s}.d11{animation-delay:.55s}.d12{animation-delay:.6s}
+.d13{animation-delay:.65s}.d14{animation-delay:.7s}.d15{animation-delay:.75s}
+
+/* ===== SETTINGS ACCORDION ===== */
+.setting-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.03);cursor:pointer}
+.setting-item:last-child{border:none}
+.setting-label{font-size:11px;color:rgba(245,240,232,0.5)}
+.setting-value{font-size:10px;color:rgba(245,240,232,0.2);display:flex;align-items:center;gap:4px}
+
+/* ===== FOOD CARD (Train/Diet) ===== */
+.food-card{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-sm);background:rgba(255,255,255,0.02);border:1px solid var(--border0);margin-bottom:6px}
+.food-img{width:36px;height:36px;border-radius:6px;background-size:cover;background-position:center;flex-shrink:0}
+.food-info{flex:1}
+.food-name{font-size:10px;font-weight:600}
+.food-macros{font-size:7.5px;color:rgba(245,240,232,0.25)}
+.food-cal{font-size:10px;font-weight:600;color:var(--kin)}
+</style>
+</head>
+<body>
+
+<div class="phone">
+<div class="phone-inner">
+  <!-- Atmosphere -->
+  <div class="atmos"></div>
+  <div class="p p1"></div><div class="p p2"></div><div class="p p3"></div><div class="p p4"></div>
+  <div class="p p5"></div><div class="p p6"></div><div class="p p7"></div><div class="p p8"></div>
+  <div class="kf kf1">武</div><div class="kf kf2">魂</div><div class="kf kf3">影</div>
+
+  <!-- ===== LANDING SCREEN ===== -->
+  <div id="landing" class="screen">
+    <video class="landing-video" autoplay muted loop playsinline poster="https://picsum.photos/seed/kage-poster/390/844">
+      <source src="vegabond.mp4" type="video/mp4">
+    </video>
+    <div class="landing-overlay"></div>
+    <div class="landing-vignette"></div>
+    <div class="landing-content">
+      <div class="landing-sub">The path of the warrior</div>
+      <div class="landing-title">KAGE</div>
+      <div class="landing-subtitle">Zero Equipment · Infinite Will</div>
+      <button class="landing-btn" onclick="enterApp()">Begin Your Journey</button>
+      <button class="landing-ghost" onclick="enterApp()">I Am a Warrior</button>
+    </div>
+    <div class="landing-tap">Tap anywhere to enter</div>
+    <!-- Tab bar visible on landing but inactive -->
+    <div class="tab-bar" style="z-index:30">
+      <div class="tab-item active"><span class="tab-kanji" style="color:var(--akane)">家</span><span class="tab-label" style="color:rgba(245,240,232,0.5)">Home</span><div class="tab-dot" style="background:var(--akane);box-shadow:0 0 6px rgba(200,16,46,0.4)"></div></div>
+      <div class="tab-item inactive"><span class="tab-kanji">武</span><span class="tab-label">Train</span><div class="tab-dot"></div></div>
+      <div class="tab-item inactive" style="opacity:0.7"><span class="tab-kanji">道</span><span class="tab-label">Dojo</span><div class="tab-dot"></div></div>
+      <div class="tab-item inactive"><span class="tab-kanji">昇</span><span class="tab-label">Evolve</span><div class="tab-dot"></div></div>
+      <div class="tab-item inactive"><span class="tab-kanji">魂</span><span class="tab-label">Soul</span><div class="tab-dot"></div></div>
+      <div class="tab-item inactive"><span class="tab-kanji">先</span><span class="tab-label">Sensei</span><div class="tab-dot"></div></div>
+    </div>
+  </div>
+
+  <!-- ===== HOME TAB ===== -->
+  <div id="home" class="screen">
+    <div class="section anim d1" style="padding-top:20px">
+      <div class="header-row">
+        <div><div class="brand-sub">The path of the warrior</div><span style="font-size:30px;font-weight:900;letter-spacing:5px;background:linear-gradient(135deg,#F5F0E8 20%,var(--kin)60%,var(--akane)85%);-webkit-background-clip:text;-webkit-text-fill-color:transparent">KAGE</span></div>
+        <div class="bc-badge"><span class="bc-dot"></span><span class="bc-label">BATTLE CRY</span></div>
+      </div>
+    </div>
+    <div class="section anim d2">
+      <div class="card streak-card card-accent-red">
+        <div class="streak-visual">
+          <div class="flame-orb">
+            <div class="flame-ring"></div><div class="flame-ring2"></div>
+            <div class="flame-inner"></div>
+          </div>
+          <div><div class="streak-num">12</div><div class="streak-lbl">Day Training Streak</div></div>
+        </div>
+        <div class="partner-row">
+          <div class="partner-av">S</div><span class="partner-dot-g"></span><span style="font-size:10px;color:rgba(245,240,232,0.4)">Sarah · pact partner</span><span style="font-size:8px;color:#0C8;margin-left:auto">● TRAINED</span>
+        </div>
+        <div class="shield-bar">
+          <span style="font-size:11px">🛡️</span>
+          <div class="shield-track"><div class="shield-fill"></div></div>
+          <span class="shield-lbl">Silver 40%</span>
+        </div>
+      </div>
+    </div>
+    <div class="section anim d3">
+      <div class="sensei-card">
+        <div class="sensei-holo">
+          <div class="sensei-ring2"></div><div class="sensei-ring"></div>
+          <div class="sensei-avatar">先</div>
+        </div>
+        <div class="sensei-quote" style="flex:1">"The dojo awaits. Discipline shapes the warrior."</div>
+        <span class="sensei-hint">TAP →</span>
+      </div>
+    </div>
+    <div class="section anim d4">
+      <div class="bento">
+        <div class="kpi-item kpi-full kpi-akane">
+          <div style="display:flex;align-items:center;gap:12px;width:100%">
+            <div style="width:36px;height:36px;border-radius:10px;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;color:var(--kin);font-family:var(--ff-jp)">影</div>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600;color:rgba(245,240,232,0.6)">Shadow Disciple</div><div style="font-size:8px;color:rgba(245,240,232,0.2);margin-top:1px">2,150 XP · Level 3</div></div>
+            <div class="kpi-val">47</div><div class="kpi-lbl" style="white-space:nowrap">WORKOUTS</div>
+          </div>
+        </div>
+        <div class="kpi-item kpi-green"><div class="kpi-val">450</div><div class="kpi-lbl">STRENGTH</div></div>
+        <div class="kpi-item kpi-gold"><div class="kpi-val">320</div><div class="kpi-lbl">ENDURANCE</div></div>
+        <div class="kpi-item kpi-purple"><div class="kpi-val">280</div><div class="kpi-lbl">FOCUS</div></div>
+        <div class="kpi-item kpi-hisui"><div class="kpi-val">510</div><div class="kpi-lbl">DISCIPLINE</div></div>
+        <div class="kpi-item kpi-shu"><div class="kpi-val">190</div><div class="kpi-lbl">RECOVERY</div></div>
+      </div>
+    </div>
+    <div class="section anim d5">
+      <div class="week-card">
+        <div style="font-size:7px;letter-spacing:2.5px;color:rgba(201,168,76,0.35);text-transform:uppercase;margin-bottom:12px;font-weight:600">This Week</div>
+        <div class="week-days">
+          <div class="day"><span class="day-letter">M</span><div class="day-dot done">M</div></div>
+          <div class="day"><span class="day-letter">T</span><div class="day-dot done">T</div></div>
+          <div class="day"><span class="day-letter">W</span><div class="day-dot done">W</div></div>
+          <div class="day"><span class="day-letter">T</span><div class="day-dot now">T</div></div>
+          <div class="day"><span class="day-letter">F</span><div class="day-dot empty">F</div></div>
+          <div class="day"><span class="day-letter">S</span><div class="day-dot rest">S</div></div>
+          <div class="day"><span class="day-letter">S</span><div class="day-dot empty">S</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="section anim d6">
+      <button class="cta-btn">Start Lock-In Mode</button>
+      <div class="cta-sub">Focus your spirit</div>
+    </div>
+    <div class="sg"></div>
+  </div>
+
+  <!-- ===== TRAIN TAB ===== -->
+  <div id="train" class="screen">
+    <div class="section anim d1" style="padding-top:20px">
+      <div class="header-row" style="margin-bottom:8px">
+        <div><span style="font-size:22px;font-weight:900;letter-spacing:2px;font-family:var(--ff-jp);color:var(--akane)">武</span><span style="font-size:18px;font-weight:800;margin-left:10px;letter-spacing:3px">TRAINING HALL</span></div>
+      </div>
+      <div class="section-tabs">
+        <div class="section-tab active" onclick="switchTrainTab('programs',this)">Programs</div>
+        <div class="section-tab inactive" onclick="switchTrainTab('diet',this)">Diet</div>
+      </div>
+    </div>
+
+    <!-- PROGRAMS VIEW -->
+    <div id="train-programs" class="program-view active">
+      <div class="section anim d2">
+        <div class="section-label" style="color:var(--akane);display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--akane)"></span>EQUIPMENT PROGRAMS</div>
+        <div class="program-row">
+          <div class="program-card">
+            <div class="program-img" style="background-image:url(https://picsum.photos/seed/kage-gym1/400/240)">
+              <div class="program-badge badge-gym">GYM</div>
+            </div>
+            <div class="program-info"><div class="program-name">Shadow Warrior</div><div class="program-meta"><span>🏋️ 4 wks</span><span>📋 Intermediate</span></div></div>
+          </div>
+          <div class="program-card">
+            <div class="program-img" style="background-image:url(https://picsum.photos/seed/kage-gym2/400/240)">
+              <div class="program-badge badge-gym">DUMBBELL</div>
+            </div>
+            <div class="program-info"><div class="program-name">Iron Will</div><div class="program-meta"><span>🏋️ 8 wks</span><span>📋 Advanced</span></div></div>
+          </div>
+          <div class="program-card">
+            <div class="program-img" style="background-image:url(https://picsum.photos/seed/kage-gym3/400/240)">
+              <div class="program-badge badge-gym">FULL GYM</div>
+            </div>
+            <div class="program-info"><div class="program-name">Blade</div><div class="program-meta"><span>🏋️ 12 wks</span><span>📋 Elite</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="section anim d3">
+        <div class="section-label" style="color:var(--hisui);display:flex;align-items:center;gap:6px"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--hisui)"></span>ZERO-EQUIPMENT PROGRAMS</div>
+        <div class="program-row">
+          <div class="program-card">
+            <div class="program-img" style="background-image:url(https://picsum.photos/seed/kage-bw1/400/240)">
+              <div class="program-badge badge-body">BODYWEIGHT</div>
+            </div>
+            <div class="program-info"><div class="program-name">Ronin</div><div class="program-meta"><span>🔥 4 wks</span><span>📋 Beginner</span></div></div>
+          </div>
+          <div class="program-card">
+            <div class="program-img" style="background-image:url(https://picsum.photos/seed/kage-bw2/400/240)">
+              <div class="program-badge badge-body">BODYWEIGHT</div>
+            </div>
+            <div class="program-info"><div class="program-name">Bushido</div><div class="program-meta"><span>🔥 6 wks</span><span>📋 Intermediate</span></div></div>
+          </div>
+          <div class="program-card">
+            <div class="program-img" style="background-image:url(https://picsum.photos/seed/kage-bw3/400/240)">
+              <div class="program-badge badge-body">BODYWEIGHT</div>
+            </div>
+            <div class="program-info"><div class="program-name">Fudo</div><div class="program-meta"><span>🔥 8 wks</span><span>📋 Advanced</span></div></div>
+          </div>
+          <div class="program-card">
+            <div class="program-img" style="background-image:url(https://picsum.photos/seed/kage-bw4/400/240)">
+              <div class="program-badge badge-body">BODYWEIGHT</div>
+            </div>
+            <div class="program-info"><div class="program-name">Miyamoto</div><div class="program-meta"><span>🔥 12 wks</span><span>📋 Elite</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="section anim d4">
+        <button class="cta-btn" style="background:linear-gradient(135deg,var(--hisui),#2A9D7A);box-shadow:0 8px 24px rgba(56,180,139,0.3)">Start Empty-Handed</button>
+        <div class="cta-sub">No equipment needed · Just your will</div>
+      </div>
+    </div>
+
+    <!-- DIET VIEW -->
+    <div id="train-diet" class="diet-view">
+      <div class="section anim d2">
+        <div class="section-label" style="color:var(--kin)">MACRO TARGETS</div>
+        <div style="display:flex;justify-content:space-around;padding:10px 0">
+          <div style="text-align:center">
+            <div class="macro-ring" style="border:3px solid var(--akane)">
+              <div class="macro-ring-inner"><span class="macro-ring-val" style="color:var(--akane)">32</span><span class="macro-ring-lbl" style="color:rgba(200,16,46,0.35)">PROT</span></div>
+            </div>
+            <div style="font-size:7px;color:rgba(245,240,232,0.2);margin-top:4px">/ 45g</div>
+          </div>
+          <div style="text-align:center">
+            <div class="macro-ring" style="border:3px solid var(--kin)">
+              <div class="macro-ring-inner"><span class="macro-ring-val" style="color:var(--kin)">48</span><span class="macro-ring-lbl" style="color:rgba(201,168,76,0.35)">CARBS</span></div>
+            </div>
+            <div style="font-size:7px;color:rgba(245,240,232,0.2);margin-top:4px">/ 60g</div>
+          </div>
+          <div style="text-align:center">
+            <div class="macro-ring" style="border:3px solid var(--sumire)">
+              <div class="macro-ring-inner"><span class="macro-ring-val" style="color:var(--sumire)">18</span><span class="macro-ring-lbl" style="color:rgba(139,92,246,0.35)">FATS</span></div>
+            </div>
+            <div style="font-size:7px;color:rgba(245,240,232,0.2);margin-top:4px">/ 25g</div>
+          </div>
+          <div style="text-align:center">
+            <div class="macro-ring" style="border:3px solid var(--sunset)">
+              <div class="macro-ring-inner"><span class="macro-ring-val" style="color:var(--sunset)">580</span><span class="macro-ring-lbl" style="color:rgba(255,107,53,0.35)">KCAL</span></div>
+            </div>
+            <div style="font-size:7px;color:rgba(245,240,232,0.2);margin-top:4px">/ 2,400</div>
+          </div>
+        </div>
+      </div>
+      <div class="section anim d3">
+        <div class="section-label" style="color:var(--hisui)">WATER TRACKER</div>
+        <div class="card" style="padding:14px 16px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <span style="font-size:22px">💧</span>
+            <div style="display:flex;gap:6px;flex:1">
+              <div class="water-glass filled"></div><div class="water-glass filled"></div><div class="water-glass filled"></div>
+              <div class="water-glass filled"></div><div class="water-glass"></div><div class="water-glass"></div>
+            </div>
+            <span style="font-size:11px;font-weight:600;color:var(--hisui)">1.0L</span>
+            <span style="font-size:8px;color:rgba(245,240,232,0.2)">/ 2.5L</span>
+          </div>
+        </div>
+      </div>
+      <div class="section anim d4">
+        <div class="section-label" style="color:var(--cream)">TODAY'S MEALS</div>
+        <div class="food-card"><div class="food-img" style="background-image:url(https://picsum.photos/seed/kage-food1/100/100)"></div><div class="food-info"><div class="food-name">Warrior Oats</div><div class="food-macros">P: 12g · C: 34g · F: 8g</div></div><div class="food-cal">280</div></div>
+        <div class="food-card"><div class="food-img" style="background-image:url(https://picsum.photos/seed/kage-food2/100/100)"></div><div class="food-info"><div class="food-name">Chicken & Rice</div><div class="food-macros">P: 32g · C: 45g · F: 10g</div></div><div class="food-cal">420</div></div>
+        <div class="food-card"><div class="food-img" style="background-image:url(https://picsum.photos/seed/kage-food3/100/100)"></div><div class="food-info"><div class="food-name">Miso Salmon</div><div class="food-macros">P: 38g · C: 22g · F: 15g</div></div><div class="food-cal">380</div></div>
+      </div>
+      <div class="section anim d5">
+        <div class="section-label" style="color:var(--kin)">MEAL PLAN</div>
+        <div class="card" style="padding:14px;text-align:center">
+          <div style="font-size:12px;font-weight:600;color:var(--kin)">Warrior Diet</div>
+          <div style="font-size:8px;color:rgba(245,240,232,0.2);margin:2px 0 8px">2,400 kcal · Auto-adapted to Ronin program</div>
+          <div style="display:flex;justify-content:space-between;font-size:7.5px;color:rgba(245,240,232,0.15)">
+            <span>M</span><span>T</span><span>W</span><span style="color:var(--akane)">T</span><span>F</span><span>S</span><span>S</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sg"></div>
+  </div>
+
+  <!-- ===== DOJO TAB ===== -->
+  <div id="dojo" class="screen">
+    <div class="section anim d1" style="padding-top:20px">
+      <div class="header-row" style="margin-bottom:8px">
+        <div><span style="font-size:22px;font-weight:900;letter-spacing:2px;font-family:var(--ff-jp);color:var(--kin)">道</span><span style="font-size:18px;font-weight:800;margin-left:10px;letter-spacing:3px">DOJO</span></div>
+      </div>
+    </div>
+    <div class="section anim d2">
+      <div class="bc-active-card">
+        <div style="font-size:9px;letter-spacing:2px;color:var(--sunset);margin-bottom:6px;font-weight:600">⚔️ BATTLE CRY ACTIVE</div>
+        <div class="bc-timer">15:32</div>
+        <div class="bc-timer-lbl">Remaining to respond</div>
+        <button class="bc-btn">📸 Respond with Photo</button>
+      </div>
+    </div>
+    <div class="section anim d3">
+      <div class="section-label" style="color:var(--kin)">ACTIVE PACT</div>
+      <div class="card pact-card card-accent-gold">
+        <div class="pact-av" style="border-color:rgba(0,204,136,0.3)">S</div>
+        <div class="pact-info">
+          <div class="pact-name">Sarah</div>
+          <div class="pact-streak">🔥 12-day shared streak</div>
+          <div class="pact-meta">Shield: Silver · Rank #1</div>
+        </div>
+        <span class="pact-status-dot" style="background:#0C8;box-shadow:0 0 6px rgba(0,204,136,0.3)"></span>
+      </div>
+    </div>
+    <div class="section anim d4">
+      <div class="section-label" style="color:var(--cream)">ALL PACTS</div>
+      <div class="card pact-card">
+        <div class="pact-av" style="font-size:10px;width:30px;height:30px;border-color:rgba(201,168,76,0.15)">K</div>
+        <div class="pact-info"><div class="pact-name">Kenji</div><div class="pact-streak" style="color:rgba(201,168,76,0.5)">🔥 5 days</div></div>
+        <span class="pact-status-dot" style="background:rgba(255,255,255,0.1)"></span>
+      </div>
+      <div class="card pact-card">
+        <div class="pact-av" style="font-size:10px;width:30px;height:30px;border-color:rgba(201,168,76,0.15)">A</div>
+        <div class="pact-info"><div class="pact-name">Akira</div><div class="pact-streak" style="color:rgba(201,168,76,0.5)">🔥 1 day</div></div>
+        <span class="pact-status-dot" style="background:rgba(255,255,255,0.1)"></span>
+      </div>
+    </div>
+    <div class="section anim d5">
+      <div class="section-label" style="color:var(--hisui)">SQUAD LEADERBOARD</div>
+      <div class="card" style="padding:4px 14px 10px">
+        <div class="leaderboard-item"><span class="leaderboard-rank">1</span><div class="leaderboard-av" style="background:linear-gradient(135deg,var(--kin),rgba(201,168,76,0.2));font-size:9px;color:var(--bg1)">Y</div><div style="flex:1;font-size:10px">You + Sarah</div><span style="font-size:9px;color:var(--kin)">🔥 12</span></div>
+        <div class="leaderboard-item"><span class="leaderboard-rank" style="color:rgba(201,168,76,0.4)">2</span><div class="leaderboard-av" style="background:linear-gradient(135deg,var(--hagane),rgba(74,111,165,0.2));font-size:9px">K</div><div style="flex:1;font-size:10px">Kenji + Mika</div><span style="font-size:9px;color:var(--kin)">🔥 8</span></div>
+        <div class="leaderboard-item" style="border:none"><span class="leaderboard-rank" style="color:rgba(201,168,76,0.3)">3</span><div class="leaderboard-av" style="background:linear-gradient(135deg,var(--shu),rgba(232,72,26,0.2));font-size:9px">T</div><div style="flex:1;font-size:10px">Takeshi + Ryo</div><span style="font-size:9px;color:var(--kin)">🔥 3</span></div>
+      </div>
+    </div>
+    <div class="section anim d6">
+      <button class="cta-btn" style="background:linear-gradient(135deg,var(--kin),#A8883C);box-shadow:0 8px 24px rgba(201,168,76,0.3)">Forge New Pact</button>
+      <div class="cta-sub">Enter code or invite a warrior</div>
+    </div>
+    <div class="sg"></div>
+  </div>
+
+  <!-- ===== EVOLVE TAB ===== -->
+  <div id="evolve" class="screen">
+    <div class="section anim d1" style="padding-top:20px">
+      <div class="header-row" style="margin-bottom:4px">
+        <div><span style="font-size:22px;font-weight:900;letter-spacing:2px;font-family:var(--ff-jp);color:var(--sumire)">昇</span><span style="font-size:18px;font-weight:800;margin-left:10px;letter-spacing:3px">EVOLVE</span></div>
+      </div>
+    </div>
+    <div class="section anim d2">
+      <div class="card rank-hero card-accent-gold">
+        <div class="rank-badge-lg">⚔️</div>
+        <div class="rank-title">Shadow Disciple</div>
+        <div class="rank-sub">Level 3 · Next: Ronin</div>
+        <div class="xp-bar"><div class="xp-fill"></div></div>
+        <div class="xp-text"><span>2,150 XP</span><span>3,000 XP</span></div>
+      </div>
+    </div>
+    <div class="section anim d3">
+      <div class="section-label" style="color:var(--sumire)">WARRIOR ATTRIBUTES</div>
+      <div class="card" style="padding:10px 10px 6px">
+        <div class="hex-container">
+          <svg class="hex-svg" viewBox="0 0 200 180">
+            <defs><linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="var(--akane)" stop-opacity="0.3"/><stop offset="100%" stop-color="var(--sumire)" stop-opacity="0.1"/></linearGradient></defs>
+            <polygon points="100,10 190,55 190,125 100,170 10,125 10,55" fill="url(#hexGrad)" stroke="rgba(200,16,46,0.2)" stroke-width="1.5"/>
+            <polygon points="100,25 172,60 172,120 100,155 28,120 28,60" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+            <line x1="100" y1="10" x2="100" y2="170" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/>
+            <line x1="10" y1="90" x2="190" y2="90" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/>
+            <circle cx="100" cy="90" r="3" fill="var(--cream)"/>
+            <text x="100" y="40" text-anchor="middle" font-size="7" fill="rgba(255,255,255,0.25)" font-family="Inter">STR 450</text>
+            <text x="175" y="70" text-anchor="middle" font-size="7" fill="rgba(255,255,255,0.25)" font-family="Inter">END 320</text>
+            <text x="175" y="120" text-anchor="middle" font-size="7" fill="rgba(255,255,255,0.25)" font-family="Inter">FOC 280</text>
+            <text x="100" y="150" text-anchor="middle" font-size="7" fill="rgba(255,255,255,0.25)" font-family="Inter">DIS 510</text>
+            <text x="25" y="120" text-anchor="middle" font-size="7" fill="rgba(255,255,255,0.25)" font-family="Inter">REC 190</text>
+            <text x="25" y="70" text-anchor="middle" font-size="7" fill="rgba(255,255,255,0.25)" font-family="Inter">SPI 340</text>
+            <circle cx="100" cy="42" r="3" fill="var(--akane)" opacity="0.6"/>
+            <circle cx="160" cy="65" r="3" fill="var(--kin)" opacity="0.5"/>
+            <circle cx="155" cy="115" r="3" fill="var(--sumire)" opacity="0.45"/>
+            <circle cx="100" cy="145" r="3" fill="var(--hisui)" opacity="0.6"/>
+            <circle cx="40" cy="115" r="3" fill="var(--sunset)" opacity="0.35"/>
+            <circle cx="45" cy="65" r="3" fill="var(--sakura)" opacity="0.4"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="section anim d4">
+      <div class="section-label" style="color:var(--kin)">ACHIEVEMENTS</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div style="text-align:center"><div class="ach-badge unlocked">🔥</div><div style="font-size:6px;color:rgba(245,240,232,0.2);margin-top:4px;letter-spacing:1px">FIRST BLOOD</div></div>
+        <div style="text-align:center"><div class="ach-badge unlocked">⚔️</div><div style="font-size:6px;color:rgba(245,240,232,0.2);margin-top:4px;letter-spacing:1px">10 STREAK</div></div>
+        <div style="text-align:center"><div class="ach-badge unlocked">🤝</div><div style="font-size:6px;color:rgba(245,240,232,0.2);margin-top:4px;letter-spacing:1px">PACT BOND</div></div>
+        <div style="text-align:center"><div class="ach-badge locked">🏆</div><div style="font-size:6px;color:rgba(245,240,232,0.1);margin-top:4px;letter-spacing:1px">30 STREAK</div></div>
+        <div style="text-align:center"><div class="ach-badge locked">👑</div><div style="font-size:6px;color:rgba(245,240,232,0.1);margin-top:4px;letter-spacing:1px">RONIN</div></div>
+        <div style="text-align:center"><div class="ach-badge locked">💀</div><div style="font-size:6px;color:rgba(245,240,232,0.1);margin-top:4px;letter-spacing:1px">100 WARS</div></div>
+      </div>
+    </div>
+    <div class="section anim d5">
+      <div class="section-label" style="color:var(--sakura)">SEASON TRACK</div>
+      <div class="card" style="padding:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <span style="font-size:11px;font-weight:600">Season of the Ronin</span><span style="font-size:8px;color:rgba(245,240,232,0.2)">45 days left</span>
+        </div>
+        <div style="display:flex;gap:4px">
+          <div style="flex:1;height:4px;border-radius:2px;background:var(--akane);box-shadow:0 0 6px rgba(200,16,46,0.2)"></div>
+          <div style="flex:1;height:4px;border-radius:2px;background:var(--akane);box-shadow:0 0 6px rgba(200,16,46,0.2)"></div>
+          <div style="flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,0.04)"></div>
+          <div style="flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,0.04)"></div>
+          <div style="flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,0.04)"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:4px">
+          <span style="font-size:6.5px;color:var(--akane);font-weight:600">Level 2</span>
+          <span style="font-size:6.5px;color:rgba(245,240,232,0.15)">Next: Onyx Knuckles</span>
+        </div>
+      </div>
+    </div>
+    <div class="sg"></div>
+  </div>
+
+  <!-- ===== SOUL TAB ===== -->
+  <div id="soul" class="screen">
+    <div class="section anim d1" style="padding-top:20px">
+      <div class="header-row" style="margin-bottom:8px">
+        <div><span style="font-size:22px;font-weight:900;letter-spacing:2px;font-family:var(--ff-jp);color:var(--sakura)">魂</span><span style="font-size:18px;font-weight:800;margin-left:10px;letter-spacing:3px">SOUL</span></div>
+      </div>
+    </div>
+    <div class="section anim d2">
+      <div class="card profile-header card-accent-gold">
+        <div class="profile-av">
+          武
+          <div class="profile-rank-dot">3</div>
+        </div>
+        <div>
+          <div class="profile-name">Shadow Warrior</div>
+          <div class="profile-title">Shadow Disciple · Level 3</div>
+        </div>
+      </div>
+    </div>
+    <div class="section anim d3">
+      <div class="bento" style="grid-template-columns:1fr 1fr">
+        <div class="kpi-item kpi-akane"><div class="kpi-val">47</div><div class="kpi-lbl">WORKOUTS</div></div>
+        <div class="kpi-item kpi-gold"><div class="kpi-val">34</div><div class="kpi-lbl">DAYS</div></div>
+        <div class="kpi-item kpi-green"><div class="kpi-val">12</div><div class="kpi-lbl">PACT DAYS</div></div>
+        <div class="kpi-item kpi-purple"><div class="kpi-val">2,150</div><div class="kpi-lbl">TOTAL XP</div></div>
+      </div>
+    </div>
+    <div class="section anim d4">
+      <div class="section-label" style="color:var(--cream)">ACHIEVEMENTS</div>
+      <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px">
+        <div style="min-width:70px;text-align:center;padding:8px;border-radius:var(--radius-sm);background:rgba(255,255,255,0.02);border:1px solid var(--border0)"><div style="font-size:20px;margin-bottom:4px">🔥</div><div style="font-size:6px;color:rgba(245,240,232,0.2)">First Blood</div></div>
+        <div style="min-width:70px;text-align:center;padding:8px;border-radius:var(--radius-sm);background:rgba(255,255,255,0.02);border:1px solid var(--border0)"><div style="font-size:20px;margin-bottom:4px">⚔️</div><div style="font-size:6px;color:rgba(245,240,232,0.2)">10 Streak</div></div>
+        <div style="min-width:70px;text-align:center;padding:8px;border-radius:var(--radius-sm);background:rgba(255,255,255,0.02);border:1px solid var(--border0)"><div style="font-size:20px;margin-bottom:4px">🤝</div><div style="font-size:6px;color:rgba(245,240,232,0.2)">Pact Forged</div></div>
+        <div style="min-width:70px;text-align:center;padding:8px;border-radius:var(--radius-sm);background:rgba(255,255,255,0.02);border:1px solid var(--border0)"><div style="font-size:20px;margin-bottom:4px">🏆</div><div style="font-size:6px;color:rgba(245,240,232,0.1)">30 Streak</div></div>
+      </div>
+    </div>
+    <div class="section anim d5">
+      <div class="section-label" style="color:var(--hagane)">PERSONAL RECORDS</div>
+      <div class="card" style="padding:12px 14px">
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.03)">
+          <span style="font-size:10px;color:rgba(245,240,232,0.4)">Push-ups (max)</span><span style="font-size:10px;font-weight:600;color:var(--kin)">87</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.03)">
+          <span style="font-size:10px;color:rgba(245,240,232,0.4)">Plank hold</span><span style="font-size:10px;font-weight:600;color:var(--kin)">4m 12s</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.03)">
+          <span style="font-size:10px;color:rgba(245,240,232,0.4)">Squats (max)</span><span style="font-size:10px;font-weight:600;color:var(--kin)">142</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:6px 0">
+          <span style="font-size:10px;color:rgba(245,240,232,0.4)">Burpees (60s)</span><span style="font-size:10px;font-weight:600;color:var(--kin)">32</span>
+        </div>
+      </div>
+    </div>
+    <div class="section anim d6">
+      <div class="section-label" style="color:var(--cream)">SETTINGS</div>
+      <div class="card" style="padding:4px 14px 10px">
+        <div class="setting-item"><span class="setting-label">📷 Profile Photo</span><span class="setting-value">Change →</span></div>
+        <div class="setting-item"><span class="setting-label">🎨 Theme</span><span class="setting-value">Dark Mode ○</span></div>
+        <div class="setting-item"><span class="setting-label">🔔 Notifications</span><span class="setting-value">On →</span></div>
+        <div class="setting-item"><span class="setting-label">📊 Export Data</span><span class="setting-value">Download →</span></div>
+        <div class="setting-item" style="border:none"><span class="setting-label">ℹ️ About KAGE</span><span class="setting-value">v1.0 →</span></div>
+      </div>
+    </div>
+    <div class="sg"></div>
+  </div>
+
+  <!-- ===== SENSEI TAB ===== -->
+  <div id="sensei" class="screen">
+    <div class="section anim d1" style="padding-top:20px">
+      <div class="header-row" style="margin-bottom:6px">
+        <div><span style="font-size:22px;font-weight:900;letter-spacing:2px;font-family:var(--ff-jp);color:var(--sumire)">先</span><span style="font-size:18px;font-weight:800;margin-left:10px;letter-spacing:3px">SENSEI</span></div>
+      </div>
+    </div>
+    <div class="section anim d2">
+      <div class="card" style="padding:20px;text-align:center;background:linear-gradient(135deg,rgba(139,92,246,0.04),rgba(139,92,246,0.01))">
+        <div style="position:relative;width:64px;height:64px;margin:0 auto 10px">
+          <div style="position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(139,92,246,0.06);animation:spin 10s linear infinite"></div>
+          <div style="position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(139,92,246,0.04);animation:spin 6s linear infinite reverse"></div>
+          <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--sumire),#6D28D9);border:2px solid rgba(139,92,246,0.15);display:flex;align-items:center;justify-content:center;font-size:24px;color:rgba(255,255,255,0.85);box-shadow:0 0 24px rgba(139,92,246,0.12);position:relative;z-index:1">先</div>
+        </div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:2px">Sensei</div>
+        <div style="font-size:8px;color:var(--hisui);letter-spacing:1.5px;display:flex;align-items:center;justify-content:center;gap:4px"><span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--hisui);box-shadow:0 0 6px rgba(56,180,139,0.3)"></span>Online · Ready to guide</div>
+      </div>
+    </div>
+    <div class="section anim d3">
+      <div class="gem-grid" style="padding:0 20px">
+        <div class="gem gem-red"><span>⚡</span> Workout Tip</div>
+        <div class="gem gem-purple"><span>📐</span> Form Check</div>
+        <div class="gem gem-gold"><span>🔥</span> Motivation</div>
+        <div class="gem gem-green"><span>📜</span> Warrior Wisdom</div>
+      </div>
+    </div>
+    <div class="section anim d4">
+      <div class="card" style="padding:14px;display:flex;flex-direction:column">
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px">
+          <div class="chat-bubble chat-sensei">Welcome back, warrior. Ready to forge your spirit today?</div>
+          <div class="chat-bubble chat-user" style="align-self:flex-end">I am. What's today's focus?</div>
+          <div class="chat-bubble chat-sensei">Today we target the lower fortress — 100 squats, 50 lunges, 3x30s wall sit. Your legs are the root of your power.</div>
+        </div>
+        <div class="chat-input">
+          <input type="text" placeholder="Speak to Sensei..." value="Show me a warrior quote">
+          <button class="chat-send">→</button>
+        </div>
+      </div>
+    </div>
+    <div class="section anim d5">
+      <div style="padding:0 20px">
+        <div class="section-label" style="color:rgba(139,92,246,0.3);margin-bottom:8px">OFFLINE WISDOM</div>
+        <div class="card" style="padding:12px 14px;opacity:0.6">
+          <div style="font-size:10px;font-style:italic;color:rgba(245,240,232,0.3);line-height:1.5">"The warrior who values their life will die. The warrior who casts it away will live. There is no second chance."</div>
+          <div style="font-size:7px;color:rgba(245,240,232,0.1);margin-top:4px">— Miyamoto Musashi</div>
+        </div>
+      </div>
+    </div>
+    <div class="sg"></div>
+  </div>
+
+  <!-- ===== TAB BAR ===== -->
+  <div class="tab-bar" id="tabbar" style="display:none">
+    <button class="tab-item active" onclick="switchTab('home',this)"><span class="tab-kanji" style="color:var(--akane)">家</span><span class="tab-label" style="color:rgba(245,240,232,0.5)">Home</span><div class="tab-dot" style="background:var(--akane);box-shadow:0 0 6px rgba(200,16,46,0.4)"></div></button>
+    <button class="tab-item inactive" onclick="switchTab('train',this)"><span class="tab-kanji">武</span><span class="tab-label">Train</span><div class="tab-dot"></div></button>
+    <button class="tab-item inactive" onclick="switchTab('dojo',this)"><span class="tab-kanji">道</span><span class="tab-label">Dojo</span><div class="tab-dot"></div></button>
+    <button class="tab-item inactive" onclick="switchTab('evolve',this)"><span class="tab-kanji">昇</span><span class="tab-label">Evolve</span><div class="tab-dot"></div></button>
+    <button class="tab-item inactive" onclick="switchTab('soul',this)"><span class="tab-kanji">魂</span><span class="tab-label">Soul</span><div class="tab-dot"></div></button>
+    <button class="tab-item inactive" onclick="switchTab('sensei',this)"><span class="tab-kanji">先</span><span class="tab-label">Sensei</span><div class="tab-dot"></div></button>
+  </div>
+
+</div></div>
+
+<script>
+function enterApp(){
+  document.getElementById('landing').classList.add('hidden');
+  document.getElementById('tabbar').style.display = 'flex';
+  document.getElementById('home').classList.add('active');
+}
+function switchTab(id, btn){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-item').forEach(t => {
+    t.className = 'tab-item inactive';
+    t.querySelector('.tab-kanji').style.color = '';
+    t.querySelector('.tab-label').style.color = '';
+    t.querySelector('.tab-dot').style.cssText = '';
+  });
+  btn.className = 'tab-item active';
+  btn.querySelector('.tab-kanji').style.color = 'var(--akane)';
+  btn.querySelector('.tab-label').style.color = 'rgba(245,240,232,0.5)';
+  btn.querySelector('.tab-dot').style.cssText = 'background:var(--akane);box-shadow:0 0 6px rgba(200,16,46,0.4)';
+  document.querySelectorAll('.screen').forEach(s => s.scrollTop = 0);
+}
+function switchTrainTab(tab, btn){
+  document.querySelectorAll('.section-tab').forEach(t => {t.className='section-tab inactive'});
+  btn.className = 'section-tab active';
+  document.getElementById('train-programs').className = 'program-view' + (tab==='programs'?' active':'');
+  document.getElementById('train-diet').className = 'diet-view' + (tab==='diet'?' active':'');
+}
+// Landing tap anywhere
+document.getElementById('landing').addEventListener('click', function(e){
+  if(e.target.tagName!=='BUTTON') enterApp();
+});
+</script>
+
+<div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:20px;max-width:390px">
+  <div style="padding:16px;background:rgba(255,255,255,0.02);border-radius:14px;border:1px solid rgba(255,255,255,0.04);font-size:10px;color:rgba(255,255,255,0.2);line-height:1.6">
+    <strong style="color:rgba(255,255,255,0.35)">🎯 KAGE Premium V2 · 7 Screens</strong><br><br>
+    <strong style="color:var(--akane)">Landing</strong> — Cinematic video hero with vegabond.mp4<br>
+    <strong style="color:var(--akane)">Home (家)</strong> — Flame orb, bento KPIs, Sensei hologram, pact partner, week<br>
+    <strong style="color:var(--akane)">Train (武)</strong> — Equipment + Zero-equipment programs side by side + Diet view<br>
+    <strong style="color:var(--akane)">Dojo (道)</strong> — Battle Cry, active pacts, squad leaderboard, forge pact<br>
+    <strong style="color:var(--akane)">Evolve (昇)</strong> — Rank, hexagon chart, achievements, season track<br>
+    <strong style="color:var(--akane)">Soul (魂)</strong> — Profile, stats bento, PRs, settings<br>
+    <strong style="color:var(--akane)">Sensei (先)</strong> — Hologram avatar, gem actions, chat, offline wisdom<br><br>
+    <span style="color:rgba(255,255,255,0.1)">Design: 12-color Japanese palette · 3D depth · Glassmorphism · Floating kanji · Particles · Micro-animations</span>
+  </div>
+</div>
+
+</body>
+</html>

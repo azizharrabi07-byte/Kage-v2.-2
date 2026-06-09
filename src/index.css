@@ -1,1 +1,112 @@
 @import "tailwindcss";
+
+/* ===== KAGE Premium Design Tokens ===== */
+:root {
+  --kage-void: #0B0B10;
+  --kage-sumi: #1A1A24;
+  --kage-kachi: #252530;
+  --kage-crimson: #E31E24;
+  --kage-neon: #22D3EE;
+  --kage-gold: #C9A84C;
+  --kage-amber: #F2C94C;
+  --kage-parchment: #EAE4D7;
+  --kage-glass: rgba(255, 255, 255, 0.04);
+  --kage-glass-hover: rgba(255, 255, 255, 0.08);
+}
+
+/* ===== Glass Morphism Utilities ===== */
+.glass {
+  background: rgba(26, 26, 36, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== 3D Depth ===== */
+.depth-3d-card {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.depth-perspective {
+  perspective: 1000px;
+}
+
+/* ===== Glow Effects ===== */
+.glow-crimson {
+  box-shadow: 0 0 20px rgba(227, 30, 36, 0.3), 0 0 40px rgba(227, 30, 36, 0.1);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.3), 0 0 40px rgba(34, 211, 238, 0.1);
+}
+
+.glow-gold {
+  box-shadow: 0 0 20px rgba(201, 168, 76, 0.3), 0 0 40px rgba(201, 168, 76, 0.1);
+}
+
+/* ===== Gold Shimmer ===== */
+.gold-shimmer-btn {
+  background: linear-gradient(135deg, #C9A84C, #F2C94C, #C9A84C);
+  background-size: 200% 200%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ===== Premium Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--kage-crimson);
+  border-radius: 10px;
+}
+
+/* ===== Hide Scrollbar Utility ===== */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===== Text Glow ===== */
+.text-glow-crimson {
+  text-shadow: 0 0 10px rgba(227, 30, 36, 0.5), 0 0 20px rgba(227, 30, 36, 0.3);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.5), 0 0 20px rgba(34, 211, 238, 0.3);
+}
+
+/* ===== Skeleton / Loading ===== */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--kage-kachi) 25%, var(--kage-sumi) 50%, var(--kage-kachi) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* ===== Particle Dots Background ===== */
+.particles-bg {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+}

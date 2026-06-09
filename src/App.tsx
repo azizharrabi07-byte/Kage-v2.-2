@@ -38,6 +38,13 @@ import { IMAGES } from './assets';
 import { KageAudio } from './audio';
 import { TabName, WorkoutProgram, Meal, Pact, LeaderboardUser, ChatMessage, Achievement } from './types';
 import ThreeDCard from './components/ThreeDCard';
+import TiltCard3D from './components/TiltCard3D';
+import CinematicTransition, { StaggerList, StaggerItem } from './components/CinematicTransition';
+import { EnergySphereScene } from './components/FloatingEnergySphere';
+import { ProgramCard, ProgramDetailBoard } from './components/ProgramBoard';
+import StatsBoard from './components/StatsBoard';
+import LeaderboardBoard from './components/LeaderboardBoard';
+import ParallaxHero from './components/ParallaxHero';
 import { auth, db, handleFirestoreError, OperationType } from './firebase';
 import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged, User as FirebaseUser, signOut } from 'firebase/auth';
 import { doc, getDoc, setDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
@@ -502,6 +509,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-void text-light flex flex-col items-center justify-center p-0 md:p-6 transition-colors selection:bg-neon-crimson selection:text-white">
+      {/* 3D Energy Sphere Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none opacity-30">
+        <EnergySphereScene />
+      </div>
       {/* Dynamic Background Image & Atmospheric Grid */}
       <div 
         className="fixed inset-0 pointer-events-none z-0 opacity-40 bg-cover bg-center bg-no-repeat"
@@ -1094,63 +1105,14 @@ export default function App() {
                   {MOCK_PROGRAMS
                     .filter(p => trainingSubTab === 'eq' ? p.equipmentNeeded : !p.equipmentNeeded)
                     .map(prog => (
-                      <ThreeDCard 
+                      <ProgramCard
                         key={prog.id}
-                        glowColor={selectedProgram?.id === prog.id ? "rgba(255, 59, 48, 0.4)" : "rgba(255, 255, 255, 0.05)"}
-                        onClick={() => {
+                        program={prog}
+                        onSelect={(p) => {
                           soundSafe('tap');
-                          setSelectedProgram(selectedProgram?.id === prog.id ? null : prog);
+                          setSelectedProgram(p);
                         }}
-                        className={`border rounded-xl cursor-pointer transition-all ${selectedProgram?.id === prog.id ? 'bg-gradient-to-br from-indigo/30 via-kachi to-kachi border-rose-500/40' : 'bg-kachi/40 border-white/5'}`}
-                      >
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <span className="font-kanji font-black text-rose-500 text-sm bg-rose-500/10 px-1.5 py-0.5 rounded border border-rose-500/20">{prog.nameKanji}</span>
-                              <h4 className="font-bold text-sm text-white tracking-wider">{prog.nameEnglish}</h4>
-                            </div>
-                            <p className="text-[11px] text-[#8E9EAF] mt-1.5 line-clamp-2">{prog.description}</p>
-                          </div>
-                          
-                          <div className="text-right">
-                            <div className="flex text-rose-500 mb-1">
-                              {Array.from({ length: 5 }).map((_, i) => (
-                                <span key={i} className="text-xs">{i < prog.difficulty ? '⚔️' : '◯'}</span>
-                              ))}
-                            </div>
-                            <span className="text-[10px] font-mono text-zinc-500 whitespace-nowrap">{prog.duration} • {prog.workoutCount} Days</span>
-                          </div>
-                        </div>
-
-                        {selectedProgram?.id === prog.id && (
-                          <div className="mt-4 pt-4 border-t border-white/5 space-y-3 animate-fadeIn">
-                            <p className="text-xs font-mono text-rose-400 uppercase tracking-widest">TACTICAL PROTOCOLS:</p>
-                            <ul className="text-xs font-mono text-zinc-300 space-y-1.5">
-                              {prog.moves.map((move, i) => (
-                                <li key={i} className="flex flex-col gap-1.5 p-2 rounded-lg border border-white/5 bg-void/30">
-                                  <div className="flex items-center gap-2">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-                                    <span>{move.name}</span>
-                                  </div>
-                                  <div className="w-full h-16 bg-cover bg-center rounded opacity-80" style={{ backgroundImage: `url(${move.image})` }}></div>
-                                </li>
-                              ))}
-                            </ul>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                soundSafe('clash');
-                                setActiveRunningProgram(prog);
-                                setRunningTimer(0);
-                                setIsRunning(true);
-                              }}
-                              className="w-full text-center py-2 bg-rose-500 hover:bg-rose-600 rounded-lg text-white font-mono font-bold text-xs tracking-wider transition-colors cursor-pointer"
-                            >
-                              INITIATE RUNNING TIMER NOW
-                            </button>
-                          </div>
-                        )}
-                      </ThreeDCard>
+                      />
                     ))}
                 </div>
               </div>
@@ -1451,35 +1413,7 @@ export default function App() {
                   <p className="text-xs font-mono text-[#8E9EAF] uppercase tracking-wide">LEADERBOARD_INDEX (TOP 10)</p>
                   <span className="text-[9px] text-[#2D9C6E] font-mono">STATUS: CALCULATED LIVE</span>
                 </div>
-
-                <div className="bg-kachi/40 rounded-xl overflow-hidden border border-white/5 divide-y divide-white/5">
-                  {leaderboard.map((user) => (
-                    <div 
-                      key={user.rank}
-                      className={`p-3 flex items-center justify-between transition-all ${user.isCurrentUser ? 'bg-rose-500/15 border-y border-rose-500/30' : 'hover:bg-kachi/60'}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className={`w-5 text-center text-xs font-mono font-bold ${user.rank === 1 ? 'text-kin' : user.rank === 2 ? 'text-zinc-300' : user.rank === 3 ? 'text-amber-600' : 'text-zinc-500'}`}>
-                          #{user.rank}
-                        </span>
-                        <span className="text-xl bg-void w-8 h-8 rounded-full flex items-center justify-center border border-white/5">{user.avatar}</span>
-                        <div>
-                          <p className={`text-xs font-semibold ${user.isCurrentUser ? 'text-rose-400 font-extrabold' : 'text-zinc-200'}`}>
-                            {user.name}
-                          </p>
-                          <p className="text-[9px] text-zinc-500 font-mono">LVL {user.level} • {user.streak}D STREAK</p>
-                        </div>
-                      </div>
-
-                      <div className="text-right flex items-center gap-2">
-                        <span className="text-xs font-mono font-extrabold text-[#F2C94C]">{user.honorPoints} HP</span>
-                        {user.isCurrentUser && (
-                          <div className="w-2 h-2 rounded-full bg-rose-500 animate-ping" />
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <LeaderboardBoard data={leaderboard} />
               </div>
 
             </motion.div>
@@ -1674,110 +1608,7 @@ export default function App() {
                 </div>
 
                 <div className="bg-kachi/40 rounded-2xl border border-white/10 p-5 flex flex-col items-center">
-                  {/* Custom Calculated Radar Graph using Simple Inline SVG elements */}
-                  <div className="relative w-48 h-48">
-                    {/* SVG Center at 96, 96 */}
-                    <svg className="w-full h-full" viewBox="0 0 192 192">
-                      {/* Hex/Web grids at 100%, 75%, 50%, 25% radius (Max Radius 80) */}
-                      {[80, 60, 40, 20].map((r, ri) => {
-                        const pointsStr = Array.from({ length: 5 }).map((_, i) => {
-                          const angle = (i * 72 - 90) * Math.PI / 180;
-                          return `${96 + r * Math.cos(angle)},${96 + r * Math.sin(angle)}`;
-                        }).join(' ');
-                        return (
-                          <polygon 
-                            key={ri}
-                            points={pointsStr} 
-                            className="fill-none stroke-zinc-800" 
-                            strokeWidth="1"
-                          />
-                        );
-                      })}
-
-                      {/* Web Hub Center Axes Lines */}
-                      {Array.from({ length: 5 }).map((_, i) => {
-                        const angle = (i * 72 - 90) * Math.PI / 180;
-                        return (
-                          <line 
-                            key={i}
-                            x1="96" 
-                            y1="96" 
-                            x2={96 + 80 * Math.cos(angle)} 
-                            y2={96 + 80 * Math.sin(angle)} 
-                            className="stroke-zinc-800" 
-                            strokeWidth="1"
-                          />
-                        );
-                      })}
-
-                      {/* The Current User Capability Plot polygon */}
-                      {(() => {
-                        const vals = [stats.Strength, stats.Speed, stats.Spirit, stats.Focus, stats.Endurance];
-                        const pointsStr = vals.map((val, i) => {
-                          const r = (val / 100) * 80;
-                          const angle = (i * 72 - 90) * Math.PI / 180;
-                          return `${96 + r * Math.cos(angle)},${96 + r * Math.sin(angle)}`;
-                        }).join(' ');
-
-                        return (
-                          <>
-                            <polygon 
-                              points={pointsStr} 
-                              className="fill-rose-500/30 stroke-neon-crimson" 
-                              strokeWidth="2" 
-                              strokeLinejoin="round"
-                            />
-                            {/* Accent coordinate beads */}
-                            {vals.map((val, i) => {
-                              const r = (val / 100) * 80;
-                              const angle = (i * 72 - 90) * Math.PI / 180;
-                              return (
-                                <circle 
-                                  key={i}
-                                  cx={96 + r * Math.cos(angle)} 
-                                  cy={96 + r * Math.sin(angle)} 
-                                  r="3.5" 
-                                  className="fill-white stroke-neon-crimson" 
-                                  strokeWidth="1.5"
-                                />
-                              );
-                            })}
-                          </>
-                        );
-                      })()}
-                    </svg>
-
-                    {/* Simple absolute axis labels */}
-                    <span className="absolute top-0 left-1/2 -translate-x-1/2 text-[8px] font-mono text-zinc-400 font-bold uppercase">STR ({stats.Strength})</span>
-                    <span className="absolute top-1/4 right-0 text-[8px] font-mono text-zinc-400 font-bold uppercase">SPD ({stats.Speed})</span>
-                    <span className="absolute bottom-4 right-1 text-[8px] font-mono text-[#F2C94C] font-bold uppercase">SPI ({stats.Spirit})</span>
-                    <span className="absolute bottom-4 left-1 text-[8px] font-mono text-zinc-400 font-bold uppercase">FOC ({stats.Focus})</span>
-                    <span className="absolute top-1/4 left-0 text-[8px] font-mono text-zinc-400 font-bold uppercase">END ({stats.Endurance})</span>
-                  </div>
-
-                  {/* Under table view */}
-                  <div className="grid grid-cols-5 gap-1.5 w-full text-center mt-5">
-                    <div className="bg-void p-1.5 rounded border border-white/5">
-                      <p className="text-[10px] font-bold text-white">{stats.Strength}</p>
-                      <span className="text-[7px] font-mono text-zinc-500 uppercase block">STR</span>
-                    </div>
-                    <div className="bg-void p-1.5 rounded border border-white/5">
-                      <p className="text-[10px] font-bold text-white">{stats.Speed}</p>
-                      <span className="text-[7px] font-mono text-zinc-500 uppercase block">SPD</span>
-                    </div>
-                    <div className="bg-void p-1.5 rounded border border-white/5">
-                      <p className="text-[10px] font-bold text-white">{stats.Spirit}</p>
-                      <span className="text-[7px] font-mono text-[#F2C94C] uppercase block">SPI</span>
-                    </div>
-                    <div className="bg-void p-1.5 rounded border border-white/5">
-                      <p className="text-[10px] font-bold text-white">{stats.Focus}</p>
-                      <span className="text-[7px] font-mono text-zinc-500 uppercase block">FOC</span>
-                    </div>
-                    <div className="bg-void p-1.5 rounded border border-white/5">
-                      <p className="text-[10px] font-bold text-white">{stats.Endurance}</p>
-                      <span className="text-[7px] font-mono text-zinc-500 uppercase block">END</span>
-                    </div>
-                  </div>
+                  <StatsBoard stats={stats} />
                 </div>
               </div>
 
@@ -2367,12 +2198,23 @@ export default function App() {
       )}
 
 
+      {/* Program Detail Board Overlay */}
+      {selectedProgram && (
+        <ProgramDetailBoard
+          program={selectedProgram}
+          onClose={() => {
+            setSelectedProgram(null);
+            setActiveRunningProgram(selectedProgram);
+            setRunningTimer(0);
+            setIsRunning(true);
+          }}
+        />
+      )}
+
       {/* ========================================================================================= */}
       {/* ======================= ACTIVE RUNNING TIMER SCREEN OVERLAY ============================= */}
-      {/* ========================================================================================= */}
       {activeRunningProgram && (
         <div className="fixed inset-0 bg-void z-50 flex flex-col items-center justify-between p-6">
-          
           <div className="w-full max-w-sm flex justify-between items-center mt-4">
             <span className="px-2.5 py-1 bg-rose-500/10 border border-rose-500/20 text-rose-500 font-mono text-[9px] uppercase tracking-widest">RUNNING COMBAT TIMER</span>
             <button

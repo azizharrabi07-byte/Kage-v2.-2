@@ -45,6 +45,8 @@ import { ProgramCard, ProgramDetailBoard } from './components/ProgramBoard';
 import StatsBoard from './components/StatsBoard';
 import LeaderboardBoard from './components/LeaderboardBoard';
 import ParallaxHero from './components/ParallaxHero';
+import ErrorBoundary from './components/ErrorBoundary';
+import EpicLanding from './components/EpicLanding';
 import { auth, db, handleFirestoreError, OperationType } from './firebase';
 import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged, User as FirebaseUser, signOut } from 'firebase/auth';
 import { doc, getDoc, setDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
@@ -185,12 +187,8 @@ export default function App() {
   // Navigation State
   const [currentTab, setCurrentTab] = useState<TabName>('家');
 
-  // Aesthetic Landing Page Theme Selector (Red Sun cinematic dark vs. Cream Parchment Sumi-e)
-  const [landingTheme, setLandingTheme] = useState<'red-sun' | 'parchment'>('red-sun');
-
-  // Interactive full-resolution lightbox & details for design showcase
-  const [zoomedPhoto, setZoomedPhoto] = useState<'red-sun' | 'parchment' | null>(null);
-  const [activeBasicTab, setActiveBasicTab] = useState<number>(0);
+  const [landingTheme, setLandingTheme] = useState<'dark' | 'light'>('dark');
+  const isLight = landingTheme === 'light';
 
   // App core state
   const [streak, setStreak] = useState(15);
@@ -240,6 +238,7 @@ export default function App() {
   const [isOathOpen, setIsOathOpen] = useState(false);
   const [isPremiumOpen, setIsPremiumOpen] = useState(false);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const [zoomedPhoto, setZoomedPhoto] = useState<string | null>(null);
 
   // Forge code states
   const [forgeTab, setForgeTab] = useState<'create' | 'join'>('create');
@@ -475,588 +474,290 @@ export default function App() {
   };
 
   if (authLoading) {
-    return <div className="min-h-screen bg-void flex items-center justify-center"><div className="text-rose-500 animate-pulse font-mono tracking-widest text-sm">INITIALIZING KAGE...</div></div>;
+    return <div className="min-h-screen bg-[#0A0A0F] flex items-center justify-center"><div className="text-rose-500 animate-pulse font-mono tracking-widest text-sm">INITIALIZING KAGE...</div></div>;
   }
+
+  // Guest user for local development
+  const guestUser: FirebaseUser = {
+    uid: 'guest-001',
+    displayName: 'Guest Warrior',
+    email: 'guest@kage.dojo',
+    emailVerified: true,
+    isAnonymous: false,
+    photoURL: null,
+    phoneNumber: null,
+    providerData: [],
+    metadata: {} as any,
+    tenantId: null,
+    delete: async () => {},
+    getIdToken: async () => 'guest-token',
+    getIdTokenResult: async () => ({ token: 'guest-token', signInProvider: null, expirationTime: '', issuedAtTime: '', authTime: '', claims: {} }),
+    reload: async () => {},
+    toJSON: () => ({}),
+  } as FirebaseUser;
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-cover bg-center flex items-center justify-center p-6" style={{ backgroundImage: `url(${IMAGES.bgSamurai})` }}>
-        <div className="absolute inset-0 bg-void/60 backdrop-blur-sm" />
-        <div className="bg-sumi/80 backdrop-blur-md border border-white/10 p-8 rounded-3xl text-center max-w-sm w-full relative z-10 shadow-2xl">
-          <h1 className="font-kanji font-black text-6xl text-rose-500 mb-2 drop-shadow-[0_0_15px_rgba(227,30,36,0.5)]">影</h1>
-          <h2 className="font-mono text-xl tracking-widest text-white mb-2">KAGE DOJO</h2>
-          <p className="text-xs text-zinc-400 font-mono mb-8">VERIFY YOUR SPIRIT</p>
-          <button 
-            onClick={async () => {
-              try {
-                await signInWithPopup(auth, new GoogleAuthProvider());
-              } catch (err: any) {
-                if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
-                  console.log('Login cancelled by user.');
-                } else {
-                  console.error('Login error:', err);
-                }
-              }
-            }}
-            className="w-full py-4 rounded-xl font-bold font-mono text-white bg-rose-600 hover:bg-rose-500 transition-colors shadow-[0_5px_15px_rgba(255,59,48,0.3)] hover:shadow-[0_8px_25px_rgba(255,59,48,0.6)]"
-          >
-            ENTER DOJO (GOOGLE)
-          </button>
-        </div>
-      </div>
+      <EpicLanding
+        onGoogleLogin={async () => {
+          try {
+            await signInWithPopup(auth, new GoogleAuthProvider());
+          } catch (err: any) {
+            if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
+              console.log('Login cancelled by user.');
+            } else {
+              console.error('Login error:', err);
+            }
+          }
+        }}
+        onGuestLogin={() => setUser(guestUser)}
+      />
     );
   }
 
   return (
-    <div className="min-h-screen bg-void text-light flex flex-col items-center justify-center p-0 md:p-6 transition-colors selection:bg-neon-crimson selection:text-white">
+    <ErrorBoundary>
+    <div className={`min-h-screen flex flex-col transition-all duration-500 selection:bg-rose-500/30 selection:text-white ${
+      isLight ? 'bg-stone-100 text-stone-900' : 'bg-[#0A0A0F] text-zinc-200'
+    }`}>
       {/* 3D Energy Sphere Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none opacity-30">
-        <EnergySphereScene />
+      <div className={`fixed inset-0 pointer-events-none transition-opacity duration-500 ${
+        isLight ? 'opacity-30 mix-blend-multiply' : 'opacity-70 mix-blend-screen'
+      }`}>
+        <ErrorBoundary>
+          <EnergySphereScene isLight={isLight} />
+        </ErrorBoundary>
       </div>
-      {/* Dynamic Background Image & Atmospheric Grid */}
-      <div 
-        className="fixed inset-0 pointer-events-none z-0 opacity-40 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${IMAGES.bgSamurai})` }}
-      />
-      <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_50%_40%,rgba(11,11,16,0.3),rgba(11,11,16,1)_100%)]" />
-      <div className="fixed inset-0 pointer-events-none z-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:32px_32px]" />
+      {/* DIAGNOSTIC - remove after fixing */}
+      <div className="fixed top-0 left-0 z-[99999] bg-rose-600 text-white text-[8px] font-mono px-2 py-0.5">KAGE APP MOUNTED</div>
+      <div className={`fixed inset-0 pointer-events-none transition-opacity duration-500 ${isLight ? 'bg-gradient-to-b from-stone-100/80 via-stone-100/50 to-stone-100' : 'bg-gradient-to-b from-transparent via-[#0A0A0F]/30 to-[#0A0A0F]/80'}`} />
+      <div className={`fixed inset-0 pointer-events-none transition-opacity duration-500 ${isLight ? 'opacity-[0.02]' : 'opacity-[0.03]'} bg-[linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] bg-[size:48px_48px]`} />
 
-      {/* Header Info (Mute Toggle / Top Status) */}
-      <header className="fixed top-4 left-4 right-4 z-50 flex justify-between items-center pointer-events-auto max-w-4xl mx-auto px-4 mix-blend-difference">
+      {/* Header */}
+      <header className={`fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-5 py-3 transition-colors duration-500 ${
+        isLight ? 'bg-stone-100/80 backdrop-blur-sm border-b border-stone-200' : 'bg-[#0A0A0F]/80 backdrop-blur-sm border-b border-zinc-800/50'
+      }`}>
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-neon-crimson animate-pulse" />
-          <span className="text-xs font-mono tracking-widest text-[#8E9EAF]">DOJO_STATUS: ONLINE</span>
+          <div className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+          <span className={`text-xs font-mono tracking-widest ${isLight ? 'text-stone-500' : 'text-zinc-400'}`}>DOJO ACTIVE</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <button 
             onClick={() => signOut(auth)}
-            className="text-[10px] font-mono border border-neon-crimson/50 text-neon-crimson px-2 py-1 rounded hover:bg-neon-crimson hover:text-white transition-colors uppercase tracking-widest"
+            className={`text-[10px] font-mono border px-2 py-1 rounded transition-colors ${
+              isLight ? 'border-stone-300 text-stone-500 hover:bg-stone-200' : 'border-zinc-700 text-zinc-400 hover:bg-zinc-800'
+            }`}
           >
             LOGOUT
           </button>
           <button 
-            id="audio-synth-btn"
-            onClick={() => {
-              setIsMuted(!isMuted);
-              if (isMuted) {
-                // Instantly play a tiny confirmation hum
-                KageAudio.playZenHum();
-              }
-            }}
-            className="p-2 rounded-full bg-kachi/50 hover:bg-neon-crimson/10 border border-white/10 hover:border-neon-crimson/30 transition-all flex items-center justify-center cursor-pointer"
-            title="Toggle synthesized SFX"
+            onClick={() => { setIsMuted(!isMuted); if (isMuted) KageAudio.playZenHum(); }}
+            className={`p-1.5 rounded-lg transition-all ${
+              isLight ? 'bg-stone-200 hover:bg-stone-300' : 'bg-zinc-800/50 hover:bg-zinc-700/50'
+            }`}
           >
-            <Volume2 className={`w-4 h-4 transition-colors ${isMuted ? 'text-zinc-600' : 'text-neon-crimson'}`} />
+            <Volume2 className={`w-4 h-4 ${isMuted ? (isLight ? 'text-stone-400' : 'text-zinc-600') : (isLight ? 'text-stone-700' : 'text-zinc-300')}`} />
           </button>
         </div>
       </header>
 
-      {/* Mobile Device Frame Mockup to guarantee a highly-polished, consistent screen layout constraint */}
-      <div className="relative w-full max-w-[430px]-disabled md:w-[410px] md:h-[840px] bg-lacquer-black rounded-[48px] border-4 border-kachi/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_rgba(255,59,48,0.1)] overflow-hidden z-10 flex flex-col select-none">
+      {/* Main Content Container */}
+      <div className="relative w-full max-w-xl mx-auto min-h-screen z-10 flex flex-col select-none">
         
-        {/* Device Ear Speaker / Camera Cutout */}
-        <div className="hidden md:flex absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-lacquer-black rounded-b-3xl z-40 justify-center items-center">
-          <div className="w-12 h-1 bg-zinc-800 rounded-full" />
-          <div className="w-2.5 h-2.5 bg-zinc-900 rounded-full border border-zinc-800 ml-4" />
-        </div>
-
         {/* Screen/Tab Canvas */}
         <div 
           onMouseMove={handleGlobalMouseMove}
           onMouseLeave={handleGlobalMouseLeave}
-          className={`flex-1 overflow-x-hidden overflow-y-auto no-scrollbar pt-6 md:pt-10 pb-20 px-4 relative z-25 flex flex-col transition-all duration-500 ease-in-out ${
-          landingTheme === 'parchment' && currentTab === '家'
-            ? 'bg-[#EAE4D7] text-stone-900 shadow-inner'
-            : 'bg-[#050505] text-white'
-        }`}>
+          className={`flex-1 overflow-x-hidden overflow-y-auto no-scrollbar pt-16 pb-20 px-5 relative z-25 flex flex-col transition-all duration-500 ease-in-out ${
+            isLight ? 'bg-stone-100/60 text-stone-800' : 'bg-[#0A0A0F]/80 text-zinc-200'
+          }`}>
           <AnimatePresence mode="wait">
           {/* ======================= TAB 1: HOME (家) ======================= */}
           {currentTab === '家' && (
-            <motion.div key="tab-home" initial={{ opacity: 0, x: -20, filter: 'blur(5px)' }} animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, x: 20, filter: 'blur(5px)' }} transition={{ duration: 0.4, ease: "easeOut" }} className="space-y-6 flex-1 flex flex-col justify-start relative">
+            <motion.div key="tab-home" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="space-y-5 flex-1 flex flex-col relative">
               
-              {/* HUGE FULL-BLEED DESIGN HERO FROM THE ACTUAL UPLOADED PHOTOS */}
-              <div className="absolute inset-x-[-16px] top-[-24px] md:top-[-40px] pointer-events-none select-none z-0 overflow-hidden h-[500px]">
-                {landingTheme === 'parchment' ? (
-                  <>
-                    <motion.img 
-                      src={IMAGES.warriorHelmet} 
-                      className="w-full h-full object-cover object-top shadow-inner brightness-105 contrast-125" 
-                      style={{ scale: imageScale, x: xTransform, y: yTransform }}
-                      alt="Miyamoto Musashi Poster" 
-                    />
-                    {/* Subtle fade so the UI cards below read clearly */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#EAE4D7]/40 to-[#EAE4D7]" />
-                  </>
-                ) : (
-                  <>
-                    <motion.img 
-                      src={IMAGES.bgSamurai} 
-                      className="w-full h-full object-cover object-top filter contrast-[1.1] saturate-150" 
-                      style={{ scale: imageScale, x: xTransform, y: yTransform }}
-                      alt="Cyber Kage Samurai" 
-                    />
-                    {/* Dark gradient fade for the deep void look */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-void/50 to-void pt-20" />
-                  </>
-                )}
-              </div>
-
-              {/* Premium Design Showroom Pill Toggle - Positioned over the hero image */}
-              <motion.div style={{ x: floatX, y: floatY }} className="flex justify-center z-30 pointer-events-auto relative mt-2">
-                <div className="bg-neutral-900/40 border border-white/5 p-1 rounded-full flex gap-1 text-[10px] font-mono shadow-lg backdrop-blur-md">
-                  <button
-                    onClick={() => {
-                      soundSafe('tap');
-                      setLandingTheme('red-sun');
-                    }}
-                    className={`px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 font-bold ${
-                      landingTheme === 'red-sun'
-                        ? 'bg-rose-600/60 text-white border border-rose-500/50 shadow-[0_0_12px_rgba(255,59,48,0.4)]'
-                        : 'text-zinc-400 hover:text-white border border-transparent'
-                    }`}
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-                    影 PROJECT RED SUN
-                  </button>
-                  <button
-                    onClick={() => {
-                      soundSafe('tap');
-                      setLandingTheme('parchment');
-                    }}
-                    className={`px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 font-bold ${
-                      landingTheme === 'parchment'
-                        ? 'bg-stone-800/80 text-[#EAE4D7] border border-stone-800 shadow-[0_2px_6px_rgba(0,0,0,0.5)]'
-                        : 'text-zinc-400 hover:text-white border border-transparent'
-                    }`}
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-slate-300/80" />
-                    墨 PARCHMENT SUMI-E
-                  </button>
-                </div>
-              </motion.div>
-
-              {/* KAGE Logotype over the image */}
-              <motion.div 
-                style={{ x: floatX, y: floatY }} 
-                className="text-center py-4 flex flex-col items-center pointer-events-auto z-10 mt-[120px]"
-                onClick={() => soundSafe('tap')}
-              >
-                <div className="flex items-center gap-2 mb-2 bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
-                  <span className={`font-kanji font-black text-xs tracking-widest ${landingTheme === 'parchment' ? 'text-rose-400' : 'text-rose-500'}`}>家庭</span>
-                  <div className={`w-1 h-1 rounded-full ${landingTheme === 'parchment' ? 'bg-rose-400' : 'bg-rose-500'}`} />
-                  <span className={`text-[9px] tracking-widest font-mono uppercase text-white/80`}>V2 PREMIUM DOJO</span>
-                </div>
-              </motion.div>
-
-              {/* STREAK FLAME BANNER (Pushed down below the main hero visual) */}
-              <div className="relative z-10 mt-[80px] space-y-4">
-                <ThreeDCard 
-                  isLight={landingTheme === 'parchment'}
-                  glowColor="rgba(232, 122, 93, 0.3)" 
-                  className={`relative overflow-hidden flex items-center justify-between pointer-events-auto transition-all ${
-                    landingTheme === 'parchment' 
-                      ? 'bg-[#E5DFD0] border-stone-300' 
-                      : 'bg-gradient-to-br from-sumi via-kachi to-void'
-                  }`}
-                  onClick={() => {
-                    soundSafe('tap');
-                    syncStreak(streak + 1);
-                  }}
-                >
-                <div className="z-10">
-                  <div className="flex items-center gap-2">
-                    <span className={`text-[10px] uppercase font-mono tracking-wider ${landingTheme === 'parchment' ? 'text-rose-800' : 'text-rose-400'}`}>WARRIOR'S FIRE</span>
-                    <span className={`px-1.5 py-0.5 rounded text-[9px] font-mono ${
-                      landingTheme === 'parchment' 
-                        ? 'bg-rose-700/10 border border-rose-700/20 text-rose-800' 
-                        : 'bg-orange-500/10 border border-orange-500/20 text-orange-400'
-                    }`}>ACTIVE STATE</span>
-                  </div>
-                  <div className="flex items-baseline gap-1 mt-1">
-                    <span className={`text-4xl font-extrabold text-transparent bg-clip-text ${
-                      landingTheme === 'parchment'
-                        ? 'bg-gradient-to-r from-stone-900 to-rose-700'
-                        : 'bg-gradient-to-r from-orange-400 via-sunset to-rose-500'
-                    }`}>{streak}</span>
-                    <span className={`text-xs font-semibold font-kanji ${landingTheme === 'parchment' ? 'text-stone-600' : 'text-zinc-400'}`}>DAYS</span>
-                  </div>
-                  <p className={`text-[11px] mt-1 ${landingTheme === 'parchment' ? 'text-stone-600' : 'text-[#8E9EAF]'}`}>Tap the card to feed fuel to your inner furnace.</p>
-                </div>
-                {/* Floating animated fire component */}
-                <div className="relative w-16 h-16 flex items-center justify-center z-10">
-                  <div className={`absolute inset-0 rounded-full blur-xl ${landingTheme === 'parchment' ? 'bg-rose-500/10' : 'bg-sunset/20 animate-pulse'}`} />
-                  <Flame className={`w-10 h-10 animate-bounce ${
-                    landingTheme === 'parchment' ? 'text-rose-700 fill-rose-600 drop-shadow-[0_2px_8px_rgba(193,39,45,0.4)]' : 'text-rose-500 fill-sunset drop-shadow-[0_0_12px_rgba(255,90,50,0.8)]'
-                  }`} />
-                  {/* Small particle sparks */}
-                  <div className="absolute top-2 left-4 w-1 h-1 rounded-full bg-rose-400 animate-ping" />
-                  <div className="absolute bottom-1 right-5 w-1 h-1 rounded-full bg-rose-700 animate-ping" />
-                </div>
-              </ThreeDCard>
-
-              {/* QUICK START GIANT BUTTON */}
-              <div className="pointer-events-auto z-10">
-                <button
-                  id="begin-training-btn"
-                  onClick={() => {
-                    soundSafe('clash');
-                    setActiveRunningProgram(MOCK_PROGRAMS[0]);
-                    setRunningTimer(0);
-                    setIsRunning(true);
-                  }}
-                  className={`w-full py-5 rounded-xl font-bold font-mono tracking-widest text-md transform active:scale-95 transition-all flex items-center justify-center gap-3 cursor-pointer ${
-                    landingTheme === 'parchment'
-                      ? 'bg-stone-900 text-[#EAE4D7] border border-stone-800 hover:bg-stone-800 shadow-md'
-                      : 'neon-shimmer-btn text-white border-rose-500/30 shadow-[0_5px_15px_rgba(255,59,48,0.4)] hover:shadow-[0_8px_25px_rgba(255,59,48,0.7)]'
-                  }`}
-                >
-                  <Swords className="w-5 h-5 text-white animate-spin" />
-                  BEGIN TRAINING
-                </button>
-                <div className="text-center mt-2 animate-pulse">
-                  <span className={`text-[10px] font-mono uppercase tracking-widest ${landingTheme === 'parchment' ? 'text-stone-600' : 'text-[#8E9EAF]'}`}>
-                    TODAY'S ORDER: 鉄体 IRON PHYSICAL (45 MIN)
-                  </span>
+              {/* Theme Toggle */}
+              <div className="flex justify-center">
+                <div className={`inline-flex p-0.5 rounded-full transition-colors ${
+                  isLight ? 'bg-stone-200' : 'bg-zinc-800/60'
+                }`}>
+                  <button onClick={() => setLandingTheme('dark')} className={`px-3 py-1 rounded-full text-[10px] font-mono tracking-wider transition-all ${!isLight ? 'bg-rose-600 text-white shadow' : 'text-stone-500 hover:text-stone-800'}`}>DARK</button>
+                  <button onClick={() => setLandingTheme('light')} className={`px-3 py-1 rounded-full text-[10px] font-mono tracking-wider transition-all ${isLight ? 'bg-amber-600 text-white shadow' : 'text-stone-500 hover:text-stone-800'}`}>LIGHT</button>
                 </div>
               </div>
 
-              {/* EXCITING ROW: WARRIOR PACT & STATUS BADGES */}
-              <div className="grid grid-cols-2 gap-3 pointer-events-auto z-10">
-                <ThreeDCard 
-                  isLight={landingTheme === 'parchment'}
-                  glowColor="rgba(45, 156, 110, 0.2)"
-                  onClick={() => setIsPartnerProfileOpen(true)}
-                  className={landingTheme === 'parchment' ? 'bg-[#E5DFD0]' : 'bg-sumi'}
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <span className={`text-[10px] font-mono uppercase ${landingTheme === 'parchment' ? 'text-stone-600' : 'text-zinc-500'}`}>BLOOD PACT</span>
-                    {pactData.shieldIntact ? (
-                      <Shield className={`w-4 h-4 ${landingTheme === 'parchment' ? 'text-emerald-700 fill-emerald-700/10' : 'text-hisui fill-hisui/10'}`} />
-                    ) : (
-                      <ShieldAlert className="w-4 h-4 text-shu animate-pulse" />
-                    )}
+              {/* Hero Image */}
+              <div className="relative w-full h-52 rounded-2xl overflow-hidden shadow-lg">
+                <motion.img 
+                  src={IMAGES.bgSamurai} 
+                  className="w-full h-full object-cover" 
+                  style={{ scale: imageScale }}
+                  alt="Kage Dojo" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F]/90 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-rose-900/20 to-transparent" />
+                <div className="absolute bottom-3 left-4 flex items-end gap-3">
+                  <div>
+                    <span className="font-kanji font-black text-5xl text-rose-500 drop-shadow-[0_0_15px_rgba(227,30,36,0.6)]">影</span>
+                    <p className={`text-[10px] font-mono tracking-widest mt-1 ${isLight ? 'text-stone-300' : 'text-zinc-400'}`}>KAGE PREMIUM DOJO V2</p>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl">{pactData.avatar}</span>
-                    <div className="overflow-hidden">
-                      <p className={`text-xs font-semibold truncate ${landingTheme === 'parchment' ? 'text-stone-950' : 'text-zinc-300'}`}>{pactData.partnerName}</p>
-                      <p className={`text-[10px] font-mono ${landingTheme === 'parchment' ? 'text-emerald-800' : 'text-hisui'}`}>Streak: {pactData.sharedStreak}d</p>
-                    </div>
+                  <div className="flex gap-1 ml-auto">
+                    <img src={IMAGES.warriorHelmet} className="w-10 h-10 rounded-lg object-cover border border-white/10 shadow" />
+                    <img src={IMAGES.hologramSensei} className="w-10 h-10 rounded-lg object-cover border border-white/10 shadow" />
                   </div>
-                </ThreeDCard>
+                </div>
+              </div>
 
-                {/* BATTLE CRY BADGE */}
-                <div 
-                  onClick={() => setIsBattleCryModalOpen(true)}
-                  className={`border rounded-xl p-3 flex flex-col justify-between relative cursor-pointer active:scale-95 transition-all ${
-                    landingTheme === 'parchment'
-                      ? (isBattleCryActive ? 'border-rose-600 bg-rose-500/5' : 'border-stone-300 bg-[#E5DFD0]')
-                      : (isBattleCryActive ? 'border-neon-crimson/50 bg-shu/10' : 'border-white/5 bg-kachi')
-                  }`}
-                >
-                  <div className="flex justify-between items-start">
-                    <span className={`text-[10px] font-mono ${landingTheme === 'parchment' ? 'text-rose-800' : 'text-rose-400'}`}>ALERT NETWORK</span>
-                    {isBattleCryActive && (
-                      <div className="w-2 h-2 rounded-full bg-rose-600 animate-ping" />
-                    )}
+              {/* Stats Grid */}
+              <div className="grid grid-cols-4 gap-2">
+                {[
+                  { label: 'LEVEL', value: '16', icon: '⭐', color: 'text-amber-400' },
+                  { label: 'STREAK', value: `${streak}d`, icon: '🔥', color: 'text-rose-500' },
+                  { label: 'HONOR', value: '2,450', icon: '⚔️', color: 'text-cyan-400' },
+                  { label: 'PACT', value: '22', icon: '🤝', color: 'text-emerald-400' },
+                ].map((stat) => (
+                  <div key={stat.label} className={`rounded-xl p-2.5 text-center transition-colors ${
+                    isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/60 border border-zinc-800/50'
+                  }`}>
+                    <div className={`text-base ${stat.color}`}>{stat.icon}</div>
+                    <div className={`text-sm font-extrabold mt-0.5 ${isLight ? 'text-stone-800' : 'text-white'}`}>{stat.value}</div>
+                    <div className={`text-[7px] font-mono tracking-wider ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Streak Card + Photos */}
+              <div className={`flex items-center justify-between rounded-xl p-4 transition-colors ${
+                isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/60 border border-zinc-800/50'
+              }`}>
+                <div className="flex items-center gap-3">
+                  <div className="w-14 h-14 rounded-xl overflow-hidden">
+                    <img src={IMAGES.warriorHelmet} className="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <h4 className={`text-xs font-bold uppercase flex items-center gap-1.5 mt-2 ${landingTheme === 'parchment' ? 'text-stone-900' : 'text-white'}`}>
-                      <Zap className={`w-3.5 h-3.5 ${isBattleCryActive ? 'text-rose-600' : 'text-stone-400'}`} />
-                      BATTLE CRY!
-                    </h4>
-                    <p className={`text-[9px] line-clamp-1 mt-0.5 ${landingTheme === 'parchment' ? 'text-stone-600' : 'text-zinc-400'}`}>{battleCryText}</p>
+                    <span className={`text-[10px] font-mono uppercase tracking-wider ${isLight ? 'text-rose-600' : 'text-rose-400'}`}>FLAME STREAK</span>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl font-extrabold bg-gradient-to-r from-orange-400 to-rose-500 bg-clip-text text-transparent">{streak}</span>
+                      <span className={`text-xs font-mono ${isLight ? 'text-stone-500' : 'text-zinc-500'}`}>DAYS</span>
+                    </div>
                   </div>
-                  {isBattleCryActive && (
-                    <div className="absolute top-1 right-2 bg-rose-600 text-white text-[8px] px-1 rounded font-mono font-bold">1</div>
-                  )}
+                </div>
+                <div className="flex gap-2 items-center">
+                  <Flame className="w-8 h-8 text-rose-500 drop-shadow-[0_0_10px_rgba(255,59,48,0.6)]" />
+                  <div className="text-right">
+                    <div className={`text-[9px] font-mono ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>BEST</div>
+                    <div className="text-xs font-bold text-amber-400">89d</div>
+                  </div>
                 </div>
               </div>
 
-              {/* SENSEI HOLOGRAM ADVICE WIDGET */}
-              <div 
-                onClick={() => {
-                  soundSafe('tap');
-                  setCurrentTipIndex((currentTipIndex + 1) % senseiWidgetProverbs.length);
-                }}
-                className={`border rounded-xl p-3 flex items-center gap-3 cursor-pointer transition-all pointer-events-auto z-10 ${
-                  landingTheme === 'parchment'
-                    ? 'bg-[#E5DFD0] border-rose-800/20 hover:border-rose-800/40 text-stone-900'
-                    : 'bg-gradient-to-r from-indigo/30 via-kachi to-kachi border border-indigo/20 hover:border-indigo/40'
-                }`}
-              >
-                <div className="relative">
-                  <div className={`absolute inset-0 rounded-full blur animate-pulse ${landingTheme === 'parchment' ? 'bg-rose-500/10' : 'bg-cyan-400/20'}`} />
-                  <img 
-                    src={IMAGES.hologramSensei} 
-                    alt="Sensei" 
-                    className={`w-10 h-10 object-contain rounded-full border ${landingTheme === 'parchment' ? 'border-rose-700/30' : 'border-cyan-500/30'}`} 
-                  />
-                  <div className={`absolute -bottom-1 -right-1 w-2.5 h-2.5 rounded-full border border-void animate-ping ${landingTheme === 'parchment' ? 'bg-rose-700' : 'bg-cyan-400'}`} />
-                </div>
-                <div className="flex-1">
-                  <span className={`text-[9px] font-mono uppercase tracking-widest ${landingTheme === 'parchment' ? 'text-rose-800' : 'text-cyan-400'}`}>SENSEI ANCIENT COUNSEL</span>
-                  <p className={`text-xs italic font-medium leading-tight ${landingTheme === 'parchment' ? 'text-stone-800' : 'text-zinc-300'}`}>
-                    "{senseiWidgetProverbs[currentTipIndex]}"
-                  </p>
-                </div>
-              </div>
-
-              {/* 3D ACCORDION ACHIEVEMENTS PORTLET */}
-              <div className="pointer-events-auto">
-                <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-xs font-mono uppercase tracking-widest text-[#8E9EAF]">NEXT MILESTONE</h3>
-                  <span className="text-[10px] text-kin font-mono">{(achievements.filter(a=>a.unlocked).length / achievements.length * 100).toFixed(0)}% OVERALL</span>
-                </div>
-                <ThreeDCard isLight={landingTheme === 'parchment'} className="py-3 px-4">
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">🛡️</span>
-                      <div>
-                        <p className={`text-xs font-semibold ${landingTheme === 'parchment' ? 'text-stone-900' : 'text-white'}`}>Golden Pact Seal</p>
-                        <p className={`text-[9px] ${landingTheme === 'parchment' ? 'text-stone-600' : 'text-zinc-500'}`}>Shared joint days count: 22 / 30 workouts</p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] text-zinc-400 font-mono">STAGE 4</span>
-                  </div>
-                  {/* Progress bar */}
-                  <div className="h-1.5 w-full bg-void rounded-full overflow-hidden mt-3.5">
-                    <div className="h-full bg-gradient-to-r from-[#9E2A2A] to-rose-500" style={{ width: '73%' }} />
-                  </div>
-                </ThreeDCard>
-              </div>
-            </div>
-
-              {/* =========================================================================================
-                  AUTHENTIC JAPANESE POSTER DESIGN SHOWROOM & INTERACTIVE MASTERCLASS
-                  ========================================================================================= */}
-              <div className="mt-8 pt-6 border-t border-dashed border-rose-500/20 pointer-events-auto">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className={`text-xs font-mono uppercase tracking-widest flex items-center gap-2 ${landingTheme === 'parchment' ? 'text-rose-800' : 'text-rose-400'}`}>
-                    <span className="animate-pulse">●</span> LANDING GALLERY & MASTERCLASS
-                  </h3>
-                  <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-600/10 text-rose-500 font-bold">INSPIRED BY YOUR IMAGES</span>
-                </div>
-
-                {/* THE MINIATURE POSTER REPLICAS */}
-                {landingTheme === 'parchment' ? (
-                  // Replica of Miyamoto Musashi Sumi-e Layout (Attachment 1)
-                  <div 
-                    onClick={() => { soundSafe('tap'); setZoomedPhoto('parchment'); }}
-                    className="group relative bg-[#F4EFE3] rounded-2xl border-2 border-[#DCD5C5] p-5 shadow-sm overflow-hidden cursor-pointer transform hover:scale-[1.02] transition-all duration-300"
-                  >
-                    {/* Fold texture simulation */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-stone-900/[0.03] to-[#FFFFFF]/40 mix-blend-overlay pointer-events-none" />
-                    
-                    {/* Main Layout Row */}
-                    <div className="flex justify-between items-stretch gap-4 relative z-10 min-h-[160px]">
-                      {/* Left Column: Calligraphy & Insert Card */}
-                      <div className="flex-1 flex flex-col justify-between">
-                        <div>
-                          {/* Helmet picture frame overlay */}
-                          <div className="w-20 h-20 bg-stone-300 rounded-lg p-1 border border-stone-400 shadow-inner overflow-hidden mb-2 relative">
-                            <img src={IMAGES.warriorHelmet} className="w-full h-full object-cover rounded-md" alt="Helmet closeup" />
-                            <div className="absolute bottom-1 right-1 bg-stone-900/80 text-white text-[6px] px-1 py-0.5 rounded uppercase font-mono tracking-wider">REF 01</div>
-                          </div>
-                          {/* Traditional English Typography and Japanese prose mimicking the original design exactly */}
-                          <p className="text-[7px] leading-[1.3] text-stone-700 tracking-tight font-sans max-w-[120px] uppercase font-bold">
-                            Miyamoto Musashi: Warrior & master swordsman from Japan's late Sengoku era. Creator of the active two-sword style, undefeated in 61 duels.
-                          </p>
-                        </div>
-                        {/* Red Signature Stamp */}
-                        <div className="mt-2 flex items-center gap-1.5 text-rose-700">
-                          <div className="w-6 h-6 rounded border-2 border-rose-700 flex items-center justify-center font-kanji font-black text-[9px] rotate-6 bg-red-500/5">
-                            斬龍
-                          </div>
-                          <span className="text-[8px] font-mono uppercase tracking-wider text-stone-600 font-bold">1604-1645 A.D.</span>
-                        </div>
-                      </div>
-
-                      {/* Right Column: Large Red Sun Circle, Canvas Silhouette and Vertical Calligraphy */}
-                      <div className="w-36 relative flex flex-col items-end justify-between">
-                        {/* Giant Red Sun Circle background */}
-                        <div className="absolute top-2 -right-4 w-28 h-28 rounded-full bg-rose-600/80 -z-10 shadow-sm" />
-                        
-                        {/* Vertical Calligraphy Japanese label text "Miyamoto Musashi" */}
-                        <div className="relative z-10 font-kanji text-xl font-black text-stone-900 tracking-widest leading-none flex flex-col gap-1 items-end pt-2 pr-1">
-                          <span>宮</span>
-                          <span>本</span>
-                          <span>武</span>
-                          <span>蔵</span>
-                        </div>
-
-                        {/* Silhouette samurai representation (We overlay some subtle design icons or graphics) */}
-                        <div className="absolute -bottom-2 left-0 w-24 h-28 pointer-events-none overflow-hidden opacity-90">
-                          <img src={IMAGES.hologramSensei} className="w-full h-full object-contain filter brightness-0 scale-x-[-1]" alt="Samurai Silhouette representation" />
-                        </div>
-
-                        <div className="z-10 bg-stone-900 text-white text-[8px] font-mono px-2 py-0.5 rounded-full flex items-center gap-1 shadow">
-                          <span>武蔵 RONIN STYLE</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Bottom Tech Barcode Decor */}
-                    <div className="mt-4 pt-2 border-t border-stone-300 flex justify-between items-center text-[#7C7360] font-mono text-[7px] tracking-widest">
-                      <span>REF NO: MM-089201</span>
-                      <span className="font-mono">||||| ||| | || |||| STYLE GUIDE 01</span>
-                    </div>
-
-                    <div className="absolute top-2 right-2 bg-rose-600 text-white text-[8px] px-1.5 rounded font-bold shadow animate-bounce">
-                      🔍 TAP TO VIEW ORIGINAL PHOTO
-                    </div>
-                  </div>
-                ) : (
-                  // Replica of Cyber Samurai "影" Layout (Attachment 2)
-                  <div 
-                    onClick={() => { soundSafe('tap'); setZoomedPhoto('red-sun'); }}
-                    className="group relative bg-[#09090B] rounded-2xl border-2 border-rose-500/20 p-5 shadow-2xl overflow-hidden cursor-pointer transform hover:scale-[1.02] transition-all duration-300"
-                  >
-                    {/* Big red ambient glow */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-rose-600/10 blur-3xl pointer-events-none" />
-                    
-                    {/* Solid Vivid Red Sun in back center */}
-                    <div className="absolute top-[10%] right-[10%] w-32 h-32 rounded-full bg-[#E31E24]/90 -z-10 box-shadow-[0_0_30px_rgba(227,30,36,0.3)] pointer-events-none" />
-
-                    {/* Giant background kanji watermark */}
-                    <div className="absolute left-4 top-4 font-kanji text-8xl font-black text-[#E31E24]/10 leading-none tracking-normal select-none pointer-events-none uppercase">
-                      影
-                    </div>
-
-                    <div className="relative z-10 flex flex-col justify-between min-h-[160px]">
-                      {/* Top Header Badge */}
-                      <div className="flex justify-between items-start">
-                        <div className="flex items-center gap-1.5 bg-neutral-900/80 px-2 py-1 rounded border border-white/5 backdrop-blur">
-                          <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
-                          <span className="text-[9px] font-mono text-rose-400 font-bold">PROJECT SHADOW: 影</span>
-                        </div>
-                        <span className="text-[8px] font-mono text-zinc-500">2026 COMBAT ED.</span>
-                      </div>
-
-                      {/* Middle layout: The full-stretch Cyber Samurai photograph illustration */}
-                      <div className="my-2 h-20 w-full overflow-hidden rounded relative border border-white/10 group-hover:border-rose-500/30 transition-colors">
-                        <img src={IMAGES.bgSamurai} className="w-full h-full object-cover object-top scale-105 group-hover:scale-110 transition-transform duration-500" alt="Cyber Samurai illustration" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
-                        <div className="absolute bottom-1 left-2 flex items-center gap-1">
-                          <span className="text-[9px] font-bold text-white tracking-widest uppercase">CYBERPUNK SHOGUNATE</span>
-                        </div>
-                      </div>
-
-                      {/* Bottom row */}
-                      <div className="flex justify-between items-end">
-                        <div>
-                          <p className="text-[10px] font-semibold text-white">THE SAMURAI MATRIX STYLE</p>
-                          <p className="text-[8px] text-zinc-400 font-mono mt-0.5">Vivid solid red backdrops, deep dark negative voids.</p>
-                        </div>
-                        <div className="bg-rose-600 hover:bg-rose-500 text-white font-mono font-bold text-[8px] px-2.5 py-1 rounded transition-colors shadow">
-                          🔍 ZOOM ILLUSTRATION
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="absolute top-2 right-2 bg-[#E31E24] text-white text-[8px] px-1.5 rounded font-bold shadow animate-bounce">
-                      🔍 TAP TO VIEW ORIGINAL PHOTO
-                    </div>
-                  </div>
-                )}
-
-                {/* THE 4 PILLARS TUTORIAL BOX */}
-                <div className={`mt-5 rounded-xl border p-4 transition-colors ${
-                  landingTheme === 'parchment'
-                    ? 'bg-[#E5DFD0]/70 border-stone-300'
-                    : 'bg-kachi/50 border-white/5'
+              {/* Progress Row */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className={`rounded-xl p-3 transition-colors ${
+                  isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/60 border border-zinc-800/50'
                 }`}>
-                  <p className={`text-xs font-mono mb-2.5 ${landingTheme === 'parchment' ? 'text-stone-900' : 'text-zinc-300'}`}>
-                    日本のグラフィックデザインの基本 — <strong className="font-bold">THE 4 DESIGN BASICS TO REPRODUCE THIS LOOK:</strong>
-                  </p>
-
-                  <div className="grid grid-cols-4 gap-1.5 mb-3 bg-void/10 p-1 rounded-lg">
-                    {['FOCAL ROUND', 'TYPOGRAPHIC DUALITY', 'GRUNGE DECALS', 'NEG VOID'].map((tabTitle, idx) => (
-                      <button
-                        key={tabTitle}
-                        onClick={() => { soundSafe('tap'); setActiveBasicTab(idx); }}
-                        className={`text-[8px] py-1 px-1 rounded font-bold font-mono tracking-tighter text-center uppercase transition-all ${
-                          activeBasicTab === idx
-                            ? 'bg-rose-600 text-white shadow'
-                            : (landingTheme === 'parchment' ? 'text-stone-700 hover:bg-stone-400/10' : 'text-zinc-500 hover:bg-white/5')
-                        }`}
-                      >
-                        {tabTitle}
-                      </button>
+                  <div className="flex items-center gap-2">
+                    <Award className={`w-5 h-5 ${isLight ? 'text-amber-600' : 'text-amber-400'}`} />
+                    <span className={`text-[9px] font-mono tracking-wider ${isLight ? 'text-stone-500' : 'text-zinc-500'}`}>ACHIEVEMENTS</span>
+                  </div>
+                  <div className="mt-1 flex items-baseline gap-1">
+                    <span className="text-xl font-extrabold text-amber-400">{achievements.filter(a => a.unlocked).length}</span>
+                    <span className={`text-[10px] ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>/ {achievements.length}</span>
+                  </div>
+                  <div className="mt-1.5 h-1.5 rounded-full bg-zinc-700/30 overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full" style={{ width: `${(achievements.filter(a => a.unlocked).length / achievements.length) * 100}%` }} />
+                  </div>
+                </div>
+                <div className={`rounded-xl p-3 transition-colors ${
+                  isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/60 border border-zinc-800/50'
+                }`}>
+                  <div className="flex items-center gap-2">
+                    <Activity className={`w-5 h-5 ${isLight ? 'text-emerald-600' : 'text-emerald-400'}`} />
+                    <span className={`text-[9px] font-mono tracking-wider ${isLight ? 'text-stone-500' : 'text-zinc-500'}`}>THIS WEEK</span>
+                  </div>
+                  <div className="mt-1">
+                    <span className="text-xl font-extrabold text-emerald-400">5</span>
+                    <span className={`text-[10px] ml-1 ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>workouts</span>
+                  </div>
+                  <div className="mt-1.5 flex gap-1">
+                    {[1,1,1,1,0,0,0].map((d, i) => (
+                      <div key={i} className={`h-1.5 flex-1 rounded-full ${d ? 'bg-emerald-500' : isLight ? 'bg-stone-200' : 'bg-zinc-700/50'}`} />
                     ))}
                   </div>
-
-                  {activeBasicTab === 0 && (
-                    <div className="space-y-1 animate-fadeIn">
-                      <p className={`text-xs font-bold flex items-center gap-1 ${landingTheme === 'parchment' ? 'text-rose-900' : 'text-rose-400'}`}>
-                        <span>🔴</span> 1. Anchor Sun (日章 "Nisshō")
-                      </p>
-                      <p className={`text-[11px] leading-relaxed ${landingTheme === 'parchment' ? 'text-stone-800' : 'text-zinc-400'}`}>
-                        Use a perfectly solid, vibrant red circle (<code className="font-mono text-[10px] bg-red-800/5 px-1 rounded text-rose-500">rgb(227, 30, 36)</code>) situated off-center or behind the main subject. This anchors the observer's gaze and creates instant thematic recognition without visual noise.
-                      </p>
-                    </div>
-                  )}
-
-                  {activeBasicTab === 1 && (
-                    <div className="space-y-1 animate-fadeIn">
-                      <p className={`text-xs font-bold flex items-center gap-1 ${landingTheme === 'parchment' ? 'text-rose-900' : 'text-rose-400'}`}>
-                        <span>Brush vs Tech</span> 2. Orthogonal & Vertical Typography
-                      </p>
-                      <p className={`text-[11px] leading-relaxed ${landingTheme === 'parchment' ? 'text-stone-800' : 'text-zinc-400'}`}>
-                        Pair heavy, organic hand-brushed Kanji letters (designed vertically in vertical bins via <code className="font-mono text-[9px] bg-red-800/5 px-1 rounded text-rose-500">flex flex-col</code> blocks) with tiny, sparse horizontal industrial monospace text tags. This contrast of ancient vs modern is extremely striking.
-                      </p>
-                    </div>
-                  )}
-
-                  {activeBasicTab === 2 && (
-                    <div className="space-y-1 animate-fadeIn">
-                      <p className={`text-xs font-bold flex items-center gap-1 ${landingTheme === 'parchment' ? 'text-rose-900' : 'text-rose-400'}`}>
-                        <span>🎫</span> 3. Stamp Seals & Barcode Stickers
-                      </p>
-                      <p className={`text-[11px] leading-relaxed ${landingTheme === 'parchment' ? 'text-stone-800' : 'text-zinc-400'}`}>
-                        Utilize square red-line signature "hanko" stamps (rotated 5-12 degrees) and horizontal or rotated barcodes in the corners. These mimic authentic physical print, making digital designs feel like vintage collectable posters.
-                      </p>
-                    </div>
-                  )}
-
-                  {activeBasicTab === 3 && (
-                    <div className="space-y-1 animate-fadeIn">
-                      <p className={`text-xs font-bold flex items-center gap-1 ${landingTheme === 'parchment' ? 'text-rose-900' : 'text-rose-400'}`}>
-                        <span>☯️</span> 4. Intentional Negative Void & Patina
-                      </p>
-                      <p className={`text-[11px] leading-relaxed ${landingTheme === 'parchment' ? 'text-stone-800' : 'text-zinc-400'}`}>
-                        Do not crowd the layout! Let the background bleed. Choose either a rich absolute deep void space (e.g. <code className="font-mono text-[10px]">#0C0C0E</code>) or a crumpled tactile paper parchment patina (<code className="font-mono text-[10px]">#EAE4D7</code>) to make the colors explode.
-                      </p>
-                    </div>
-                  )}
                 </div>
+              </div>
 
-                {/* THE GITHUB DEPLOYMENT INSTRUCTIONS EXPLAINER */}
-                <div className={`mt-4 rounded-xl border border-dashed p-4 transition-colors ${
-                  landingTheme === 'parchment'
-                    ? 'bg-[#EAE4D7] border-stone-400/60 text-stone-900'
-                    : 'bg-[#15151C] border-rose-500/20 text-zinc-300'
-                }`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-sm">🐙</span>
-                    <h4 className="text-xs font-bold tracking-widest font-mono uppercase">DEPLOY THIS PROJECT TO GITHUB PAGES:</h4>
+              {/* BEGIN TRAINING */}
+              <button
+                onClick={() => {
+                  soundSafe('clash');
+                  setActiveRunningProgram(MOCK_PROGRAMS[0]);
+                  setRunningTimer(0);
+                  setIsRunning(true);
+                }}
+                className="w-full py-4 rounded-xl font-bold font-mono tracking-widest bg-rose-600 text-white hover:bg-rose-500 transition-all shadow-[0_4px_20px_rgba(227,30,36,0.3)] active:scale-[0.98] flex items-center justify-center gap-2"
+              >
+                <Swords className="w-5 h-5" />
+                BEGIN TRAINING
+              </button>
+
+              {/* Pact + Battle Cry Row */}
+              <div className="grid grid-cols-2 gap-3">
+                <div 
+                  onClick={() => setIsPartnerProfileOpen(true)}
+                  className={`rounded-xl p-3 cursor-pointer active:scale-[0.98] transition-all ${
+                    isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/60 border border-zinc-800/50'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">{pactData.avatar}</span>
+                    <div className="min-w-0">
+                      <p className={`text-xs font-semibold truncate ${isLight ? 'text-stone-700' : 'text-zinc-200'}`}>{pactData.partnerName}</p>
+                      <p className="text-[10px] text-emerald-400 font-mono">{pactData.sharedStreak}d streak</p>
+                    </div>
                   </div>
-                  <ol className="list-decimal list-inside space-y-1.5 text-[10.5px] font-mono leading-relaxed">
-                    <li>
-                      <strong className="text-rose-500">Export:</strong> Open the top right settings menu in AI Studio and select <span className="underline italic">"Export as ZIP"</span> or <span className="underline italic">"Push to GitHub"</span>.
-                    </li>
-                    <li>
-                      <strong>Structure:</strong> You get a pristine folder structure:
-                      <p className="pl-4 text-[9.5px] text-zinc-500 font-sans tracking-tight mt-0.5">
-                        📂 <code className="font-mono">/src/assets/images</code> — contains all high-res png/jpg files.<br />
-                        📂 <code className="font-mono">/src/components</code> — contains modular cards & icons.<br />
-                        📄 <code className="font-mono">/src/App.tsx</code> — contains the interactive code you see here.
-                      </p>
-                    </li>
-                    <li>
-                      <strong>Deploy in 1 Click:</strong> If using GitHub, go to <span className="underline">Repository &rarr; Settings &rarr; Pages</span>, select <strong className="text-rose-500">GitHub Actions</strong> as the source, and use the default static Vite workflow to host it directly for free!
-                    </li>
-                  </ol>
+                </div>
+                <div 
+                  onClick={() => setIsBattleCryModalOpen(true)}
+                  className={`rounded-xl p-3 cursor-pointer active:scale-[0.98] transition-all ${
+                    isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/60 border border-zinc-800/50'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <Zap className="w-5 h-5 text-rose-400" />
+                    <div>
+                      <p className={`text-xs font-semibold ${isLight ? 'text-stone-700' : 'text-zinc-200'}`}>BATTLE CRY</p>
+                      <p className={`text-[9px] font-mono truncate ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>{battleCryText}</p>
+                    </div>
+                  </div>
+                  {isBattleCryActive && <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1 animate-ping" />}
+                </div>
+              </div>
+
+              {/* Sensei Widget */}
+              <div 
+                onClick={() => setCurrentTipIndex((currentTipIndex + 1) % senseiWidgetProverbs.length)}
+                className={`flex items-center gap-3 rounded-xl p-3 cursor-pointer active:scale-[0.98] transition-all ${
+                  isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/40 border border-zinc-800/40'
+                }`}
+              >
+                <img src={IMAGES.hologramSensei} alt="" className="w-10 h-10 rounded-full object-cover border border-cyan-500/30" />
+                <div className="min-w-0 flex-1">
+                  <span className="text-[9px] font-mono text-cyan-400 tracking-widest">SENSEI</span>
+                  <p className={`text-xs truncate ${isLight ? 'text-stone-600' : 'text-zinc-300'}`}>"{senseiWidgetProverbs[currentTipIndex]}"</p>
+                </div>
+              </div>
+
+              {/* Photo Gallery Row */}
+              <div className="grid grid-cols-3 gap-2">
+                <div className="rounded-xl overflow-hidden h-20">
+                  <img src={IMAGES.warriorHelmet} className="w-full h-full object-cover" />
+                </div>
+                <div className="rounded-xl overflow-hidden h-20">
+                  <img src={IMAGES.bgSamurai} className="w-full h-full object-cover" />
+                </div>
+                <div className="rounded-xl overflow-hidden h-20">
+                  <img src={IMAGES.hologramSensei} className="w-full h-full object-cover" />
                 </div>
               </div>
 
@@ -1795,10 +1496,10 @@ export default function App() {
         </div>
 
 
-        {/* ========================================================================================= */}
-        {/* ======================= BOTTOM TAB BAR DIAL (漆黒 LACQUER BLACK) ======================= */}
-        {/* ========================================================================================= */}
-        <nav className="absolute bottom-0 left-0 right-0 h-20 pb-2 bg-lacquer-black border-t border-white/5 px-2 flex justify-around items-center z-30">
+        {/* ======================= BOTTOM TAB BAR ======================= */}
+        <nav className={`fixed bottom-0 left-0 right-0 h-16 px-2 flex justify-around items-center z-30 transition-colors duration-500 ${
+          isLight ? 'bg-stone-100/90 backdrop-blur-lg border-t border-stone-200' : 'bg-[#0A0A0F]/90 backdrop-blur-lg border-t border-zinc-800/50'
+        }`}>
           {(['家', '武', '道', '先', '异', '魂'] as TabName[]).map((tab) => {
             const isActive = currentTab === tab;
             return (
@@ -1814,7 +1515,7 @@ export default function App() {
                 {isActive && (
                   <div className="absolute -top-1 w-5 h-[2px] bg-rose-500 rounded-full" />
                 )}
-                <span className={`font-kanji font-black text-lg transition-colors duration-250 ${isActive ? 'text-neon-crimson' : 'text-white'}`}>
+                <span className={`font-kanji font-black text-lg transition-colors duration-250 ${isActive ? (isLight ? 'text-rose-600' : 'text-neon-crimson') : (isLight ? 'text-stone-500' : 'text-white')}`}>
                   {tab}
                 </span>
                 
@@ -2430,5 +2131,6 @@ export default function App() {
       )}
 
     </div>
+    </ErrorBoundary>
   );
 }

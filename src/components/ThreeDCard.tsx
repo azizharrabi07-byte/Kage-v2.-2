@@ -15,7 +15,7 @@ interface ThreeDCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'on
   isLight?: boolean;
 }
 
-export default function ThreeDCard({
+const ThreeDCard = React.memo(function ThreeDCard({
   children,
   className = "",
   glowColor = "rgba(255, 59, 48, 0.15)",
@@ -53,3 +53,5 @@ export default function ThreeDCard({
     </motion.div>
   );
 }
+
+export default ThreeDCard;

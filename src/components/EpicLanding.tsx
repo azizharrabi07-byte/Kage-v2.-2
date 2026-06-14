@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, useState, useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, useScroll, useInView } from 'motion/react';
+import { motion, useMotionValue, useSpring, useTransform, useScroll, useInView, type MotionValue } from 'motion/react';
 import { IMAGES } from '../assets';
 import { EnergySphereScene } from './FloatingEnergySphere';
 import TiltCard3D from './TiltCard3D';
@@ -921,7 +921,7 @@ function LoginCard({ onGoogleLogin, onGuestLogin }: { onGoogleLogin: () => void;
                 className="absolute inset-0 pointer-events-none rounded-3xl"
                 style={{
                   background: useTransform(
-                    [glareX, glareY] as any,
+                    [glareX, glareY] as unknown as MotionValue<string>[],
                     ([gx, gy]: string[]) => `radial-gradient(circle at ${gx} ${gy}, rgba(227,30,36,0.15) 0%, transparent 60%)`
                   ),
                 }}

@@ -110,3 +110,26 @@
   background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
   background-size: 24px 24px;
 }
+
+/* ===== Animated Gradient Background ===== */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 50%; }
+}
+
+.bg-animate-dark {
+  background: linear-gradient(135deg, #0A0A0F 0%, #0F0A1A 25%, #1A0A0F 50%, #0A0A14 75%, #0A0A0F 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 20s ease-in-out infinite;
+  transform: translate3d(0, 0, 0);
+}
+
+.bg-animate-light {
+  background: linear-gradient(135deg, #F5F0E8 0%, #FDF8F0 25%, #F0E8E0 50%, #F8F0E8 75%, #F5F0E8 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 20s ease-in-out infinite;
+  transform: translate3d(0, 0, 0);
+}

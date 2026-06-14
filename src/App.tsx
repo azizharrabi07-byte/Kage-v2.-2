@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback, Suspense } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'motion/react';
 import { 
   Flame, 
@@ -31,25 +31,74 @@ import {
   Droplet,
   Compass,
   Utensils,
-  BookOpen
+  BookOpen,
+  Hammer
 } from 'lucide-react';
 
 import { IMAGES } from './assets';
 import { KageAudio } from './audio';
-import { TabName, WorkoutProgram, Meal, Pact, LeaderboardUser, ChatMessage, Achievement } from './types';
+import { TabName, WorkoutProgram, Meal, Pact, LeaderboardUser, ChatMessage, Achievement, UserProgram, WorkoutSession, ExerciseLog, LoggedSet, TrainingPlan } from './types';
+import { useWorkoutHistory, useExercisePRs } from './hooks/useWorkoutHistory';
+import { useAchievements } from './hooks/useAchievements';
+import { useVoiceCommands } from './hooks/useVoiceCommands';
 import ThreeDCard from './components/ThreeDCard';
 import TiltCard3D from './components/TiltCard3D';
 import CinematicTransition, { StaggerList, StaggerItem } from './components/CinematicTransition';
+import { Toaster } from 'sonner';
 import { EnergySphereScene } from './components/FloatingEnergySphere';
 import { ProgramCard, ProgramDetailBoard } from './components/ProgramBoard';
+import RestTimer from './components/RestTimer';
+import CameraCheckIn from './components/CameraCheckIn';
+import PushupVerification from './components/PushupVerification';
 import StatsBoard from './components/StatsBoard';
 import LeaderboardBoard from './components/LeaderboardBoard';
 import ParallaxHero from './components/ParallaxHero';
 import ErrorBoundary from './components/ErrorBoundary';
-import EpicLanding from './components/EpicLanding';
 import { auth, db, handleFirestoreError, OperationType } from './firebase';
 import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged, User as FirebaseUser, signOut } from 'firebase/auth';
 import { doc, getDoc, setDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
+
+const EpicLanding = React.lazy(() => import('./components/EpicLanding'));
+const HomeTab = React.lazy(() => import('./components/HomeTab'));
+const TrainTab = React.lazy(() => import('./components/TrainTab'));
+const DojoTab = React.lazy(() => import('./components/DojoTab'));
+const SenseiTab = React.lazy(() => import('./components/SenseiTab'));
+const FuelTab = React.lazy(() => import('./components/FuelTab'));
+const SoulTab = React.lazy(() => import('./components/SoulTab'));
+const BattleChallenge = React.lazy(() => import('./components/BattleChallenge'));
+const PoseDetector = React.lazy(() => import('./components/PoseDetector'));
+const WorkoutComplete = React.lazy(() => import('./components/WorkoutComplete'));
+const ProgramBuilder = React.lazy(() => import('./components/ProgramBuilder'));
+
+function LazyFallback({ isLight }: { isLight: boolean }) {
+  return (
+    <div className={`min-h-screen flex items-center justify-center ${isLight ? 'bg-stone-100' : 'bg-[#0A0A0F]'}`}>
+      <div className="flex flex-col items-center gap-6 w-full max-w-xs px-6">
+        {/* Pulsing logo area */}
+        <div className="flex flex-col items-center gap-3">
+          <div className={`w-16 h-16 rounded-full animate-pulse ${isLight ? 'bg-stone-200' : 'bg-zinc-800/70'}`} />
+          <div className={`h-4 w-28 rounded animate-pulse ${isLight ? 'bg-stone-200' : 'bg-zinc-800/70'}`} />
+        </div>
+
+        {/* Pulsing content bars */}
+        <div className="w-full space-y-3">
+          <div className={`h-3 rounded animate-pulse ${isLight ? 'bg-stone-200' : 'bg-zinc-800/70'}`} style={{ width: '92%' }} />
+          <div className={`h-3 rounded animate-pulse ${isLight ? 'bg-stone-200' : 'bg-zinc-800/70'}`} style={{ width: '78%' }} />
+          <div className={`h-3 rounded animate-pulse ${isLight ? 'bg-stone-200' : 'bg-zinc-800/70'}`} style={{ width: '85%' }} />
+          <div className={`h-3 rounded animate-pulse ${isLight ? 'bg-stone-200' : 'bg-zinc-800/70'}`} style={{ width: '64%' }} />
+        </div>
+
+        {/* Pulsing card skeletons */}
+        <div className="w-full space-y-2.5 mt-2">
+          <div className={`h-20 rounded-xl animate-pulse ${isLight ? 'bg-stone-200' : 'bg-zinc-800/70'}`} />
+          <div className={`h-20 rounded-xl animate-pulse ${isLight ? 'bg-stone-200' : 'bg-zinc-800/70'}`} />
+        </div>
+
+        <span className={`text-[10px] font-mono tracking-widest animate-pulse ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>LOADING DOJO...</span>
+      </div>
+    </div>
+  );
+}
 
 // Realistic Mock Data for KAGE Premium V2
 const MOCK_PROGRAMS: WorkoutProgram[] = [
@@ -119,21 +168,39 @@ const MOCK_PROGRAMS: WorkoutProgram[] = [
   }
 ];
 
+const MOCK_TRAINING_PLANS: { id: string; name: string; description: string; duration: string; difficulty: number; equipmentNeeded: boolean }[] = [
+  { id: 'tp1', name: 'IRON ASCENSION', description: 'Progressive compound lifts for raw power.', duration: '55 min', difficulty: 4, equipmentNeeded: true },
+  { id: 'tp2', name: 'SHRED STORM', description: 'High rep burn-out to carve definition.', duration: '35 min', difficulty: 3, equipmentNeeded: true },
+  { id: 'tp3', name: 'CABLE FURY', description: 'Cable-only full body tension work.', duration: '40 min', difficulty: 2, equipmentNeeded: true },
+  { id: 'tp4', name: 'CALISTHENIC GOD', description: 'Bodyweight mastery with progressive holds.', duration: '30 min', difficulty: 3, equipmentNeeded: false },
+  { id: 'tp5', name: 'HIIT SAMURAI', description: 'Explosive intervals for fat loss.', duration: '20 min', difficulty: 4, equipmentNeeded: false },
+  { id: 'tp6', name: 'FLEX RECOVERY', description: 'Mobility flow for joint health.', duration: '25 min', difficulty: 1, equipmentNeeded: false },
+];
+
 const MOCK_MEAL_PLANS: Record<'shred' | 'bulk' | 'maintain', Meal[]> = {
   shred: [
     { id: 'm1', name: 'Steamed Red-Sun Sea Bass', protein: 38, carbs: 12, fat: 6, calories: 250, image: '🐟' },
     { id: 'm2', name: 'Sumi Chicken Breast + Asparagus', protein: 44, carbs: 8, fat: 4, calories: 240, image: '🍗' },
-    { id: 'm3', name: 'Almond Green Tempeh Stir-fry', protein: 28, carbs: 18, fat: 12, calories: 290, image: '🥗' }
+    { id: 'm3', name: 'Almond Green Tempeh Stir-fry', protein: 28, carbs: 18, fat: 12, calories: 290, image: '🥗' },
+    { id: 'm10', name: 'Seared Tuna & Wakame Salad', protein: 40, carbs: 6, fat: 8, calories: 260, image: '🥬' },
+    { id: 'm11', name: 'Egg White & Spinach Muffins', protein: 32, carbs: 4, fat: 3, calories: 180, image: '🥚' },
+    { id: 'm12', name: 'Matcha Protein Smoothie Bowl', protein: 35, carbs: 22, fat: 5, calories: 275, image: '🍵' }
   ],
   bulk: [
     { id: 'm4', name: 'Sumo Soy Beef Rice Bowl', protein: 55, carbs: 80, fat: 18, calories: 700, image: '🥩' },
     { id: 'm5', name: 'Sesame Peanut Soba with Tofu', protein: 32, carbs: 95, fat: 22, calories: 710, image: '🍜' },
-    { id: 'm6', name: 'Miso Wild Egg Avocado Toast', protein: 26, carbs: 55, fat: 20, calories: 500, image: '🥑' }
+    { id: 'm6', name: 'Miso Wild Egg Avocado Toast', protein: 26, carbs: 55, fat: 20, calories: 500, image: '🥑' },
+    { id: 'm13', name: 'Double Chicken Teriyaki Don', protein: 65, carbs: 88, fat: 16, calories: 780, image: '🍚' },
+    { id: 'm14', name: 'Salmon & Sweet Potato Hash', protein: 48, carbs: 65, fat: 22, calories: 650, image: '🍠' },
+    { id: 'm15', name: 'Peanut Butter Overnight Oats', protein: 38, carbs: 72, fat: 24, calories: 620, image: '🥣' }
   ],
   maintain: [
     { id: 'm7', name: 'Teriyaki Wild Salmon Bowl', protein: 42, carbs: 45, fat: 14, calories: 470, image: '🍣' },
     { id: 'm8', name: 'Steamed Sea Shell Quinoa Mix', protein: 30, carbs: 50, fat: 10, calories: 410, image: '🍛' },
-    { id: 'm9', name: 'Spiced Edamame Tofu Mash', protein: 24, carbs: 35, fat: 8, calories: 310, image: '🍡' }
+    { id: 'm9', name: 'Spiced Edamame Tofu Mash', protein: 24, carbs: 35, fat: 8, calories: 310, image: '🍡' },
+    { id: 'm16', name: 'Grilled Chicken & Couscous', protein: 45, carbs: 42, fat: 12, calories: 445, image: '🍗' },
+    { id: 'm17', name: 'Tuna Stuffed Bell Peppers', protein: 38, carbs: 18, fat: 9, calories: 315, image: '🌶️' },
+    { id: 'm18', name: 'Greek Yogurt & Berry Parfait', protein: 28, carbs: 32, fat: 5, calories: 285, image: '🫐' }
   ]
 };
 
@@ -165,21 +232,6 @@ const INITIAL_MOCK_LEADERBOARD: LeaderboardUser[] = [
   { rank: 10, name: "KidSaber", level: 6, streak: 1, honorPoints: 515, avatar: "🍡" }
 ];
 
-const INITIAL_MOCK_ACHIEVEMENTS: Achievement[] = [
-  { id: 'ac1', title: 'First Drop of Sweat', description: 'Complete 1 individual Dojo Training.', icon: '💧', unlocked: true, rarity: 'common' },
-  { id: 'ac2', title: 'Two Shadows Collide', description: 'Forge a blood Pact with a combat brother.', icon: '🤝', unlocked: true, rarity: 'common' },
-  { id: 'ac3', title: 'Crimson Fortitude', description: 'Reach a 15-Day workout streak with active state.', icon: '🔥', unlocked: true, rarity: 'rare' },
-  { id: 'ac4', title: 'Golden Pact Seal', description: 'Complete a 30-Day Joint Workout Target.', icon: '🛡️', unlocked: false, rarity: 'epic' },
-  { id: 'ac5', title: 'Hologram\'s Disciple', description: 'Query the cybernetic Sensei 5 times.', icon: '🔮', unlocked: true, rarity: 'common' },
-  { id: 'ac6', title: 'The Iron Scabbard', description: 'Execute the high-difficulty IRON PHYSICAL program fully.', icon: '⛩️', unlocked: false, rarity: 'epic' },
-  { id: 'ac7', title: 'Tear the Sky', description: 'Achieve level 20 with over 4,000 Honour Points.', icon: '⚡', unlocked: false, rarity: 'legendary' },
-  { id: 'ac8', title: 'Lotus Focus', description: 'Complete a 15-minute sound guided shadow meditation.', icon: '🧘', unlocked: false, rarity: 'rare' },
-  { id: 'ac9', title: 'Void Dweller', description: 'Maintain dark theme mode for entire season.', icon: '🌌', unlocked: true, rarity: 'rare' },
-  { id: 'ac10', title: 'Hydration General', description: 'Drink 8 full glasses of water in a single day.', icon: '🌊', unlocked: true, rarity: 'common' },
-  { id: 'ac11', title: 'Sensei\'s Seal', description: 'Receive an AI-certified form rating score of over 95%.', icon: '💮', unlocked: false, rarity: 'legendary' },
-  { id: 'ac12', title: 'Steel Shred', description: 'Accumulate 10,000 burned calories in Bulk module.', icon: '🔱', unlocked: false, rarity: 'legendary' }
-];
-
 export default function App() {
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
@@ -197,7 +249,6 @@ export default function App() {
   const [battleCryTimer, setBattleCryTimer] = useState('11:42'); // Countdown inside 15 min
   const [pactData, setPactData] = useState<Pact>(INITIAL_PACT);
   const [leaderboard, setLeaderboard] = useState<LeaderboardUser[]>(INITIAL_MOCK_LEADERBOARD);
-  const [achievements, setAchievements] = useState<Achievement[]>(INITIAL_MOCK_ACHIEVEMENTS);
   
   // Custom stats for SVG Spider Graph
   const [stats, setStats] = useState({
@@ -208,10 +259,36 @@ export default function App() {
     Endurance: 74
   });
 
+  const [waterCups, setWaterCups] = useState<boolean[]>([true, true, true, true, false, false, false, false]);
+
+  // Persistence hooks
+  const { workouts, setWorkouts, addWorkout, getTotalWorkouts, getVerifiedWorkouts, getTotalVolume, getCurrentStreak, getBestStreak, getWeeklyVolume, getMaxVolumeSession, compute1RM } = useWorkoutHistory();
+  const { prs, updatePRs, checkNewPR } = useExercisePRs();
+  const { achievements, setAchievements, xp, setXp, bonusXP, checkAchievements, getProgress, stats: achievementStats } = useAchievements(
+    getTotalWorkouts(), getVerifiedWorkouts(), getTotalVolume(), getCurrentStreak(), waterCups.filter(c => c).length, 0, 0, 0
+  );
+
+  // User programs (Build tool)
+  const [userPrograms, setUserPrograms] = useState<UserProgram[]>(() => {
+    try { return JSON.parse(localStorage.getItem('kage_user_programs') || '[]'); }
+    catch { return []; }
+  });
+  const saveUserProgram = (prog: UserProgram) => {
+    const updated = [...userPrograms, prog];
+    setUserPrograms(updated);
+    localStorage.setItem('kage_user_programs', JSON.stringify(updated));
+  };
+
+  // Active workout exercise logging
+  const [exerciseLogs, setExerciseLogs] = useState<ExerciseLog[]>([]);
+  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
+  const [restTimerDuration, setRestTimerDuration] = useState(90);
+  const [restTimerKey, setRestTimerKey] = useState(0);
+
   // Training Plan Selection
   const [trainingSubTab, setTrainingSubTab] = useState<'eq' | 'zero'>('eq');
+  const [trainingInnerTab, setTrainingInnerTab] = useState<'plans' | 'track' | 'build'>('plans');
   const [mealPlanType, setMealPlanType] = useState<'shred' | 'bulk' | 'maintain'>('shred');
-  const [waterCups, setWaterCups] = useState<boolean[]>([true, true, true, true, false, false, false, false]);
   const [selectedProgram, setSelectedProgram] = useState<WorkoutProgram | null>(null);
 
   // Active workout execution overlay state
@@ -238,7 +315,21 @@ export default function App() {
   const [isOathOpen, setIsOathOpen] = useState(false);
   const [isPremiumOpen, setIsPremiumOpen] = useState(false);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const [confirmModal, setConfirmModal] = useState<{ message: string; onConfirm: () => void } | null>(null);
+  const [alertModal, setAlertModal] = useState<{ message: string } | null>(null);
+  const [showBattleChallenge, setShowBattleChallenge] = useState(false);
+  const [showPoseDetector, setShowPoseDetector] = useState(false);
   const [zoomedPhoto, setZoomedPhoto] = useState<string | null>(null);
+  const [showWorkoutComplete, setShowWorkoutComplete] = useState(false);
+  const [workoutCompleteData, setWorkoutCompleteData] = useState<{
+    programName: string; duration: number; totalSets: number;
+    totalVolume: number; newPRs: { name: string }[]; xpEarned: number;
+    achievementsUnlocked: string[];
+  } | null>(null);
+  const [shadowMode, setShadowMode] = useState(() => localStorage.getItem('shadow_mode') === 'true');
+  const [gymPhotos, setGymPhotos] = useState<string[]>(() => {
+      try { return JSON.parse(localStorage.getItem('gym_photos') || '[]').map((p: { url: string }) => p.url); } catch (error) { console.warn('[Storage] Failed to parse gym photos:', error); return []; }
+  });
 
   // Forge code states
   const [forgeTab, setForgeTab] = useState<'create' | 'join'>('create');
@@ -352,9 +443,14 @@ export default function App() {
     return () => unsub();
   }, [user]);
 
+  // Persist shadow mode
+  useEffect(() => {
+    localStorage.setItem('shadow_mode', String(shadowMode));
+  }, [shadowMode]);
+
   // Active workout timer
   useEffect(() => {
-    let interval: any = null;
+    let interval: ReturnType<typeof setInterval> | null = null;
     if (isRunning && activeRunningProgram) {
       interval = setInterval(() => {
         setRunningTimer(prev => prev + 1);
@@ -365,13 +461,142 @@ export default function App() {
     return () => clearInterval(interval);
   }, [isRunning, activeRunningProgram]);
 
-  const soundSafe = (type: 'clash' | 'tap' | 'chime' | 'hum') => {
+  // Sensei AI verification state
+  const [senseiVerifyFeedback, setSenseiVerifyFeedback] = useState<string | null>(null);
+  const [senseiVerifyLoading, setSenseiVerifyLoading] = useState(false);
+  const [senseiVerifyError, setSenseiVerifyError] = useState(false);
+
+  const handleSenseiVerify = async () => {
+    const currentEx = exerciseLogs[currentExerciseIndex];
+    if (!currentEx || currentEx.sets.length === 0) {
+      setSenseiVerifyFeedback("Log at least one set first before asking Sensei to verify your form.");
+      setSenseiVerifyError(true);
+      return;
+    }
+
+    setSenseiVerifyLoading(true);
+    setSenseiVerifyFeedback(null);
+    setSenseiVerifyError(false);
+
+    const setLog = currentEx.sets.map((s, i) =>
+      `Set ${i + 1}: ${s.reps} reps${s.weight > 0 ? ` @ ${s.weight}kg` : ''}`
+    ).join('\n');
+
+    const prompt = `As a fitness Sensei/AI coach, analyze this exercise performance:
+
+Exercise: ${currentEx.name}
+Target: ${currentEx.targetSets} sets × ${currentEx.targetReps} reps
+Logged sets:
+${setLog}
+
+Provide:
+1. A brief form/technique tip specific to this exercise
+2. Whether the logged volume is appropriate
+3. One motivational push to finish strong
+
+Keep it to 3-4 short sentences. Be direct and authoritative like a martial arts master.`;
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: prompt,
+          history: [],
+        }),
+      });
+      const data = await response.json();
+      setSenseiVerifyFeedback(data.text || 'Sensei nods in approval. Continue your path.');
+      setSenseiVerifyError(false);
+    } catch {
+      setSenseiVerifyFeedback("Sensei's vision is clouded. Check your connection and try again, warrior.");
+      setSenseiVerifyError(true);
+    } finally {
+      setSenseiVerifyLoading(false);
+    }
+  };
+
+  // Voice command handlers
+  const voiceHandlers = useMemo(() => ({
+    onNextExercise: () => {
+      if (currentExerciseIndex < exerciseLogs.length - 1) {
+        setCurrentExerciseIndex(prev => prev + 1);
+        setRestTimerKey(prev => prev + 1);
+      }
+    },
+    onPrevExercise: () => {
+      if (currentExerciseIndex > 0) {
+        setCurrentExerciseIndex(prev => prev - 1);
+        setRestTimerKey(prev => prev + 1);
+      }
+    },
+    onLogSet: () => {
+      const repsInput = document.getElementById(`reps-input-${currentExerciseIndex}`) as HTMLInputElement;
+      const weightInput = document.getElementById(`weight-input-${currentExerciseIndex}`) as HTMLInputElement;
+      const reps = parseInt(repsInput?.value || '0') || 0;
+      const weight = parseInt(weightInput?.value || '0') || 0;
+      if (reps <= 0) return;
+      const newSet: LoggedSet = { reps, weight, timestamp: Date.now() };
+      setExerciseLogs(prev => prev.map((log, i) =>
+        i === currentExerciseIndex ? { ...log, sets: [...log.sets, newSet] } : log
+      ));
+      updatePRs(exerciseLogs[currentExerciseIndex]?.name || '', weight, reps);
+      if (repsInput) repsInput.value = String(exerciseLogs[currentExerciseIndex]?.targetReps || '10');
+      if (weightInput) weightInput.value = '0';
+      setRestTimerKey(prev => prev + 1);
+    },
+    onSkipSet: () => {
+      const newSet: LoggedSet = { reps: 0, weight: 0, timestamp: Date.now() };
+      setExerciseLogs(prev => prev.map((log, i) =>
+        i === currentExerciseIndex ? { ...log, sets: [...log.sets, newSet] } : log
+      ));
+      setRestTimerKey(prev => prev + 1);
+    },
+    onPause: () => setIsRunning(false),
+    onResume: () => setIsRunning(true),
+    onFinish: () => {
+      const totalSets = exerciseLogs.reduce((sum, log) => sum + log.sets.length, 0);
+      if (totalSets === 0) return;
+      const session: WorkoutSession = {
+        id: `ws_${Date.now()}`,
+        programName: activeRunningProgram?.nameEnglish || 'Workout',
+        date: new Date().toISOString(),
+        duration: runningTimer,
+        exercises: exerciseLogs,
+        verified: false,
+      };
+      addWorkout(session);
+      setStreak(prev => prev + 1);
+      setStats(s => ({
+        ...s,
+        Strength: Math.min(100, s.Strength + 2),
+        Endurance: Math.min(100, s.Endurance + 3)
+      }));
+      const newUnlocks = checkAchievements();
+      const totalVolume = exerciseLogs.reduce((s, log) => s + log.sets.reduce((ss, set) => ss + set.reps * set.weight, 0), 0);
+      setWorkoutCompleteData({
+        programName: activeRunningProgram?.nameEnglish || 'Workout',
+        duration: runningTimer,
+        totalSets,
+        totalVolume,
+        newPRs: newUnlocks.length > 0 ? [{ name: 'Achievement Unlocked' }] : [],
+        xpEarned: totalSets * 10 + Math.floor(runningTimer / 60),
+        achievementsUnlocked: newUnlocks,
+      });
+      setShowWorkoutComplete(true);
+    },
+    onStartRestTimer: () => setRestTimerKey(prev => prev + 1),
+  }), [currentExerciseIndex, exerciseLogs, activeRunningProgram, runningTimer]);
+
+  const { isListening: voiceListening, toggleListening: voiceToggle, lastCommand, isSupported: voiceSupported } = useVoiceCommands(voiceHandlers);
+
+  const soundSafe = useCallback((type: 'clash' | 'tap' | 'chime' | 'hum') => {
     if (isMuted) return;
     if (type === 'clash') KageAudio.playSwordClash();
     if (type === 'tap') KageAudio.playHologramTap();
     if (type === 'chime') KageAudio.playEvolveChime();
     if (type === 'hum') KageAudio.playZenHum();
-  };
+  }, [isMuted]);
 
   const handleQuerySubmit = async (customAction?: string) => {
     const textToSend = customAction ? `Quick Diamond Select: ${customAction.toUpperCase()}` : queryInput;
@@ -391,14 +616,22 @@ export default function App() {
     setIsSenseiTyping(true);
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
         body: JSON.stringify({ 
           message: textToSend, 
-          quickAction: customAction || undefined 
+          quickAction: customAction || undefined,
+          history: chatMessages.slice(-10).map(m => ({
+            role: m.sender === 'user' ? 'user' : 'model',
+            text: m.text
+          }))
         }),
       });
+      clearTimeout(timeoutId);
       const data = await response.json();
       
       const senseiReply: ChatMessage = {
@@ -424,7 +657,7 @@ export default function App() {
     }
   };
 
-  const fillWaterCup = (index: number) => {
+  const fillWaterCup = useCallback((index: number) => {
     soundSafe('tap');
     const updated = [...waterCups];
     updated[index] = !updated[index];
@@ -432,9 +665,9 @@ export default function App() {
 
     // If suddenly all cups are complete, trigger the Hydration achievement
     if (updated.every(c => c)) {
-      unlockAchievement('ac10');
+      unlockAchievement('hydration_ninja');
     }
-  };
+  }, [soundSafe, waterCups]);
 
   const unlockAchievement = (id: string) => {
     setAchievements(prev => prev.map(ac => {
@@ -462,7 +695,7 @@ export default function App() {
     }
   };
 
-  const handleLeaderboardRefresh = () => {
+  const handleLeaderboardRefresh = useCallback(() => {
     soundSafe('clash');
     // Simulate slight rotation of points or active user bump
     setLeaderboard(prev => prev.map(user => {
@@ -471,7 +704,7 @@ export default function App() {
       }
       return user;
     }));
-  };
+  }, [soundSafe]);
 
   if (authLoading) {
     return <div className="min-h-screen bg-[#0A0A0F] flex items-center justify-center"><div className="text-rose-500 animate-pulse font-mono tracking-widest text-sm">INITIALIZING KAGE...</div></div>;
@@ -487,7 +720,7 @@ export default function App() {
     photoURL: null,
     phoneNumber: null,
     providerData: [],
-    metadata: {} as any,
+    metadata: {} as Record<string, unknown>,
     tenantId: null,
     delete: async () => {},
     getIdToken: async () => 'guest-token',
@@ -498,27 +731,50 @@ export default function App() {
 
   if (!user) {
     return (
-      <EpicLanding
-        onGoogleLogin={async () => {
-          try {
-            await signInWithPopup(auth, new GoogleAuthProvider());
-          } catch (err: any) {
-            if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
-              console.log('Login cancelled by user.');
-            } else {
-              console.error('Login error:', err);
-            }
-          }
-        }}
-        onGuestLogin={() => setUser(guestUser)}
-      />
+      <ErrorBoundary>
+        <Suspense fallback={<LazyFallback isLight={false} />}>
+          <EpicLanding
+            onGoogleLogin={async () => {
+              try {
+                await signInWithPopup(auth, new GoogleAuthProvider());
+              } catch (err: unknown) {
+                const firebaseErr = err as { code?: string };
+                if (firebaseErr.code === 'auth/popup-closed-by-user' || firebaseErr.code === 'auth/cancelled-popup-request') {
+                  console.log('Login cancelled by user.');
+                } else {
+                  console.error('Login error:', err);
+                }
+              }
+            }}
+            onGuestLogin={() => setUser(guestUser)}
+          />
+        </Suspense>
+      </ErrorBoundary>
     );
   }
 
   return (
     <ErrorBoundary>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: isLight ? '#f5f5f0' : '#0A0A0F',
+            color: isLight ? '#1c1917' : '#e4e4e7',
+            border: isLight ? '1px solid #e7e5e4' : '1px solid rgba(255,255,255,0.08)',
+            fontFamily: 'ui-monospace, monospace',
+            fontSize: '13px',
+          },
+          success: {
+            iconTheme: { primary: '#22c55e', secondary: '#f0fdf4' },
+          },
+          error: {
+            iconTheme: { primary: '#e31e24', secondary: '#fef2f2' },
+          },
+        }}
+      />
     <div className={`min-h-screen flex flex-col transition-all duration-500 selection:bg-rose-500/30 selection:text-white ${
-      isLight ? 'bg-stone-100 text-stone-900' : 'bg-[#0A0A0F] text-zinc-200'
+      isLight ? 'bg-gradient-to-br from-stone-100 via-stone-50 to-stone-200 text-stone-900' : 'bg-gradient-to-br from-[#0A0A0F] via-[#0A0A14] to-[#1A0A0F] text-zinc-200'
     }`}>
       {/* 3D Energy Sphere Background */}
       <div className={`fixed inset-0 pointer-events-none transition-opacity duration-500 ${
@@ -528,6 +784,9 @@ export default function App() {
           <EnergySphereScene isLight={isLight} />
         </ErrorBoundary>
       </div>
+      {/* Animated Gradient Background Overlay */}
+      <div className={`fixed inset-0 pointer-events-none transition-opacity duration-700 ${isLight ? 'bg-animate-light opacity-50' : 'bg-animate-dark opacity-60'}`} />
+
       {/* DIAGNOSTIC - remove after fixing */}
       <div className="fixed top-0 left-0 z-[99999] bg-rose-600 text-white text-[8px] font-mono px-2 py-0.5">KAGE APP MOUNTED</div>
       <div className={`fixed inset-0 pointer-events-none transition-opacity duration-500 ${isLight ? 'bg-gradient-to-b from-stone-100/80 via-stone-100/50 to-stone-100' : 'bg-gradient-to-b from-transparent via-[#0A0A0F]/30 to-[#0A0A0F]/80'}`} />
@@ -544,19 +803,15 @@ export default function App() {
         <div className="flex items-center gap-3">
           <button 
             onClick={() => signOut(auth)}
-            className={`text-[10px] font-mono border px-2 py-1 rounded transition-colors ${
-              isLight ? 'border-stone-300 text-stone-500 hover:bg-stone-200' : 'border-zinc-700 text-zinc-400 hover:bg-zinc-800'
-            }`}
+            className={`text-[10px] font-mono border px-2 py-1 rounded transition-all duration-200 cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${isLight ? 'border-stone-300 text-stone-500 hover:bg-stone-200' : 'border-zinc-700 text-zinc-400 hover:bg-zinc-800'}`}
           >
             LOGOUT
           </button>
           <button 
             onClick={() => { setIsMuted(!isMuted); if (isMuted) KageAudio.playZenHum(); }}
-            className={`p-1.5 rounded-lg transition-all ${
-              isLight ? 'bg-stone-200 hover:bg-stone-300' : 'bg-zinc-800/50 hover:bg-zinc-700/50'
-            }`}
+            className={`p-1.5 rounded-lg transition-all duration-200 cursor-pointer active:scale-90 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${isLight ? 'bg-stone-200 hover:bg-stone-300' : 'bg-zinc-800/50 hover:bg-zinc-700/50'}`}
           >
-            <Volume2 className={`w-4 h-4 ${isMuted ? (isLight ? 'text-stone-400' : 'text-zinc-600') : (isLight ? 'text-stone-700' : 'text-zinc-300')}`} />
+            <Volume2 className={`w-4 h-4 ${isMuted ? (isLight ? 'text-stone-400' : 'text-zinc-600') : (isLight ? 'text-stone-600' : 'text-zinc-300')}`} />
           </button>
         </div>
       </header>
@@ -568,927 +823,168 @@ export default function App() {
         <div 
           onMouseMove={handleGlobalMouseMove}
           onMouseLeave={handleGlobalMouseLeave}
-          className={`flex-1 overflow-x-hidden overflow-y-auto no-scrollbar pt-16 pb-20 px-5 relative z-25 flex flex-col transition-all duration-500 ease-in-out ${
-            isLight ? 'bg-stone-100/60 text-stone-800' : 'bg-[#0A0A0F]/80 text-zinc-200'
-          }`}>
+          className={`flex-1 overflow-x-hidden overflow-y-auto no-scrollbar pt-16 pb-20 px-5 relative z-25 flex flex-col transition-all duration-500 ease-in-out ${isLight ? 'bg-stone-100/80 text-stone-900' : 'bg-[#0A0A0F]/80 text-zinc-200'}`}>
           <AnimatePresence mode="wait">
           {/* ======================= TAB 1: HOME (家) ======================= */}
           {currentTab === '家' && (
-            <motion.div key="tab-home" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }} className="space-y-5 flex-1 flex flex-col relative">
-              
-              {/* Theme Toggle */}
-              <div className="flex justify-center">
-                <div className={`inline-flex p-0.5 rounded-full transition-colors ${
-                  isLight ? 'bg-stone-200' : 'bg-zinc-800/60'
-                }`}>
-                  <button onClick={() => setLandingTheme('dark')} className={`px-3 py-1 rounded-full text-[10px] font-mono tracking-wider transition-all ${!isLight ? 'bg-rose-600 text-white shadow' : 'text-stone-500 hover:text-stone-800'}`}>DARK</button>
-                  <button onClick={() => setLandingTheme('light')} className={`px-3 py-1 rounded-full text-[10px] font-mono tracking-wider transition-all ${isLight ? 'bg-amber-600 text-white shadow' : 'text-stone-500 hover:text-stone-800'}`}>LIGHT</button>
-                </div>
-              </div>
-
-              {/* Hero Image */}
-              <div className="relative w-full h-52 rounded-2xl overflow-hidden shadow-lg">
-                <motion.img 
-                  src={IMAGES.bgSamurai} 
-                  className="w-full h-full object-cover" 
-                  style={{ scale: imageScale }}
-                  alt="Kage Dojo" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F]/90 via-transparent to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-r from-rose-900/20 to-transparent" />
-                <div className="absolute bottom-3 left-4 flex items-end gap-3">
-                  <div>
-                    <span className="font-kanji font-black text-5xl text-rose-500 drop-shadow-[0_0_15px_rgba(227,30,36,0.6)]">影</span>
-                    <p className={`text-[10px] font-mono tracking-widest mt-1 ${isLight ? 'text-stone-300' : 'text-zinc-400'}`}>KAGE PREMIUM DOJO V2</p>
-                  </div>
-                  <div className="flex gap-1 ml-auto">
-                    <img src={IMAGES.warriorHelmet} className="w-10 h-10 rounded-lg object-cover border border-white/10 shadow" />
-                    <img src={IMAGES.hologramSensei} className="w-10 h-10 rounded-lg object-cover border border-white/10 shadow" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Stats Grid */}
-              <div className="grid grid-cols-4 gap-2">
-                {[
-                  { label: 'LEVEL', value: '16', icon: '⭐', color: 'text-amber-400' },
-                  { label: 'STREAK', value: `${streak}d`, icon: '🔥', color: 'text-rose-500' },
-                  { label: 'HONOR', value: '2,450', icon: '⚔️', color: 'text-cyan-400' },
-                  { label: 'PACT', value: '22', icon: '🤝', color: 'text-emerald-400' },
-                ].map((stat) => (
-                  <div key={stat.label} className={`rounded-xl p-2.5 text-center transition-colors ${
-                    isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/60 border border-zinc-800/50'
-                  }`}>
-                    <div className={`text-base ${stat.color}`}>{stat.icon}</div>
-                    <div className={`text-sm font-extrabold mt-0.5 ${isLight ? 'text-stone-800' : 'text-white'}`}>{stat.value}</div>
-                    <div className={`text-[7px] font-mono tracking-wider ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Streak Card + Photos */}
-              <div className={`flex items-center justify-between rounded-xl p-4 transition-colors ${
-                isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/60 border border-zinc-800/50'
-              }`}>
-                <div className="flex items-center gap-3">
-                  <div className="w-14 h-14 rounded-xl overflow-hidden">
-                    <img src={IMAGES.warriorHelmet} className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <span className={`text-[10px] font-mono uppercase tracking-wider ${isLight ? 'text-rose-600' : 'text-rose-400'}`}>FLAME STREAK</span>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-4xl font-extrabold bg-gradient-to-r from-orange-400 to-rose-500 bg-clip-text text-transparent">{streak}</span>
-                      <span className={`text-xs font-mono ${isLight ? 'text-stone-500' : 'text-zinc-500'}`}>DAYS</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex gap-2 items-center">
-                  <Flame className="w-8 h-8 text-rose-500 drop-shadow-[0_0_10px_rgba(255,59,48,0.6)]" />
-                  <div className="text-right">
-                    <div className={`text-[9px] font-mono ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>BEST</div>
-                    <div className="text-xs font-bold text-amber-400">89d</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Progress Row */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className={`rounded-xl p-3 transition-colors ${
-                  isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/60 border border-zinc-800/50'
-                }`}>
-                  <div className="flex items-center gap-2">
-                    <Award className={`w-5 h-5 ${isLight ? 'text-amber-600' : 'text-amber-400'}`} />
-                    <span className={`text-[9px] font-mono tracking-wider ${isLight ? 'text-stone-500' : 'text-zinc-500'}`}>ACHIEVEMENTS</span>
-                  </div>
-                  <div className="mt-1 flex items-baseline gap-1">
-                    <span className="text-xl font-extrabold text-amber-400">{achievements.filter(a => a.unlocked).length}</span>
-                    <span className={`text-[10px] ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>/ {achievements.length}</span>
-                  </div>
-                  <div className="mt-1.5 h-1.5 rounded-full bg-zinc-700/30 overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full" style={{ width: `${(achievements.filter(a => a.unlocked).length / achievements.length) * 100}%` }} />
-                  </div>
-                </div>
-                <div className={`rounded-xl p-3 transition-colors ${
-                  isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/60 border border-zinc-800/50'
-                }`}>
-                  <div className="flex items-center gap-2">
-                    <Activity className={`w-5 h-5 ${isLight ? 'text-emerald-600' : 'text-emerald-400'}`} />
-                    <span className={`text-[9px] font-mono tracking-wider ${isLight ? 'text-stone-500' : 'text-zinc-500'}`}>THIS WEEK</span>
-                  </div>
-                  <div className="mt-1">
-                    <span className="text-xl font-extrabold text-emerald-400">5</span>
-                    <span className={`text-[10px] ml-1 ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>workouts</span>
-                  </div>
-                  <div className="mt-1.5 flex gap-1">
-                    {[1,1,1,1,0,0,0].map((d, i) => (
-                      <div key={i} className={`h-1.5 flex-1 rounded-full ${d ? 'bg-emerald-500' : isLight ? 'bg-stone-200' : 'bg-zinc-700/50'}`} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* BEGIN TRAINING */}
-              <button
-                onClick={() => {
-                  soundSafe('clash');
-                  setActiveRunningProgram(MOCK_PROGRAMS[0]);
-                  setRunningTimer(0);
-                  setIsRunning(true);
-                }}
-                className="w-full py-4 rounded-xl font-bold font-mono tracking-widest bg-rose-600 text-white hover:bg-rose-500 transition-all shadow-[0_4px_20px_rgba(227,30,36,0.3)] active:scale-[0.98] flex items-center justify-center gap-2"
-              >
-                <Swords className="w-5 h-5" />
-                BEGIN TRAINING
-              </button>
-
-              {/* Pact + Battle Cry Row */}
-              <div className="grid grid-cols-2 gap-3">
-                <div 
-                  onClick={() => setIsPartnerProfileOpen(true)}
-                  className={`rounded-xl p-3 cursor-pointer active:scale-[0.98] transition-all ${
-                    isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/60 border border-zinc-800/50'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl">{pactData.avatar}</span>
-                    <div className="min-w-0">
-                      <p className={`text-xs font-semibold truncate ${isLight ? 'text-stone-700' : 'text-zinc-200'}`}>{pactData.partnerName}</p>
-                      <p className="text-[10px] text-emerald-400 font-mono">{pactData.sharedStreak}d streak</p>
-                    </div>
-                  </div>
-                </div>
-                <div 
-                  onClick={() => setIsBattleCryModalOpen(true)}
-                  className={`rounded-xl p-3 cursor-pointer active:scale-[0.98] transition-all ${
-                    isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/60 border border-zinc-800/50'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-rose-400" />
-                    <div>
-                      <p className={`text-xs font-semibold ${isLight ? 'text-stone-700' : 'text-zinc-200'}`}>BATTLE CRY</p>
-                      <p className={`text-[9px] font-mono truncate ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>{battleCryText}</p>
-                    </div>
-                  </div>
-                  {isBattleCryActive && <div className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1 animate-ping" />}
-                </div>
-              </div>
-
-              {/* Sensei Widget */}
-              <div 
-                onClick={() => setCurrentTipIndex((currentTipIndex + 1) % senseiWidgetProverbs.length)}
-                className={`flex items-center gap-3 rounded-xl p-3 cursor-pointer active:scale-[0.98] transition-all ${
-                  isLight ? 'bg-white/70 border border-stone-200' : 'bg-zinc-900/40 border border-zinc-800/40'
-                }`}
-              >
-                <img src={IMAGES.hologramSensei} alt="" className="w-10 h-10 rounded-full object-cover border border-cyan-500/30" />
-                <div className="min-w-0 flex-1">
-                  <span className="text-[9px] font-mono text-cyan-400 tracking-widest">SENSEI</span>
-                  <p className={`text-xs truncate ${isLight ? 'text-stone-600' : 'text-zinc-300'}`}>"{senseiWidgetProverbs[currentTipIndex]}"</p>
-                </div>
-              </div>
-
-              {/* Photo Gallery Row */}
-              <div className="grid grid-cols-3 gap-2">
-                <div className="rounded-xl overflow-hidden h-20">
-                  <img src={IMAGES.warriorHelmet} className="w-full h-full object-cover" />
-                </div>
-                <div className="rounded-xl overflow-hidden h-20">
-                  <img src={IMAGES.bgSamurai} className="w-full h-full object-cover" />
-                </div>
-                <div className="rounded-xl overflow-hidden h-20">
-                  <img src={IMAGES.hologramSensei} className="w-full h-full object-cover" />
-                </div>
-              </div>
-
-            </motion.div>
+            <Suspense fallback={<LazyFallback isLight={isLight} />}>
+              <HomeTab
+                isLight={isLight}
+                streak={streak}
+                achievements={achievements}
+                pactData={pactData}
+                battleCryText={battleCryText}
+                battleCryTimer={battleCryTimer}
+                isBattleCryActive={isBattleCryActive}
+                senseiWidgetProverbs={senseiWidgetProverbs}
+                currentTipIndex={currentTipIndex}
+                soundSafe={soundSafe}
+                setLandingTheme={setLandingTheme}
+                setActiveRunningProgram={setActiveRunningProgram}
+                setExerciseLogs={setExerciseLogs}
+                setCurrentExerciseIndex={setCurrentExerciseIndex}
+                setRunningTimer={setRunningTimer}
+                setIsRunning={setIsRunning}
+                setRestTimerDuration={setRestTimerDuration}
+                setRestTimerKey={setRestTimerKey}
+                setIsPartnerProfileOpen={setIsPartnerProfileOpen}
+                setIsBattleCryModalOpen={setIsBattleCryModalOpen}
+                setCurrentTipIndex={setCurrentTipIndex}
+                mockPrograms={MOCK_PROGRAMS}
+              />
+            </Suspense>
           )}
 
 
           {/* ======================= TAB 2: TRAIN (武) ======================= */}
           {currentTab === '武' && (
-            <motion.div key="tab-train" initial={{ opacity: 0, x: -20, filter: 'blur(5px)' }} animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, x: 20, filter: 'blur(5px)' }} transition={{ duration: 0.4, ease: "easeOut" }} className="space-y-6 pt-2">
-              
-              <div className="text-center py-2 flex justify-between items-center border-b border-white/5 pb-4">
-                <div className="flex items-center gap-2">
-                  <span className="font-kanji font-black text-rose-500 text-3xl">武</span>
-                  <h2 className="text-xl font-bold text-white tracking-widest">DOJO FLOOR</h2>
-                </div>
-                <span className="px-2 py-0.5 rounded-full bg-rose-500/10 border border-rose-500/25 text-[10px] text-rose-400 font-mono">BETA</span>
-              </div>
-
-              {/* Sub-Tabs Selector */}
-              <div className="flex bg-void p-1 rounded-lg border border-white/5">
-                <button
-                  onClick={() => { soundSafe('tap'); setTrainingSubTab('eq'); }}
-                  className={`flex-1 text-center py-2 rounded-md font-mono text-xs font-medium transition-all cursor-pointer flex items-center justify-center gap-1.5 ${trainingSubTab === 'eq' ? 'bg-kachi text-rose-500 font-bold border border-rose-500/10' : 'text-zinc-400'}`}
-                >
-                  <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-                  EQUIPMENT
-                </button>
-                <button
-                  onClick={() => { soundSafe('tap'); setTrainingSubTab('zero'); }}
-                  className={`flex-1 text-center py-2 rounded-md font-mono text-xs font-medium transition-all cursor-pointer flex items-center justify-center gap-1.5 ${trainingSubTab === 'zero' ? 'bg-kachi text-hisui font-bold border border-hisui/10' : 'text-zinc-400'}`}
-                >
-                  <span className="w-2 h-2 rounded-full bg-hisui animate-pulse" />
-                  ZERO-EQUIPMENT
-                </button>
-              </div>
-
-              {/* CARD CAROUSEL (Vertical snap or dynamic selectable items) */}
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <p className="text-xs font-mono text-[#8E9EAF] uppercase tracking-wide">AVAILABLE COMBAT MODULES</p>
-                  <span className="text-[10px] text-zinc-500">SWORD RANKS INDENTED</span>
-                </div>
-
-                <div className="space-y-3">
-                  {MOCK_PROGRAMS
-                    .filter(p => trainingSubTab === 'eq' ? p.equipmentNeeded : !p.equipmentNeeded)
-                    .map(prog => (
-                      <ProgramCard
-                        key={prog.id}
-                        program={prog}
-                        onSelect={(p) => {
-                          soundSafe('tap');
-                          setSelectedProgram(p);
-                        }}
-                      />
-                    ))}
-                </div>
-              </div>
-
-              {/* DIET SECTION BELOW CAROUSEL */}
-              <div className="pt-4 border-t border-white/5 space-y-4">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-1">
-                    <Utensils className="w-4 h-4 text-[#F2C94C]" />
-                    <h3 className="text-xs font-mono uppercase tracking-widest text-[#8E9EAF]">WARRIOR\'S FUEL</h3>
-                  </div>
-                  <select 
-                    value={mealPlanType}
-                    onChange={(e) => {
-                      soundSafe('tap');
-                      setMealPlanType(e.target.value as any);
-                    }}
-                    className="bg-void text-xs font-mono text-zinc-300 border border-white/10 rounded px-2 py-1 outline-none"
-                  >
-                    <option value="shred">SHRED (Low Cal)</option>
-                    <option value="bulk">BULK (High Pro)</option>
-                    <option value="maintain">MAINTAIN</option>
-                  </select>
-                </div>
-
-                {/* MacroRings Indicator (Protein / Carbs / Fat) */}
-                <div className="grid grid-cols-3 gap-3 bg-kachi/50 rounded-xl p-4">
-                  {/* Protein Ring */}
-                  <div className="flex flex-col items-center">
-                    <div className="relative w-16 h-16 flex items-center justify-center">
-                      <svg className="absolute w-full h-full transform -rotate-90">
-                        <circle cx="32" cy="32" r="26" className="stroke-void fill-none" strokeWidth="4" />
-                        <circle 
-                          cx="32" 
-                          cy="32" 
-                          r="26" 
-                          className="stroke-rose-500 fill-none transition-all duration-1000" 
-                          strokeWidth="4" 
-                          strokeDasharray={163.3}
-                          strokeDashoffset={163.3 * (1 - (mealPlanType === 'bulk' ? 0.9 : mealPlanType === 'shred' ? 0.8 : 0.65))}
-                        />
-                      </svg>
-                      <div className="text-center">
-                        <span className="text-xs font-bold text-white font-mono">{mealPlanType === 'bulk' ? '180g' : '150g'}</span>
-                        <p className="text-[8px] text-rose-400 font-mono">PROTEIN</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Carbs Ring */}
-                  <div className="flex flex-col items-center">
-                    <div className="relative w-16 h-16 flex items-center justify-center">
-                      <svg className="absolute w-full h-full transform -rotate-90">
-                        <circle cx="32" cy="32" r="26" className="stroke-void fill-none" strokeWidth="4" />
-                        <circle 
-                          cx="32" 
-                          cy="32" 
-                          r="26" 
-                          className="stroke-[#F2C94C] fill-none transition-all duration-1000" 
-                          strokeWidth="4" 
-                          strokeDasharray={163.3}
-                          strokeDashoffset={163.3 * (1 - (mealPlanType === 'bulk' ? 0.95 : mealPlanType === 'shred' ? 0.25 : 0.5))}
-                        />
-                      </svg>
-                      <div className="text-center">
-                        <span className="text-xs font-bold text-white font-mono">{mealPlanType === 'bulk' ? '320g' : '90g'}</span>
-                        <p className="text-[8px] text-yellow-400 font-mono">CARBS</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Fat Ring */}
-                  <div className="flex flex-col items-center">
-                    <div className="relative w-16 h-16 flex items-center justify-center">
-                      <svg className="absolute w-full h-full transform -rotate-90">
-                        <circle cx="32" cy="32" r="26" className="stroke-void fill-none" strokeWidth="4" />
-                        <circle 
-                          cx="32" 
-                          cy="32" 
-                          r="26" 
-                          className="stroke-[#2D9C6E] fill-none transition-all duration-1000" 
-                          strokeWidth="4" 
-                          strokeDasharray={163.3}
-                          strokeDashoffset={163.3 * (1 - (mealPlanType === 'bulk' ? 0.7 : mealPlanType === 'shred' ? 0.45 : 0.6))}
-                        />
-                      </svg>
-                      <div className="text-center">
-                        <span className="text-xs font-bold text-white font-mono">{mealPlanType === 'bulk' ? '80g' : '55g'}</span>
-                        <p className="text-[8px] text-emerald-400 font-mono">LIPID</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* WATER TRACKER (Grid of cups) */}
-                <div className="bg-kachi/30 border border-white/5 rounded-xl p-4 space-y-3">
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <Droplet className="w-4 h-4 text-cyan-400 animate-pulse" />
-                      <span className="text-xs font-mono text-zinc-200">HYDRO-LEDGER</span>
-                    </div>
-                    <span className="text-xs font-mono text-cyan-400 font-bold">
-                      {waterCups.filter(c => c).length} / 8 GLASSES
-                    </span>
-                  </div>
-
-                  <p className="text-[10px] text-zinc-500 font-mono uppercase">HYDRATION PREVENTS CORE MUSCLE FAILURES. TAP TO DRINK MILK OR SPRING WATER:</p>
-                  
-                  {/* Grid of cups */}
-                  <div className="grid grid-cols-8 gap-2">
-                    {waterCups.map((filled, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => fillWaterCup(idx)}
-                        className={`aspect-square rounded border transition-all flex items-center justify-center relative overflow-hidden cursor-pointer ${filled ? 'bg-cyan-500/20 border-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.4)]' : 'bg-void border-zinc-700 hover:border-cyan-500/30'}`}
-                      >
-                        {filled ? (
-                          <div className="absolute inset-0 bg-cyan-400 opacity-20 animate-pulse" />
-                        ) : null}
-                        <CupSoda className={`w-4 h-4 ${filled ? 'text-cyan-400 animate-bounce' : 'text-zinc-600'}`} />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* MealCard List */}
-                <div className="space-y-2">
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase">SUGGESTED COMBAT RECIPES FOR TODAY:</span>
-                  {MOCK_MEAL_PLANS[mealPlanType].map(meal => (
-                    <div key={meal.id} className="bg-kachi/50 rounded-xl p-3 flex items-center justify-between border border-white/5">
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl">{meal.image}</span>
-                        <div>
-                          <p className="text-xs font-bold text-white">{meal.name}</p>
-                          <p className="text-[10px] text-zinc-400 font-mono">P: {meal.protein}g • C: {meal.carbs}g • F: {meal.fat}g</p>
-                        </div>
-                      </div>
-                      <span className="text-xs font-bold font-mono text-amber-500">{meal.calories} kcal</span>
-                    </div>
-                  ))}
-                </div>
-
-              </div>
-
-            </motion.div>
+            <Suspense fallback={<LazyFallback isLight={isLight} />}>
+              <TrainTab
+                isLight={isLight}
+                soundSafe={soundSafe}
+                MOCK_PROGRAMS={MOCK_PROGRAMS}
+                MOCK_TRAINING_PLANS={MOCK_TRAINING_PLANS}
+                userPrograms={userPrograms}
+                trainingSubTab={trainingSubTab}
+                setTrainingSubTab={setTrainingSubTab}
+                trainingInnerTab={trainingInnerTab}
+                setTrainingInnerTab={setTrainingInnerTab}
+                setSelectedProgram={setSelectedProgram}
+                setActiveRunningProgram={setActiveRunningProgram}
+                setExerciseLogs={setExerciseLogs}
+                setCurrentExerciseIndex={setCurrentExerciseIndex}
+                setRunningTimer={setRunningTimer}
+                setIsRunning={setIsRunning}
+                setRestTimerDuration={setRestTimerDuration}
+                setRestTimerKey={setRestTimerKey}
+                saveUserProgram={saveUserProgram}
+                getTotalWorkouts={getTotalWorkouts}
+                getVerifiedWorkouts={getVerifiedWorkouts}
+                getTotalVolume={getTotalVolume}
+                getCurrentStreak={getCurrentStreak}
+                getBestStreak={getBestStreak}
+                getWeeklyVolume={getWeeklyVolume}
+                getMaxVolumeSession={getMaxVolumeSession}
+                workouts={workouts}
+              />
+            </Suspense>
           )}
 
 
           {/* ======================= TAB 3: DOJO (道) ======================= */}
           {currentTab === '道' && (
-            <motion.div key="tab-dojo" initial={{ opacity: 0, x: -20, filter: 'blur(5px)' }} animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, x: 20, filter: 'blur(5px)' }} transition={{ duration: 0.4, ease: "easeOut" }} className="space-y-6 pt-2">
-              
-              <div className="text-center py-2 flex justify-between items-center border-b border-white/5 pb-4">
-                <div className="flex items-center gap-2">
-                  <span className="font-kanji font-black text-rose-500 text-3xl">道</span>
-                  <h2 className="text-xl font-bold text-white tracking-widest">SACRED ARENA</h2>
-                </div>
-                <button
-                  onClick={handleLeaderboardRefresh}
-                  className="p-1.5 rounded bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 active:scale-95 transition-all text-rose-400 flex items-center gap-1.5 text-[10px] font-mono cursor-pointer"
-                >
-                  <RefreshCw className="w-3 h-3 animate-spin" />
-                  STRIKE CLASH
-                </button>
-              </div>
-
-              {/* Top 60% — Warrior Pact Section */}
-              <div className="space-y-4">
-                <p className="text-xs font-mono text-[#8E9EAF] uppercase tracking-wide">YOUR BLOOD PACT ALLY</p>
-                
-                <div className="bg-gradient-to-br from-sumi to-void rounded-2xl border border-white/10 p-5 space-y-4 relative overflow-hidden shadow-2xl">
-                  {/* Glowing core indicator */}
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-rose-500 opacity-5 blur-[40px] pointer-events-none" />
-
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-3">
-                      <span className="text-4xl bg-kachi w-14 h-14 rounded-full flex items-center justify-center border-2 border-hisui/60">{pactData.avatar}</span>
-                      <div>
-                        <h4 className="font-bold text-md text-white tracking-wide">{pactData.partnerName}</h4>
-                        <p className="text-xs text-hisui font-mono flex items-center gap-1">
-                          <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
-                          SHIELD LEVEL: {pactData.partnerLevel} INTACT
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="text-right">
-                      <span className="text-[10px] font-mono text-zinc-500 uppercase">SHARED STREAK</span>
-                      <p className="text-2xl font-black text-[#F2C94C] flex items-center justify-end gap-1 font-mono">
-                        <Flame className="w-5 h-5 fill-[#F2C94C]" />
-                        {pactData.sharedStreak}D
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Shared shield progress bar info */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-xs font-mono">
-                      <span className="text-zinc-400">Joint Workout Target</span>
-                      <span className="text-zinc-500">{pactData.jointWorkoutCount} / {pactData.targetCount} days</span>
-                    </div>
-                    <div className="h-2 w-full bg-void rounded-full overflow-hidden border border-white/5">
-                      <div className="h-full bg-gradient-to-r from-[#2196F3] via-hisui to-emerald-500 rounded-full" style={{ width: `${(pactData.jointWorkoutCount / pactData.targetCount) * 100}%` }} />
-                    </div>
-                  </div>
-
-                  {/* ChainStreak Visual (🏅 chain links glow gold at milestones) */}
-                  <div className="space-y-2 pt-2">
-                    <p className="text-[10px] font-mono text-rose-400 uppercase tracking-widest">CHAINSTREAK PROTOCOL MILSTONES:</p>
-                    <div className="flex justify-between items-center bg-void p-2.5 rounded-lg border border-white/5">
-                      <div className="flex items-center gap-1.5 flex-1 justify-around">
-                        <div className="flex flex-col items-center">
-                          <Award className="w-5 h-5 text-zinc-500" />
-                          <span className="text-[8px] font-mono text-zinc-500 mt-1">7 DAYS</span>
-                        </div>
-                        <div className="h-0.5 bg-zinc-700 flex-1 mx-2" />
-                        <div className="flex flex-col items-center">
-                          <Award className="w-5 h-5 text-zinc-300 animate-pulse" />
-                          <span className="text-[8px] font-mono text-rose-400 mt-1">15 DAYS</span>
-                        </div>
-                        <div className="h-0.5 bg-zinc-700 flex-1 mx-2" />
-                        <div className="flex flex-col items-center">
-                          <Award className="w-5 h-5 text-zinc-700" />
-                          <span className="text-[8px] font-mono text-zinc-700 mt-1">30 DAYS</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Fast Action Buttons */}
-                  <div className="grid grid-cols-2 gap-3 pt-2">
-                    <button
-                      onClick={() => setIsBattleCryModalOpen(true)}
-                      className="text-center py-2 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/30 transition-all font-mono font-bold text-xs text-rose-400 cursor-pointer active:scale-95 flex items-center justify-center gap-1.5"
-                    >
-                      <Zap className="w-3.5 h-3.5" />
-                      SEND BATTLE CRY
-                    </button>
-                    <button
-                      onClick={() => setIsForgeModalOpen(true)}
-                      className="text-center py-2 rounded-lg bg-indigo/30 hover:bg-indigo/40 border border-indigo/40 transition-all font-mono font-bold text-xs text-indigo-400 cursor-pointer active:scale-95 flex items-center justify-center gap-1.5"
-                    >
-                      <Plus className="w-3.5 h-3.5" />
-                      FORGE PACT
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Mid Section — Discipline Calendar */}
-              <div className="space-y-4 pt-2">
-                <p className="text-xs font-mono text-[#8E9EAF] uppercase tracking-wide flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  HISTORIC DISCIPLINE RECORD
-                </p>
-                <div className="bg-kachi/30 rounded-2xl border border-white/5 p-5">
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-sm font-bold text-white font-mono tracking-widest uppercase shadow-sm">JUNE 2026</h3>
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-rose-500 shadow-[0_0_8px_rgba(227,30,36,0.5)]"></span><span className="text-[9px] text-zinc-400 font-mono">COMPLETE</span></div>
-                      <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded border border-rose-500/50 border-dashed"></span><span className="text-[9px] text-zinc-400 font-mono">SCHEDULED</span></div>
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-7 gap-2">
-                    {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
-                       <div key={i} className="text-center text-[10px] text-zinc-500 font-mono font-bold">{day}</div>
-                    ))}
-                    {Array.from({length: 30}).map((_, i) => {
-                       const isPast = i < 5;
-                       const isToday = i === 5;
-                       const isScheduled = i === 7 || i === 9 || i === 12 || i === 14;
-                       const isCompleted = isPast && (i === 0 || i === 1 || i === 3 || i === 4);
-                       
-                       return (
-                         <div key={i} className={`aspect-square rounded-md flex items-center justify-center font-mono text-xs transition-all relative group cursor-pointer ${
-                           isToday ? 'bg-rose-500 text-white border border-rose-400 shadow-[0_0_15px_rgba(227,30,36,0.6)] z-10 scale-105' : 
-                           isCompleted ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30 hover:bg-rose-500/30' :
-                           isScheduled ? 'bg-void border border-rose-500/30 border-dashed text-zinc-400 hover:bg-white/5' :
-                           'bg-void/40 border border-white/5 text-zinc-700 hover:bg-white/5'
-                         }`}>
-                           {i + 1}
-                           
-                           {/* Tooltip on hover */}
-                           <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max px-2 py-1 bg-lacquer-black text-white text-[9px] rounded border border-white/10 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-20">
-                             {isToday ? 'TODAY: SHRED DUPLEX' : isCompleted ? 'LOG: IRON PHYSICAL' : isScheduled ? 'SCHEDULED DRILL' : 'REST / NO RECORD'}
-                           </div>
-                         </div>
-                       )
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom 40% — Leaderboard Section */}
-              <div className="space-y-3 pt-2">
-                <div className="flex justify-between items-center">
-                  <p className="text-xs font-mono text-[#8E9EAF] uppercase tracking-wide">LEADERBOARD_INDEX (TOP 10)</p>
-                  <span className="text-[9px] text-[#2D9C6E] font-mono">STATUS: CALCULATED LIVE</span>
-                </div>
-                <LeaderboardBoard data={leaderboard} />
-              </div>
-
-            </motion.div>
+            <Suspense fallback={<LazyFallback isLight={isLight} />}>
+              <DojoTab
+                isLight={isLight}
+                pactData={pactData}
+                isBattleCryActive={isBattleCryActive}
+                handleLeaderboardRefresh={handleLeaderboardRefresh}
+                setIsBattleCryModalOpen={setIsBattleCryModalOpen}
+                setIsForgeModalOpen={setIsForgeModalOpen}
+                leaderboard={leaderboard}
+                soundSafe={soundSafe}
+              />
+            </Suspense>
           )}
 
 
-          {/* ======================= TAB 4: SENSEI (先) ======================= */}
+          {/* ======================= TAB 4: BUILD (造) ======================= */}
+          {currentTab === '造' && (
+            <Suspense fallback={<LazyFallback isLight={isLight} />}>
+              <ProgramBuilder
+                isLight={isLight}
+                soundSafe={soundSafe}
+                onStartTraining={(program) => {
+                  setSelectedProgram(program);
+                  // Auto-begin the program
+                  setActiveRunningProgram(program);
+                  setExerciseLogs(program.moves.map((m: any, i: number) => ({
+                    name: m.name,
+                    sets: [],
+                    targetSets: m.sets || 3,
+                    targetReps: m.reps || 10
+                  })));
+                  setCurrentExerciseIndex(0);
+                  setRunningTimer(0);
+                  setIsRunning(true);
+                  setRestTimerDuration(90);
+                  setRestTimerKey(prev => prev + 1);
+                }}
+              />
+            </Suspense>
+          )}
+
+          {/* ======================= TAB 5: SENSEI (先) ======================= */}
           {currentTab === '先' && (
-            <motion.div key="tab-sensei" initial={{ opacity: 0, x: -20, filter: 'blur(5px)' }} animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, x: 20, filter: 'blur(5px)' }} transition={{ duration: 0.4, ease: "easeOut" }} className="flex-1 flex flex-col h-full space-y-4 pt-2">
-              
-              <div className="text-center py-2 flex justify-between items-center border-b border-white/5 pb-4">
-                <div className="flex items-center gap-2">
-                  <span className="font-kanji font-black text-rose-500 text-3xl">先</span>
-                  <div>
-                    <h2 className="text-xl font-bold text-white tracking-widest text-left">CYBER-SENSEI</h2>
-                    <p className="text-[8px] text-cyan-400 font-mono text-left uppercase">GEMINI NEURAL GRID MODULE ADAPTIVE</p>
-                  </div>
-                </div>
-                <div className="px-2 py-1 rounded bg-[#F2C94C]/10 border border-[#F2C94C]/20 text-[9px] text-yellow-500 font-mono animate-pulse">
-                  MASTER STATUS
-                </div>
-              </div>
-
-              {/* Holographic Big Floating Avatar */}
-              <div className="flex flex-col items-center py-4 relative bg-sumi/30 rounded-2xl border border-indigo/10 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-void to-transparent" />
-                
-                {/* Visual grid lines for holograms */}
-                <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-cyan-500/20 shadow-[0_0_8px_rgba(34,211,238,0.5)] animate-pulse" />
-
-                <div className="relative w-36 h-36 flex items-center justify-center z-10 select-none">
-                  {/* Glowing pulses */}
-                  <div className="absolute w-28 h-28 rounded-full border border-cyan-500/30 animate-ping pointer-events-none" />
-                  <div className="absolute w-32 h-32 rounded-full border border-cyan-400/20 animate-pulse pointer-events-none" />
-                  <img 
-                    src={IMAGES.hologramSensei} 
-                    alt="Cybermaster" 
-                    className="w-full h-full object-contain filter drop-shadow-[0_0_20px_rgba(6,182,212,0.8)]" 
-                  />
-                </div>
-                
-                <h3 className="text-xs font-mono text-center text-cyan-400 tracking-wider font-extrabold uppercase mt-2 z-10">UNIT-IV COVENANT SENSEI</h3>
-                <p className="text-[10px] text-zinc-400 text-center font-mono z-10 px-4 mt-1">"The sword cut determines your essence."</p>
-              </div>
-
-              {/* 6 Quick Action Gems */}
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  onClick={() => handleQuerySubmit('inspire')}
-                  className="bg-kachi/50 hover:bg-rose-500/20 border border-white/5 hover:border-rose-500/30 rounded-xl p-2.5 flex flex-col items-center text-center transition-all cursor-pointer transform active:scale-95"
-                >
-                  <Sparkles className="w-4 h-4 text-[#F2C94C] mb-1 shrink-0" />
-                  <span className="text-[9px] font-mono text-zinc-300">INSPIRE</span>
-                </button>
-                <button
-                  onClick={() => handleQuerySubmit('form')}
-                  className="bg-kachi/50 hover:bg-rose-500/20 border border-white/5 hover:border-rose-500/30 rounded-xl p-2.5 flex flex-col items-center text-center transition-all cursor-pointer transform active:scale-95"
-                >
-                  <Dumbbell className="w-4 h-4 text-rose-500 mb-1 shrink-0" />
-                  <span className="text-[9px] font-mono text-zinc-300">FORM CHECK</span>
-                </button>
-                <button
-                  onClick={() => handleQuerySubmit('diet')}
-                  className="bg-kachi/50 hover:bg-rose-500/20 border border-white/5 hover:border-rose-500/30 rounded-xl p-2.5 flex flex-col items-center text-center transition-all cursor-pointer transform active:scale-95"
-                >
-                  <Utensils className="w-4 h-4 text-emerald-400 mb-1 shrink-0" />
-                  <span className="text-[9px] font-mono text-zinc-300">DIET TIPS</span>
-                </button>
-                <button
-                  onClick={() => handleQuerySubmit('lore')}
-                  className="bg-kachi/50 hover:bg-[#6A4E9B]/20 border border-white/5 hover:border-[#6A4E9B]/30 rounded-xl p-2.5 flex flex-col items-center text-center transition-all cursor-pointer transform active:scale-95"
-                >
-                  <BookOpen className="w-4 h-4 text-purple-400 mb-1 shrink-0" />
-                  <span className="text-[9px] font-mono text-zinc-300">SHADOW LORE</span>
-                </button>
-                <button
-                  onClick={() => handleQuerySubmit('meditate')}
-                  className="bg-kachi/50 hover:bg-cyan-500/20 border border-white/5 hover:border-cyan-500/30 rounded-xl p-2.5 flex flex-col items-center text-center transition-all cursor-pointer transform active:scale-95"
-                >
-                  <Compass className="w-4 h-4 text-cyan-400 mb-1 shrink-0" />
-                  <span className="text-[9px] font-mono text-zinc-300">MEDITATE</span>
-                </button>
-                <button
-                  onClick={() => handleQuerySubmit('random')}
-                  className="bg-kachi/50 hover:bg-[#E87A5D]/20 border border-white/5 hover:border-[#E87A5D]/30 rounded-xl p-2.5 flex flex-col items-center text-center transition-all cursor-pointer transform active:scale-95"
-                >
-                  <Activity className="w-4 h-4 text-orange-400 mb-1 shrink-0" />
-                  <span className="text-[9px] font-mono text-zinc-300">SHADOW REAP</span>
-                </button>
-              </div>
-
-              {/* Chat Window with Glassmorphic visual boxes */}
-              <div className="flex-1 min-h-[160px] max-h-[300px] overflow-y-auto no-scrollbar bg-kachi/30 rounded-xl border border-white/5 p-3 space-y-3 flex flex-col justify-end">
-                <div className="space-y-3 overflow-y-auto no-scrollbar max-h-[280px]">
-                  {chatMessages.map(msg => (
-                    <div 
-                      key={msg.id} 
-                      className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div 
-                        className={`max-w-[85%] rounded-xl p-2.5 text-xs ${
-                          msg.sender === 'user' 
-                            ? 'bg-[#1A1A24]/90 border border-rose-500/30 text-white rounded-tr-none' 
-                            : 'bg-void/40 backdrop-blur-md border border-cyan-500/10 text-cyan-50 font-sans rounded-tl-none'
-                        }`}
-                      >
-                        <p className="leading-relaxed whitespace-pre-line">{msg.text}</p>
-                        <span className="block text-[8px] text-zinc-500 font-mono text-right mt-1.5">{msg.timestamp}</span>
-                      </div>
-                    </div>
-                  ))}
-                  
-                  {isSenseiTyping && (
-                    <div className="flex justify-start">
-                      <div className="max-w-[80%] rounded-xl rounded-tl-none p-3 bg-void/50 border border-cyan-500/20 flex items-center gap-1.5 font-mono text-[10px] text-cyan-400">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-bounce" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-bounce delay-100" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-bounce delay-200" />
-                        <span>SENSEI RETRIEVING CHRONICLES...</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Interactive bottom writing field */}
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  placeholder="Ask and learn our code..."
-                  value={queryInput}
-                  onChange={(e) => setQueryInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleQuerySubmit();
-                  }}
-                  className="flex-1 bg-void text-xs font-mono text-zinc-200 border border-white/10 rounded-xl px-4 py-3 focus:border-rose-500/50 outline-none"
-                />
-                <button
-                  onClick={() => handleQuerySubmit()}
-                  className="bg-rose-500 hover:bg-rose-600 rounded-xl p-3 text-white transition-colors cursor-pointer active:scale-95 flex items-center justify-center shrink-0"
-                >
-                  <Send className="w-4 h-4" />
-                </button>
-              </div>
-
-            </motion.div>
+            <Suspense fallback={<LazyFallback isLight={isLight} />}>
+              <SenseiTab
+                isLight={isLight}
+                chatMessages={chatMessages}
+                isSenseiTyping={isSenseiTyping}
+                queryInput={queryInput}
+                setQueryInput={setQueryInput}
+                handleQuerySubmit={handleQuerySubmit}
+                soundSafe={soundSafe}
+              />
+            </Suspense>
           )}
 
 
-          {/* ======================= TAB 5: EVOLVE (异) ======================= */}
+          {/* ======================= TAB 6: EVOLVE (异) ======================= */}
           {currentTab === '异' && (
-            <motion.div key="tab-evolve" initial={{ opacity: 0, x: -20, filter: 'blur(5px)' }} animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, x: 20, filter: 'blur(5px)' }} transition={{ duration: 0.4, ease: "easeOut" }} className="space-y-6 pt-2">
-              
-              <div className="text-center py-2 flex justify-between items-center border-b border-white/5 pb-4">
-                <div className="flex items-center gap-2">
-                  <span className="font-kanji font-black text-rose-500 text-3xl">异</span>
-                  <h2 className="text-xl font-bold text-white tracking-widest">ASCENSION CHAMBER</h2>
-                </div>
-                <div className="px-2 py-0.5 rounded-full bg-[#F2C94C]/10 border border-[#F2C94C]/30 text-[10px] text-yellow-500 font-mono flex items-center gap-1">
-                  <Award className="w-3.5 h-3.5" />
-                  LEVEL 16
-                </div>
-              </div>
-
-              {/* Header Badging Rank title */}
-              <div className="bg-gradient-to-r from-void via-kachi to-void p-4 rounded-xl text-center border border-white/5">
-                <span className="text-[10px] font-mono text-zinc-500 uppercase">CURRENT ASCENSION SEAL</span>
-                <p className="font-display font-extrabold text-lg text-transparent bg-clip-text bg-gradient-to-r from-[#F2C94C] to-[#E87A5D] tracking-widest mt-0.5">IRON FIST SHADOW</p>
-                <div className="text-[9px] font-mono text-rose-500 mt-1 uppercase">REACH STAGE 17 TO FORGE CHRONOCROSS SPELL</div>
-              </div>
-
-              {/* Dynamic SVGs Radar Radar Chart 5-Axis (Strength, Speed, Spirit, Focus, Endurance) */}
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <p className="text-xs font-mono text-[#8E9EAF] uppercase tracking-wide">CAPABILITY SPECTRUM MAP</p>
-                  <button 
-                    onClick={() => {
-                      soundSafe('tap');
-                      // Custom interactive stats generator simulation
-                      setStats({
-                        Strength: Math.floor(Math.random() * 40) + 60,
-                        Speed: Math.floor(Math.random() * 40) + 60,
-                        Spirit: Math.floor(Math.random() * 30) + 70,
-                        Focus: Math.floor(Math.random() * 45) + 55,
-                        Endurance: Math.floor(Math.random() * 35) + 65
-                      });
-                    }}
-                    className="text-[9px] font-mono text-rose-400 uppercase tracking-widest border-b border-rose-500/20"
-                  >
-                    TAP TO DRILL STATS
-                  </button>
-                </div>
-
-                <div className="bg-kachi/40 rounded-2xl border border-white/10 p-5 flex flex-col items-center">
-                  <StatsBoard stats={stats} />
-                </div>
-              </div>
-
-              {/* Season Track Progress Bar */}
-              <div className="space-y-2">
-                <div className="flex justify-between items-center text-xs font-mono">
-                  <span className="text-zinc-400">🍂 SEASON: AUTUMN OF FURY</span>
-                  <span className="text-rose-500 font-bold">14 DAYS LEFT</span>
-                </div>
-                <div className="bg-kachi/50 rounded-xl p-3 border border-white/5">
-                  <div className="flex justify-between text-[10px] text-zinc-500 font-mono mb-1.5">
-                    <span>SECTOR A</span>
-                    <span>SECTOR B (MILSTONE)</span>
-                    <span>ASCENSION</span>
-                  </div>
-                  <div className="h-3 bg-void rounded-full overflow-hidden border border-white/10 relative">
-                    <div className="absolute top-0 bottom-0 left-[25%] w-[1.5px] bg-sky-400" />
-                    <div className="absolute top-0 bottom-0 left-[50%] w-[1.5px] bg-[#F2C94C]" />
-                    <div className="absolute top-0 bottom-0 left-[75%] w-[1.5px] bg-rose-500" />
-                    <div className="h-full bg-gradient-to-r from-indigo via-rose-500 to-[#F2C94C] rounded-full" style={{ width: '61%' }} />
-                  </div>
-                </div>
-              </div>
-
-              {/* Achievements Medal matrix 6x2 */}
-              <div className="space-y-3">
-                <p className="text-xs font-mono text-[#8E9EAF] uppercase tracking-wide">6X2 MEDALLION ENCLAVE (TAP TO EARN)</p>
-                <div className="grid grid-cols-6 gap-2 bg-kachi/25 border border-white/5 rounded-2xl p-4">
-                  {achievements.map((ac) => (
-                    <div
-                      key={ac.id}
-                      onClick={() => unlockAchievement(ac.id)}
-                      className={`aspect-square rounded-xl border flex flex-col items-center justify-center relative cursor-pointer active:scale-90 transition-all ${
-                        ac.unlocked 
-                          ? 'bg-gradient-to-br from-sumi via-kachi to-sumi border-rose-500/40 shadow-[0_0_10px_rgba(255,59,48,0.2)]' 
-                          : 'bg-void border-zinc-950 opacity-40 grayscale'
-                      }`}
-                      title={`${ac.title}: ${ac.description}`}
-                    >
-                      {ac.unlocked && ac.rarity === 'legendary' && (
-                        <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-yellow-400 animate-ping" />
-                      )}
-                      <span className="text-xl">{ac.icon}</span>
-                      <span className={`text-[6px] font-mono tracking-tighter mt-1 text-center truncate w-[90%] ${ac.unlocked ? 'text-zinc-300' : 'text-zinc-600'}`}>{ac.title}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-            </motion.div>
+            <Suspense fallback={<LazyFallback isLight={isLight} />}>
+              <FuelTab
+                isLight={isLight}
+                soundSafe={soundSafe}
+                mealPlanType={mealPlanType}
+                setMealPlanType={setMealPlanType}
+                waterCups={waterCups}
+                fillWaterCup={fillWaterCup}
+                MOCK_MEAL_PLANS={MOCK_MEAL_PLANS}
+              />
+            </Suspense>
           )}
 
 
-          {/* ======================= TAB 6: SOUL (魂) ======================= */}
+          {/* ======================= TAB 7: SOUL (魂) ======================= */}
           {currentTab === '魂' && (
-            <motion.div key="tab-soul" initial={{ opacity: 0, x: -20, filter: 'blur(5px)' }} animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, x: 20, filter: 'blur(5px)' }} transition={{ duration: 0.4, ease: "easeOut" }} className="space-y-6 pt-2">
-              
-              <div className="text-center py-2 flex justify-between items-center border-b border-white/5 pb-4">
-                <div className="flex items-center gap-2">
-                  <span className="font-kanji font-black text-rose-500 text-3xl">魂</span>
-                  <h2 className="text-xl font-bold text-white tracking-widest">INNER SANCTUM</h2>
-                </div>
-                <button
-                  onClick={() => setIsPremiumOpen(true)}
-                  className="px-3 py-1 bg-gradient-to-r from-yellow-600 to-[#F2C94C] text-xs font-mono font-bold text-black rounded-lg gold-shimmer-btn shadow-lg cursor-pointer transform hover:scale-105 active:scale-95 flex items-center gap-1.5"
-                >
-                  <Sparkles className="w-3.5 h-3.5 fill-black" />
-                  PREMIUM
-                </button>
-              </div>
-
-              {/* Profile Card overlay config */}
-              <div className="bg-gradient-to-br from-[#1A1A24] to-void rounded-2xl border border-white/10 p-5 flex flex-col items-center text-center relative overflow-hidden">
-                <div className="absolute top-2 right-2 bg-rose-500/10 border border-rose-500/30 text-[9px] font-mono text-rose-400 px-2 py-0.5 rounded-full">
-                  SOUL STAGE 16
-                </div>
-
-                <div className="relative w-24 h-24 mb-3">
-                  <div className="absolute inset-0 bg-rose-500/20 rounded-full blur-xl animate-pulse" />
-                  <img src={IMAGES.warriorHelmet} className="w-full h-full bg-kachi/75 rounded-full border-2 border-rose-500/40 object-cover" alt="KAGE Avatar" />
-                  <div className="absolute bottom-0 right-0 p-1.5 bg-neutral-800 rounded-full border border-neutral-700 cursor-pointer text-xs" title="Edit avatar">
-                    📸
-                  </div>
-                </div>
-
-                <h3 className="font-bold text-lg text-white font-mono tracking-wider">You (KAGE Master)</h3>
-                <p className="text-xs text-rose-400 font-mono">CODE_ID: #432963e9</p>
-                <p className="text-[10px] text-zinc-500 font-mono uppercase mt-1">SWORN UNDER OATH ON 2026-06-05</p>
-              </div>
-
-              {/* 4 Lifetime Stats Grid Cards */}
-              <div className="grid grid-cols-2 gap-3">
-                <ThreeDCard className="p-3.5" glowColor="rgba(255, 255, 255, 0.05)">
-                  <span className="text-[9px] font-mono text-zinc-500 uppercase">LIFETIME WORKOUTS</span>
-                  <p className="text-xl font-bold font-mono text-white mt-1">112 STRIKES</p>
-                </ThreeDCard>
-                <ThreeDCard className="p-3.5" glowColor="rgba(255, 255, 255, 0.05)">
-                  <span className="text-[9px] font-mono text-zinc-500 uppercase">HONOUR POINTS</span>
-                  <p className="text-xl font-bold font-mono text-[#F2C94C] mt-1">2,450 HP</p>
-                </ThreeDCard>
-                <ThreeDCard className="p-3.5" glowColor="rgba(255, 255, 255, 0.05)">
-                  <span className="text-[9px] font-mono text-zinc-500 uppercase">TOTAL CALORIES</span>
-                  <p className="text-xl font-bold font-mono text-emerald-400 mt-1">34,180 KCAL</p>
-                </ThreeDCard>
-                <ThreeDCard className="p-3.5" glowColor="rgba(255, 255, 255, 0.05)">
-                  <span className="text-[9px] font-mono text-zinc-500 uppercase">ACTIVE PROTOCOL</span>
-                  <p className="text-xs font-bold font-mono text-sky-400 mt-2 truncate">SHRED DUPLEX</p>
-                </ThreeDCard>
-              </div>
-
-              {/* Accordion Expandables: Personal Records */}
-              <div className="space-y-2">
-                <p className="text-xs font-mono text-[#8E9EAF] uppercase tracking-wide">SHADOW RECORDS MAXIMUMS</p>
-                
-                <div className="divide-y divide-white/5 bg-kachi/20 rounded-xl border border-white/5">
-                  <details className="group p-3">
-                    <summary className="list-none flex justify-between items-center cursor-pointer text-xs font-semibold text-white">
-                      <span>⛩️ PUSH-UPS (Max 1-Min reps)</span>
-                      <span className="text-rose-500 font-mono font-bold flex items-center gap-1.5 uppercase">
-                        64 REPS
-                        <ChevronDown className="w-4 h-4 text-zinc-500 group-open:rotate-180 transition-transform" />
-                      </span>
-                    </summary>
-                    <p className="text-[10px] text-zinc-400 font-mono mt-2 leading-relaxed">
-                      Executed during GALE-FORCE Wind session on Phase 12. Score validated by physical pact checker brother.
-                    </p>
-                  </details>
-
-                  <details className="group p-3">
-                    <summary className="list-none flex justify-between items-center cursor-pointer text-xs font-semibold text-white">
-                      <span>⛩️ PULL-UPS (Heaviest Weight Added)</span>
-                      <span className="text-rose-500 font-mono font-bold flex items-center gap-1.5 uppercase">
-                        +20 KG
-                        <ChevronDown className="w-4 h-4 text-zinc-500 group-open:rotate-180 transition-transform" />
-                      </span>
-                    </summary>
-                    <p className="text-[10px] text-zinc-400 font-mono mt-2 leading-relaxed">
-                      Sought highest point of lift using standard weighted armor structure. Tested in Sumi dungeon.
-                    </p>
-                  </details>
-
-                  <details className="group p-3">
-                    <summary className="list-none flex justify-between items-center cursor-pointer text-xs font-semibold text-white">
-                      <span>⛩️ MEDITATION QUIET SITTING</span>
-                      <span className="text-[#2D9C6E] font-mono font-bold flex items-center gap-1.5 uppercase">
-                        45 MINS
-                        <ChevronDown className="w-4 h-4 text-zinc-500 group-open:rotate-180 transition-transform" />
-                      </span>
-                    </summary>
-                    <p className="text-[10px] text-zinc-400 font-mono mt-2 leading-relaxed">
-                      Held perfect spinal alignment, deep breathing cycle guided by low synthesised frequencies.
-                    </p>
-                  </details>
-                </div>
-              </div>
-
-              {/* Fast Dashboard Settings Row */}
-              <div className="space-y-2 pt-2">
-                <p className="text-xs font-mono text-zinc-500 uppercase">SANCTUM SETTINGS</p>
-                <div className="grid grid-cols-2 gap-3">
-                  <button 
-                    onClick={() => setIsOathOpen(true)}
-                    className="py-2.5 rounded-lg bg-kachi/50 hover:bg-rose-500/10 border border-white/5 font-mono text-xs text-zinc-300 transition-all cursor-pointer active:scale-95"
-                  >
-                    ⚖️ DECLARE OATH
-                  </button>
-                  <button 
-                    onClick={() => {
-                      soundSafe('tap');
-                      setIsMuted(!isMuted);
-                    }}
-                    className="py-2.5 rounded-lg bg-kachi/50 hover:bg-rose-500/10 border border-white/5 font-mono text-xs text-zinc-300 transition-all cursor-pointer active:scale-95"
-                  >
-                    🔊 SFX: {isMuted ? 'MUTED' : 'ACTIVE'}
-                  </button>
-                </div>
-              </div>
-
-            </motion.div>
+            <Suspense fallback={<LazyFallback isLight={isLight} />}>
+              <SoulTab
+                isLight={isLight}
+                soundSafe={soundSafe}
+                getTotalWorkouts={getTotalWorkouts}
+                xp={xp}
+                bonusXP={bonusXP}
+                getTotalVolume={getTotalVolume}
+                achievements={achievements}
+                stats={stats}
+                setIsPremiumOpen={setIsPremiumOpen}
+                setIsOathOpen={setIsOathOpen}
+                setIsMuted={setIsMuted}
+                isMuted={isMuted}
+                prs={prs}
+              />
+            </Suspense>
           )}
 
           </AnimatePresence>
@@ -1497,20 +993,19 @@ export default function App() {
 
 
         {/* ======================= BOTTOM TAB BAR ======================= */}
-        <nav className={`fixed bottom-0 left-0 right-0 h-16 px-2 flex justify-around items-center z-30 transition-colors duration-500 ${
-          isLight ? 'bg-stone-100/90 backdrop-blur-lg border-t border-stone-200' : 'bg-[#0A0A0F]/90 backdrop-blur-lg border-t border-zinc-800/50'
-        }`}>
-          {(['家', '武', '道', '先', '异', '魂'] as TabName[]).map((tab) => {
+        <nav className={`fixed bottom-0 left-0 right-0 h-16 px-2 flex justify-around items-center z-30 transition-colors duration-500 ${isLight ? 'bg-stone-100/90 backdrop-blur-lg border-t border-stone-200' : 'bg-[#0A0A0F]/90 backdrop-blur-lg border-t border-zinc-800/50'}`}>
+          {(['家', '武', '道', '造', '先', '异', '魂'] as TabName[]).map((tab) => {
             const isActive = currentTab === tab;
             return (
               <button
                 key={tab}
                 id={`tab-icon-${tab}`}
+                aria-label={`${tab === '家' ? 'Home' : tab === '武' ? 'Train' : tab === '道' ? 'Dojo' : tab === '造' ? 'Build' : tab === '先' ? 'Sensei' : tab === '异' ? 'Fuel' : 'Soul'} tab`}
                 onClick={() => {
                   soundSafe('tap');
                   setCurrentTab(tab);
                 }}
-                className={`flex flex-col items-center justify-center w-12 h-12 rounded-full transition-all relative cursor-pointer active:scale-95 ${isActive ? 'scale-110 drop-shadow-[0_0_12px_rgba(255,59,48,0.7)]' : 'opacity-60 hover:opacity-100'}`}
+                className={`flex flex-col items-center justify-center w-12 h-12 rounded-full transition-all relative cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${isActive ? 'scale-110 drop-shadow-[0_0_12px_rgba(255,59,48,0.7)]' : 'opacity-60 hover:opacity-100'}`}
               >
                 {isActive && (
                   <div className="absolute -top-1 w-5 h-[2px] bg-rose-500 rounded-full" />
@@ -1538,26 +1033,27 @@ export default function App() {
       {/* ======================= OVERLAY MODAL 1: BATTLE CRY NETWORK ============================= */}
       {/* ========================================================================================= */}
       {isBattleCryModalOpen && (
-        <div className="fixed inset-0 bg-void/90 backdrop-blur-md z-50 flex flex-col items-center justify-center p-4">
-          <div className="bg-[#1A1A24] rounded-2xl border border-rose-500/40 p-6 w-full max-w-sm space-y-6 shadow-[0_0_40px_rgba(255,59,48,0.3)]">
+        <div className={`fixed inset-0 ${isLight ? 'bg-stone-200/90' : 'bg-void/90'} backdrop-blur-md z-50 flex flex-col items-center justify-center p-4`}>
+          <div className={`${isLight ? 'bg-white border-stone-200' : 'bg-[#1A1A24] border-rose-500/40'} rounded-2xl border p-6 w-full max-w-sm space-y-6 shadow-[0_0_40px_rgba(255,59,48,0.3)]`}>
             
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <Zap className="w-5 h-5 text-neon-crimson animate-bounce" />
-                <h3 className="font-mono font-bold text-white uppercase tracking-wider text-sm">BATTLE CRY DISPATCH</h3>
+                <h3 className={`font-mono font-bold ${isLight ? 'text-stone-800' : 'text-white'} uppercase tracking-wider text-sm`}>BATTLE CRY DISPATCH</h3>
               </div>
               <button 
                 onClick={() => setIsBattleCryModalOpen(false)}
-                className="p-1 text-zinc-500 hover:text-white transition-colors cursor-pointer"
+                className={`p-1 ${isLight ? 'text-stone-400 hover:text-stone-800' : 'text-zinc-500 hover:text-white'} transition-colors duration-200 cursor-pointer active:scale-90 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none`}
+                aria-label="Close battle cry modal"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="bg-void p-4 rounded-xl text-center space-y-2 relative border border-white/5">
-              <span className="text-[10px] font-mono text-zinc-500 uppercase">REMAINING LIFE SPAN OF TRANSIENT PROVOKE</span>
+            <div className={`${isLight ? 'bg-stone-100 border-stone-200' : 'bg-void border-white/5'} p-4 rounded-xl text-center space-y-2 relative border`}>
+              <span className={`text-[10px] font-mono ${isLight ? 'text-stone-400' : 'text-zinc-500'} uppercase`}>REMAINING LIFE SPAN OF TRANSIENT PROVOKE</span>
               <p className="font-mono text-3xl font-black text-[#F2C94C] tracking-widest">{battleCryTimer}</p>
-              <p className="text-[10px] text-zinc-400 italic">"Sent by Kazuma #8821"</p>
+              <p className={`text-[10px] ${isLight ? 'text-stone-500' : 'text-zinc-400'} italic`}>"Sent by Kazuma #8821"</p>
             </div>
 
             <div className="space-y-2">
@@ -1566,7 +1062,7 @@ export default function App() {
                 value={battleCryText}
                 onChange={(e) => setBattleCryText(e.target.value)}
                 rows={3}
-                className="w-full bg-void border border-white/10 rounded-xl p-3 text-xs font-sans text-zinc-200 focus:border-rose-500 outline-none resize-none"
+                className={`w-full ${isLight ? 'bg-stone-100 border-stone-200 text-stone-700' : 'bg-void border-white/10 text-zinc-200'} border rounded-xl p-3 text-xs font-sans focus:border-rose-500 outline-none resize-none focus-visible:ring-2 focus-visible:ring-rose-500/50`}
               />
             </div>
 
@@ -1576,7 +1072,7 @@ export default function App() {
                 setIsBattleCryActive(true);
                 setIsBattleCryModalOpen(false);
               }}
-              className="w-full neon-shimmer-btn py-3 rounded-lg text-white font-mono font-bold text-xs tracking-widest cursor-pointer hover:opacity-90 active:scale-95 transition-all text-center uppercase"
+              className="w-full neon-shimmer-btn py-3 rounded-lg text-white font-mono font-bold text-xs tracking-widest cursor-pointer hover:opacity-90 active:scale-95 transition-all text-center uppercase focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none"
             >
               SEND OUTCRY & RALLY SOLDIER
             </button>
@@ -1590,30 +1086,31 @@ export default function App() {
       {/* ======================= OVERLAY MODAL 2: FORGE ACC CONTRACTS ============================ */}
       {/* ========================================================================================= */}
       {isForgeModalOpen && (
-        <div className="fixed inset-0 bg-void/90 backdrop-blur-md z-50 flex flex-col items-center justify-center p-4">
-          <div className="bg-[#1A1A24] rounded-2xl border border-white/10 p-6 w-full max-w-sm space-y-5 shadow-2xl">
+        <div className={`fixed inset-0 ${isLight ? 'bg-stone-200/90' : 'bg-void/90'} backdrop-blur-md z-50 flex flex-col items-center justify-center p-4`}>
+          <div className={`${isLight ? 'bg-white border-stone-200' : 'bg-[#1A1A24] border-white/10'} rounded-2xl border p-6 w-full max-w-sm space-y-5 shadow-2xl`}>
             
             <div className="flex justify-between items-center">
-              <h3 className="font-mono font-bold text-white uppercase tracking-widest text-sm">FORGE NEW CONTRACT PACT</h3>
+              <h3 className={`font-mono font-bold ${isLight ? 'text-stone-800' : 'text-white'} uppercase tracking-widest text-sm`}>FORGE NEW CONTRACT PACT</h3>
               <button 
                 onClick={() => setIsForgeModalOpen(false)}
-                className="p-1 text-zinc-500 hover:text-white transition-colors cursor-pointer"
+                className={`p-1 ${isLight ? 'text-stone-400 hover:text-stone-800' : 'text-zinc-500 hover:text-white'} transition-colors duration-200 cursor-pointer active:scale-90 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none`}
+                aria-label="Close forge modal"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* In-Modal Tab switch */}
-            <div className="flex bg-void p-1 rounded-lg border border-white/5">
+            <div className={`flex ${isLight ? 'bg-stone-100 border-stone-200' : 'bg-void border-white/5'} p-1 rounded-lg border`}>
               <button
                 onClick={() => setForgeTab('create')}
-                className={`flex-1 text-center py-1.5 rounded-md font-mono text-xs ${forgeTab === 'create' ? 'bg-kachi text-white font-extrabold' : 'text-zinc-500'}`}
+                className={`flex-1 text-center py-1.5 rounded-md font-mono text-xs focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${forgeTab === 'create' ? `${isLight ? 'bg-stone-200 text-stone-800' : 'bg-kachi text-white'} font-extrabold` : `${isLight ? 'text-stone-400' : 'text-zinc-500'}`}`}
               >
                 CREATE CODE
               </button>
               <button
                 onClick={() => setForgeTab('join')}
-                className={`flex-1 text-center py-1.5 rounded-md font-mono text-xs ${forgeTab === 'join' ? 'bg-kachi text-white font-extrabold' : 'text-zinc-500'}`}
+                className={`flex-1 text-center py-1.5 rounded-md font-mono text-xs focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${forgeTab === 'join' ? `${isLight ? 'bg-stone-200 text-stone-800' : 'bg-kachi text-white'} font-extrabold` : `${isLight ? 'text-stone-400' : 'text-zinc-500'}`}`}
               >
                 ENTER KEY
               </button>
@@ -1621,11 +1118,11 @@ export default function App() {
 
             {forgeTab === 'create' ? (
               <div className="space-y-4 text-center">
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className={`text-xs ${isLight ? 'text-stone-500' : 'text-zinc-400'} leading-relaxed`}>
                   Provide this 6-digit blood key to a trusted companion. When they register it, their health tracker synchronises directly.
                 </p>
-                <div className="bg-void p-5 rounded-xl border border-dashed border-rose-500/30">
-                  <span className="text-[9px] font-mono text-zinc-500 block uppercase mb-1">CONTRACT REGISTRY ID KEY</span>
+                <div className={`${isLight ? 'bg-stone-100' : 'bg-void'} p-5 rounded-xl border border-dashed border-rose-500/30`}>
+                  <span className={`text-[9px] font-mono ${isLight ? 'text-stone-400' : 'text-zinc-500'} block uppercase mb-1`}>CONTRACT REGISTRY ID KEY</span>
                   <p className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#F2C94C] to-rose-400 tracking-wider font-mono">{generatedCode}</p>
                 </div>
                 <button
@@ -1634,20 +1131,20 @@ export default function App() {
                     // randomize code
                     setGeneratedCode(`${Math.floor(Math.random()*900+100)} ${Math.floor(Math.random()*900+100)}`);
                   }}
-                  className="text-[10px] font-mono text-zinc-500 uppercase underline"
+                  className={`text-[10px] font-mono ${isLight ? 'text-stone-400' : 'text-zinc-500'} uppercase underline`}
                 >
                   REGENERATE SECURE VAULT KEY
                 </button>
               </div>
             ) : (
               <div className="space-y-4">
-                <p className="text-xs text-zinc-400">Enter the 6-digit cryptographic covenant link code generated by your training sibling:</p>
+                <p className={`text-xs ${isLight ? 'text-stone-500' : 'text-zinc-400'}`}>Enter the 6-digit cryptographic covenant link code generated by your training sibling:</p>
                 <input
                   type="text"
                   placeholder="e.g., 556 121"
                   value={enteredCode}
                   onChange={(e) => setEnteredCode(e.target.value)}
-                  className="w-full bg-void border border-white/10 rounded-xl p-3 text-center text-lg font-mono text-white focus:border-rose-500 outline-none"
+                  className={`w-full ${isLight ? 'bg-stone-100 border-stone-200 text-stone-800' : 'bg-void border-white/10 text-white'} border rounded-xl p-3 text-center text-lg font-mono focus:border-rose-500 outline-none focus-visible:ring-2 focus-visible:ring-rose-500/50`}
                 />
                 <button
                   onClick={() => {
@@ -1661,7 +1158,7 @@ export default function App() {
                       setIsForgeModalOpen(false);
                     }
                   }}
-                  className="w-full bg-rose-500 hover:bg-rose-600 text-white font-mono text-xs font-bold tracking-widest py-3 rounded-lg cursor-pointer"
+                  className="w-full bg-rose-500 hover:bg-rose-600 text-white font-mono text-xs font-bold tracking-widest py-3 rounded-lg cursor-pointer active:scale-[0.97] transition-all duration-200 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none"
                 >
                   SEAL COVENANT pact
                 </button>
@@ -1673,27 +1170,26 @@ export default function App() {
       )}
 
 
-      {/* ========================================================================================= */}
       {/* ======================= OVERLAY MODAL 3: COVENANT/PARTNER SHEET DETAILS ================== */}
-      {/* ========================================================================================= */}
       {isPartnerProfileOpen && (
-        <div className="fixed inset-0 bg-void/90 backdrop-blur-md z-50 flex flex-col items-center justify-center p-4">
-          <div className="bg-[#1A1A24] rounded-2xl border border-white/10 p-6 w-full max-w-sm space-y-5 shadow-2xl">
+        <div className={`fixed inset-0 ${isLight ? 'bg-stone-200/90' : 'bg-void/90'} backdrop-blur-md z-50 flex flex-col items-center justify-center p-4`}>
+          <div className={`${isLight ? 'bg-white border-stone-200' : 'bg-[#1A1A24] border-white/10'} rounded-2xl border p-6 w-full max-w-sm space-y-5 shadow-2xl`}>
             
             <div className="flex justify-between items-center">
-              <h3 className="font-mono font-bold text-white uppercase tracking-wider text-xs">COVENANT PROFILE</h3>
+              <h3 className={`font-mono font-bold ${isLight ? 'text-stone-800' : 'text-white'} uppercase tracking-wider text-xs`}>COVENANT PROFILE</h3>
               <button 
                 onClick={() => setIsPartnerProfileOpen(false)}
-                className="p-1 text-zinc-500 hover:text-white transition-colors cursor-pointer"
+                className={`p-1 ${isLight ? 'text-stone-400 hover:text-stone-800' : 'text-zinc-500 hover:text-white'} transition-colors duration-200 cursor-pointer active:scale-90 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none`}
+                aria-label="Close partner profile"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="flex flex-col items-center text-center space-y-2">
-              <span className="text-5xl bg-kachi w-20 h-20 rounded-full flex items-center justify-center border-2 border-[#2D9C6E]">{pactData.avatar}</span>
-              <h4 className="font-bold text-lg text-white">{pactData.partnerName}</h4>
-              <p className="text-xs text-zinc-400">Accountability Rank Level: {pactData.partnerLevel}</p>
+              <span className={`text-5xl ${isLight ? 'bg-stone-200' : 'bg-kachi'} w-20 h-20 rounded-full flex items-center justify-center border-2 border-[#2D9C6E]`}>{pactData.avatar}</span>
+              <h4 className={`font-bold text-lg ${isLight ? 'text-stone-800' : 'text-white'}`}>{pactData.partnerName}</h4>
+              <p className={`text-xs ${isLight ? 'text-stone-500' : 'text-zinc-400'}`}>Accountability Rank Level: {pactData.partnerLevel}</p>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#2D9C6E]/10 border border-[#2D9C6E]/30 text-xs text-emerald-400 font-mono">
                 <Shield className="w-4.5 h-4.5" />
                 SHIELD INTACT
@@ -1704,10 +1200,10 @@ export default function App() {
               <p className="text-[10px] font-mono text-[#8E9EAF] uppercase tracking-widest">JOINT STRIKE TIMELINE HISTORY:</p>
               <div className="space-y-2 max-h-40 overflow-y-auto no-scrollbar">
                 {pactData.history.map((row, idx) => (
-                  <div key={idx} className="bg-void p-2.5 rounded-lg border border-white/5 flex justify-between items-center text-xs">
+                  <div key={idx} className={`${isLight ? 'bg-stone-100 border-stone-200' : 'bg-void border-white/5'} p-2.5 rounded-lg border flex justify-between items-center text-xs`}>
                     <div>
-                      <p className="font-semibold text-white">{row.workoutName}</p>
-                      <span className="text-[9px] text-zinc-500">{row.date}</span>
+                      <p className={`font-semibold ${isLight ? 'text-stone-800' : 'text-white'}`}>{row.workoutName}</p>
+                      <span className={`text-[9px] ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>{row.date}</span>
                     </div>
                     <span className="text-xs font-mono text-[#F2C94C] font-bold">{row.duration}</span>
                   </div>
@@ -1718,19 +1214,21 @@ export default function App() {
             <button
               onClick={() => {
                 soundSafe('clash');
-                // Destructive prompt
-                if(confirm("Are you sure you want to fracture this shield and break your pledge oath?")) {
-                  setPactData({
-                    ...pactData,
-                    partnerName: "No Pledge Active",
-                    sharedStreak: 0,
-                    shieldIntact: false,
-                    avatar: "🌫️"
-                  });
-                  setIsPartnerProfileOpen(false);
-                }
+                setConfirmModal({
+                  message: "Are you sure you want to fracture this shield and break your pledge oath?",
+                  onConfirm: () => {
+                    setPactData({
+                      ...pactData,
+                      partnerName: "No Pledge Active",
+                      sharedStreak: 0,
+                      shieldIntact: false,
+                      avatar: "🌫️"
+                    });
+                    setIsPartnerProfileOpen(false);
+                  }
+                });
               }}
-              className="w-full bg-[#9E2A2A] hover:bg-rose-700 text-white font-mono text-xs font-bold py-2.5 rounded-lg cursor-pointer"
+              className="w-full bg-[#9E2A2A] hover:bg-rose-700 text-white font-mono text-xs font-bold py-2.5 rounded-lg cursor-pointer active:scale-[0.97] transition-all duration-200 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none"
             >
               FRACTURE OATH (BREAK PACT)
             </button>
@@ -1744,11 +1242,11 @@ export default function App() {
       {/* ======================= OVERLAY MODAL 4: 4-STEP WARRIOR\'S OATH WIZARD ================= */}
       {/* ========================================================================================= */}
       {isOathOpen && (
-        <div className="fixed inset-0 bg-void/90 backdrop-blur-md z-50 flex flex-col items-center justify-center p-4">
-          <div className="bg-[#1A1A24] rounded-2xl border border-rose-500/30 p-6 w-full max-w-sm space-y-6 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+        <div className={`fixed inset-0 ${isLight ? 'bg-stone-200/90' : 'bg-void/90'} backdrop-blur-md z-50 flex flex-col items-center justify-center p-4`}>
+          <div className={`${isLight ? 'bg-white border-stone-200' : 'bg-[#1A1A24] border-rose-500/30'} rounded-2xl border p-6 w-full max-w-sm space-y-6 shadow-[0_0_50px_rgba(0,0,0,0.8)]`}>
             
             <div className="flex justify-between items-center">
-              <h3 className="font-mono font-bold text-white uppercase tracking-widest text-xs">SWEAR SHADOW OATH</h3>
+              <h3 className={`font-mono font-bold ${isLight ? 'text-stone-800' : 'text-white'} uppercase tracking-widest text-xs`}>SWEAR SHADOW OATH</h3>
               <span className="text-xs font-mono text-rose-500">{oathStep} / 4 STEPS</span>
             </div>
 
@@ -1756,60 +1254,62 @@ export default function App() {
               {oathStep === 1 && (
                 <>
                   <span className="text-3xl">誓</span>
-                  <p className="text-sm font-semibold text-white">"I swear to look inside the void before launching training, committing my muscles and heart to constant self-conquest."</p>
+                  <p className={`text-sm font-semibold ${isLight ? 'text-stone-800' : 'text-white'}`}>"I swear to look inside the void before launching training, committing my muscles and heart to constant self-conquest."</p>
                 </>
               )}
               {oathStep === 2 && (
                 <>
                   <span className="text-3xl">武</span>
-                  <p className="text-sm font-semibold text-white">"I declare that sweat is my medicine and consistency is my sword. No day shall melt without direct muscle stimulation."</p>
+                  <p className={`text-sm font-semibold ${isLight ? 'text-stone-800' : 'text-white'}`}>"I declare that sweat is my medicine and consistency is my sword. No day shall melt without direct muscle stimulation."</p>
                 </>
               )}
               {oathStep === 3 && (
                 <>
                   <span className="text-3xl">道</span>
-                  <p className="text-sm font-semibold text-white">"I swear to protect my covenant brother, answering their battle cry instantly and maintaining my shared combat shield."</p>
+                  <p className={`text-sm font-semibold ${isLight ? 'text-stone-800' : 'text-white'}`}>"I swear to protect my covenant brother, answering their battle cry instantly and maintaining my shared combat shield."</p>
                 </>
               )}
               {oathStep === 4 && (
                 <>
                   <span className="text-3xl">魂</span>
-                  <p className="text-sm font-semibold text-white">"Under code 432963e9 in the high temple of KAGE, I pledge my unyielding effort for the season of fury."</p>
+                  <p className={`text-sm font-semibold ${isLight ? 'text-stone-800' : 'text-white'}`}>"Under code 432963e9 in the high temple of KAGE, I pledge my unyielding effort for the season of fury."</p>
                 </>
               )}
             </div>
 
             <div className="flex justify-between gap-3">
               {oathStep > 1 && (
-                <button
-                  onClick={() => setOathStep(oathStep - 1)}
-                  className="flex-1 py-2 rounded bg-[#2A2A3A] hover:bg-zinc-700 font-mono text-xs text-white"
-                >
-                  RETREAT
-                </button>
-              )}
-              
-              {oathStep < 4 ? (
-                <button
-                  onClick={() => {
-                    soundSafe('tap');
-                    setOathStep(oathStep + 1);
-                  }}
-                  className="flex-1 py-2 rounded bg-rose-500 hover:bg-rose-600 font-mono text-xs text-white"
-                >
-                  DECLARE ACCORD
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    soundSafe('clash');
-                    setIsOathOpen(false);
-                    setOathStep(1);
-                  }}
-                  className="flex-1 py-2 rounded bg-gradient-to-r from-[#F2C94C] to-[#E87A5D] text-black font-extrabold font-mono text-xs"
-                >
-                  SWEAR BLOOD BOND
-                </button>
+                <>
+                  <button
+                    onClick={() => setOathStep(oathStep - 1)}
+                    className={`flex-1 py-2 rounded ${isLight ? 'bg-stone-200 hover:bg-stone-300 text-stone-700' : 'bg-[#2A2A3A] hover:bg-zinc-700 text-white'} font-mono text-xs focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none`}
+                  >
+                    RETREAT
+                  </button>
+                  
+                  {oathStep < 4 ? (
+                    <button
+                      onClick={() => {
+                        soundSafe('tap');
+                        setOathStep(oathStep + 1);
+                      }}
+                      className="flex-1 py-2 rounded bg-rose-500 hover:bg-rose-600 font-mono text-xs text-white focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none"
+                    >
+                      DECLARE ACCORD
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        soundSafe('clash');
+                        setIsOathOpen(false);
+                        setOathStep(1);
+                      }}
+                      className="flex-1 py-2 rounded bg-gradient-to-r from-[#F2C94C] to-[#E87A5D] text-black font-extrabold font-mono text-xs focus-visible:ring-2 focus-visible:ring-yellow-500/50 focus-visible:outline-none"
+                  >
+                    SWEAR BLOOD BOND
+                  </button>
+                )}
+                </>
               )}
             </div>
 
@@ -1822,17 +1322,18 @@ export default function App() {
       {/* ======================= OVERLAY MODAL 5: PREMIUM GATE LOCK OUT =========================== */}
       {/* ========================================================================================= */}
       {isPremiumOpen && (
-        <div className="fixed inset-0 bg-void/90 backdrop-blur-md z-50 flex flex-col items-center justify-center p-4">
-          <div className="bg-[#1A1A24] rounded-2xl border border-yellow-600/50 p-6 w-full max-w-md space-y-6 shadow-[0_0_60px_rgba(242,201,76,0.2)]">
+        <div className={`fixed inset-0 ${isLight ? 'bg-stone-200/90' : 'bg-void/90'} backdrop-blur-md z-50 flex flex-col items-center justify-center p-4`}>
+          <div className={`${isLight ? 'bg-white border-stone-200' : 'bg-[#1A1A24] border-yellow-600/50'} rounded-2xl border p-6 w-full max-w-md space-y-6 shadow-[0_0_60px_rgba(242,201,76,0.2)]`}>
             
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-1.5 text-yellow-500">
                 <Lock className="w-5 h-5 fill-yellow-500/20" />
-                <h3 className="font-mono font-bold uppercase tracking-widest text-sm">PREMIUM GATE CHAMBER</h3>
+                <h3 className={`font-mono font-bold uppercase tracking-widest text-sm ${isLight ? 'text-stone-800' : ''}`}>PREMIUM GATE CHAMBER</h3>
               </div>
               <button 
                 onClick={() => setIsPremiumOpen(false)}
-                className="p-1 text-zinc-500 hover:text-white transition-colors cursor-pointer"
+                className={`p-1 ${isLight ? 'text-stone-400 hover:text-stone-800' : 'text-zinc-500 hover:text-white'} transition-colors duration-200 cursor-pointer active:scale-90 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none`}
+                aria-label="Close premium modal"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1840,34 +1341,34 @@ export default function App() {
 
             <div className="text-center space-y-1">
               <h4 className="font-display font-black text-2xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-200">ASCEND THE MOUNTAIN</h4>
-              <p className="text-xs text-zinc-400">Gain live full-bandwidth Cyber-Sensei neural advice and advanced tracking stats.</p>
+              <p className={`text-xs ${isLight ? 'text-stone-500' : 'text-zinc-400'}`}>Gain live full-bandwidth Cyber-Sensei neural advice and advanced tracking stats.</p>
             </div>
 
             {/* Feature Comparision table */}
-            <div className="overflow-hidden border border-white/5 rounded-xl text-xs bg-void/60 divide-y divide-white/5">
-              <div className="grid grid-cols-3 p-2.5 font-mono text-[9px] text-zinc-500 uppercase">
+            <div className={`overflow-hidden border ${isLight ? 'border-stone-200 bg-white/60 divide-stone-200' : 'border-white/5 bg-void/60 divide-white/5'} rounded-xl text-xs divide-y`}>
+              <div className={`grid grid-cols-3 p-2.5 font-mono text-[9px] ${isLight ? 'text-stone-400' : 'text-zinc-500'} uppercase`}>
                 <span>BENEFIT PROTOCOL</span>
                 <span>FREE CADET</span>
                 <span className="text-yellow-500 font-bold">SOUL ELITE</span>
               </div>
               <div className="grid grid-cols-3 p-2.5">
-                <span className="text-zinc-300">Dojo Floor Access</span>
-                <span className="text-zinc-500">Standard</span>
+                <span className={`${isLight ? 'text-stone-700' : 'text-zinc-300'}`}>Dojo Floor Access</span>
+                <span className={`${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>Standard</span>
                 <span className="text-[#2D9C6E] font-bold">All 48 Modules</span>
               </div>
               <div className="grid grid-cols-3 p-2.5">
-                <span className="text-zinc-300">Cyber-Sensei Advice</span>
-                <span className="text-zinc-500">Cached Lines Only</span>
+                <span className={`${isLight ? 'text-stone-700' : 'text-zinc-300'}`}>Cyber-Sensei Advice</span>
+                <span className={`${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>Cached Lines Only</span>
                 <span className="text-cyan-400 font-mono font-bold">Live Gemini Grid</span>
               </div>
               <div className="grid grid-cols-3 p-2.5">
-                <span className="text-zinc-300">Simultaneous Pacts</span>
-                <span className="text-zinc-500">Max 1</span>
+                <span className={`${isLight ? 'text-stone-700' : 'text-zinc-300'}`}>Simultaneous Pacts</span>
+                <span className={`${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>Max 1</span>
                 <span className="text-[#6A4E9B] font-bold">Infinite Shadows</span>
               </div>
               <div className="grid grid-cols-3 p-2.5">
-                <span className="text-zinc-300">Synthesised audio loops</span>
-                <span className="text-zinc-500">Fallback only</span>
+                <span className={`${isLight ? 'text-stone-700' : 'text-zinc-300'}`}>Synthesised audio loops</span>
+                <span className={`${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>Fallback only</span>
                 <span className="text-[#F2C94C] font-bold">High Hz Zen</span>
               </div>
             </div>
@@ -1877,20 +1378,20 @@ export default function App() {
               <button
                 onClick={() => {
                   soundSafe('clash');
-                  alert("Swearing allegiance to the Elite Annual pact ($29.99/yr) initiates!");
+                  setAlertModal({ message: "Swearing allegiance to the Elite Annual pact ($29.99/yr) initiates!" });
                 }}
-                className="w-full gold-shimmer-btn py-3.5 rounded-xl text-black font-mono font-black tracking-widest text-xs shadow-lg uppercase"
-              >
-                ANNUAL ASCENSION ($29.99 / YEAR)
+              className="w-full gold-shimmer-btn py-3.5 rounded-xl text-black font-mono font-black tracking-widest text-xs shadow-lg uppercase focus-visible:ring-2 focus-visible:ring-yellow-500/50 focus-visible:outline-none"
+            >
+              ANNUAL ASCENSION ($29.99 / YEAR)
               </button>
               <button
                 onClick={() => {
                   soundSafe('clash');
-                  alert("Forging lifetime supreme shadow covenant ($79.99) initiates!");
+                  setAlertModal({ message: "Forging lifetime supreme shadow covenant ($79.99) initiates!" });
                 }}
-                className="w-full bg-gradient-to-r from-neutral-800 to-black text-neutral-200 hover:text-white border border-neutral-700 py-3 rounded-xl font-mono text-xs font-bold tracking-widest uppercase transition-all"
-              >
-                LIFETIME SOUL ENVELOPE ($79.99)
+              className={`w-full bg-gradient-to-r ${isLight ? 'from-stone-200 to-stone-300 text-stone-600 border-stone-300 hover:text-stone-800' : 'from-neutral-800 to-black text-neutral-200 hover:text-white border-neutral-700'} py-3 rounded-xl font-mono text-xs font-bold tracking-widest uppercase transition-all border focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none`}
+            >
+              LIFETIME SOUL ENVELOPE ($79.99)
               </button>
             </div>
 
@@ -1903,103 +1404,384 @@ export default function App() {
       {selectedProgram && (
         <ProgramDetailBoard
           program={selectedProgram}
-          onClose={() => {
+          isLight={isLight}
+          onClose={() => setSelectedProgram(null)}
+          onBegin={(inputs) => {
             setSelectedProgram(null);
             setActiveRunningProgram(selectedProgram);
+            setExerciseLogs(selectedProgram.moves.map((m, i) => ({
+              name: m.name,
+              sets: [],
+              targetSets: inputs[i]?.sets || m.sets || 3,
+              targetReps: inputs[i]?.reps || m.reps || 10
+            })));
+            setCurrentExerciseIndex(0);
             setRunningTimer(0);
             setIsRunning(true);
+            setRestTimerDuration(90);
+            setRestTimerKey(prev => prev + 1);
           }}
         />
       )}
 
       {/* ========================================================================================= */}
-      {/* ======================= ACTIVE RUNNING TIMER SCREEN OVERLAY ============================= */}
+      {/* ======================= ACTIVE WORKOUT OVERLAY ========================================== */}
       {activeRunningProgram && (
-        <div className="fixed inset-0 bg-void z-50 flex flex-col items-center justify-between p-6">
-          <div className="w-full max-w-sm flex justify-between items-center mt-4">
-            <span className="px-2.5 py-1 bg-rose-500/10 border border-rose-500/20 text-rose-500 font-mono text-[9px] uppercase tracking-widest">RUNNING COMBAT TIMER</span>
+        <div className={`fixed inset-0 z-50 flex flex-col p-6 overflow-y-auto ${
+          shadowMode
+            ? 'bg-black'
+            : isLight ? 'bg-stone-100' : 'bg-[#0A0A0F]'
+        }`}>
+          {/* Header */}
+          <div className="w-full max-w-sm mx-auto flex justify-between items-center mb-4">
+            <div>
+              <span className="text-[10px] font-mono text-rose-500 uppercase tracking-widest">ACTIVE PROTOCOL</span>
+              <h2 className={`text-lg font-bold tracking-wider ${isLight ? 'text-stone-800' : 'text-white'}`}>{activeRunningProgram.nameEnglish}</h2>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setShadowMode(!shadowMode)}
+                className={`p-2 rounded-full cursor-pointer text-xs font-mono active:scale-90 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${shadowMode ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' : isLight ? 'bg-stone-200 text-stone-500' : 'bg-zinc-800 text-zinc-400'}`}
+                title="Shadow Mode"
+                aria-label="Toggle shadow mode"
+              >
+                陰
+              </button>
+              <button
+                onClick={() => {
+                  setConfirmModal({
+                  message: "Exit training? Progress will be lost!",
+                  onConfirm: () => {
+                    setActiveRunningProgram(null);
+                    setIsRunning(false);
+                  }
+                });
+                }}
+                className={`p-2 rounded-full cursor-pointer active:scale-90 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${isLight ? 'bg-stone-200 hover:bg-rose-200' : 'bg-zinc-800 hover:bg-rose-500/20'}`}
+                aria-label="Close workout"
+              >
+                <X className={`w-5 h-5 ${isLight ? 'text-stone-500' : 'text-zinc-400'}`} />
+              </button>
+            </div>
+          </div>
+
+          {/* Timer + Progress */}
+          <div className="w-full max-w-sm mx-auto flex items-center gap-4 mb-4">
+            <div className={`flex-1 rounded-xl p-3 border ${isLight ? 'bg-white/80 border-stone-200' : 'bg-zinc-900/80 border-zinc-800/50'} flex items-center gap-3`}>
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold font-mono ${isLight ? 'bg-stone-200 text-stone-700' : 'bg-zinc-800 text-white'}`}>
+                {Math.floor(runningTimer / 60).toString().padStart(2, '0')}
+              </div>
+              <div>
+                <span className={`text-[8px] font-mono uppercase tracking-widest ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>ELAPSED</span>
+                <span className={`text-xs font-mono block ${isLight ? 'text-stone-700' : 'text-zinc-300'}`}>{Math.floor(runningTimer / 60)}:{(runningTimer % 60).toString().padStart(2, '0')}</span>
+              </div>
+            </div>
+            <div className={`flex-1 rounded-xl p-3 border ${isLight ? 'bg-white/80 border-stone-200' : 'bg-zinc-900/80 border-zinc-800/50'} flex items-center gap-3`}>
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold font-mono ${isLight ? 'bg-stone-200 text-stone-700' : 'bg-zinc-800 text-rose-400'}`}>
+                {currentExerciseIndex + 1}/{exerciseLogs.length}
+              </div>
+              <div>
+                <span className={`text-[8px] font-mono uppercase tracking-widest ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>EXERCISE</span>
+                <span className={`text-xs font-mono block truncate max-w-[100px] ${isLight ? 'text-stone-700' : 'text-zinc-300'}`}>{exerciseLogs[currentExerciseIndex]?.name || '...'}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Current Exercise Card */}
+          {exerciseLogs[currentExerciseIndex] && (
+            <div className={`w-full max-w-sm mx-auto rounded-xl p-4 border mb-4 ${isLight ? 'bg-white border-stone-200' : 'bg-zinc-900/80 border-zinc-800/50'}`}>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className={`text-sm font-bold ${isLight ? 'text-stone-800' : 'text-white'}`}>{exerciseLogs[currentExerciseIndex].name}</h3>
+                <span className={`text-[10px] font-mono ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>
+                  {exerciseLogs[currentExerciseIndex].targetSets} × {exerciseLogs[currentExerciseIndex].targetReps}
+                </span>
+              </div>
+
+              {/* Logged Sets */}
+              <div className="space-y-1.5 mb-3" aria-live="polite">
+                {exerciseLogs[currentExerciseIndex].sets.length === 0 ? (
+                  <p className={`text-[10px] font-mono text-center py-4 ${isLight ? 'text-stone-400' : 'text-zinc-600'}`}>No sets logged yet. Add your first set below.</p>
+                ) : (
+                  exerciseLogs[currentExerciseIndex].sets.map((set, si) => (
+                    <div key={si} className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-mono ${isLight ? 'bg-stone-100' : 'bg-zinc-800/50'}`}>
+                      <span className={isLight ? 'text-stone-700' : 'text-zinc-300'}>Set {si + 1}</span>
+                      <span className={isLight ? 'text-stone-500' : 'text-zinc-400'}>{set.reps} reps {set.weight > 0 ? `@ ${set.weight}kg` : ''}</span>
+                      {checkNewPR(exerciseLogs[currentExerciseIndex].name, set.weight, set.reps) && (
+                        <span className="text-amber-400 text-[8px] ml-1">🔥 PR</span>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* Add Set Form */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className={`text-[10px] font-mono ${isLight ? 'text-stone-500' : 'text-zinc-400'}`}>Set {exerciseLogs[currentExerciseIndex].sets.length + 1}/{exerciseLogs[currentExerciseIndex].targetSets}</span>
+                  {exerciseLogs[currentExerciseIndex].sets.length >= exerciseLogs[currentExerciseIndex].targetSets && (
+                    <span className="text-[10px] font-mono text-emerald-400">✓ COMPLETE</span>
+                  )}
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="number"
+                    placeholder="Reps"
+                    id={`reps-input-${currentExerciseIndex}`}
+                    defaultValue={exerciseLogs[currentExerciseIndex].targetReps}
+                    className={`w-20 rounded-lg px-2 py-2 text-xs font-mono outline-none border focus-visible:ring-2 focus-visible:ring-rose-500/50 ${isLight ? 'bg-stone-100 border-stone-300 text-stone-800' : 'bg-zinc-800 border-zinc-700 text-white'}`}
+                  />
+                  <input
+                    type="number"
+                    placeholder="Weight"
+                    id={`weight-input-${currentExerciseIndex}`}
+                    defaultValue={0}
+                    className={`w-20 rounded-lg px-2 py-2 text-xs font-mono outline-none border focus-visible:ring-2 focus-visible:ring-rose-500/50 ${isLight ? 'bg-stone-100 border-stone-300 text-stone-800' : 'bg-zinc-800 border-zinc-700 text-white'}`}
+                  />
+                  <button
+                    onClick={() => {
+                      const repsInput = document.getElementById(`reps-input-${currentExerciseIndex}`) as HTMLInputElement;
+                      const weightInput = document.getElementById(`weight-input-${currentExerciseIndex}`) as HTMLInputElement;
+                      const reps = parseInt(repsInput?.value || '0') || 0;
+                      const weight = parseInt(weightInput?.value || '0') || 0;
+                      if (reps <= 0) return;
+                      soundSafe('tap');
+                      const newSet: LoggedSet = { reps, weight, timestamp: Date.now() };
+                      setExerciseLogs(prev => prev.map((log, i) =>
+                        i === currentExerciseIndex ? { ...log, sets: [...log.sets, newSet] } : log
+                      ));
+                      updatePRs(exerciseLogs[currentExerciseIndex].name, weight, reps);
+                      repsInput.value = String(exerciseLogs[currentExerciseIndex].targetReps);
+                      weightInput.value = '0';
+                      setRestTimerKey(prev => prev + 1);
+                    }}
+                    className="px-4 py-2 rounded-lg bg-rose-600 text-white hover:bg-rose-500 text-xs font-mono font-bold cursor-pointer active:scale-95 transition-all focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none"
+                  >
+                    LOG SET
+                  </button>
+                  <button
+                    onClick={() => {
+                      soundSafe('tap');
+                      const newSet: LoggedSet = { reps: 0, weight: 0, timestamp: Date.now() };
+                      setExerciseLogs(prev => prev.map((log, i) =>
+                        i === currentExerciseIndex ? { ...log, sets: [...log.sets, newSet] } : log
+                      ));
+                      setRestTimerKey(prev => prev + 1);
+                    }}
+                    className={`px-3 py-2 rounded-lg text-xs font-mono font-bold cursor-pointer active:scale-95 transition-all border focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${isLight ? 'bg-stone-100 border-stone-300 text-stone-500 hover:bg-stone-200' : 'bg-zinc-800 border-zinc-700 text-zinc-400 hover:bg-zinc-700'}`}
+                  >
+                    SKIP
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Rest Timer */}
+          <div className="w-full max-w-sm mx-auto mb-4">
+            {exerciseLogs.some(e => e.sets.length > 0) && (
+              <div key={restTimerKey}><RestTimer duration={restTimerDuration} autoStart isLight={isLight} /></div>
+            )}
+          </div>
+
+          {/* Exercise Navigation */}
+          <div className="w-full max-w-sm mx-auto flex gap-2 mb-4">
             <button
               onClick={() => {
-                if(confirm("Exit training sequence? This breaks today\'s fire progression!")) {
-                  setActiveRunningProgram(null);
-                  setIsRunning(false);
+                if (currentExerciseIndex > 0) {
+                  setCurrentExerciseIndex(prev => prev - 1);
+                  setRestTimerKey(prev => prev + 1);
                 }
               }}
-              className="p-1.5 rounded-full bg-kachi/50 hover:bg-rose-500/10 cursor-pointer"
+              disabled={currentExerciseIndex === 0}
+              className={`flex-1 py-3 rounded-xl text-xs font-mono font-bold tracking-wider transition-all cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${isLight ? 'bg-stone-200 text-stone-600 disabled:opacity-30' : 'bg-zinc-800 text-zinc-400 disabled:opacity-30'}`}
             >
-              <X className="w-5 h-5 text-zinc-400" />
+              ← PREV
+            </button>
+            <button
+              onClick={() => {
+                setCurrentExerciseIndex(prev => Math.min(prev + 1, exerciseLogs.length - 1));
+                setRestTimerKey(prev => prev + 1);
+              }}
+              disabled={currentExerciseIndex >= exerciseLogs.length - 1}
+              className={`flex-1 py-3 rounded-xl text-xs font-mono font-bold tracking-wider transition-all cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${isLight ? 'bg-stone-200 text-stone-600 disabled:opacity-30' : 'bg-zinc-800 text-zinc-400 disabled:opacity-30'}`}
+            >
+              NEXT →
             </button>
           </div>
 
-          {/* Master 3D focus clock */}
-          <div className="flex flex-col items-center space-y-4">
-            <div className="relative w-56 h-56 flex items-center justify-center">
-              {/* Outer Glowing spinning circle */}
-              <div className={`absolute inset-0 rounded-full border-4 border-dashed border-rose-500/10 ${isRunning ? 'animate-spin' : ''}`} style={{ animationDuration: '40s' }} />
-              <div className="absolute w-48 h-48 rounded-full bg-gradient-to-b from-sumi to-void shadow-[inset_0_4px_30px_rgba(0,0,0,0.8),0_0_25px_rgba(255,59,48,0.25)] flex flex-col items-center justify-center relative">
-                
-                <span className="text-xs uppercase text-zinc-500 tracking-widest font-mono">ELAPSED TIME</span>
-                <span className="text-4xl font-mono font-black tracking-widest text-white mt-1">
-                  {Math.floor(runningTimer / 60).toString().padStart(2, '0')}:{Math.floor(runningTimer % 60).toString().padStart(2, '0')}
-                </span>
-                
-                <span className="text-[10px] text-[#2D9C6E] font-mono mt-1 font-bold animate-pulse">WARRIOR FIRE ACTIVE</span>
-              </div>
-            </div>
-
-            <div className="text-center">
-              <span className="font-kanji font-black text-rose-500 text-lg">{activeRunningProgram.nameKanji}</span>
-              <h2 className="text-xl font-extrabold text-white tracking-widest mt-0.5">{activeRunningProgram.nameEnglish}</h2>
-              <p className="text-xs text-zinc-400 max-w-xs mt-1">{activeRunningProgram.description}</p>
-            </div>
+          {/* Exercise Overview Dots */}
+          <div className="w-full max-w-sm mx-auto flex gap-1.5 justify-center mb-4">
+            {exerciseLogs.map((log, i) => {
+              const isComplete = log.sets.length >= log.targetSets;
+              return (
+                <button key={i} onClick={() => { setCurrentExerciseIndex(i); setRestTimerKey(prev => prev + 1); }}
+                  className={`w-3 h-3 rounded-full transition-all cursor-pointer ${i === currentExerciseIndex ? 'bg-rose-500 scale-125' : isComplete ? 'bg-emerald-400' : log.sets.length > 0 ? (isLight ? 'bg-amber-400' : 'bg-amber-500') : (isLight ? 'bg-stone-300' : 'bg-zinc-700')}`} />
+              );
+            })}
           </div>
 
-          {/* Next drills list */}
-          <div className="w-full max-w-sm bg-kachi/30 rounded-2xl border border-white/5 p-4 space-y-3">
-            <span className="text-[9px] font-mono text-rose-400 uppercase tracking-widest block">STEEL PATTERNS & DRILLS:</span>
-            <div className="space-y-3 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
-              {activeRunningProgram.moves.map((move, i) => (
-                <div key={i} className="flex items-center gap-3 bg-void/50 p-2 rounded-lg border border-white/5 overflow-hidden relative group">
-                  <div className="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-40 transition-opacity" style={{ backgroundImage: `url(${move.image})` }}></div>
-                  <span className="w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/50 flex items-center justify-center text-[10px] text-rose-500 font-bold relative z-10">{i+1}</span>
-                  <span className="text-xs text-white font-mono relative z-10 drop-shadow-md">{move.name}</span>
+            {/* Battle Challenge + AI Pose Detector + Sensei Verify Buttons */}
+            <div className="w-full max-w-sm mx-auto flex gap-2 mb-3">
+              <button onClick={() => setShowBattleChallenge(true)}
+                className={`flex-1 py-3 rounded-xl text-[10px] font-mono font-bold cursor-pointer active:scale-95 transition-all border focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${
+                  isLight ? 'bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100' : 'bg-purple-500/10 border-purple-500/30 text-purple-400 hover:bg-purple-500/20'
+                }`}>
+                ⚔️ BATTLE
+              </button>
+              <button onClick={() => setShowPoseDetector(true)}
+                className={`flex-1 py-3 rounded-xl text-[10px] font-mono font-bold cursor-pointer active:scale-95 transition-all border focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${
+                  isLight ? 'bg-indigo-50 border-indigo-200 text-indigo-700 hover:bg-indigo-100' : 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20'
+                }`}>
+                📷 AI VERIFY
+              </button>
+              <button onClick={handleSenseiVerify}
+                disabled={senseiVerifyLoading || senseiVerifyFeedback !== null}
+                className={`flex-1 py-3 rounded-xl text-[10px] font-mono font-bold cursor-pointer active:scale-95 transition-all border focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${
+                  isLight ? 'bg-cyan-50 border-cyan-200 text-cyan-700 hover:bg-cyan-100 disabled:opacity-40' : 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 disabled:opacity-40'
+                }`}>
+                {senseiVerifyLoading ? '⏳ THINKING...' : senseiVerifyFeedback ? '✅ VERIFIED' : '🎯 SENSEI'}
+              </button>
+            </div>
+
+            {/* Sensei Verification Feedback */}
+            {senseiVerifyFeedback && (
+              <div className={`w-full max-w-sm mx-auto mb-3 p-3 rounded-xl border text-xs leading-relaxed ${
+                senseiVerifyError
+                  ? (isLight ? 'bg-red-50 border-red-200 text-red-700' : 'bg-red-500/10 border-red-500/30 text-red-400')
+                  : (isLight ? 'bg-cyan-50 border-cyan-200 text-stone-700' : 'bg-cyan-500/5 border-cyan-500/20 text-zinc-300')
+              }`} aria-live="polite">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <span className="text-xs">{senseiVerifyError ? '⚠️' : '🎯'}</span>
+                    <span className={`text-[9px] font-mono font-bold uppercase tracking-wider ${senseiVerifyError ? 'text-red-500' : 'text-cyan-500'}`}>
+                      {senseiVerifyError ? 'VERIFICATION FAILED' : 'SENSEI VERDICT'}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setSenseiVerifyFeedback(null)}
+                    className={`p-0.5 cursor-pointer focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${isLight ? 'text-stone-400 hover:text-stone-600' : 'text-zinc-600 hover:text-zinc-400'}`}
+                    aria-label="Close verification"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
                 </div>
-              ))}
-            </div>
+                <p className="font-sans whitespace-pre-wrap">{senseiVerifyFeedback}</p>
+              </div>
+            )}
+
+          {/* Voice Command Button + Status */}
+          <div className="w-full max-w-sm mx-auto mb-2 flex items-center justify-center gap-2">
+            {voiceSupported && (
+              <button
+                onClick={voiceToggle}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-mono font-bold tracking-wider transition-all cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${
+                  voiceListening
+                    ? 'bg-rose-500 text-white shadow-[0_0_12px_rgba(227,30,36,0.6)] animate-pulse'
+                    : isLight ? 'bg-stone-200 text-stone-600 hover:bg-stone-300' : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
+                }`}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                  <line x1="12" y1="19" x2="12" y2="23"/>
+                  <line x1="8" y1="23" x2="16" y2="23"/>
+                </svg>
+                {voiceListening ? 'LISTENING...' : 'VOICE'}
+              </button>
+            )}
+            {lastCommand && (
+              <span className={`text-[10px] font-mono px-2 py-1 rounded ${isLight ? 'bg-emerald-100 text-emerald-700' : 'bg-emerald-500/10 text-emerald-400'}`}>
+                ⌘ {lastCommand}
+              </span>
+            )}
           </div>
 
-          {/* Control Triggers */}
-          <div className="w-full max-w-sm flex gap-3 mb-6">
+          {/* Pause / Finish */}
+          <div className="w-full max-w-sm mx-auto flex gap-3">
             <button
               onClick={() => {
                 soundSafe('tap');
                 setIsRunning(!isRunning);
               }}
-              className={`flex-1 text-center py-4 rounded-xl font-mono font-bold text-xs tracking-widest cursor-pointer active:scale-95 transition-all uppercase border ${isRunning ? 'bg-[#9E2A2A] text-white border-rose-500/30' : 'bg-[#2D9C6E] text-white border-emerald-500/30'}`}
+              className={`flex-1 py-4 rounded-xl font-mono font-bold text-xs tracking-widest cursor-pointer active:scale-95 transition-all border focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${isRunning ? 'bg-[#9E2A2A] text-white border-rose-500/30' : 'bg-[#2D9C6E] text-white border-emerald-500/30'}`}
             >
-              {isRunning ? 'PAUSE STEEL FLOW' : 'RESUME DRILL CLASH'}
+              {isRunning ? 'PAUSE' : 'RESUME'}
             </button>
             <button
               onClick={() => {
+                const totalSets = exerciseLogs.reduce((sum, log) => sum + log.sets.length, 0);
+                if (totalSets === 0) {
+                  setConfirmModal({
+                    message: "No sets logged. Finish anyway?",
+                    onConfirm: () => {
+                      const session: WorkoutSession = {
+                        id: `ws_${Date.now()}`,
+                        programName: activeRunningProgram.nameEnglish,
+                        date: new Date().toISOString(),
+                        duration: runningTimer,
+                        exercises: exerciseLogs,
+                        verified: false,
+                      };
+                      addWorkout(session);
+                      setStreak(prev => prev + 1);
+                      setStats(s => ({
+                        ...s,
+                        Strength: Math.min(100, s.Strength + 2),
+                        Endurance: Math.min(100, s.Endurance + 3)
+                      }));
+                      const newUnlocks = checkAchievements();
+                      const totalVolume = exerciseLogs.reduce((s, log) => s + log.sets.reduce((ss, set) => ss + set.reps * set.weight, 0), 0);
+                      setWorkoutCompleteData({
+                        programName: activeRunningProgram.nameEnglish,
+                        duration: runningTimer,
+                        totalSets,
+                        totalVolume,
+                        newPRs: newUnlocks.length > 0 ? [{ name: 'Achievement Unlocked' }] : [],
+                        xpEarned: totalSets * 10 + Math.floor(runningTimer / 60),
+                        achievementsUnlocked: newUnlocks,
+                      });
+                      setShowWorkoutComplete(true);
+                    }
+                  });
+                  return;
+                }
+                const session: WorkoutSession = {
+                  id: `ws_${Date.now()}`,
+                  programName: activeRunningProgram.nameEnglish,
+                  date: new Date().toISOString(),
+                  duration: runningTimer,
+                  exercises: exerciseLogs,
+                  verified: false,
+                };
+                addWorkout(session);
                 soundSafe('chime');
-                unlockAchievement('ac1');
-                // complete
                 setStreak(prev => prev + 1);
-                // random stats bump
                 setStats(s => ({
                   ...s,
                   Strength: Math.min(100, s.Strength + 2),
                   Endurance: Math.min(100, s.Endurance + 3)
                 }));
-                alert(`CONGRATULATIONS WARRIOR! You successfully completed [${activeRunningProgram.nameEnglish}]. Live points and streak counters updated within the ledger.`);
-                setActiveRunningProgram(null);
-                setIsRunning(false);
+                const newUnlocks = checkAchievements();
+                const totalVolume = exerciseLogs.reduce((s, log) => s + log.sets.reduce((ss, set) => ss + set.reps * set.weight, 0), 0);
+                setWorkoutCompleteData({
+                  programName: activeRunningProgram.nameEnglish,
+                  duration: runningTimer,
+                  totalSets,
+                  totalVolume,
+                  newPRs: newUnlocks.length > 0 ? [{ name: 'Achievement Unlocked' }] : [],
+                  xpEarned: totalSets * 10 + Math.floor(runningTimer / 60),
+                  achievementsUnlocked: newUnlocks,
+                });
+                setShowWorkoutComplete(true);
               }}
-              className="px-6 py-4 rounded-xl bg-gradient-to-r from-yellow-500 to-[#F2C94C] text-black font-mono font-bold text-xs tracking-widest cursor-pointer active:scale-95 transition-all uppercase"
+              className="px-6 py-4 rounded-xl bg-gradient-to-r from-yellow-500 to-[#F2C94C] text-black font-mono font-bold text-xs tracking-widest cursor-pointer active:scale-95 transition-all uppercase focus-visible:ring-2 focus-visible:ring-yellow-500/50 focus-visible:outline-none"
             >
-              FINISH PROTOCOL
+              FINISH
             </button>
           </div>
+
+          {/* Hidden gym photo input */}
+          <input type="file" id="gym-photo-input" accept="image/*" className="hidden" />
 
         </div>
       )}
@@ -2009,23 +1791,24 @@ export default function App() {
       {/* ========================================================================================= */}
       {zoomedPhoto !== null && (
         <div 
-          className="fixed inset-0 bg-void/98 z-50 flex flex-col items-center justify-center p-4 md:p-10 backdrop-blur-xl transition-all duration-300 animate-fadeIn"
+          className={`fixed inset-0 ${isLight ? 'bg-stone-200/98' : 'bg-void/98'} z-50 flex flex-col items-center justify-center p-4 md:p-10 backdrop-blur-xl transition-all duration-300 animate-fadeIn`}
           onClick={() => setZoomedPhoto(null)}
         >
           <div 
             className={`w-full max-w-4xl rounded-3xl border p-6 md:p-8 space-y-6 shadow-2xl overflow-y-auto max-h-[90vh] transition-all relative ${
               zoomedPhoto === 'parchment'
                 ? 'bg-[#EAE4D7] border-stone-400 text-stone-900'
-                : 'bg-[#0B0B0C] border-rose-500/20 text-white'
+                : `${isLight ? 'bg-white border-stone-200 text-stone-800' : 'bg-[#0B0B0C] border-rose-500/20 text-white'}`
             }`}
             onClick={(e) => e.stopPropagation()} // Stop background click from closing
           >
             {/* Close trigger button */}
             <button 
               onClick={() => setZoomedPhoto(null)}
-              className={`absolute top-4 right-4 p-2 rounded-full cursor-pointer transition-colors ${
-                zoomedPhoto === 'parchment' ? 'bg-stone-300 hover:bg-stone-400 text-stone-900' : 'bg-neutral-800 hover:bg-neutral-700 text-white'
+              className={`absolute top-4 right-4 p-2 rounded-full cursor-pointer transition-colors focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${
+                zoomedPhoto === 'parchment' ? 'bg-stone-300 hover:bg-stone-400 text-stone-900' : `${isLight ? 'bg-stone-200 hover:bg-stone-300 text-stone-600' : 'bg-neutral-800 hover:bg-neutral-700 text-white'}`
               }`}
+              aria-label="Close lightbox"
             >
               <X className="w-5 h-5" />
             </button>
@@ -2059,10 +1842,11 @@ export default function App() {
                     src={zoomedPhoto === 'parchment' ? IMAGES.warriorHelmet : IMAGES.bgSamurai} 
                     className="w-full max-h-[480px] object-contain rounded-xl hover:scale-[1.03] transition-transform duration-500" 
                     alt="Pristine Design Reference Closeup" 
+                    loading="lazy" decoding="async"
                   />
                   
                   {/* Anchor watermark overlays */}
-                  <div className="absolute bottom-4 left-4 bg-black/75 px-3 py-1.5 rounded-lg border border-white/10 text-white font-mono text-[9px] flex items-center gap-1.5">
+                  <div className={`absolute bottom-4 left-4 bg-black/75 px-3 py-1.5 rounded-lg border ${isLight && zoomedPhoto !== 'parchment' ? 'border-rose-500/30' : 'border-white/10'} text-white font-mono text-[9px] flex items-center gap-1.5`}>
                     <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping" />
                     <span>ORIGINAL DESIGN FILE</span>
                   </div>
@@ -2094,22 +1878,22 @@ export default function App() {
                     </ul>
                   </div>
                 ) : (
-                  <div className="space-y-3.5 text-xs text-zinc-400 leading-relaxed">
+                  <div className={`space-y-3.5 text-xs ${isLight ? 'text-stone-600' : 'text-zinc-400'} leading-relaxed`}>
                     <p>
-                      This theme replicates the <strong className="text-white font-bold">Cyber Samurai "Kage" Wallpaper</strong>. It leverages dramatic chiaroscuro and highly vibrant cyberpunk neon-red strokes:
+                      This theme replicates the <strong className={`${isLight ? 'text-stone-900' : 'text-white'} font-bold`}>Cyber Samurai "Kage" Wallpaper</strong>. It leverages dramatic chiaroscuro and highly vibrant cyberpunk neon-red strokes:
                     </p>
-                    <ul className="space-y-2.5 list-disc list-inside bg-neutral-900 p-4 rounded-xl border border-white/5">
+                    <ul className={`space-y-2.5 list-disc list-inside ${isLight ? 'bg-stone-100 border-stone-200' : 'bg-neutral-900 border-white/5'} p-4 rounded-xl border`}>
                       <li>
-                        <strong className="text-white font-bold">Void Charcoal canvas:</strong> A rich background gradient that focuses 100% attention on the central figure.
+                        <strong className={`${isLight ? 'text-stone-900' : 'text-white'} font-bold`}>Void Charcoal canvas:</strong> A rich background gradient that focuses 100% attention on the central figure.
                       </li>
                       <li>
-                        <strong className="text-white font-bold">The Radiant Sun Backlight:</strong> A giant glowing circular gradient in deep scarlet/crimson.
+                        <strong className={`${isLight ? 'text-stone-900' : 'text-white'} font-bold`}>The Radiant Sun Backlight:</strong> A giant glowing circular gradient in deep scarlet/crimson.
                       </li>
                       <li>
-                        <strong className="text-white font-bold">Huge Calligraphic "影" (KAGE):</strong> Left-aligned, acting as a dynamic backdrop watermark that scales with negative space.
+                        <strong className={`${isLight ? 'text-stone-900' : 'text-white'} font-bold`}>Huge Calligraphic "影" (KAGE):</strong> Left-aligned, acting as a dynamic backdrop watermark that scales with negative space.
                       </li>
                       <li>
-                        <strong className="text-white font-bold">Saturated red-accents:</strong> Buttons, tags, and sparks emerge from the darkness like burning cinders.
+                        <strong className={`${isLight ? 'text-stone-900' : 'text-white'} font-bold`}>Saturated red-accents:</strong> Buttons, tags, and sparks emerge from the darkness like burning cinders.
                       </li>
                     </ul>
                   </div>
@@ -2118,7 +1902,7 @@ export default function App() {
                 <div className="pt-4 border-t border-stone-300/40">
                   <button 
                     onClick={() => setZoomedPhoto(null)}
-                    className="w-full py-3 bg-stone-950 text-white hover:bg-stone-800 dark:bg-rose-600 dark:hover:bg-rose-500 rounded-xl font-mono text-xs font-bold font-black uppercase shadow-lg select-all"
+                    className={`w-full py-3 ${isLight ? 'bg-stone-800 text-white hover:bg-stone-700' : 'bg-stone-950 text-white hover:bg-stone-800'} rounded-xl font-mono text-xs font-bold font-black uppercase shadow-lg select-all`}
                   >
                     ⚖️ CONFIRM STYLE COMPREHENSION
                   </button>
@@ -2130,6 +1914,61 @@ export default function App() {
         </div>
       )}
 
+      {/* ========================================================================================= */}
+      {/* ======================= BATTLE CHALLENGE MODAL ============================================= */}
+      {showBattleChallenge && (
+        <Suspense fallback={null}>
+          <BattleChallenge
+            isLight={isLight}
+            onClose={() => setShowBattleChallenge(false)}
+            partnerName={pactData.partnerName}
+            partnerAvatar={pactData.avatar}
+            sharedStreak={pactData.sharedStreak}
+          />
+        </Suspense>
+      )}
+
+      {/* ========================================================================================= */}
+      {/* ======================= AI POSE DETECTOR MODAL ============================================ */}
+      {showPoseDetector && exerciseLogs[currentExerciseIndex] && (
+        <Suspense fallback={null}>
+          <PoseDetector
+            isLight={isLight}
+            onClose={() => setShowPoseDetector(false)}
+            onComplete={(count) => {
+              const newSet: LoggedSet = { reps: count, weight: 0, timestamp: Date.now() };
+              setExerciseLogs(prev => prev.map((log, i) =>
+                i === currentExerciseIndex ? { ...log, sets: [...log.sets, newSet] } : log
+              ));
+              setShowPoseDetector(false);
+            }}
+            targetCount={10}
+            exerciseName={exerciseLogs[currentExerciseIndex].name}
+          />
+        </Suspense>
+      )}
+
+        {/* Workout Complete Summary Modal */}
+      {showWorkoutComplete && workoutCompleteData && (
+        <Suspense fallback={null}>
+          <WorkoutComplete
+            isLight={isLight}
+            programName={workoutCompleteData.programName}
+            duration={workoutCompleteData.duration}
+            totalSets={workoutCompleteData.totalSets}
+            totalVolume={workoutCompleteData.totalVolume}
+            newPRs={workoutCompleteData.newPRs}
+            xpEarned={workoutCompleteData.xpEarned}
+            achievementsUnlocked={workoutCompleteData.achievementsUnlocked}
+            onClose={() => {
+              setShowWorkoutComplete(false);
+              setActiveRunningProgram(null);
+              setIsRunning(false);
+            }}
+            onPhotoUpload={() => document.getElementById('gym-photo-input')?.click()}
+          />
+        </Suspense>
+      )}
     </div>
     </ErrorBoundary>
   );

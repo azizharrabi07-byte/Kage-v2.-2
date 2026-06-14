@@ -8,7 +8,7 @@ class KageAudioContext {
 
   private init() {
     if (!this.ctx) {
-      this.ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      this.ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
     }
   }
 
@@ -125,7 +125,7 @@ class KageAudioContext {
 
       osc.start(now);
       osc.stop(now + 0.2);
-    } catch {}
+    } catch (error) { console.warn('[Audio] playback failed:', error); }
   }
 
   /**
@@ -155,7 +155,7 @@ class KageAudioContext {
         osc.start(now + delay);
         osc.stop(now + delay + 0.35);
       });
-    } catch {}
+    } catch (error) { console.warn('[Audio] playback failed:', error); }
   }
 
   /**
@@ -192,7 +192,7 @@ class KageAudioContext {
       osc2.start(now);
       osc1.stop(now + 2.5);
       osc2.stop(now + 2.5);
-    } catch {}
+    } catch (error) { console.warn('[Audio] playback failed:', error); }
   }
 }
 

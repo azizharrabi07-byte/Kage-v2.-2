@@ -1,7 +1,9 @@
 import React from 'react';
 
-export default class ErrorBoundary extends React.Component<{children: React.ReactNode}> {
-  state = { hasError: false, error: null as Error | null };
+interface ErrorBoundaryState { hasError: boolean; error: Error | null; }
+
+export default class ErrorBoundary extends React.Component<{ children: React.ReactNode }, ErrorBoundaryState> {
+  state: ErrorBoundaryState = { hasError: false, error: null };
   static getDerivedStateFromError(error: Error) { return { hasError: true, error }; }
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error('ErrorBoundary caught:', error, errorInfo);

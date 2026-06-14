@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const pageVariants = {
@@ -25,7 +25,7 @@ interface CinematicTransitionProps {
   id?: string;
 }
 
-export default function CinematicTransition({
+const CinematicTransition = React.memo(function CinematicTransition({
   children,
   variant = 'page',
   className = '',
@@ -48,17 +48,11 @@ export default function CinematicTransition({
       </motion.div>
     </AnimatePresence>
   );
-}
+});
 
-export function StaggerList({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return (
-    <motion.div initial="hidden" animate="visible" className={className}>
-      {children}
-    </motion.div>
-  );
-}
+export default CinematicTransition;
 
-export function StaggerItem({ children, index = 0 }: { children: ReactNode; index?: number }) {
+export const StaggerItem = React.memo(function StaggerItem({ children, index = 0 }: { children: ReactNode; index?: number }) {
   return (
     <motion.div
       variants={{
@@ -69,4 +63,12 @@ export function StaggerItem({ children, index = 0 }: { children: ReactNode; inde
       {children}
     </motion.div>
   );
-}
+});
+
+export const StaggerList = React.memo(function StaggerList({ children, className = '' }: { children: ReactNode; className?: string }) {
+  return (
+    <motion.div initial="hidden" animate="visible" className={className}>
+      {children}
+    </motion.div>
+  );
+});

@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import React, { Suspense, useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial, Float, TorusKnot } from '@react-three/drei';
 import * as THREE from 'three';
@@ -42,7 +42,18 @@ function GalaxyParticles({ count = 400 }) {
   );
 }
 
-function FloatingGeo({ data, index }: { data: any; index: number }) {
+interface FloatingGeoData {
+  type: 'box' | 'octa' | 'tetra' | 'ico';
+  args: number[];
+  pos: [number, number, number];
+  rotSpeed: number;
+  floatSpeed: number;
+  floatAmp: number;
+  color: string;
+  opacity: number;
+}
+
+function FloatingGeo({ data, index, key }: { data: FloatingGeoData; index: number; key?: string | number }) {
   const meshRef = useRef<THREE.Mesh>(null);
   useFrame(({ clock }) => {
     if (meshRef.current) {
@@ -237,22 +248,32 @@ function ShootingStars() {
   );
 }
 
-export function EnergySphereScene({ isLight }: { isLight?: boolean }) {
+function SceneSkeleton({ isLight }: { isLight?: boolean }) {
   return (
-    <div className="absolute inset-0 pointer-events-none">
-      <Canvas camera={{ position: [0, 0, 4.5], fov: 45 }}>
-        <ambientLight intensity={isLight ? 0.8 : 0.3} />
-        <pointLight position={[5, 5, 5]} intensity={isLight ? 0.5 : 1.5} />
-        <pointLight position={[-3, -2, 1]} intensity={isLight ? 0.2 : 0.5} color="#22D3EE" />
-        <GlowField />
-        <GalaxyParticles />
-        <FloatingGeometries />
-        <EnergyCore />
-        <InnerCore />
-        <EnergyRings />
-        <TorusKnotGlow />
-        <ShootingStars />
-      </Canvas>
+    <div className={`absolute inset-0 flex items-center justify-center ${isLight ? 'bg-stone-100/50' : 'bg-[#0A0A0F]/50'}`}>
+      <div className={`w-32 h-32 rounded-full animate-pulse ${isLight ? 'bg-stone-200/60' : 'bg-zinc-800/40'}`} />
     </div>
   );
 }
+
+export const EnergySphereScene = React.memo(function EnergySphereScene({ isLight }: { isLight?: boolean }) {
+  return (
+    <div className="absolute inset-0 pointer-events-none">
+      <Suspense fallback={<SceneSkeleton isLight={isLight} />}>
+        <Canvas camera={{ position: [0, 0, 4.5], fov: 45 }}>
+          <ambientLight intensity={isLight ? 0.8 : 0.3} />
+          <pointLight position={[5, 5, 5]} intensity={isLight ? 0.5 : 1.5} />
+          <pointLight position={[-3, -2, 1]} intensity={isLight ? 0.2 : 0.5} color="#22D3EE" />
+          <GlowField />
+          <GalaxyParticles />
+          <FloatingGeometries />
+          <EnergyCore />
+          <InnerCore />
+          <EnergyRings />
+          <TorusKnotGlow />
+          <ShootingStars />
+        </Canvas>
+      </Suspense>
+    </div>
+  );
+});

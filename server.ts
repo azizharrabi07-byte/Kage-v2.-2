@@ -58,7 +58,7 @@ const QUICK_RESPONSES: Record<string, string> = {
  * Sensei chat endpoint proxying to Gemini (when available)
  */
 app.post("/api/chat", async (req, res) => {
-  const { message, quickAction } = req.body;
+  const { message, quickAction, history } = req.body;
 
   if (quickAction && QUICK_RESPONSES[quickAction]) {
     return res.json({
@@ -71,9 +71,20 @@ app.post("/api/chat", async (req, res) => {
 
   if (ai) {
     try {
+      // Build conversation contents from history if available
+      const contents = (history && Array.isArray(history) && history.length > 0)
+        ? [
+            ...history.map((h: any) => ({
+              role: h.role === 'model' ? 'model' : 'user',
+              parts: [{ text: h.text }]
+            })),
+            { role: 'user', parts: [{ text: userMsg }] }
+          ]
+        : userMsg;
+
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: userMsg,
+        contents,
         config: {
           systemInstruction: "You are the Holographic Sensei inside the KAGE fitness app. You are a legendary, wise, cybernetic samurai mentor. Express severe, punchy, unyielding but supportive martial arts wisdom. Keep responses concise (under 2-3 short paragraphs), highly styled with analogies related to forge, swords, shadows, and dojos. Never break character.",
           temperature: 0.8,

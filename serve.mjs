@@ -5,7 +5,8 @@ const dir = '/tmp/kage-v2-2/dist';
 const mime = {
   '.js':'application/javascript','.css':'text/css','.png':'image/png',
   '.jpg':'image/jpeg','.gif':'image/gif','.svg':'image/svg+xml',
-  '.ico':'image/x-icon','.html':'text/html','.json':'application/json'
+  '.ico':'image/x-icon','.html':'text/html','.json':'application/json',
+  '.js.map':'application/json','.woff2':'font/woff2','.webp':'image/webp'
 };
 const srv = http.createServer((req, res) => {
   let f = req.url === '/' ? '/index.html' : req.url.split('?')[0];

@@ -1,7 +1,9 @@
+import React from 'react';
 import { motion } from 'motion/react';
 
 interface StatsBoardProps {
   stats: Record<string, number>;
+  isLight?: boolean;
 }
 
 const statLabels: Record<string, string> = {
@@ -12,7 +14,7 @@ const statLabels: Record<string, string> = {
   Endurance: '耐',
 };
 
-export default function StatsBoard({ stats }: StatsBoardProps) {
+const StatsBoard = React.memo(function StatsBoard({ stats, isLight = false }: StatsBoardProps) {
   const keys = Object.keys(stats);
   const cx = 120;
   const cy = 120;
@@ -46,12 +48,12 @@ export default function StatsBoard({ stats }: StatsBoardProps) {
               return `${cx + radius * r * Math.cos(angle)},${cy + radius * r * Math.sin(angle)}`;
             }).join(' ')}
             fill="none"
-            stroke="rgba(255,255,255,0.05)"
+            stroke={isLight ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.05)"}
             strokeWidth="1"
           />
         ))}
         {/* Background grid */}
-        <polygon points={bgD} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+        <polygon points={bgD} fill="none" stroke={isLight ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.08)"} strokeWidth="1" />
         {/* Data polygon */}
         <motion.path
           d={pathD}
@@ -82,19 +84,19 @@ export default function StatsBoard({ stats }: StatsBoardProps) {
           const ly = cy + (radius + 20) * Math.sin(angle);
           return (
             <text key={'l' + p.key} x={lx} y={ly} textAnchor="middle" dominantBaseline="middle"
-              fill="#8E9EAF" fontSize="11" fontFamily="monospace" letterSpacing="2"
+              fill={isLight ? "#78716C" : "#8E9EAF"} fontSize="11" fontFamily="monospace" letterSpacing="2"
             >
               {p.label}
             </text>
           );
         })}
         {/* Center value */}
-        <text x={cx} y={cy - 4} textAnchor="middle" fill="white" fontSize="28" fontWeight="bold"
+        <text x={cx} y={cy - 4} textAnchor="middle" fill={isLight ? "#44403C" : "white"} fontSize="28" fontWeight="bold"
           fontFamily="'Inter', sans-serif"
         >
           {Math.round(Object.values(stats).reduce((a, b) => a + b, 0) / keys.length)}
         </text>
-        <text x={cx} y={cy + 16} textAnchor="middle" fill="#8E9EAF" fontSize="8"
+        <text x={cx} y={cy + 16} textAnchor="middle" fill={isLight ? "#78716C" : "#8E9EAF"} fontSize="8"
           letterSpacing="3" fontFamily="monospace"
         >
           OVERALL
@@ -104,8 +106,8 @@ export default function StatsBoard({ stats }: StatsBoardProps) {
       <div className="w-full space-y-2 mt-4">
         {keys.map((key) => (
           <div key={key} className="flex items-center gap-3">
-            <span className="text-xs text-gray-400 w-8 tracking-wider">{key}</span>
-            <div className="flex-1 h-1.5 bg-black/30 rounded-full overflow-hidden">
+            <span className={`text-xs w-8 tracking-wider ${isLight ? 'text-stone-500' : 'text-gray-400'}`}>{key}</span>
+            <div className={`flex-1 h-1.5 rounded-full overflow-hidden ${isLight ? 'bg-stone-200' : 'bg-black/30'}`}>
               <motion.div
                 className="h-full rounded-full"
                 style={{ backgroundColor: '#E31E24' }}
@@ -114,10 +116,12 @@ export default function StatsBoard({ stats }: StatsBoardProps) {
                 transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
               />
             </div>
-            <span className="text-xs text-gray-500 w-6 text-right">{stats[key]}</span>
+            <span className={`text-xs w-6 text-right ${isLight ? 'text-stone-400' : 'text-gray-500'}`}>{stats[key]}</span>
           </div>
         ))}
       </div>
     </div>
   );
-}
+});
+
+export default StatsBoard;

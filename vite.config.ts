@@ -11,11 +11,50 @@ export default defineConfig(() => {
         '@': path.resolve(__dirname, '.'),
       },
     },
+    optimizeDeps: {
+      include: ['three', '@react-three/fiber', '@react-three/drei'],
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            three: ['three', '@react-three/fiber', '@react-three/drei'],
+            'data-exercises': ['./src/data/exercises.ts'],
+            'data-programs': ['./src/data/programs.ts'],
+            'data-diets': ['./src/data/dietPrograms.ts'],
+            landing: ['./src/components/EpicLanding.tsx'],
+            'components-exercise': [
+              './src/components/ExerciseLibrary.tsx',
+              './src/components/ExerciseDetail.tsx',
+              './src/components/ExerciseImage.tsx',
+            ],
+            'components-program': [
+              './src/components/ProgramBrowser.tsx',
+              './src/components/ProgramBoard.tsx',
+              './src/components/DataTable.tsx',
+            ],
+            'components-diet': ['./src/components/DietPlanView.tsx'],
+            'components-extra': [
+              './src/components/BattleChallenge.tsx',
+              './src/components/PoseDetector.tsx',
+              './src/components/WorkoutComplete.tsx',
+              './src/components/CameraCheckIn.tsx',
+              './src/components/PushupVerification.tsx',
+            ],
+            'components-tabs': [
+              './src/components/HomeTab.tsx',
+              './src/components/TrainTab.tsx',
+              './src/components/DojoTab.tsx',
+              './src/components/SenseiTab.tsx',
+              './src/components/FuelTab.tsx',
+              './src/components/SoulTab.tsx',
+            ],
+          },
+        },
+      },
+    },
     server: {
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
-      // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },
   };

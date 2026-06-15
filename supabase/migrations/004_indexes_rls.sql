@@ -6,10 +6,19 @@
 -- INDEXES
 -- ============================================================================
 
--- exercises
-CREATE INDEX IF NOT EXISTS idx_exercises_target ON exercises(target);
-CREATE INDEX IF NOT EXISTS idx_exercises_category ON exercises(category);
-CREATE INDEX IF NOT EXISTS idx_exercises_difficulty ON exercises(difficulty);
+-- exercises (index only columns that exist — skip target/muscle_group if absent)
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='exercises' AND column_name='category') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_exercises_category ON exercises(category)';
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='exercises' AND column_name='difficulty') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_exercises_difficulty ON exercises(difficulty)';
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='exercises' AND column_name='muscle_group') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_exercises_muscle_group ON exercises(muscle_group)';
+  END IF;
+END $$;
 
 -- workout_sessions
 CREATE INDEX IF NOT EXISTS idx_workout_sessions_user_id ON workout_sessions(user_id);

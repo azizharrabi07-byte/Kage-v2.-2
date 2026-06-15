@@ -11,7 +11,7 @@ def signup(email: str, password: str, name: str) -> dict:
     if not user:
         raise ValueError("Signup failed")
 
-    supabase.table("users").upsert({
+    supabase.table("profiles").upsert({
         "id": user.id,
         "email": email,
         "name": name,
@@ -38,7 +38,7 @@ def login(email: str, password: str) -> dict:
     if not user:
         raise ValueError("Invalid credentials")
 
-    profile = supabase.table("users").select("id, email, name").eq("id", user.id).single().execute()
+    profile = supabase.table("profiles").select("id, email, name").eq("id", user.id).single().execute()
     user_data = profile.data if profile.data else {"id": user.id, "email": email, "name": ""}
 
     token = _make_token(user.id, email)
@@ -47,7 +47,7 @@ def login(email: str, password: str) -> dict:
 
 def get_profile(user_id: str) -> dict | None:
     supabase = get_supabase()
-    profile = supabase.table("users").select("id, email, name").eq("id", user_id).single().execute()
+    profile = supabase.table("profiles").select("id, email, name").eq("id", user_id).single().execute()
     return profile.data
 
 

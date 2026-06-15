@@ -27,7 +27,7 @@ async def create_battle(body: CreateBattleRequest, user: dict = Depends(get_curr
     if challenger_id == body.opponent_id:
         raise HTTPException(status_code=400, detail="Cannot battle yourself")
 
-    opponent = supabase.table("users").select("id").eq("id", body.opponent_id).single().execute()
+    opponent = supabase.table("profiles").select("id").eq("id", body.opponent_id).single().execute()
     if not opponent.data:
         raise HTTPException(status_code=404, detail="Opponent not found")
 

@@ -100,6 +100,46 @@ CREATE TABLE IF NOT EXISTS personal_records (
   UNIQUE(user_id, exercise_id, weight_kg, reps)
 );
 
+CREATE TABLE IF NOT EXISTS achievements (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL,
+  icon TEXT DEFAULT '🏆',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS user_achievements (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  achievement_id TEXT REFERENCES achievements(id),
+  unlocked_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(user_id, achievement_id)
+);
+
+INSERT INTO achievements (id, name, description, icon) VALUES
+  ('first_workout', 'First Sweat', 'Complete your first workout', '💪'),
+  ('five_workouts', 'Getting Started', 'Complete 5 workouts', '🔥'),
+  ('ten_workouts', 'Dedicated', 'Complete 10 workouts', '⚔️'),
+  ('twenty_five_workouts', 'Warrior Path', 'Complete 25 workouts', '🛡️'),
+  ('fifty_workouts', 'Half Century', 'Complete 50 workouts', '🗡️'),
+  ('hundred_workouts', 'Century Club', 'Complete 100 workouts', '👑'),
+  ('first_streak_3', 'Streak Starter', 'Reach a 3-day streak', '📅'),
+  ('first_streak_7', 'Weekly Warrior', 'Reach a 7-day streak', '📆'),
+  ('first_streak_30', 'Monthly Master', 'Reach a 30-day streak', '🗓️'),
+  ('first_pr', 'Personal Record', 'Set your first personal record', '🏆')
+ON CONFLICT (id) DO NOTHING;
+
+CREATE TABLE IF NOT EXISTS battles (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  challenger_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  opponent_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'active', 'completed')),
+  winner_id UUID REFERENCES auth.users(id),
+  wager_xp INT DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  completed_at TIMESTAMPTZ
+);
+
 CREATE TABLE IF NOT EXISTS body_measurements (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,

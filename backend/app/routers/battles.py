@@ -82,10 +82,14 @@ async def complete_battle(battle_id: str, body: CompleteBattleRequest, user: dic
 
     wager = battle.data.get("wager_xp", 0)
     if wager > 0 and winner_id:
-        supabase.rpc("transfer_xp", {
-            "from_id": battle.data["challenger_id"] if winner_id == battle.data["challenger_id"] else battle.data["opponent_id"],
-            "to_id": winner_id,
-            "amount": wager,
-        }).execute()
+        loser_id = battle.data["challenger_id"] if winner_id == battle.data["opponent_id"] else battle.data["opponent_id"]
+        for uid in [loser_id, winner_id]:
+            prog = supabase.table("progression").select("total_xp").eq("user_id", uid).single().execute()
+            if prog.data:
+                current = prog.data.get("total_xp", 0)
+                delta = -wager if uid == loser_id else wager
+                supabase.table("progression").update({
+                    "total_xp": max(0, current + delta),
+                }).eq("user_id", uid).execute()
 
     return updated.data

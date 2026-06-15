@@ -38,6 +38,8 @@ import {
 import { IMAGES } from './assets';
 import { KageAudio } from './audio';
 import { TabName, WorkoutProgram, Meal, Pact, LeaderboardUser, ChatMessage, Achievement, UserProgram, WorkoutSession, ExerciseLog, LoggedSet, TrainingPlan } from './types';
+import { exercises } from './data/exercises';
+import { setTrainingExercises, generatePrograms } from './utils/programGenerator';
 import { useWorkoutHistory, useExercisePRs } from './hooks/useWorkoutHistory';
 import { useAchievements } from './hooks/useAchievements';
 import { useVoiceCommands } from './hooks/useVoiceCommands';
@@ -291,6 +293,11 @@ export default function App() {
   const [mealPlanType, setMealPlanType] = useState<'shred' | 'bulk' | 'maintain'>('shred');
   const [selectedProgram, setSelectedProgram] = useState<WorkoutProgram | null>(null);
 
+  // Generated zero-equipment programs (bodyweight only)
+  const [generatedZeroEquipPrograms] = useState<WorkoutProgram[]>(() => 
+    generatePrograms({ goal: 'strength', difficulty: 3, duration: 8, frequency: 4, equipment: 'none' })
+  );
+
   // Active workout execution overlay state
   const [activeRunningProgram, setActiveRunningProgram] = useState<WorkoutProgram | null>(null);
   const [runningTimer, setRunningTimer] = useState(0);
@@ -447,6 +454,12 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('shadow_mode', String(shadowMode));
   }, [shadowMode]);
+
+  // Initialize program generator with exercises data
+  useEffect(() => {
+    setTrainingExercises(exercises);
+    console.log('[KAGE] Program generator initialized with', exercises.length, 'exercises');
+  }, []);
 
   // Active workout timer
   useEffect(() => {
@@ -864,6 +877,7 @@ Keep it to 3-4 short sentences. Be direct and authoritative like a martial arts 
                 soundSafe={soundSafe}
                 MOCK_PROGRAMS={MOCK_PROGRAMS}
                 MOCK_TRAINING_PLANS={MOCK_TRAINING_PLANS}
+                GENERATED_ZERO_EQUIP_PROGRAMS={generatedZeroEquipPrograms}
                 userPrograms={userPrograms}
                 trainingSubTab={trainingSubTab}
                 setTrainingSubTab={setTrainingSubTab}

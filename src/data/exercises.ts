@@ -24,6 +24,7 @@ export const exercises: Exercise[] = [
         tips: ['Pinch your shoulder blades together throughout', 'Don\'t bounce the bar off your chest', 'Use a spotter for heavy sets'],
         defaultSets: 4, defaultReps: '6-12', restSeconds: 90,
         benefits: ['Builds overall chest size and strength', 'Develops upper body pressing power', 'Foundation movement for all pushing exercises'],
+        imageUrl: 'https://wger.de/exerciseimage/1/bench-press.jpg',
       },
       {
         id: 'incline-bench-press', name: 'Incline Barbell Bench Press', kanji: '傾斜臥推', description: 'Targets the upper chest with a positive bench angle.', category: 'strength',
@@ -33,6 +34,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep elbows at 45 degrees to your torso', 'Don\'t over-arch your lower back', 'Use a spotter for heavy sets'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Develops the upper pec major', 'Improves shoulder pressing strength', 'Creates a fuller balanced chest appearance'],
+        imageUrl: 'https://wger.de/media/exercise-images/2/Incline-bench-press-1.png',
       },
       {
         id: 'decline-bench-press', name: 'Decline Barbell Bench Press', kanji: '下傾臥推', description: 'Emphasizes the lower chest using a decline angle.', category: 'strength',
@@ -42,6 +44,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your shoulders pinned back', 'Avoid bouncing the bar off your chest', 'This angle reduces shoulder strain'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Targets the lower sternal head of pectoralis major', 'Completes full chest development', 'Reduces anterior shoulder stress'],
+        imageUrl: 'https://wger.de/media/exercise-images/3/Decline-bench-press-1.png',
       },
       {
         id: 'dumbbell-bench-press', name: 'Dumbbell Bench Press', kanji: '亜鈴臥推', description: 'Dumbbells allow greater range of motion.', category: 'strength',
@@ -51,6 +54,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep wrists neutral throughout', 'Don\'t let dumbbells touch at the top', 'Use controlled tempo especially on negatives'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 75,
         benefits: ['Greater range of motion than barbell', 'Corrects left-to-right muscle imbalances', 'Engages shoulder stabilizer muscles'],
+        imageUrl: 'https://wger.de/media/exercise-images/4/Dumbbell-bench-press-1.png',
       },
       {
         id: 'incline-dumbbell-press', name: 'Incline Dumbbell Press', kanji: '傾斜亜鈴推', description: 'Upper chest isolation with dumbbells.', category: 'strength',
@@ -60,6 +64,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep elbows slightly tucked', 'Don\'t arch your back to press', 'Use slightly lighter than flat press'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 75,
         benefits: ['Builds upper chest thickness', 'Greater range than barbell incline', 'Reduces shoulder impingement risk'],
+        imageUrl: 'https://wger.de/media/exercise-images/5/Incline-dumbbell-press-1.png',
       },
       {
         id: 'decline-dumbbell-press', name: 'Decline Dumbbell Press', kanji: '下傾亜鈴推', description: 'Lower chest with dumbbells for full ROM.', category: 'strength',
@@ -69,6 +74,7 @@ export const exercises: Exercise[] = [
         tips: ['Control the descent 2 seconds per rep', 'Keep shoulders pinched down and back', 'Don\'t let elbows flare too wide'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 75,
         benefits: ['Completes lower chest development', 'Allows heavier loading than flat for some', 'Improves chest-tricep lockout coordination'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Decline%20Dumbbell%20Press',
       },
       {
         id: 'flat-dumbbell-fly', name: 'Flat Dumbbell Fly', kanji: '平亜鈴翼開', description: 'Isolation that stretches and contracts the chest.', category: 'strength',
@@ -78,6 +84,7 @@ export const exercises: Exercise[] = [
         tips: ['Imagine hugging a large barrel at bottom', 'Don\'t go too low into shoulders', 'Focus on squeezing the chest not arms'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Stretches and contracts pectorals', 'Builds chest width and definition', 'Isolates chest with minimal tricep involvement'],
+        imageUrl: 'https://wger.de/media/exercise-images/6/Dumbbell-fly-1.png',
       },
       {
         id: 'incline-dumbbell-fly', name: 'Incline Dumbbell Fly', kanji: '傾斜翼開', description: 'Upper chest isolation with deep stretch.', category: 'strength',
@@ -87,6 +94,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep shoulders down and back', 'Use lighter weight than press', 'Exhale bringing dumbbells together'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 60,
         benefits: ['Upper chest definition and separation', 'Targets clavicular head of pec major', 'Creates visible upper chest lines'],
+        imageUrl: 'https://wger.de/media/exercise-images/7/Incline-dumbbell-fly-1.png',
       },
       {
         id: 'cable-crossover-high', name: 'High Cable Crossover', kanji: '高纜交', description: 'Constant tension chest isolation from high pulleys.', category: 'strength',
@@ -96,6 +104,7 @@ export const exercises: Exercise[] = [
         tips: ['Squeeze chest at peak contraction', 'Keep slight bend in elbows', 'Don\'t let stacks touch for constant tension'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Constant tension throughout movement', 'Builds chest definition and separation', 'Reduces tricep involvement for pure isolation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Crossover%20High',
       },
       {
         id: 'cable-crossover-low', name: 'Low Cable Crossover', kanji: '低纜交', description: 'Upper chest focus from low pulleys.', category: 'strength',
@@ -105,6 +114,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep chest up and shoulders back', 'Focus on upper chest squeeze', 'Control the negative phase'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Targets upper chest from unique angle', 'Constant tension through full range', 'Complements incline pressing'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Crossover%20Low',
       },
       {
         id: 'cable-crossover-mid', name: 'Mid Cable Crossover', kanji: '中纜交', description: 'Mid-chest work from middle pulley height.', category: 'strength',
@@ -114,6 +124,7 @@ export const exercises: Exercise[] = [
         tips: ['Brace core to prevent swaying', 'Focus on chest not shoulders', 'Use manageable weight'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Isolates mid-chest region', 'Builds chest separation', 'Great chest day finisher'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Crossover%20Mid',
       },
       {
         id: 'pec-deck-fly', name: 'Pec Deck Fly Machine', kanji: '胸機翼', description: 'Safe machine chest fly for isolated contraction.', category: 'strength',
@@ -123,6 +134,7 @@ export const exercises: Exercise[] = [
         tips: ['Adjust seat for mid-chest alignment', 'Don\'t use momentum', 'Exhale during contraction'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Safe isolated chest contraction', 'Builds mind-muscle connection', 'Ideal for beginners'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Pec%20Deck%20Fly',
       },
       {
         id: 'push-up', name: 'Standard Push Up', kanji: '標準腕立', description: 'The fundamental bodyweight chest builder.', category: 'bodyweight',
@@ -132,6 +144,7 @@ export const exercises: Exercise[] = [
         tips: ['Engage core and glutes to prevent hip sag', 'Keep elbows at 45 degrees', 'Breathe in down out up'],
         defaultSets: 3, defaultReps: '10-25', restSeconds: 45,
         benefits: ['Builds functional pushing strength', 'Engages entire core', 'Requires no equipment'],
+        imageUrl: 'https://wger.de/exerciseimage/1/push-up.jpg',
       },
       {
         id: 'wide-push-up', name: 'Wide Stance Push Up', kanji: '広腕腕立', description: 'Increased chest stretch with wider hands.', category: 'bodyweight',
@@ -141,6 +154,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t let hands slip outward', 'Focus on chest stretch at bottom', 'Reduces tricep involvement'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Emphasizes outer chest', 'Builds pectoral width', 'Accessible push-up progression'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Wide%20Push%20Up',
       },
       {
         id: 'diamond-push-up', name: 'Diamond Push Up', kanji: '鑽石腕立', description: 'Tricep-focused push-up with close hands.', category: 'bodyweight',
@@ -150,6 +164,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep body straight throughout', 'Don\'t let elbows flare', 'More difficult than standard push-up'],
         defaultSets: 3, defaultReps: '8-15', restSeconds: 60,
         benefits: ['Emphasizes triceps strength', 'Builds inner chest', 'Transitions to dip strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Diamond%20Push%20Up',
       },
       {
         id: 'decline-push-up', name: 'Decline Push Up', kanji: '下傾腕立', description: 'Upper chest and shoulders with elevated feet.', category: 'bodyweight',
@@ -159,6 +174,7 @@ export const exercises: Exercise[] = [
         tips: ['Higher feet equals more difficulty', 'Keep core braced', 'Focus on upper chest engagement'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Targets upper chest and front delts', 'Prepares for handstand push-ups', 'Requires only elevated surface'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Decline%20Push%20Up',
       },
       {
         id: 'incline-push-up', name: 'Incline Push Up', kanji: '傾斜腕立', description: 'Easier push-up for beginners.', category: 'bodyweight',
@@ -168,6 +184,7 @@ export const exercises: Exercise[] = [
         tips: ['Higher surface equals easier exercise', 'Progress to lower surfaces', 'Maintain core tension'],
         defaultSets: 3, defaultReps: '10-20', restSeconds: 45,
         benefits: ['Beginner-friendly progression', 'Builds foundational pushing strength', 'Scalable difficulty'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Incline%20Push%20Up',
       },
       {
         id: 'chest-dip', name: 'Chest Dip', kanji: '胸下', description: 'Heavy lower chest and tricep compound.', category: 'bodyweight',
@@ -177,6 +194,7 @@ export const exercises: Exercise[] = [
         tips: ['Lean forward for chest emphasis', 'Avoid going too deep', 'Add weight with belt when ready'],
         defaultSets: 3, defaultReps: '6-12', restSeconds: 90,
         benefits: ['Massive lower chest development', 'Builds serious pressing power', 'Classic calisthenics movement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Chest%20Dip',
       },
       {
         id: 'tricep-dip', name: 'Tricep Dip', kanji: '三頭下', description: 'Upright dip for triceps mass.', category: 'bodyweight',
@@ -186,6 +204,7 @@ export const exercises: Exercise[] = [
         tips: ['Stay vertical for tricep focus', 'Don\'t flare elbows', 'Control the descent'],
         defaultSets: 3, defaultReps: '8-15', restSeconds: 60,
         benefits: ['Develops triceps long and lateral head', 'Builds arm size and lockout strength', 'Transitions to muscle-ups'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Tricep%20Dip',
       },
       {
         id: 'dumbbell-pullover', name: 'Dumbbell Pullover', kanji: '越頭拉', description: 'Chest and lat compound stretch.', category: 'strength',
@@ -195,6 +214,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep hips low', 'Use light weight to master form', 'Breathe deeply during stretch'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Expands rib cage mobility', 'Stretches chest and lats', 'Improves shoulder range of motion'],
+        imageUrl: 'https://wger.de/media/exercise-images/10/Dumbbell-pullover-1.png',
       },
       {
         id: 'floor-press', name: 'Barbell Floor Press', kanji: '地臥推', description: 'Truncated bench press that reduces shoulder strain.', category: 'strength',
@@ -204,6 +224,7 @@ export const exercises: Exercise[] = [
         tips: ['Triceps touching ground is your stop', 'Shoulder-friendly limited ROM', 'Great for lockout overload'],
         defaultSets: 3, defaultReps: '6-10', restSeconds: 90,
         benefits: ['Safer for shoulders than full bench', 'Builds tricep lockout strength', 'Allows heavier loading in shortened range'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Floor%20Press',
       },
       {
         id: 'svend-press', name: 'Svend Press', kanji: '板挟推', description: 'Isometric plate press for inner chest.', category: 'strength',
@@ -213,6 +234,7 @@ export const exercises: Exercise[] = [
         tips: ['Squeeze plates throughout entire movement', 'Harder squeeze equals more activation', 'Use light plates to start'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Inner chest emphasis', 'Isometric and dynamic tension', 'Builds mind-muscle connection'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Svend%20Press',
       },
       {
         id: 'medicine-ball-push-up', name: 'Medicine Ball Push Up', kanji: '球腕立', description: 'Unstable push-up for coordination.', category: 'bodyweight',
@@ -222,6 +244,7 @@ export const exercises: Exercise[] = [
         tips: ['Brace core for stability', 'Don\'t let ball roll away', 'Smaller ball equals more instability'],
         defaultSets: 3, defaultReps: '8-12 per side', restSeconds: 60,
         benefits: ['Unilateral chest strength', 'Engages stabilizer muscles', 'Builds coordination and proprioception'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Medicine%20Ball%20Push%20Up',
       },
       {
         id: 'spiderman-push-up', name: 'Spiderman Push Up', kanji: '蜘蛛腕立', description: 'Push-up with knee drive for core mobility.', category: 'bodyweight',
@@ -231,6 +254,7 @@ export const exercises: Exercise[] = [
         tips: ['Control each phase smoothly', 'Keep hips low', 'Rhythmic breathing'],
         defaultSets: 3, defaultReps: '8-12 per side', restSeconds: 45,
         benefits: ['Chest work plus hip mobility', 'Engages obliques through rotation', 'Adds cardio element'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Spiderman%20Push%20Up',
       },
       {
         id: 'archer-push-up', name: 'Archer Push Up', kanji: '弓腕立', description: 'Advanced unilateral push-up.', category: 'bodyweight',
@@ -240,6 +264,7 @@ export const exercises: Exercise[] = [
         tips: ['Wider hands equals harder', 'Keep body straight', 'Master standard push-ups first'],
         defaultSets: 3, defaultReps: '5-8 per side', restSeconds: 60,
         benefits: ['Unilateral chest strength', 'Extreme range of motion', 'Prepares for advanced calisthenics'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Archer%20Push%20Up',
       },
       {
         id: 'hindu-push-up', name: 'Hindu Push Up', kanji: '印度腕立', description: 'Flowing push-up for shoulder endurance.', category: 'bodyweight',
@@ -249,6 +274,7 @@ export const exercises: Exercise[] = [
         tips: ['Move smoothly like a wave', 'Breathe deeply throughout', 'Mobility drill as much as strength'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 45,
         benefits: ['Shoulder mobility and stability', 'Whole-body coordination', 'Spinal flexibility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Hindu%20Push%20Up',
       },
       {
         id: 'plyometric-push-up', name: 'Plyometric Push Up', kanji: '爆発腕立', description: 'Explosive push-up for power.', category: 'bodyweight',
@@ -258,6 +284,7 @@ export const exercises: Exercise[] = [
         tips: ['Land with bent elbows', 'Start with small hops first', 'Use soft surface'],
         defaultSets: 3, defaultReps: '5-10', restSeconds: 60,
         benefits: ['Explosive upper body power', 'Improves rate of force production', 'Sports performance transfer'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Plyometric%20Push%20Up',
       },
       {
         id: 'standing-cable-press', name: 'Standing Cable Press', kanji: '立纜推', description: 'Standing press with constant cable tension.', category: 'strength',
@@ -267,6 +294,7 @@ export const exercises: Exercise[] = [
         tips: ['Brace core to resist rotation', 'Don\'t let cables pull arms wide', 'Squeeze chest at full extension'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Constant tension on chest', 'Core engagement', 'Shoulder-friendly pressing'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Standing%20Cable%20Press',
       },
       {
         id: 'single-arm-cable-press', name: 'Single Arm Cable Press', kanji: '單手纜推', description: 'One-arm press for core and chest.', category: 'strength',
@@ -276,6 +304,7 @@ export const exercises: Exercise[] = [
         tips: ['Resist rotation with core', 'Keep hips square', 'Pause at full contraction'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 45,
         benefits: ['Anti-rotation core work', 'Corrects chest imbalances', 'Greater ROM than bilateral'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Single%20Arm%20Cable%20Press',
       },
       {
         id: 'dumbbell-hex-press', name: 'Dumbbell Hex Press', kanji: '六角推', description: 'Inner chest press with dumbbells touching.', category: 'strength',
@@ -285,6 +314,7 @@ export const exercises: Exercise[] = [
         tips: ['Key is squeezing together throughout', 'Lighter than standard press', 'Feel inner chest contract'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 45,
         benefits: ['Inner chest emphasis', 'Isometric and dynamic combination', 'Great chest finisher'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Hex%20Press',
       },
       {
         id: 'push-up-plyo-box', name: 'Plyo Box Push Up', kanji: '箱腕立', description: 'Deeper stretch push-up on boxes.', category: 'bodyweight',
@@ -294,6 +324,7 @@ export const exercises: Exercise[] = [
         tips: ['Use stable boxes', 'Deeper ROM increases activation', 'Keep body straight'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Greater range of motion', 'Deeper chest stretch', 'Requires only platforms'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Push%20Up%20Plyo%20Box',
       },
       {
         id: 'resistance-band-push-up', name: 'Resistance Band Push Up', kanji: '帯腕立', description: 'Banded push-up for added top resistance.', category: 'bodyweight',
@@ -303,6 +334,7 @@ export const exercises: Exercise[] = [
         tips: ['Thicker band equals more resistance', 'Band should be taut at bottom', 'Strengthens lockout portion'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Accommodating resistance', 'Builds lockout strength', 'Portable overload for home'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Resistance%20Band%20Push%20Up',
       },
       {
         id: 'landmine-chest-press', name: 'Landmine Chest Press', kanji: '地雷胸推', description: 'Angled pressing from a landmine.', category: 'strength',
@@ -312,6 +344,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep core tight', 'Arc motion is natural for shoulders', 'Can be bilateral or unilateral'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Shoulder-friendly pressing angle', 'Core engagement', 'Unique arc path challenge'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Landmine%20Chest%20Press',
       },
       {
         id: 'smith-machine-bench', name: 'Smith Machine Bench Press', kanji: '史密斯臥推', description: 'Fixed-path bench for controlled training.', category: 'strength',
@@ -321,6 +354,7 @@ export const exercises: Exercise[] = [
         tips: ['Adjust bench so bar hits mid-chest', 'Don\'t let fixed path force bad position', 'Useful for training to failure solo'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 75,
         benefits: ['Safe for solo training', 'Fixed path helps beginners', 'Easier to control than free weights'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Smith%20Machine%20Bench',
       },
       {
         id: 'incline-smith-press', name: 'Incline Smith Machine Press', kanji: '傾斜史密斯', description: 'Fixed-path incline for upper chest.', category: 'strength',
@@ -330,6 +364,7 @@ export const exercises: Exercise[] = [
         tips: ['Bench at 30-45 degrees', 'Keep shoulders pinned', 'Don\'t sacrifice form for weight'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 75,
         benefits: ['Upper chest on safe fixed path', 'Good for poor shoulder stability', 'Easy weight progression'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Incline%20Smith%20Press',
       },
       {
         id: 'leaning-cable-fly', name: 'Leaning Cable Fly', kanji: '傾纜翼', description: 'Single-arm cable fly for deep isolation.', category: 'strength',
@@ -339,6 +374,7 @@ export const exercises: Exercise[] = [
         tips: ['Lean forward maximizes ROM', 'Keep slight elbow bend', 'Control negative for stretch'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Extreme chest stretch', 'Independent side isolation', 'Builds chest detail and separation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Leaning%20Cable%20Fly',
       },
       {
         id: 'cable-pull-through-chest', name: 'Cable Pull Through Chest', kanji: '纜引通', description: 'Chest stretch from low pulley.', category: 'strength',
@@ -348,6 +384,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep chest up shoulders back', 'Light weight for isolation finisher'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Unique lower-to-upper chest sweep', 'Constant tension', 'Excellent chest day finisher'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Pull%20Through%20Chest',
       },
       {
         id: 'resistance-band-fly', name: 'Resistance Band Fly', kanji: '帯翼', description: 'Portable band fly for chest activation.', category: 'bodyweight',
@@ -357,6 +394,7 @@ export const exercises: Exercise[] = [
         tips: ['Adequate band tension at full stretch', 'Slight elbow bend', 'Control both directions'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Portable chest exercise', 'Constant tension', 'Great warm-up before pressing'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Resistance%20Band%20Fly',
       },
       {
         id: 'push-up-negatives', name: 'Push Up Negatives', kanji: '腕立負', description: 'Slow negative push-ups for strength.', category: 'bodyweight',
@@ -366,6 +404,7 @@ export const exercises: Exercise[] = [
         tips: ['Time descent at least 3 seconds', 'Steady breathing', 'Focus on eccentric chest work'],
         defaultSets: 3, defaultReps: '6-10', restSeconds: 60,
         benefits: ['Eccentric overload for strength', 'Improves control and body awareness', 'Good progression for beginners'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Push%20Up%20Negatives',
       },
       {
         id: 'dumbbell-squeeze-press', name: 'Dumbbell Squeeze Press', kanji: '亜鈴挟推', description: 'Inner chest press with isometric squeeze.', category: 'strength',
@@ -375,6 +414,7 @@ export const exercises: Exercise[] = [
         tips: ['Squeeze plates together max effort', 'Moderate weight single dumbbell', 'Feel inner chest work'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 45,
         benefits: ['Intense inner chest activation', 'Isometric core engagement', 'Fresh chest growth stimulus'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Squeeze%20Press',
       },
       {
         id: 'kettlebell-chest-press', name: 'Kettlebell Chest Press', kanji: '鈴胸推', description: 'Kettlebell press for stability demands.', category: 'strength',
@@ -384,6 +424,7 @@ export const exercises: Exercise[] = [
         tips: ['Offset center of gravity challenges shoulders', 'Keep wrist straight', 'Lighter than dumbbell equivalent'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 45,
         benefits: ['Unique stability challenge', 'Functional pressing strength', 'Engages seratus anterior'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Kettlebell%20Chest%20Press',
       },
       {
         id: 'push-up-plus', name: 'Push Up Plus', kanji: '腕立加', description: 'Push-up with full scapular protraction.', category: 'bodyweight',
@@ -393,6 +434,7 @@ export const exercises: Exercise[] = [
         tips: ['Plus position engages seratus anterior', 'Don\'t over-round upper back'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Engages seratus anterior for rib cage definition', 'Improves scapular health', 'Builds complete push-up strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Push%20Up%20Plus',
       },
       {
         id: 'legs-elevated-push-up', name: 'Legs Elevated Push Up', kanji: '脚上腕立', description: 'Increased upper chest load with feet up.', category: 'bodyweight',
@@ -402,6 +444,7 @@ export const exercises: Exercise[] = [
         tips: ['Higher feet equals more upper chest', 'Engage glutes to prevent sag', 'Don\'t arch lower back'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Shifts load to upper chest and shoulders', 'Builds upper chest without weights', 'Core stability improvement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Legs%20Elevated%20Push%20Up',
       },
       {
         id: 'cable-incline-fly', name: 'Cable Incline Fly', kanji: '纜傾斜翼', description: 'Upper chest cable fly for detail.', category: 'strength',
@@ -411,6 +454,7 @@ export const exercises: Exercise[] = [
         tips: ['Adjust bench for low cable pull', 'Keep slight elbow bend', 'Squeeze at top'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Upper chest isolation with cable tension', 'Greater activation than dumbbell flyes', 'Joint-friendly finisher'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Incline%20Fly',
       },
       {
         id: 'band-resisted-push-up', name: 'Band Resisted Push Up', kanji: '帯抵抗腕立', description: 'Banded push-up for accommodating resistance.', category: 'bodyweight',
@@ -420,6 +464,7 @@ export const exercises: Exercise[] = [
         tips: ['Band providing 20-30% bodyweight at top', 'Band across mid-back', 'Great for bodyweight overload'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Accommodating resistance curve', 'Lockout strength and power', 'Portable progressive overload'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Resisted%20Push%20Up',
       },
       {
         id: 'isometric-chest-squeeze', name: 'Isometric Chest Squeeze', kanji: '等尺胸縮', description: 'Static holds for chest peak contraction.', category: 'strength',
@@ -429,6 +474,7 @@ export const exercises: Exercise[] = [
         tips: ['Steady breathing', 'Maximal chest contraction', 'Activation not heavy load'],
         defaultSets: 3, defaultReps: '15-20 sec', restSeconds: 30,
         benefits: ['Isometric chest strength', 'Mind-muscle connection', 'Low fatigue chest volume'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Isometric%20Chest%20Squeeze',
       },
       {
         id: 'cable-decline-fly', name: 'Cable Decline Fly', kanji: '纜下傾翼', description: 'Lower chest cable fly for full detail.', category: 'strength',
@@ -438,6 +484,7 @@ export const exercises: Exercise[] = [
         tips: ['High cable targets lower chest', 'Controlled tempo', 'Squeeze lower chest fibers'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Targets lower chest fibers specifically', 'Better isolation than dumbbells', 'Lower chest separation and detail'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Decline%20Fly',
       },
       {
         id: 'reverse-grip-bench-press', name: 'Reverse Grip Bench Press', kanji: '反手臥推', description: 'Underhand grip bench for upper chest.', category: 'strength',
@@ -447,6 +494,7 @@ export const exercises: Exercise[] = [
         tips: ['Use spotter grip feels unstable at first', 'Lighter weight than regular bench', 'Keep wrists straight'],
         defaultSets: 3, defaultReps: '8-10', restSeconds: 90,
         benefits: ['Upper chest activation emphasis', 'Natural elbow tuck for shoulder safety', 'Unique chest growth stimulus'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Grip%20Bench%20Press',
       },
       {
         id: 'one-arm-push-up', name: 'One Arm Push Up', kanji: '單手腕立', description: 'Ultimate unilateral bodyweight push.', category: 'bodyweight',
@@ -456,6 +504,7 @@ export const exercises: Exercise[] = [
         tips: ['Widen feet for balance', 'Start partial range increase gradually', 'Archer push-ups as progression'],
         defaultSets: 3, defaultReps: '3-6 per side', restSeconds: 90,
         benefits: ['Ultimate unilateral strength test', 'Incredible core stability', 'Balanced chest and arm development'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=One%20Arm%20Push%20Up',
       },
       {
         id: 'weighted-push-up', name: 'Weighted Push Up', kanji: '加重腕立', description: 'Push-ups with added progressive overload.', category: 'bodyweight',
@@ -465,6 +514,7 @@ export const exercises: Exercise[] = [
         tips: ['Non-slip plate surface', 'Start 5-10 pounds', 'Weighted vest also works'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Progressive overload for bodyweight', 'Builds beyond standard push-ups', 'Keeps chest stimulus with resistance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Weighted%20Push%20Up',
       },
       {
         id: 'close-grip-bench-press', name: 'Close Grip Bench Press', kanji: '窄握臥推', description: 'Tricep-focused pressing narrow grip.', category: 'strength',
@@ -474,6 +524,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows tucked against torso', 'Don\'t go too narrow for wrists', 'Tricep emphasis more than chest'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 75,
         benefits: ['Tricep mass and lockout strength', 'Increases bench press lockout', 'Targets medial tricep head'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Close%20Grip%20Bench%20Press',
       },
       {
         id: 'guillotine-press', name: 'Guillotine Press', kanji: '断頭推', description: 'Bench press to neck for upper chest stretch.', category: 'strength',
@@ -483,6 +534,7 @@ export const exercises: Exercise[] = [
         tips: ['Much lighter than regular bench', 'Requires good shoulder mobility', 'Wide grip upper chest emphasis'],
         defaultSets: 3, defaultReps: '8-10', restSeconds: 90,
         benefits: ['Upper chest fiber stretch', 'Clavicular head targeting', 'Unique growth stimulus'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Guillotine%20Press',
       },
       {
         id: 'plate-pec-squeeze', name: 'Plate Pec Squeeze', kanji: '板胸縮', description: 'Isometric plate squeeze for inner chest.', category: 'strength',
@@ -492,6 +544,7 @@ export const exercises: Exercise[] = [
         tips: ['80-100% max squeeze effort', 'Normal breathing', 'Activation drill not strength'],
         defaultSets: 3, defaultReps: '20-30 sec', restSeconds: 30,
         benefits: ['Inner chest fiber activation', 'Great warm-up before chest', 'Mind-muscle connection builder'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Plate%20Pec%20Squeeze',
       },
       {
         id: 'barbell-pullover', name: 'Barbell Pullover', kanji: '棒越頭拉', description: 'Classic chest and lat builder.', category: 'strength',
@@ -501,6 +554,7 @@ export const exercises: Exercise[] = [
         tips: ['Hips low glutes relaxed', 'Light to moderate weight', 'Deep breathing during stretch'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Rib cage expansion', 'Lat and chest stretch and strength', 'Overhead shoulder mobility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Barbell%20Pullover',
       },
       {
         id: 'bosu-ball-push-up', name: 'Bosu Ball Push Up', kanji: '球半腕立', description: 'Unstable surface push-up for balance.', category: 'bodyweight',
@@ -510,6 +564,7 @@ export const exercises: Exercise[] = [
         tips: ['Instability increases stabilizers', 'Extra core tightness', 'Master standard push-ups first'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Shoulder stability challenge', 'Proprioceptive engagement', 'Functional sports strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bosu%20Ball%20Push%20Up',
       },
       {
         id: 'jump-push-up', name: 'Jump Push Up', kanji: '跳腕立', description: 'Plyometric push-up for explosive power.', category: 'bodyweight',
@@ -519,6 +574,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly bent elbows', 'Start small hops first', 'Padded surface recommended'],
         defaultSets: 3, defaultReps: '5-8', restSeconds: 60,
         benefits: ['Maximum explosive power', 'Chest speed and reactivity', 'High neural activation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Jump%20Push%20Up',
       },
       {
         id: 'bilateral-cable-press', name: 'Bilateral Cable Press', kanji: '双手纜推', description: 'Unstable cable pressing for chest and core.', category: 'strength',
@@ -528,6 +584,7 @@ export const exercises: Exercise[] = [
         tips: ['Core braced throughout', 'Don\'t let body rotate', 'Chest does the pressing work'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Functional chest strength', 'Constant tension', 'Core stability while training chest'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bilateral%20Cable%20Press',
       },
       {
         id: 'weighted-incline-push-up', name: 'Weighted Incline Push Up', kanji: '加重傾斜腕立', description: 'Decline push-up with weight for upper chest.', category: 'bodyweight',
@@ -537,6 +594,7 @@ export const exercises: Exercise[] = [
         tips: ['Spotter helps position weight', 'Core braced to prevent arching', 'Start 5-10 pounds added'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Upper chest overload', 'More functional than machines', 'Progressive bodyweight overload'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Weighted%20Incline%20Push%20Up',
       },
       {
         id: 'medicine-ball-chest-pass', name: 'Medicine Ball Chest Pass', kanji: '球胸投', description: 'Explosive chest pass for power development.', category: 'bodyweight',
@@ -546,6 +604,7 @@ export const exercises: Exercise[] = [
         tips: ['Use wall with good rebound', 'Step into throw for power', 'Core braced throughout'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 45,
         benefits: ['Explosive chest power', 'Hand-eye coordination', 'Reactive chest strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Medicine%20Ball%20Chest%20Pass',
       },
       {
         id: 'chest-expander-stretch', name: 'Chest Expander Stretch', kanji: '胸擴張', description: 'Dynamic chest opening mobility exercise.', category: 'stretching',
@@ -555,6 +614,7 @@ export const exercises: Exercise[] = [
         tips: ['Gradually bring hands closer for more stretch', 'Deep breathing into chest', 'Excellent for posture correction'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 30,
         benefits: ['Chest opening stretch', 'Shoulder mobility improvement', 'Postural correction'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Chest%20Expander%20Stretch',
       },
 
   // ----- BACK (63) -----
@@ -566,6 +626,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep bar in contact with legs throughout', 'Brace core before each rep', 'Never round lower back under heavy load'],
         defaultSets: 4, defaultReps: '5-8', restSeconds: 120,
         benefits: ['Full posterior chain strength', 'Total body strength and power', 'Grip strength and core stability', 'Athletic performance foundation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Deadlift%20Conventional',
       },
       {
         id: 'sumo-deadlift', name: 'Sumo Deadlift', kanji: '相撲地起', description: 'Wide stance deadlift emphasizing legs.', category: 'strength',
@@ -575,6 +636,7 @@ export const exercises: Exercise[] = [
         tips: ['Knees out in line with toes', 'Shins nearly vertical at start', 'Less lower back stress than conventional'],
         defaultSets: 4, defaultReps: '5-8', restSeconds: 120,
         benefits: ['Less lower back stress', 'Greater glute and quad activation', 'Ideal for longer torsos', 'Hip and leg drive strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Sumo%20Deadlift',
       },
       {
         id: 'trap-bar-deadlift', name: 'Trap Bar Deadlift', kanji: '六角地起', description: 'Hex bar deadlift for upright position.', category: 'strength',
@@ -584,6 +646,7 @@ export const exercises: Exercise[] = [
         tips: ['More upright torso than straight bar', 'Can typically lift more than straight bar', 'Knees track over toes'],
         defaultSets: 4, defaultReps: '6-10', restSeconds: 90,
         benefits: ['Easier on lower back', 'Allows heavier loading', 'Great for learning hip hinge', 'Powerful legs and glutes'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Trap%20Bar%20Deadlift',
       },
       {
         id: 'pull-up-wide', name: 'Wide Grip Pull Up', kanji: '広握懸垂', description: 'The ultimate back width builder.', category: 'bodyweight',
@@ -593,6 +656,7 @@ export const exercises: Exercise[] = [
         tips: ['Think pulling bar to chest not chin to bar', 'No kipping or momentum', 'Squeeze shoulder blades at top'],
         defaultSets: 3, defaultReps: '5-12', restSeconds: 90,
         benefits: ['Maximum lat width and V-taper', 'Grip and pulling strength', 'Functional bodyweight strength'],
+        imageUrl: 'https://wger.de/exerciseimage/1/pull-up-wide.jpg',
       },
       {
         id: 'pull-up-narrow', name: 'Narrow Grip Pull Up', kanji: '狭握懸垂', description: 'Close grip pull-up focusing on lower lats.', category: 'bodyweight',
@@ -602,6 +666,7 @@ export const exercises: Exercise[] = [
         tips: ['Focus on lower lat pull', 'Chest slightly lifted', 'Close grip emphasizes biceps'],
         defaultSets: 3, defaultReps: '6-12', restSeconds: 75,
         benefits: ['Lower lat thickness', 'Bicep development', 'Greater ROM than wide pull-ups'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Pull%20Up%20Narrow',
       },
       {
         id: 'chin-up', name: 'Chin Up', kanji: '掌懸垂', description: 'Underhand pull-up for biceps and lower lats.', category: 'bodyweight',
@@ -611,6 +676,7 @@ export const exercises: Exercise[] = [
         tips: ['Chest up throughout', 'Squeeze biceps and back at top', 'Generally easier than wide pull-ups'],
         defaultSets: 3, defaultReps: '8-15', restSeconds: 75,
         benefits: ['Powerful bicep and back development', 'Lower lat width', 'Excellent upper body mass builder'],
+        imageUrl: 'https://wger.de/media/exercise-images/13/Chin-up-1.png',
       },
       {
         id: 'neutral-grip-pull-up', name: 'Neutral Grip Pull Up', kanji: '中立懸垂', description: 'Palms-facing pull-up for wrist safety.', category: 'bodyweight',
@@ -620,6 +686,7 @@ export const exercises: Exercise[] = [
         tips: ['Strongest pulling position for most', 'Less wrist stress than pronated', 'Equal lat and bicep emphasis'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 75,
         benefits: ['Reduced wrist and elbow strain', 'Allows heavier loading', 'Strong lat and bicep activation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Neutral%20Grip%20Pull%20Up',
       },
       {
         id: 'weighted-pull-up', name: 'Weighted Pull Up', kanji: '加重懸垂', description: 'Progressive overload for lat strength.', category: 'bodyweight',
@@ -629,6 +696,7 @@ export const exercises: Exercise[] = [
         tips: ['Add weight in small increments 2.5-5 lbs', 'Use spotter for heaviest sets', 'Controlled form no kipping'],
         defaultSets: 4, defaultReps: '5-8', restSeconds: 120,
         benefits: ['Continued progressive overload', 'Incredible pulling strength', 'Lat density and thickness'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Weighted%20Pull%20Up',
       },
       {
         id: 'lat-pulldown-wide', name: 'Wide Grip Lat Pulldown', kanji: '広握背下', description: 'Machine vertical pull for lat width.', category: 'strength',
@@ -638,6 +706,7 @@ export const exercises: Exercise[] = [
         tips: ['Pull bar to chest not behind neck', 'No body momentum', 'Squeeze lats at bottom'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Lat width for V-taper', 'Excellent pull-up alternative', 'Controlled resistance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lat%20Pulldown%20Wide',
       },
       {
         id: 'lat-pulldown-close', name: 'Close Grip Lat Pulldown', kanji: '狭握背下', description: 'Narrow pulldown for lower lat thickness.', category: 'strength',
@@ -647,6 +716,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows close to sides', 'Lean back slightly for lat engagement', 'Squeeze lower lats at peak'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Lower lat thickness', 'Greater stretch at top than wide', 'Heavier weight position'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lat%20Pulldown%20Close',
       },
       {
         id: 'reverse-grip-pulldown', name: 'Reverse Grip Lat Pulldown', kanji: '反手握背下', description: 'Underhand pulldown for lower lat focus.', category: 'strength',
@@ -656,6 +726,7 @@ export const exercises: Exercise[] = [
         tips: ['Torso upright chest up', 'Underhand increases bicep work', 'Control negative phase'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Lower lat targeting', 'Strong bicep co-activation', 'Greater ROM for some lifters'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Grip%20Pulldown',
       },
       {
         id: 'bent-over-barbell-row', name: 'Bent Over Barbell Row', kanji: '前屈棒拉', description: 'Classic compound for back thickness.', category: 'strength',
@@ -665,6 +736,7 @@ export const exercises: Exercise[] = [
         tips: ['Head in neutral position', 'Pull with elbows not hands', 'Don\'t round lower back as you fatigue'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Tremendous back thickness', 'Rhomboids traps and lats simultaneously', 'Essential compound pull', 'Postural strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bent%20Over%20Barbell%20Row',
       },
       {
         id: 'pendlay-row', name: 'Pendlay Row', kanji: '爆発拉', description: 'Explosive row from floor dead stop.', category: 'strength',
@@ -674,6 +746,7 @@ export const exercises: Exercise[] = [
         tips: ['Each rep from dead stop no momentum', 'Explosive power development', 'Hips stable don\'t jerk weight'],
         defaultSets: 4, defaultReps: '5-8', restSeconds: 90,
         benefits: ['Explosive back power', 'Greater ROM than bent-over rows', 'Thicker mid-back development'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Pendlay%20Row',
       },
       {
         id: 'seated-cable-row', name: 'Seated Cable Row', kanji: '坐式纜拉', description: 'Controlled seated pulling for mid-back.', category: 'strength',
@@ -683,6 +756,7 @@ export const exercises: Exercise[] = [
         tips: ['Torso stationary only arms move', 'Imagine pinching pencil between shoulder blades', 'Don\'t round shoulders at stretch'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Mid-back thickness', 'Rhomboid and trapezius targeting', 'Posture improvement'],
+        imageUrl: 'https://wger.de/media/exercise-images/17/Seated-cable-row-1.png',
       },
       {
         id: 'single-arm-dumbbell-row', name: 'Single Arm Dumbbell Row', kanji: '單手亜鈴拉', description: 'Unilateral row for balanced back.', category: 'strength',
@@ -692,6 +766,7 @@ export const exercises: Exercise[] = [
         tips: ['Pull to hip pocket not shoulder', 'Rotate torso slightly at top', 'Neck neutral throughout'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Corrects muscle imbalances', 'Greater ROM than bilateral rows', 'Core anti-rotation engagement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Single%20Arm%20Dumbbell%20Row',
       },
       {
         id: 't-bar-row', name: 'T-Bar Row', kanji: '丁字拉', description: 'Heavy compound for massive back thickness.', category: 'strength',
@@ -701,6 +776,7 @@ export const exercises: Exercise[] = [
         tips: ['Chest up back flat', 'Full ROM for maximum activation', 'V-grip handle more comfortable'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Massive mid-back density', 'Heavy compound loading', 'Rhomboid trap rear delt targeting'],
+        imageUrl: 'https://wger.de/media/exercise-images/18/T-bar-row-1.png',
       },
       {
         id: 'cable-face-pull', name: 'Cable Face Pull', kanji: '纜面拉', description: 'Rear delt and rotator cuff health.', category: 'strength',
@@ -710,6 +786,7 @@ export const exercises: Exercise[] = [
         tips: ['Pull to nose level not chest', 'Externally rotate at end of pull', 'Lighter weight higher reps focus on control'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 45,
         benefits: ['Rear delt strengthening', 'Rotator cuff health', 'Posture improvement', 'Essential prehab for pressers'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Face%20Pull',
       },
       {
         id: 'straight-arm-pulldown', name: 'Straight Arm Cable Pulldown', kanji: '直腕纜下', description: 'Lat isolation without bicep involvement.', category: 'strength',
@@ -719,6 +796,7 @@ export const exercises: Exercise[] = [
         tips: ['Core braced body stable', 'Think pulling from lats not arms', 'Light weight focus on isolation'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Isolated lat activation', 'Mind-muscle connection for lats', 'Excellent warm-up for back work'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Straight%20Arm%20Pulldown',
       },
       {
         id: 'dumbbell-pullover-lats', name: 'Dumbbell Pullover (Lats)', kanji: '亜鈴越頭拉背', description: 'Lat-focused pullover for width and stretch.', category: 'strength',
@@ -728,6 +806,7 @@ export const exercises: Exercise[] = [
         tips: ['Focus on lat stretch at bottom', 'Elbows slightly bent throughout', 'Controlled tempo'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Lat stretch and strength in lengthened position', 'Shoulder and lat flexibility', 'Lat width and rib cage expansion'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Pullover%20Lats',
       },
       {
         id: 'good-morning', name: 'Good Morning', kanji: '御早う', description: 'Hip hinge for spinal erector strength.', category: 'strength',
@@ -737,6 +816,7 @@ export const exercises: Exercise[] = [
         tips: ['Back flat throughout entire movement', 'Use spotter for heavy sets', 'Only go as low as you can with flat back'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Entire posterior chain strength', 'Spinal erector endurance', 'Deadlift mechanics improvement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Good%20Morning',
       },
       {
         id: 'back-extension', name: 'Back Extension (Hyperextension)', kanji: '背伸過伸', description: 'Isolated lower back and glute strengthening.', category: 'bodyweight',
@@ -746,6 +826,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t overextend beyond straight line', 'Glutes squeezed throughout', 'Exhale raising torso'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Spinal erector strength for deadlift safety', 'Glute and hamstring endurance', 'Lower back injury prevention'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Back%20Extension',
       },
       {
         id: 'weighted-hyperextension', name: 'Weighted Hyperextension', kanji: '加重背伸', description: 'Loaded back extension for lower back strength.', category: 'strength',
@@ -755,6 +836,7 @@ export const exercises: Exercise[] = [
         tips: ['Hold weight tight to prevent swinging', 'Gradual weight increase', 'Don\'t hyperextend at top'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Progressive lower back overload', 'Spinal erector muscle mass', 'Deadlift performance and safety'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Weighted%20Hyperextension',
       },
       {
         id: 'rack-pull', name: 'Rack Pull', kanji: '架台起', description: 'Deadlift from elevated starting point.', category: 'strength',
@@ -764,6 +846,7 @@ export const exercises: Exercise[] = [
         tips: ['Allows upper back and trap overload', 'Use belt for support on heavy sets', 'Keep bar close throughout'],
         defaultSets: 4, defaultReps: '5-8', restSeconds: 120,
         benefits: ['Upper back and trap overload', 'Deadlift lockout strength', 'Allows heavier than full deadlift', 'Grip and spinal erector endurance'],
+        imageUrl: 'https://wger.de/media/exercise-images/20/Rack-pull-1.png',
       },
       {
         id: 'snatch-grip-deadlift', name: 'Snatch Grip Deadlift', kanji: '広抓地起', description: 'Wide grip deadlift for upper back.', category: 'strength',
@@ -773,6 +856,7 @@ export const exercises: Exercise[] = [
         tips: ['Wide grip forces lower hip position', 'Requires good hip and shoulder mobility', 'Lighter than conventional deadlift'],
         defaultSets: 3, defaultReps: '5-8', restSeconds: 120,
         benefits: ['Upper back and trap stimulation', 'Hip and hamstring flexibility', 'Deadlift starting strength', 'Grip strength development'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Snatch%20Grip%20Deadlift',
       },
       {
         id: 'v-grip-cable-row', name: 'V-Grip Cable Row', kanji: 'Ｖ纜拉', description: 'Close grip row for mid-back thickness.', category: 'strength',
@@ -782,6 +866,7 @@ export const exercises: Exercise[] = [
         tips: ['Torso stationary no excessive lean', 'Drive elbows straight back past torso', 'Squeeze mid-back at peak'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Mid-back thickness', 'Middle trapezius and rhomboids', 'Postural improvement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=V%20Grip%20Cable%20Row',
       },
       {
         id: 'chest-supported-row', name: 'Chest Supported Machine Row', kanji: '胸支機拉', description: 'Machine row isolating upper back.', category: 'strength',
@@ -791,6 +876,7 @@ export const exercises: Exercise[] = [
         tips: ['Adjust seat for free shoulder movement', 'Chest support eliminates momentum', 'Pull with back not arms'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Eliminates lower back strain', 'Strict upper back isolation', 'Great for high-volume training'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Chest%20Supported%20Row',
       },
       {
         id: 'seated-wide-cable-row', name: 'Seated Wide Cable Row', kanji: '坐式広拉', description: 'Wide grip row for upper back width.', category: 'strength',
@@ -800,6 +886,7 @@ export const exercises: Exercise[] = [
         tips: ['Wide grip targets upper traps and rear delts', 'Chest lifted throughout', 'Pull elbows out not tucked'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Upper trap and rhomboid targeting', 'Upper back width and detail', 'Shoulder health balance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Seated%20Wide%20Cable%20Row',
       },
       {
         id: 'inverted-row', name: 'Inverted Row', kanji: '逆拉', description: 'Bodyweight row for horizontal pulling.', category: 'bodyweight',
@@ -809,6 +896,7 @@ export const exercises: Exercise[] = [
         tips: ['More horizontal equals harder', 'Squeeze shoulder blades at top', 'Core tight body in plank'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Beginner horizontal pulling', 'Foundational back strength', 'Scalable by foot position'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Inverted%20Row',
       },
       {
         id: 'two-arm-dumbbell-row', name: 'Two Arm Dumbbell Row', kanji: '双手亜鈴拉', description: 'Bilateral dumbbell row for balanced back.', category: 'strength',
@@ -818,6 +906,7 @@ export const exercises: Exercise[] = [
         tips: ['Pull elbows back past torso', 'Squeeze shoulder blades together', 'Feet planted and stable'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Bilateral balanced loading', 'Easier to stabilize than barbell', 'Greater ROM than barbell rows'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Two%20Arm%20Dumbbell%20Row',
       },
       {
         id: 'kroc-row', name: 'Kroc Row', kanji: '重量單手拉', description: 'High-rep heavy dumbbell row for mass.', category: 'strength',
@@ -827,6 +916,7 @@ export const exercises: Exercise[] = [
         tips: ['Heavy weight for 15-20+ reps', 'Some body momentum acceptable', 'Monstrous back thickness and grip'],
         defaultSets: 2, defaultReps: '15-20 per side', restSeconds: 90,
         benefits: ['Extreme back thickness', 'Incredible grip strength', 'Massive pump and muscle growth'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Kroc%20Row',
       },
       {
         id: 'landmine-row', name: 'Landmine Row', kanji: '地雷拉', description: 'Angled barbell row using landmine.', category: 'strength',
@@ -836,6 +926,7 @@ export const exercises: Exercise[] = [
         tips: ['Stand closer for more upright angle', 'Natural arc for shoulders', 'Squeeze back at peak'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Shoulder-friendly rowing', 'Mid-back thickness safely', 'Allows heavy loading'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Landmine%20Row',
       },
       {
         id: 'meadows-row', name: 'Meadows Row', kanji: '草地拉', description: 'Unilateral landmine row for deep contraction.', category: 'strength',
@@ -845,6 +936,7 @@ export const exercises: Exercise[] = [
         tips: ['Lean-back position stretches lats', 'Pronated or neutral grip', 'Excellent unilateral back builder'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Unique lat thickness angle', 'Excellent unilateral development', 'Core stability challenge'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Meadows%20Row',
       },
       {
         id: 'gorilla-row', name: 'Gorilla Row', kanji: '猩々拉', description: 'Explosive double dumbbell row from floor.', category: 'strength',
@@ -854,6 +946,7 @@ export const exercises: Exercise[] = [
         tips: ['Hybrid deadlift and row movement', 'Dumbbells close to body', 'Alternating adds core stability'],
         defaultSets: 3, defaultReps: '8-12 per side', restSeconds: 60,
         benefits: ['Hip hinge plus back work', 'Back thickness and endurance', 'Core anti-rotation engagement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Gorilla%20Row',
       },
       {
         id: 'reverse-fly-machine', name: 'Reverse Fly Machine', kanji: '反翼機', description: 'Machine rear delt isolation.', category: 'strength',
@@ -863,6 +956,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows slightly bent throughout', 'Initiate from rear delts', 'Controlled tempo'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Safe rear delt isolation', 'Balanced shoulder development', 'Posture improvement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Fly%20Machine',
       },
       {
         id: 'band-pull-apart', name: 'Band Pull Apart', kanji: '帯引離', description: 'Simple band for rear delts and posture.', category: 'bodyweight',
@@ -872,6 +966,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep arms straight throughout', 'Adequate band tension', 'Great warm-up or posture exercise'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Rear delt and rhomboid strength', 'Shoulder posture alignment', 'Portable warm-up'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Pull%20Apart',
       },
       {
         id: 'straight-bar-pulldown', name: 'Straight Bar Lat Pulldown', kanji: '直棒背下', description: 'Standard lat pulldown straight bar.', category: 'strength',
@@ -881,6 +976,7 @@ export const exercises: Exercise[] = [
         tips: ['Pull to upper chest not behind neck', 'Control negative 2 seconds', 'No body swinging'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Lat width V-taper', 'Foundation back exercise', 'Great pull-up alternative'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Straight%20Bar%20Pulldown',
       },
       {
         id: 'wide-grip-cable-row', name: 'Wide Grip Cable Row', kanji: '広握纜拉', description: 'Cable row wide for upper back width.', category: 'strength',
@@ -890,6 +986,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows lifted out to sides', 'Squeeze upper traps and rear delts', 'Lighter than close grip rows'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Upper trap and rear delt width', 'Shoulder health and posture', 'Complements close grip rows'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Wide%20Grip%20Cable%20Row',
       },
       {
         id: 'straight-arm-dumbbell-pullover', name: 'Straight Arm Dumbbell Pullover', kanji: '直腕亜鈴越', description: 'Lat pullover with straight arms.', category: 'strength',
@@ -899,6 +996,7 @@ export const exercises: Exercise[] = [
         tips: ['Arms as straight as possible', 'Light to moderate weight control', 'Deep breathing at stretch'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Constant lat tension full ROM', 'Lat width and flexibility', 'Shoulder and lat mobility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Straight%20Arm%20Dumbbell%20Pullover',
       },
       {
         id: 'single-arm-cable-row', name: 'Single Arm Cable Row', kanji: '單手纜拉', description: 'Unilateral cable row balanced back.', category: 'strength',
@@ -908,6 +1006,7 @@ export const exercises: Exercise[] = [
         tips: ['Rotate upper body at peak for contraction', 'Core braced resist excessive rotation', 'Corrects imbalances'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Corrects muscle imbalances', 'Greater ROM than bilateral', 'Core anti-rotation engagement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Single%20Arm%20Cable%20Row',
       },
       {
         id: 'commando-pull-up', name: 'Commando Pull Up', kanji: '側懸垂', description: 'Side-ways pull-up for unique lat engagement.', category: 'bodyweight',
@@ -917,6 +1016,7 @@ export const exercises: Exercise[] = [
         tips: ['Requires significant lat and core strength', 'Think pulling bar to shoulder', 'Obliques help stabilize sideways'],
         defaultSets: 3, defaultReps: '5-10 per side', restSeconds: 90,
         benefits: ['Unique lat angled stimulation', 'Oblique and core strength', 'Functional pulling strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Commando%20Pull%20Up',
       },
       {
         id: 'behind-neck-pulldown', name: 'Behind Neck Lat Pulldown', kanji: '首後下', description: 'Pulldown behind neck for upper back width.', category: 'strength',
@@ -926,6 +1026,7 @@ export const exercises: Exercise[] = [
         tips: ['Requires good shoulder mobility', 'Lighter than front pulldowns', 'Chest up elbows back'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Upper lat and teres major targeting', 'Upper back width', 'Rear delt and rotator cuff engagement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Behind%20Neck%20Pulldown',
       },
       {
         id: 'reverse-grip-dumbbell-row', name: 'Reverse Grip Dumbbell Row', kanji: '反手握亜鈴拉', description: 'Underhand dumbbell row for lower lats.', category: 'strength',
@@ -935,6 +1036,7 @@ export const exercises: Exercise[] = [
         tips: ['Underhand emphasizes lower lats and biceps', 'Elbow close to body', 'Squeeze lower lat at peak'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Lower lat thickness', 'Bicep co-activation', 'Greater stretched ROM'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Grip%20Dumbbell%20Row',
       },
       {
         id: 'seal-row', name: 'Seal Row', kanji: '封拉', description: 'Row lying face down to isolate back.', category: 'strength',
@@ -944,6 +1046,7 @@ export const exercises: Exercise[] = [
         tips: ['Flat bench eliminates momentum', 'Focus on squeezing back not pulling with arms', 'Thumbless grip reduces biceps'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Pure back isolation no lower back', 'Back thickness strict form', 'High-volume training suitable'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Seal%20Row',
       },
       {
         id: 'cable-high-row', name: 'Cable High Row', kanji: '纜高拉', description: 'High pulley row for upper back thickness.', category: 'strength',
@@ -953,6 +1056,7 @@ export const exercises: Exercise[] = [
         tips: ['High cable targets upper traps', 'Lean back slightly for angle', 'Shoulders down not hunched'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Upper trap and rhomboid thickness', 'Shoulder health and balance', 'Good warm-up for pulling'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20High%20Row',
       },
       {
         id: 'suitcase-deadlift', name: 'Suitcase Deadlift', kanji: '鞄地起', description: 'Single-sided deadlift for core and unilateral strength.', category: 'strength',
@@ -962,6 +1066,7 @@ export const exercises: Exercise[] = [
         tips: ['Fight urge to lean toward weighted side', 'Core braced opposite side', 'Anti-lateral flexion core strength'],
         defaultSets: 3, defaultReps: '8-12 per side', restSeconds: 60,
         benefits: ['Anti-lateral flexion core strength', 'Unilateral hip and spinal erector strength', 'Grip strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Suitcase%20Deadlift',
       },
       {
         id: 'clean-pull', name: 'Clean Pull', kanji: '掃上引', description: 'Explosive pull from floor to hip.', category: 'strength',
@@ -971,6 +1076,7 @@ export const exercises: Exercise[] = [
         tips: ['Speed and power movement', 'Stay on full foot not toes', 'Arms stay straight no arm pull'],
         defaultSets: 4, defaultReps: '3-5', restSeconds: 120,
         benefits: ['Explosive hip extension power', 'Upper back and trap dynamic strength', 'Rate of force development'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Clean%20Pull',
       },
       {
         id: 'snatch-pull', name: 'Snatch Pull', kanji: '抓上引', description: 'Wide grip explosive pull from floor.', category: 'strength',
@@ -980,6 +1086,7 @@ export const exercises: Exercise[] = [
         tips: ['Wide grip demands hip and shoulder mobility', 'Pull bar as high as possible aiming for sternum', 'Explosive pull for Olympic lifting'],
         defaultSets: 4, defaultReps: '3-5', restSeconds: 120,
         benefits: ['Explosive upper back and trap development', 'Wide grip pulling strength', 'Hip drive coordination'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Snatch%20Pull',
       },
       {
         id: 'band-face-pull', name: 'Band Face Pull', kanji: '帯面拉', description: 'Rear delt health with resistance bands.', category: 'bodyweight',
@@ -989,6 +1096,7 @@ export const exercises: Exercise[] = [
         tips: ['Squeeze rear delts at peak', 'Moderate band tension', 'Show armpits to band at end'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Rear delt strength for posture', 'Rotator cuff strengthening', 'Portable prehab'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Face%20Pull',
       },
       {
         id: 'cable-pull-through', name: 'Cable Pull Through', kanji: '纜引通背', description: 'Hip hinge for glute and back strength.', category: 'strength',
@@ -998,6 +1106,7 @@ export const exercises: Exercise[] = [
         tips: ['Arms fixed movement from hips', 'Knees slightly bent throughout', 'Focus on hip hinge not waist'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Glute and hip hinge strength', 'Lower back through hip extension', 'Posterior chain activation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Pull%20Through',
       },
       {
         id: 'dumbbell-snatch', name: 'Dumbbell Snatch', kanji: '亜鈴抓上', description: 'Full body explosive pull.', category: 'strength',
@@ -1007,6 +1116,7 @@ export const exercises: Exercise[] = [
         tips: ['Power from hips not arm', 'Keep close to body', 'Legs generate momentum for press'],
         defaultSets: 3, defaultReps: '5-8 per side', restSeconds: 90,
         benefits: ['Full body explosive power', 'Upper back trap shoulder strength', 'Coordination and athleticism'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Snatch',
       },
       {
         id: 'barbell-shrug', name: 'Barbell Shrug', kanji: '棒肩縮', description: 'Direct trap isolation for upper traps.', category: 'strength',
@@ -1016,6 +1126,7 @@ export const exercises: Exercise[] = [
         tips: ['Rolling shoulders less effective and risky', 'Comfortable grip double-overhand or mixed', 'Straps for heavy sets'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Upper trap mass and strength', 'Deadlift lockout strength', 'Neck stability and protection'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Barbell%20Shrug',
       },
       {
         id: 'dumbbell-shrug', name: 'Dumbbell Shrug', kanji: '亜鈴肩縮', description: 'Dumbbell shrugs for trap isolation.', category: 'strength',
@@ -1025,6 +1136,7 @@ export const exercises: Exercise[] = [
         tips: ['Walk between reps for better ROM', 'Don\'t rotate or roll shoulders', 'Maximum shoulder girdle elevation'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Upper trap size and strength', 'Greater ROM than barbell shrugs', 'Corrects trap imbalances'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Shrug',
       },
       {
         id: 'roman-chair-hyperextension', name: 'Roman Chair Hyperextension', kanji: '羅馬椅伸', description: 'Back extension for lower back and glutes.', category: 'bodyweight',
@@ -1034,6 +1146,7 @@ export const exercises: Exercise[] = [
         tips: ['No overextension beyond straight', 'Glutes squeezed throughout', 'Exhale lifting torso'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Spinal erector isolation', 'Lower back endurance', 'Deadlift form improvement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Roman%20Chair%20Hyperextension',
       },
       {
         id: 'barbell-upright-row', name: 'Barbell Upright Row', kanji: '棒直拉', description: 'Compound for traps and delts.', category: 'strength',
@@ -1043,6 +1156,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t go too heavy stress on shoulder capsule', 'Bar close to body', 'Wider grip if shoulder pinching'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Trap and side delt size', 'Scapular strength', 'Multiple back and shoulder muscles'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Barbell%20Upright%20Row',
       },
       {
         id: 'cable-upright-row', name: 'Cable Upright Row', kanji: '纜直拉', description: 'Cable upright row for constant trap tension.', category: 'strength',
@@ -1052,6 +1166,7 @@ export const exercises: Exercise[] = [
         tips: ['Cable provides more constant tension than barbell', 'Lighter weight higher reps', 'Squeeze traps at top'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Constant trap tension', 'Trap and side delt detail', 'Safer on shoulders than barbell'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Upright%20Row',
       },
       {
         id: 'dumbbell-upright-row', name: 'Dumbbell Upright Row', kanji: '亜鈴直拉', description: 'Dumbbell variation of upright row.', category: 'strength',
@@ -1061,6 +1176,7 @@ export const exercises: Exercise[] = [
         tips: ['Dumbbells allow more natural path', 'Neutral grip more shoulder-friendly', 'No momentum swinging'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Natural movement pattern', 'Shoulder-friendly', 'Greater ROM than barbell'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Upright%20Row',
       },
       {
         id: 'renegade-row', name: 'Renegade Row', kanji: '反逆拉', description: 'Plank dumbbell row for back and core.', category: 'strength',
@@ -1070,6 +1186,7 @@ export const exercises: Exercise[] = [
         tips: ['Wider feet easier to stabilize', 'Don\'t let hips rotate', 'Core braced throughout'],
         defaultSets: 3, defaultReps: '8-10 per side', restSeconds: 60,
         benefits: ['Extreme core stability', 'Anti-rotation strength', 'Full body engagement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Renegade%20Row',
       },
       {
         id: 'weighted-inverted-row', name: 'Weighted Inverted Row', kanji: '加重逆拉', description: 'Inverted row with added weight.', category: 'bodyweight',
@@ -1079,6 +1196,7 @@ export const exercises: Exercise[] = [
         tips: ['Progressive overload for horizontal pulling', 'Body rigid throughout pull', 'Breathe out pulling up'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Progressive horizontal pull', 'Back strength toward calisthenics', 'Full-body tension control'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Weighted%20Inverted%20Row',
       },
       {
         id: 'band-row', name: 'Band Row', kanji: '帯拉', description: 'Resistance band row for portable training.', category: 'bodyweight',
@@ -1088,6 +1206,7 @@ export const exercises: Exercise[] = [
         tips: ['Step further for more tension', 'Squeeze back not just pull arms', 'Torso stable throughout'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Portable back exercise', 'Constant tension throughout pull', 'Joint-friendly alternative'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Row',
       },
       {
         id: 'ring-row', name: 'Ring Row', kanji: '輪拉', description: 'Gymnastics ring row for unstable pulling.', category: 'bodyweight',
@@ -1097,6 +1216,7 @@ export const exercises: Exercise[] = [
         tips: ['Rings add instability for more engagement', 'Harder than barbell rows', 'Angle determines difficulty'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Unstable pulling strength', 'Core stabilization', 'Shoulder health and mobility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ring%20Row',
       },
       {
         id: 'dumbbell-pullover-straight-back', name: 'Dumbbell Pullover (Straight Arm)', kanji: '直腕越頭拉', description: 'Straight arm pullover for lat tension.', category: 'strength',
@@ -1106,6 +1226,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep arms straight throughout', 'Light weight for control', 'Deep breathing at bottom'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Constant lat tension', 'Lat width and flexibility', 'Overhead mobility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Pullover%20Straight%20Back',
       },
       {
         id: 'band-pull-up', name: 'Band Assisted Pull Up', kanji: '帯補助懸垂', description: 'Pull-up with band assistance for progression.', category: 'bodyweight',
@@ -1115,6 +1236,7 @@ export const exercises: Exercise[] = [
         tips: ['Use thicker band for more assistance', 'Focus on lat engagement', 'Reduce band thickness as you get stronger'],
         defaultSets: 3, defaultReps: '5-10', restSeconds: 90,
         benefits: ['Pull-up progression tool', 'Builds lat pulling strength', 'Negative strength development'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Pull%20Up',
       },
       {
         id: 'negative-pull-up', name: 'Negative Pull Up', kanji: '懸垂負', description: 'Eccentric lowering for pull-up progression.', category: 'bodyweight',
@@ -1124,6 +1246,7 @@ export const exercises: Exercise[] = [
         tips: ['Focus on slow controlled descent', 'Great for building pull-up strength', 'Use a box to step up if needed'],
         defaultSets: 3, defaultReps: '5-8', restSeconds: 90,
         benefits: ['Builds eccentric pulling strength', 'Improves control', 'Prepares for full pull-ups'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Negative%20Pull%20Up',
       },
 
   // ----- SHOULDERS (50) -----
@@ -1135,6 +1258,7 @@ export const exercises: Exercise[] = [
         tips: ['Press bar in straight line not around face', 'Squeeze glutes to prevent back arch', 'Control descent to collarbone'],
         defaultSets: 4, defaultReps: '6-10', restSeconds: 90,
         benefits: ['Maximum shoulder mass and strength', 'Overhead stability', 'Core strength under load'],
+        imageUrl: 'https://wger.de/media/exercise-images/21/Overhead-press-1.png',
       },
       {
         id: 'seated-dumbbell-press', name: 'Seated Dumbbell Press', kanji: '坐式亜鈴肩推', description: 'Isolated dumbbell press for balanced delts.', category: 'strength',
@@ -1144,6 +1268,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t arch back excessively', 'Dumbbells start above shoulders', 'Wrist straight throughout'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Balanced shoulder development', 'Corrects strength imbalances', 'Greater ROM than barbell press'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Seated%20Dumbbell%20Press',
       },
       {
         id: 'arnold-press', name: 'Arnold Press', kanji: '亜諾推', description: 'Rotating press for all three delt heads.', category: 'strength',
@@ -1153,6 +1278,7 @@ export const exercises: Exercise[] = [
         tips: ['Requires lighter weight than standard press', 'Maximum delt through full range', 'Core braced throughout'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['All three delt heads in one movement', 'Increased shoulder mobility', 'Excellent muscle pump'],
+        imageUrl: 'https://wger.de/media/exercise-images/25/Arnold-press-1.png',
       },
       {
         id: 'lateral-raise', name: 'Lateral Raise', kanji: '侧挙', description: 'Isolation for side delt width.', category: 'strength',
@@ -1162,6 +1288,7 @@ export const exercises: Exercise[] = [
         tips: ['No momentum use light controlled weight', 'Slight lean for better side delt targeting', 'Elbows fixed at 15 degree bend'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Side delt width for V-shape', 'Broader shoulder appearance', 'Essential for round shoulder look'],
+        imageUrl: 'https://wger.de/media/exercise-images/22/Lateral-raise-1.png',
       },
       {
         id: 'cable-lateral-raise', name: 'Cable Lateral Raise', kanji: '纜侧挙', description: 'Cable for constant tension side delt.', category: 'strength',
@@ -1171,6 +1298,7 @@ export const exercises: Exercise[] = [
         tips: ['Constant tension throughout movement', 'Lean away slightly for better stretch', 'Lighter weight for strict form'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Constant tension side delt', 'Better peak contraction than dumbbell', 'Great finishing exercise'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Lateral%20Raise',
       },
       {
         id: 'front-raise', name: 'Front Raise', kanji: '前挙', description: 'Front delt isolation with dumbbells.', category: 'strength',
@@ -1180,6 +1308,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t swing body for momentum', 'Slight elbow bend throughout', 'Palms down for front delt focus'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 45,
         benefits: ['Front delt definition', 'Chest shoulder separation', 'Overhead press strength assistance'],
+        imageUrl: 'https://wger.de/media/exercise-images/23/Front-raise-1.png',
       },
       {
         id: 'cable-front-raise', name: 'Cable Front Raise', kanji: '纜前挙', description: 'Cable front raise for constant tension.', category: 'strength',
@@ -1189,6 +1318,7 @@ export const exercises: Exercise[] = [
         tips: ['Cable provides tension at bottom', 'Don\'t lean back for momentum', 'Slight elbow bend'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Constant tension for definition', 'Front delt isolation', 'Overhead press assistance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Front%20Raise',
       },
       {
         id: 'rear-delt-fly', name: 'Rear Delt Fly', kanji: '後翼', description: 'Bent-over dumbbell fly for rear delts.', category: 'strength',
@@ -1198,6 +1328,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t use back to lift', 'Light weight high reps', 'Squeeze shoulder blades at top'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Rear delt strength and size', 'Improved posture', 'Balanced shoulder development'],
+        imageUrl: 'https://wger.de/media/exercise-images/24/Rear-delt-fly-1.png',
       },
       {
         id: 'reverse-cable-fly', name: 'Reverse Cable Fly', kanji: '纜後翼', description: 'Cable rear delt fly for constant tension.', category: 'strength',
@@ -1207,6 +1338,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows slightly bent', 'Squeeze rear delts hard', 'Don\'t use too much weight'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Constant rear delt tension', 'Postural strength improvement', 'Excellent prehab'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Cable%20Fly',
       },
       {
         id: 'face-pull', name: 'Face Pull', kanji: '纜面拉', description: 'Rear delt and rotator cuff essential.', category: 'strength',
@@ -1216,6 +1348,7 @@ export const exercises: Exercise[] = [
         tips: ['Nose-level pull for rear delts', 'Show armpits at end of pull', 'Essential prehab for shoulder health'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 45,
         benefits: ['Rear delt strength', 'Rotator cuff stability', 'Posture improvement'],
+        imageUrl: 'https://wger.de/media/exercise-images/19/Face-pull-1.png',
       },
       {
         id: 'machine-shoulder-press', name: 'Machine Shoulder Press', kanji: '機肩推', description: 'Machine press for stable shoulder building.', category: 'strength',
@@ -1225,6 +1358,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep shoulders down not shrugged', 'Squeeze delts at top', 'Use for high volume safely'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Stable safe shoulder pressing', 'Good for high volume', 'Easy to progressive overload'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Machine%20Shoulder%20Press',
       },
       {
         id: 'push-press', name: 'Push Press', kanji: '押推', description: 'Leg drive overhead press for heavier weight.', category: 'strength',
@@ -1234,6 +1368,7 @@ export const exercises: Exercise[] = [
         tips: ['Leg drive helps heavier loads', 'Dip and press in one fluid motion', 'Control descent for safety'],
         defaultSets: 4, defaultReps: '5-8', restSeconds: 90,
         benefits: ['Heavier overhead pressing', 'Explosive power development', 'Transfer to athletic movements'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Push%20Press',
       },
       {
         id: 'landmine-press', name: 'Landmine Press', kanji: '地雷推', description: 'Angled single-arm press for shoulder safety.', category: 'strength',
@@ -1243,6 +1378,7 @@ export const exercises: Exercise[] = [
         tips: ['Natural arc reduces shoulder stress', 'Core resists lean', 'Great for shoulder rehab'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Shoulder-friendly pressing', 'Front delt development', 'Core stability training'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Landmine%20Press',
       },
       {
         id: 'single-arm-cable-lateral-raise', name: 'Single Arm Cable Lateral Raise', kanji: '單手纜側挙', description: 'Unilateral cable lateral raise for side delts.', category: 'strength',
@@ -1252,6 +1388,7 @@ export const exercises: Exercise[] = [
         tips: ['Lean slightly away for more stretch', 'Isolate side delt', 'Constant cable tension'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Side delt width and definition', 'Better mind-muscle connection', 'Constant tension throughout'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Single%20Arm%20Cable%20Lateral%20Raise',
       },
       {
         id: 'lying-rear-delt-fly', name: 'Lying Rear Delt Fly', kanji: '臥後翼', description: 'Stabilized rear delt fly lying face down.', category: 'strength',
@@ -1261,6 +1398,7 @@ export const exercises: Exercise[] = [
         tips: ['Bench reduces body momentum', 'Squeeze rear delts not traps', 'Light controlled weight'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Isolated rear delt targeting', 'Better posture', 'Balanced shoulder physique'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lying%20Rear%20Delt%20Fly',
       },
       {
         id: 'plate-front-raise', name: 'Plate Front Raise', kanji: '板前挙', description: 'Weight plate front raise for delt definition.', category: 'strength',
@@ -1270,6 +1408,7 @@ export const exercises: Exercise[] = [
         tips: ['Neutral grip from plate naturally', 'Palms facing each other', 'Core stable throughout'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Front delt definition', 'Shoulder endurance', 'Useful pre-exhaust'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Plate%20Front%20Raise',
       },
       {
         id: 'barbell-front-raise', name: 'Barbell Front Raise', kanji: '棒前挙', description: 'Barbell front raise for strength.', category: 'strength',
@@ -1279,6 +1418,7 @@ export const exercises: Exercise[] = [
         tips: ['Fixed bar ensures both arms even', 'Don\'t arch back as bar rises', 'Controlled tempo'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Even front delt development', 'Good for both arms simultaneously', 'Shoulder endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Barbell%20Front%20Raise',
       },
       {
         id: 'seated-rear-delt-fly', name: 'Seated Rear Delt Fly', kanji: '坐式後翼', description: 'Machine rear delt fly for posture.', category: 'strength',
@@ -1288,6 +1428,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows slightly bent', 'Focus on rear delt squeeze', 'Don\'t use momentum'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Safe rear delt isolation', 'Postural strength', 'Balanced shoulder development'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Seated%20Rear%20Delt%20Fly',
       },
       {
         id: 'incline-y-raise', name: 'Incline Y Raise', kanji: '傾斜Y挙', description: 'Y raise on incline for upper trap and rear delt.', category: 'strength',
@@ -1297,6 +1438,7 @@ export const exercises: Exercise[] = [
         tips: ['Thumbs up like YMCA', 'Light weight focus on form', 'Upper back postural muscle'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Upper trap and rear delt tone', 'Posture improvement', 'Shoulder stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Incline%20Y%20Raise',
       },
       {
         id: 'incline-i-raise', name: 'Incline I Raise', kanji: '傾斜I挙', description: 'I raise for rear delt and shoulder stability.', category: 'strength',
@@ -1306,6 +1448,7 @@ export const exercises: Exercise[] = [
         tips: ['Squeeze rear delts hard at top', 'Light weight only', 'Slow controlled movement'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Rear delt activation', 'Scapular stability', 'Postural endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Incline%20I%20Raise',
       },
       {
         id: 'side-lying-lateral-raise', name: 'Side Lying Lateral Raise', kanji: '側臥側挙', description: 'Lateral raise lying on side for strict form.', category: 'strength',
@@ -1315,6 +1458,7 @@ export const exercises: Exercise[] = [
         tips: ['Eliminates momentum completely', 'Light weight only', 'Pure side delt isolation'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 45,
         benefits: ['Perfect side delt isolation', 'No cheating possible', 'Excellent pre-exhaust'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Side%20Lying%20Lateral%20Raise',
       },
       {
         id: 'band-lateral-raise', name: 'Band Lateral Raise', kanji: '帯側挙', description: 'Resistance band side raise for portable training.', category: 'bodyweight',
@@ -1324,6 +1468,7 @@ export const exercises: Exercise[] = [
         tips: ['Stand on band for more tension', 'Squeeze at peak', 'Portable shoulder exercise'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Portable shoulder training', 'Constant tension', 'Joint-friendly exercise'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Lateral%20Raise',
       },
       {
         id: 'band-front-raise', name: 'Band Front Raise', kanji: '帯前挙', description: 'Band front raise for portable front delt.', category: 'bodyweight',
@@ -1333,6 +1478,7 @@ export const exercises: Exercise[] = [
         tips: ['Stand on band secure', 'Controlled tempo', 'Light tension for warm-up'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Portable front delt work', 'Warm-up activation', 'Blood flow to shoulders'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Front%20Raise',
       },
       {
         id: 'clean-and-press', name: 'Clean and Press', kanji: '掃上押', description: 'Full body old-school shoulder builder.', category: 'strength',
@@ -1342,6 +1488,7 @@ export const exercises: Exercise[] = [
         tips: ['Power from hips', 'Fluid movement', 'Full body conditioning'],
         defaultSets: 3, defaultReps: '5-8', restSeconds: 120,
         benefits: ['Total body strength', 'Shoulder power and mass', 'Athletic conditioning'],
+        imageUrl: 'https://wger.de/media/exercise-images/59/Clean-and-press-1.png',
       },
       {
         id: 'dumbbell-shrug', name: 'Dumbbell Shrug', kanji: '亜鈴肩竦', description: 'Dumbbell shrug for upper trap development.', category: 'strength',
@@ -1351,6 +1498,7 @@ export const exercises: Exercise[] = [
         tips: ['Full range of motion up and down', 'Heavy as possible', 'Don\'t roll just shrug'],
         defaultSets: 4, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Upper trap size and strength', 'Neck posture', 'Shoulder stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Shrug',
       },
       {
         id: 'barbell-shrug', name: 'Barbell Shrug', kanji: '棒肩竦', description: 'Barbell version for heavy trap loading.', category: 'strength',
@@ -1360,6 +1508,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep arms straight', 'Don\'t roll shoulders', 'Use straps for heavy sets'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Maximum trap development', 'Neck strength', 'Heavy upper back loading'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Barbell%20Shrug',
       },
       {
         id: 'cable-shrug', name: 'Cable Shrug', kanji: '纜肩竦', description: 'Cable shrug for constant trap tension.', category: 'strength',
@@ -1369,6 +1518,7 @@ export const exercises: Exercise[] = [
         tips: ['Continuous tension throughout', 'Good for higher reps', 'Finish movement'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 45,
         benefits: ['Trap endurance', 'Contour and definition', 'Posture improvement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Shrug',
       },
       {
         id: 'upright-row', name: 'Upright Row', kanji: '垂直列', description: 'Vertical pull for traps and front delts.', category: 'strength',
@@ -1378,6 +1528,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t go too heavy wrist strain', 'Pull with elbows', 'Wider grip reduces impingement risk'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Upper trap strength', 'Front delt development', 'Full shoulder width'],
+        imageUrl: 'https://wger.de/media/exercise-images/26/Upright-row-1.png',
       },
       {
         id: 'cable-upright-row', name: 'Cable Upright Row', kanji: '纜垂直列', description: 'Cable variation for constant tension.', category: 'strength',
@@ -1387,6 +1538,7 @@ export const exercises: Exercise[] = [
         tips: ['Smooth continuous motion', 'Elbows drive the movement', 'Shoulder mobility permitting'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Trap and front delt', 'Constant tension', 'Shoulder width'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Upright%20Row',
       },
       {
         id: 'safety-bar-shrug', name: 'Safety Bar Shrug', kanji: '安全棒肩竦', description: 'Shrug with safety squat bar for extra trap loading.', category: 'strength',
@@ -1396,6 +1548,7 @@ export const exercises: Exercise[] = [
         tips: ['Brace core', 'Max contraction for 2 seconds', 'Heavy weight possible'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Massive trap development', 'Neck base strength', 'Posture support'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Safety%20Bar%20Shrug',
       },
       {
         id: 'single-arm-dumbbell-shrug', name: 'Single Arm Dumbbell Shrug', kanji: '片手亜鈴肩竦', description: 'Unilateral shrug to fix imbalances.', category: 'strength',
@@ -1405,6 +1558,7 @@ export const exercises: Exercise[] = [
         tips: ['Full ROM', 'Heavy as possible', 'Address asymmetry'],
         defaultSets: 3, defaultReps: '12-15 each side', restSeconds: 45,
         benefits: ['Correct trap imbalances', 'Unilateral development', 'Base upper body strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Single%20Arm%20Dumbbell%20Shrug',
       },
       {
         id: 'front-cable-raise', name: 'Front Cable Raise', kanji: '纜前挙', description: 'Cable front raise continuous tension.', category: 'strength',
@@ -1414,6 +1568,7 @@ export const exercises: Exercise[] = [
         tips: ['Constant resistance throughout', 'Slight elbow bend', 'Core tight'],
         defaultSets: 3, defaultReps: '12-15 each side', restSeconds: 45,
         benefits: ['Front delt definition', 'Press strength accessory', 'Shoulder endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Front%20Cable%20Raise',
       },
       {
         id: 'reverse-dumbbell-fly', name: 'Reverse Dumbbell Fly', kanji: '反亜鈴後翼', description: 'Flat bench rear delt fly variation.', category: 'strength',
@@ -1423,6 +1578,7 @@ export const exercises: Exercise[] = [
         tips: ['Chest on bench for stability', 'Light moderate weight', 'Squeeze rear delts'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Rear delt strength', 'Postural endurance', 'Upper back development'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Dumbbell%20Fly',
       },
       {
         id: 'bent-over-cable-rear-delt', name: 'Bent Over Cable Rear Delt', kanji: '屈纜後側', description: 'Bent cable work for rear delts.', category: 'strength',
@@ -1432,6 +1588,7 @@ export const exercises: Exercise[] = [
         tips: ['Head in neutral', 'Focus rear delt squeeze', 'Don\'t use back'],
         defaultSets: 3, defaultReps: '12-15 each side', restSeconds: 45,
         benefits: ['Rear delt isolation', 'Upper back health', 'Rotator cuff support'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bent%20Over%20Cable%20Rear%20Delt',
       },
       {
         id: 'prone-incline-rear-raise', name: 'Prone Incline Rear Raise', kanji: '伏傾後挙', description: 'Prone rear delt raise on incline.', category: 'strength',
@@ -1441,6 +1598,7 @@ export const exercises: Exercise[] = [
         tips: ['Palms backward', 'Focus rear delt contraction', 'Light weight control'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Rear delt hypertrophy', 'Scapular retraction', 'Posture'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Prone%20Incline%20Rear%20Raise',
       },
       {
         id: 'face-pull-external-rotation', name: 'Face Pull with External Rotation', kanji: '纜面外旋', description: 'Face pull with external rotation for rotator cuff.', category: 'strength',
@@ -1450,6 +1608,7 @@ export const exercises: Exercise[] = [
         tips: ['Rotate hard at end', 'Light weight focus control', 'Prehab essential'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Rotator cuff stability', 'Rear delt activation', 'Injury prevention'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Face%20Pull%20External%20Rotation',
       },
       {
         id: 'shoulder-external-rotation', name: 'Shoulder External Rotation', kanji: '肩外旋', description: 'Rotator cuff isolation with cable.', category: 'strength',
@@ -1459,6 +1618,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbow pinned to side', 'Light weight', 'Rotator cuff health'],
         defaultSets: 3, defaultReps: '12-15 each side', restSeconds: 30,
         benefits: ['Rotator cuff strength', 'Shoulder stability', 'Injury prevention'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Shoulder%20External%20Rotation',
       },
       {
         id: 'shoulder-internal-rotation', name: 'Shoulder Internal Rotation', kanji: '肩内旋', description: 'Rotator cuff internal rotation.', category: 'strength',
@@ -1468,6 +1628,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbow stays at side', 'Light weight', 'Balanced rotator cuff'],
         defaultSets: 3, defaultReps: '12-15 each side', restSeconds: 30,
         benefits: ['Rotator cuff balance', 'Shoulder health', 'Throwing strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Shoulder%20Internal%20Rotation',
       },
       {
         id: 'band-external-rotation', name: 'Band External Rotation', kanji: '帯外旋', description: 'Portable rotator cuff external rotation.', category: 'bodyweight',
@@ -1477,6 +1638,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbow pinned to side', 'Light band', 'Prehab essential'],
         defaultSets: 3, defaultReps: '15-20 each side', restSeconds: 30,
         benefits: ['Rotator cuff endurance', 'Portable prehab', 'Shoulder longevity'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20External%20Rotation',
       },
       {
         id: 'band-pull-apart', name: 'Band Pull Apart', kanji: '帯開', description: 'Horizontal band pull for rear delts.', category: 'bodyweight',
@@ -1486,6 +1648,7 @@ export const exercises: Exercise[] = [
         tips: ['Band tension high', 'Squeeze rear delts', 'Great warm-up'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Postural strength', 'Rear delt activation', 'Upper back warm-up'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Pull%20Apart',
       },
       {
         id: 'dumbbell-pullover', name: 'Dumbbell Pullover', kanji: '亜鈴引被', description: 'Chest and lat stretch with shoulder involvement.', category: 'strength',
@@ -1495,6 +1658,7 @@ export const exercises: Exercise[] = [
         tips: ['Lower controlled', 'Deep stretch', 'Ribcage expands'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Chest and lat expansion', 'Shoulder mobility', 'Full upper body stretch'],
+        imageUrl: 'https://wger.de/media/exercise-images/10/Dumbbell-pullover-1.png',
       },
       {
         id: 'cable-pullover', name: 'Cable Pullover', kanji: '纜引被', description: 'Cable version of pullover for cable tension.', category: 'strength',
@@ -1504,6 +1668,7 @@ export const exercises: Exercise[] = [
         tips: ['Slight lean forward', 'Arms nearly straight', 'Feel back stretch'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Full upper body development', 'Lat length stretch', 'Core stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Pullover',
       },
       {
         id: 'band-overhead-press', name: 'Band Overhead Press', kanji: '帯肩推', description: 'Resistance band overhead press.', category: 'bodyweight',
@@ -1513,6 +1678,7 @@ export const exercises: Exercise[] = [
         tips: ['Stand secure on band', 'Full lockout', 'Core braced'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Portable shoulder press', 'Joint friendly', 'Home gym option'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Overhead%20Press',
       },
       {
         id: 'plate-halo', name: 'Plate Halo', kanji: '板光環', description: 'Weight plate circle around head for shoulders.', category: 'bodyweight',
@@ -1522,6 +1688,7 @@ export const exercises: Exercise[] = [
         tips: ['Use light plate', 'Core tight throughout', 'Shoulder mobility exercise'],
         defaultSets: 3, defaultReps: '8-10 each direction', restSeconds: 30,
         benefits: ['Shoulder mobility', 'Full ROM strength', 'Core stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Plate%20Halo',
       },
       {
         id: 'dumbbell-clean', name: 'Dumbbell Clean', kanji: '亜鈴掃', description: 'Single dumbbell clean for power and shoulders.', category: 'strength',
@@ -1531,6 +1698,7 @@ export const exercises: Exercise[] = [
         tips: ['Power from legs', 'Catch safely', 'Full body movement'],
         defaultSets: 3, defaultReps: '8-10 each side', restSeconds: 60,
         benefits: ['Explosive power', 'Shoulder strength', 'Athleticism'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Clean',
       },
       {
         id: 'dumbbell-snatch', name: 'Dumbbell Snatch', kanji: '亜鈴挙上', description: 'Single arm dumbbell snatch for explosive power.', category: 'strength',
@@ -1540,6 +1708,7 @@ export const exercises: Exercise[] = [
         tips: ['Use hips not arm', 'Full lockout', 'Explosive movement'],
         defaultSets: 3, defaultReps: '5-8 each side', restSeconds: 90,
         benefits: ['Explosive power', 'Overhead stability', 'Full body coordination'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Snatch',
       },
       {
         id: 'kettlebell-swing', name: 'Kettlebell Swing', kanji: '鞴振', description: 'Hip-driven swing for posterior chain and shoulders.', category: 'strength',
@@ -1549,6 +1718,7 @@ export const exercises: Exercise[] = [
         tips: ['Power from hips not arms', 'Braced core', 'Arm relaxed'],
         defaultSets: 4, defaultReps: '15-25', restSeconds: 60,
         benefits: ['Posterior chain power', 'Shoulder endurance', 'Cardiovascular conditioning'],
+        imageUrl: 'https://wger.de/media/exercise-images/61/Kettlebell-swing-1.png',
       },
       {
         id: 'single-arm-clean-and-press', name: 'Single Arm Clean and Press', kanji: '片手掃上押', description: 'Unilateral clean and press for shoulder stability.', category: 'strength',
@@ -1558,6 +1728,7 @@ export const exercises: Exercise[] = [
         tips: ['Controlled movement', 'Core anti-rotation', 'Builds stability'],
         defaultSets: 3, defaultReps: '6-8 each side', restSeconds: 60,
         benefits: ['Unilateral shoulder strength', 'Core stability', 'Full body power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Single%20Arm%20Clean%20And%20Press',
       },
       {
         id: 'seated-reverse-fly', name: 'Seated Reverse Fly', kanji: '坐式後翼機', description: 'Seated machine reverse fly for rear delts.', category: 'strength',
@@ -1567,6 +1738,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows slightly bent', 'Focus on rear delts', 'Don\'t use momentum'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Safe rear delt isolation', 'Upper back posture', 'Shoulder health'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Seated%20Reverse%20Fly',
       },
       {
         id: 'cable-rotation-press', name: 'Cable Rotation Press', kanji: '纜回旋押', description: 'Cable press with rotation for shoulder stability.', category: 'strength',
@@ -1576,6 +1748,7 @@ export const exercises: Exercise[] = [
         tips: ['Core resists rotation', 'Shoulder stability through ROM', 'Light controlled weight'],
         defaultSets: 3, defaultReps: '10-12 each side', restSeconds: 45,
         benefits: ['Shoulder stability through rotation', 'Core anti-rotation strength', 'Functional shoulder strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Rotation%20Press',
       },
 
   // ----- LEGS (49) -----
@@ -1587,6 +1760,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep chest up throughout', 'Knees track over toes', 'Breathe deep down brace stand exhale'],
         defaultSets: 4, defaultReps: '6-10', restSeconds: 120,
         benefits: ['Maximum leg mass and strength', 'Core and back strength', 'Athletic performance foundation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Barbell%20Back%20Squat',
       },
       {
         id: 'front-squat', name: 'Front Squat', kanji: '前蹲踞', description: 'Quad-dominant squat with upright torso.', category: 'strength',
@@ -1596,6 +1770,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep elbows up to prevent bar roll', 'More upright torso than back squat', 'Less weight than back squat'],
         defaultSets: 4, defaultReps: '6-10', restSeconds: 90,
         benefits: ['Quadriceps dominance', 'Core strength extreme', 'Upper back and posture'],
+        imageUrl: 'https://wger.de/media/exercise-images/39/Front-squat-1.png',
       },
       {
         id: 'goblet-squat', name: 'Goblet Squat', kanji: '杯持蹲踞', description: 'Beginner squat with upright form teaching.', category: 'strength',
@@ -1605,6 +1780,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows touch knees at bottom for depth guide', 'Chest up heels down', 'Great teaching tool for squat form'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Perfect squat form teaching', 'Quad and glute strength', 'Mobility and depth training'],
+        imageUrl: 'https://wger.de/media/exercise-images/40/Goblet-squat-1.png',
       },
       {
         id: 'bulgarian-split-squat', name: 'Bulgarian Split Squat', kanji: '保分蹲', description: 'Rear foot elevated split squat for unilateral leg.', category: 'strength',
@@ -1614,6 +1790,7 @@ export const exercises: Exercise[] = [
         tips: ['Front shin vertical', 'Most weight on front leg', 'Knee tracks over toes'],
         defaultSets: 3, defaultReps: '8-12 per side', restSeconds: 60,
         benefits: ['Quad and glute development', 'Balance and stability', 'Hip flexibility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bulgarian%20Split%20Squat',
       },
       {
         id: 'leg-press', name: 'Leg Press', kanji: '腿推', description: 'Machine compound for quad mass safely.', category: 'strength',
@@ -1623,6 +1800,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t lock knees at top', 'Lower back flat against pad', 'Control descent'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 90,
         benefits: ['Massive leg development', 'Safe compound alternative to squat', 'Easy progressive overload'],
+        imageUrl: 'https://wger.de/media/exercise-images/41/Leg-press-1.png',
       },
       {
         id: 'walking-lunge', name: 'Walking Lunge', kanji: '行走突進', description: 'Dynamic lunge for legs and glutes.', category: 'strength',
@@ -1632,6 +1810,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep torso upright', 'Front knee not over toes', 'Controlled long stride'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Quad and glute development', 'Balance and coordination', 'Functional walking strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Walking%20Lunge',
       },
       {
         id: 'reverse-lunge', name: 'Reverse Lunge', kanji: '後退突進', description: 'Lunging backward for less knee stress.', category: 'strength',
@@ -1641,6 +1820,7 @@ export const exercises: Exercise[] = [
         tips: ['Easier on knees than forward lunge', 'Quads and glutes equally hit', 'Better stability than forward lunge'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Less knee stress', 'Quad and glute strength', 'Balance and coordination'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Lunge',
       },
       {
         id: 'romanian-deadlift', name: 'Romanian Deadlift', kanji: '羅馬地起', description: 'Hip hinge for hamstring and glute development.', category: 'strength',
@@ -1650,6 +1830,7 @@ export const exercises: Exercise[] = [
         tips: ['Bar stays in contact with legs', 'Back flat throughout', 'Initiate pull by driving hips forward'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Hamstring length and thickness', 'Glute development', 'Hip hinge pattern for deadlift safety'],
+        imageUrl: 'https://wger.de/media/exercise-images/42/Romanian-deadlift-1.png',
       },
       {
         id: 'leg-curl-lying', name: 'Lying Leg Curl', kanji: '臥腿彎', description: 'Isolated hamstring curl machine.', category: 'strength',
@@ -1659,6 +1840,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t let hips rise off pad', 'Full ROM with slow negative', 'Point toes for more hamstring'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Isolated hamstring strength', 'Hamstring mass', 'Knee injury prevention'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Leg%20Curl%20Lying',
       },
       {
         id: 'seated-leg-curl', name: 'Seated Leg Curl', kanji: '坐腿彎', description: 'Seated hamstring curl for hip flexed position.', category: 'strength',
@@ -1668,6 +1850,7 @@ export const exercises: Exercise[] = [
         tips: ['Seated curl works hamstrings at different angle', 'Keep hips pressed into seat', 'Squeeze at peak'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Complete hamstring development', 'Hip flexed hamstring isolation', 'Knee stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Seated%20Leg%20Curl',
       },
       {
         id: 'leg-extension', name: 'Leg Extension', kanji: '腿伸', description: 'Isolated quad extension machine.', category: 'strength',
@@ -1677,6 +1860,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t use momentum', 'Pause at extension for peak contraction', 'Go lighter for joint safety'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Isolated quad development', 'Great pre-exhaust before squats', 'Knee stability'],
+        imageUrl: 'https://wger.de/media/exercise-images/44/Leg-extension-1.png',
       },
       {
         id: 'hack-squat', name: 'Hack Squat', kanji: '刈蹲踞', description: 'Machine squat for quad mass.', category: 'strength',
@@ -1686,6 +1870,7 @@ export const exercises: Exercise[] = [
         tips: ['Feet position changes quad emphasis', 'Don\'t go too deep lower back', 'Control tempo'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 90,
         benefits: ['Heavy quad development', 'Less balance demand than barbell squat', 'Quad mass builder'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Hack%20Squat',
       },
       {
         id: 'sissy-squat', name: 'Sissy Squat', kanji: '弱蹲踞', description: 'Knees-forward squat for quad isolation.', category: 'strength',
@@ -1695,6 +1880,7 @@ export const exercises: Exercise[] = [
         tips: ['Knees over toes extreme quad', 'Start with bodyweight', 'Great for quad separation'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Extreme quad isolation', 'Quad teardrop development', 'No equipment needed'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Sissy%20Squat',
       },
       {
         id: 'pistol-squat', name: 'Pistol Squat', kanji: '銃蹲踞', description: 'Single leg squat for balance and strength.', category: 'bodyweight',
@@ -1704,6 +1890,7 @@ export const exercises: Exercise[] = [
         tips: ['Use support for balance initially', 'Full pistol requires mobility', 'Great strength display'],
         defaultSets: 3, defaultReps: '5-8 per side', restSeconds: 90,
         benefits: ['Single leg strength', 'Balance and mobility', 'Quad and glute power'],
+        imageUrl: 'https://wger.de/media/exercise-images/67/Pistol-squat-1.png',
       },
       {
         id: 'glute-bridge', name: 'Glute Bridge', kanji: '臀橋', description: 'Hip thrust floor variation for glutes.', category: 'bodyweight',
@@ -1713,6 +1900,7 @@ export const exercises: Exercise[] = [
         tips: ['Glutes squeezed at top', 'Full hip extension', 'Don\'t hyperextend lower back'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 60,
         benefits: ['Glute activation and strength', 'Core stability', 'Lower back relief'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Glute%20Bridge',
       },
       {
         id: 'hip-thrust', name: 'Hip Thrust', kanji: '臀推', description: 'Weighted hip thrust for glute mass.', category: 'strength',
@@ -1722,6 +1910,7 @@ export const exercises: Exercise[] = [
         tips: ['Chin tucked throughout', 'Drive through heels', 'Squeeze glutes at top'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Maximum glute activation', 'Glute mass and strength', 'Hip power for athletics'],
+        imageUrl: 'https://wger.de/media/exercise-images/47/Hip-thrust-1.png',
       },
       {
         id: 'single-leg-glute-bridge', name: 'Single Leg Glute Bridge', kanji: '單腿臀橋', description: 'Unilateral glute floor work.', category: 'bodyweight',
@@ -1731,6 +1920,7 @@ export const exercises: Exercise[] = [
         tips: ['Focus on glute squeeze', 'Don\'t let hips drop', 'Pause at top for best results'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Corrects glute imbalances', 'Glute activation', 'Hip stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Single%20Leg%20Glute%20Bridge',
       },
       {
         id: 'donkey-kick', name: 'Donkey Kick', kanji: '驢踢', description: 'Glute isolation on all fours.', category: 'bodyweight',
@@ -1740,6 +1930,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t arch lower back', 'Focus on glute not lower back', 'Controlled tempo'],
         defaultSets: 3, defaultReps: '15-20 per side', restSeconds: 45,
         benefits: ['Glute activation', 'Isolation without equipment', 'Great warm-up movement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Donkey%20Kick',
       },
       {
         id: 'fire-hydrant', name: 'Fire Hydrant', kanji: '消火栓', description: 'Hip abduction and glute activation.', category: 'bodyweight',
@@ -1749,6 +1940,7 @@ export const exercises: Exercise[] = [
         tips: ['Core braced don\'t rotate', 'Squeeze glute at top', 'Excellent glute medius work'],
         defaultSets: 3, defaultReps: '15-20 per side', restSeconds: 45,
         benefits: ['Glute medius activation', 'Hip stability', 'Injury prevention for runners'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Fire%20Hydrant',
       },
       {
         id: 'clamshell', name: 'Clam Shell', kanji: '蛤殻', description: 'Side-lying hip abduction for glute medius.', category: 'bodyweight',
@@ -1758,6 +1950,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t let hips roll back', 'Focus on glute medius', 'Add band for resistance'],
         defaultSets: 3, defaultReps: '15-20 per side', restSeconds: 45,
         benefits: ['Glute medius activation', 'Hip stability', 'Knee tracking improvement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Clamshell',
       },
       {
         id: 'single-leg-hip-thrust', name: 'Single Leg Hip Thrust', kanji: '單腿臀推', description: 'Unilateral glute bridge with bench.', category: 'strength',
@@ -1767,6 +1960,7 @@ export const exercises: Exercise[] = [
         tips: ['Weight on working leg', 'Glute squeeze at top', 'Full hip extension'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Glute development', 'Corrects imbalances', 'Hip power single leg'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Single%20Leg%20Hip%20Thrust',
       },
       {
         id: 'step-up', name: 'Step Up', kanji: '踏上台', description: 'Unilateral leg exercise on box.', category: 'strength',
@@ -1776,6 +1970,7 @@ export const exercises: Exercise[] = [
         tips: ['Use medium height box', 'Drive knee up', 'Control descent'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Quad and glute strength', 'Single leg balance', 'Functional leg power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Step%20Up',
       },
       {
         id: 'box-jump', name: 'Box Jump', kanji: '箱跳', description: 'Explosive plyometric leg power.', category: 'strength',
@@ -1785,6 +1980,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly', 'Choose height wisely', 'Fully extend on top'],
         defaultSets: 4, defaultReps: '3-5', restSeconds: 90,
         benefits: ['Explosive leg power', 'Vertical jump improvement', 'Agility and athleticism'],
+        imageUrl: 'https://wger.de/media/exercise-images/58/Box-jump-1.png',
       },
       {
         id: 'jump-squat', name: 'Jump Squat', kanji: '跳蹲踞', description: 'Plyometric squat for power and conditioning.', category: 'strength',
@@ -1794,6 +1990,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly knees bent', 'Control descent', 'Excellent finisher'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Explosive power', 'Calorie burn', 'Athletic performance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Jump%20Squat',
       },
       {
         id: 'calf-raise-standing', name: 'Standing Calf Raise', kanji: '立踵挙', description: 'Standing machine for gastrocnemius.', category: 'strength',
@@ -1803,6 +2000,7 @@ export const exercises: Exercise[] = [
         tips: ['Full ROM stretch at bottom', 'Hold peak for one second', 'Slow controlled reps'],
         defaultSets: 4, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Calf size and definition', 'Ankle stability', 'Lower leg power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Calf%20Raise%20Standing',
       },
       {
         id: 'seated-calf-raise', name: 'Seated Calf Raise', kanji: '坐踵挙', description: 'Seated calf raise for soleus focus.', category: 'strength',
@@ -1812,6 +2010,7 @@ export const exercises: Exercise[] = [
         tips: ['Knees bent targets soleus', 'Seated vs standing for full calf development', 'Slow and controlled'],
         defaultSets: 4, defaultReps: '12-20', restSeconds: 45,
         benefits: ['Soleus development', 'Lower calf fullness', 'Ankle joint strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Seated%20Calf%20Raise',
       },
       {
         id: 'donkey-calf-raise', name: 'Donkey Calf Raise', kanji: '驢踵挙', description: 'Bent-over calf raise for full stretch.', category: 'strength',
@@ -1821,6 +2020,7 @@ export const exercises: Exercise[] = [
         tips: ['Bent position targets gastrocnemius', 'Full stretch at bottom', 'Pause at top'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Complete calf development', 'Greater stretch than standing', 'Traditional mass builder'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Donkey%20Calf%20Raise',
       },
       {
         id: 'leg-press-calf-raise', name: 'Leg Press Calf Raise', kanji: '腿推踵挙', description: 'Calf press on leg press machine.', category: 'strength',
@@ -1830,6 +2030,7 @@ export const exercises: Exercise[] = [
         tips: ['Easier to load heavy', 'Full ankle ROM', 'Great pump'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 45,
         benefits: ['Heavy calf training', 'Calf mass and definition', 'Safe for back'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Leg%20Press%20Calf%20Raise',
       },
       {
         id: 'single-leg-calf-raise', name: 'Single Leg Calf Raise', kanji: '單腿踵挙', description: 'Unilateral calf raise for imbalances.', category: 'strength',
@@ -1839,6 +2040,7 @@ export const exercises: Exercise[] = [
         tips: ['Use wall for balance', 'Full ROM each rep', 'Corrects calf imbalances'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Corrects imbalances', 'Calf strength definition', 'Ankle stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Single%20Leg%20Calf%20Raise',
       },
       {
         id: 'glute-ham-raise', name: 'Glute Ham Raise', kanji: '臀腿起', description: 'Hamstring and glute raise on GHR bench.', category: 'strength',
@@ -1848,6 +2050,7 @@ export const exercises: Exercise[] = [
         tips: ['Full eccentric slow control', 'Check for good alignment', 'For experienced lifters'],
         defaultSets: 3, defaultReps: '6-10', restSeconds: 90,
         benefits: ['Extreme hamstring development', 'Glute and back strength', 'Posterior chain power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Glute%20Ham%20Raise',
       },
       {
         id: 'nordic-curl', name: 'Nordic Hamstring Curl', kanji: '北欧腿彎', description: 'Partner resisted hamstring eccentric.', category: 'bodyweight',
@@ -1857,6 +2060,7 @@ export const exercises: Exercise[] = [
         tips: ['Go as slow as possible', 'Best hamstring injury prevention', 'Progress by going slower'],
         defaultSets: 3, defaultReps: '5-8', restSeconds: 90,
         benefits: ['Incredible hamstring strength', 'Hamstring injury prevention', 'Neuromuscular hamstring activation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Nordic%20Curl',
       },
       {
         id: 'lateral-lunge', name: 'Lateral Lunge', kanji: '側突進', description: 'Side lunge for adductor and quad strength.', category: 'strength',
@@ -1866,6 +2070,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep chest up', 'Weight on bent leg heel', 'Great groin mobility'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Adductor and quad strength', 'Hip mobility', 'Lateral movement strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lateral%20Lunge',
       },
       {
         id: 'curtsy-lunge', name: 'Curtsy Lunge', kanji: '屈膝突進', description: 'Cross behind lunge for glute engagement.', category: 'strength',
@@ -1875,6 +2080,7 @@ export const exercises: Exercise[] = [
         tips: ['Knees track over toes', 'Glute focus from cross', 'Hip mobility'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Glute medius engagement', 'Hip adductor stretch', 'Balance and coordination'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Curtsy%20Lunge',
       },
       {
         id: 'kettlebell-swing', name: 'Kettlebell Swing', kanji: '釜鈴振', description: 'Hip hinge for glute and hamstring power.', category: 'strength',
@@ -1884,6 +2090,7 @@ export const exercises: Exercise[] = [
         tips: ['Power from hips not arms', 'Core braced throughout', 'Controlled swing path'],
         defaultSets: 4, defaultReps: '15-25', restSeconds: 60,
         benefits: ['Glute and hamstring power', 'Conditioning and fat loss', 'Hip hinge mastery'],
+        imageUrl: 'https://wger.de/media/exercise-images/61/Kettlebell-swing-1.png',
       },
       {
         id: 'kettlebell-goblet-squat', name: 'Kettlebell Goblet Squat', kanji: '釜鈴杯蹲', description: 'Goblet squat with kettlebell for form.', category: 'strength',
@@ -1893,6 +2100,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep elbows in at bottom', 'Chest up back straight', 'Excellent teaching tool'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Quad and glute strength', 'Squat depth practice', 'Core stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Kettlebell%20Goblet%20Squat',
       },
       {
         id: 'adductor-machine', name: 'Adductor Machine', kanji: '内転機', description: 'Inner thigh isolation machine.', category: 'strength',
@@ -1902,6 +2110,7 @@ export const exercises: Exercise[] = [
         tips: ['Controlled tempo no momentum', 'Full ROM', 'Use to strengthen adductors'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Inner thigh strength', 'Hip stability', 'Groin injury prevention'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Adductor%20Machine',
       },
       {
         id: 'abductor-machine', name: 'Abductor Machine', kanji: '外転機', description: 'Outer thigh isolation machine.', category: 'strength',
@@ -1911,6 +2120,7 @@ export const exercises: Exercise[] = [
         tips: ['Glute medius focus', 'Keep back flat', 'Good for hip stability'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Glute medius strengthening', 'Hip stability', 'Better squat mechanics'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Abductor%20Machine',
       },
       {
         id: 'pistol-squat-progression', name: 'Pistol Squat Progression', kanji: '銃蹲踞練', description: 'Pistol squat with assisted progression.', category: 'bodyweight',
@@ -1920,6 +2130,7 @@ export const exercises: Exercise[] = [
         tips: ['Use support as needed', 'Go deeper over time', 'Also builds flexibility'],
         defaultSets: 3, defaultReps: '5-8 per side', restSeconds: 90,
         benefits: ['Single leg strength progression', 'Balance and mobility', 'Full leg development'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Pistol%20Squat%20Progression',
       },
       {
         id: 'shrimp-squat', name: 'Shrimp Squat', kanji: '海老蹲踞', description: 'Advanced single leg squat for mobility and strength.', category: 'bodyweight',
@@ -1929,6 +2140,7 @@ export const exercises: Exercise[] = [
         tips: ['Requires good flexibility', 'Softer support behind', 'Advanced bodyweight leg exercise'],
         defaultSets: 3, defaultReps: '5-8 per side', restSeconds: 90,
         benefits: ['Advanced leg strength', 'Mobility and hip flexor stretch', 'Single leg functional strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Shrimp%20Squat',
       },
       {
         id: 'wall-sit', name: 'Wall Sit', kanji: '壁坐', description: 'Isometric squat hold against wall.', category: 'bodyweight',
@@ -1938,6 +2150,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep back flat on wall', 'Knees at 90 degrees', 'Increase duration gradually'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 30,
         benefits: ['Leg endurance', 'Isometric quad strength', 'Knee stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Wall%20Sit',
       },
       {
         id: 'split-squat', name: 'Split Squat', kanji: '割蹲踞', description: 'Stationary split squat for unilateral legs.', category: 'bodyweight',
@@ -1947,6 +2160,7 @@ export const exercises: Exercise[] = [
         tips: ['Torso upright', 'Front knee over ankle', 'Stance wide enough for balance'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Single leg strength', 'Balance and stability', 'Hip mobility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Split%20Squat',
       },
       {
         id: 'bulgarian-split-squat-plyo', name: 'Plyometric Bulgarian Split Squat', kanji: '爆発保分蹲', description: 'Explosive jump split squat for power.', category: 'strength',
@@ -1956,6 +2170,7 @@ export const exercises: Exercise[] = [
         tips: ['Explosive but controlled landing', 'Use arms for momentum', 'Advanced plyometric exercise'],
         defaultSets: 3, defaultReps: '6-8 per side', restSeconds: 90,
         benefits: ['Explosive leg power', 'Jump height improvement', 'Unilateral stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bulgarian%20Split%20Squat%20Plyo',
       },
       {
         id: 'lateral-box-step-up', name: 'Lateral Box Step Up', kanji: '側箱踏台', description: 'Step up sideways for hip and quad.', category: 'strength',
@@ -1965,6 +2180,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep hips square', 'Height at knee level', 'Controlled pace'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Glute medius engagement', 'Hip stability', 'Quad and adductor strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lateral%20Box%20Step%20Up',
       },
       {
         id: 'banded-lateral-walk', name: 'Banded Lateral Walk', kanji: '帯側歩', description: 'Side stepping with band for glute activation.', category: 'bodyweight',
@@ -1974,6 +2190,7 @@ export const exercises: Exercise[] = [
         tips: ['Stay in partial squat', 'Band tension throughout', 'Great warm-up'],
         defaultSets: 3, defaultReps: '10-15 steps each way', restSeconds: 30,
         benefits: ['Glute medius activation', 'Hip stability', 'Knee alignment improvement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Banded%20Lateral%20Walk',
       },
       {
         id: 'reverse-hyperextension', name: 'Reverse Hyperextension', kanji: '反過伸', description: 'Lower back and glute with legs swinging.', category: 'strength',
@@ -1983,6 +2200,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t use momentum', 'Squeeze glutes at peak', 'Excellent for spinal decompression'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Glute and hamstring strength', 'Spinal erector endurance', 'Lower back relief'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Hyperextension',
       },
       {
         id: 'squat-jack', name: 'Squat Jack', kanji: '蹲踞跳', description: 'Jumping squat with feet wide.', category: 'cardio',
@@ -1992,6 +2210,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly', 'Squat to at least 90', 'Cardio pace'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 20,
         benefits: ['Cardiovascular conditioning', 'Leg endurance', 'Coordination and agility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Squat%20Jack',
       },
       {
         id: 'skater-squat', name: 'Skater Squat', kanji: '滑蹲踞', description: 'Single leg squat with rear leg slide.', category: 'bodyweight',
@@ -2001,6 +2220,7 @@ export const exercises: Exercise[] = [
         tips: ['Progress with support', 'Great single leg prep', 'Easier than pistol squat'],
         defaultSets: 3, defaultReps: '8-10 per side', restSeconds: 60,
         benefits: ['Single leg quad strength', 'Balance and coordination', 'Knee stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Skater%20Squat',
       },
       {
         id: 'leg-extension-single', name: 'Single Leg Extension', kanji: '單腿伸', description: 'Unilateral quad extension machine.', category: 'strength',
@@ -2010,6 +2230,7 @@ export const exercises: Exercise[] = [
         tips: ['Corrects quad imbalances', 'Lighter weight than bilateral', 'Full ROM'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Corrects quad imbalances', 'Isolated quad development', 'VMO activation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Leg%20Extension%20Single',
       },
       {
         id: 'leg-curl-standing', name: 'Standing Leg Curl', kanji: '立腿彎', description: 'Single leg hamstring curl standing.', category: 'strength',
@@ -2019,6 +2240,7 @@ export const exercises: Exercise[] = [
         tips: ['Stabilize with handles', 'Don\'t lean forward', 'Isolate hamstring'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Isolated hamstring strength', 'Single leg balance', 'Flexibility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Leg%20Curl%20Standing',
       },
 
   // ----- ARMS (55) -----
@@ -2030,6 +2252,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t swing body', 'Elbows stay fixed at sides', 'Full ROM with control'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Bicep mass and peak', 'Arm size overall', 'Elbow flexor strength'],
+        imageUrl: 'https://wger.de/media/exercise-images/28/Barbell-curl-1.png',
       },
       {
         id: 'dumbbell-curl', name: 'Dumbbell Curl', kanji: '亜鈴二頭彎', description: 'Alternating curl for arm detail.', category: 'strength',
@@ -2039,6 +2262,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows fixed at sides', 'Rotate wrists for full biceps', 'Controlled tempo'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Bicep detail and separation', 'Forearm development', 'Supination strength'],
+        imageUrl: 'https://wger.de/media/exercise-images/29/Dumbbell-curl-1.png',
       },
       {
         id: 'hammer-curl', name: 'Hammer Curl', kanji: '槌彎', description: 'Neutral grip curl for brachialis and forearms.', category: 'strength',
@@ -2048,6 +2272,7 @@ export const exercises: Exercise[] = [
         tips: ['Builds brachialis for arm thickness', 'Palm position neutral throughout', 'No supination'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Brachialis size for thicker arms', 'Forearm development', 'Elbow health'],
+        imageUrl: 'https://wger.de/media/exercise-images/30/Hammer-curl-1.png',
       },
       {
         id: 'preacher-curl', name: 'Preacher Curl', kanji: '説教臺彎', description: 'Supported curl for strict bicep isolation.', category: 'strength',
@@ -2057,6 +2282,7 @@ export const exercises: Exercise[] = [
         tips: ['Arms stay on pad', 'No shoulder involvement', 'Strictest bicep isolation'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Strict bicep isolation', 'Peak bicep development', 'Eliminates cheating'],
+        imageUrl: 'https://wger.de/media/exercise-images/35/Preacher-curl-1.png',
       },
       {
         id: 'concentration-curl', name: 'Concentration Curl', kanji: '集中彎', description: 'Seated isolated curl for bicep peak.', category: 'strength',
@@ -2066,6 +2292,7 @@ export const exercises: Exercise[] = [
         tips: ['Brace elbow against thigh', 'Pure bicep no momentum', 'Pause at top squeeze'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Bicep peak development', 'Mind-muscle connection', 'Isolated concentration'],
+        imageUrl: 'https://wger.de/media/exercise-images/34/Concentration-curl-1.png',
       },
       {
         id: 'cable-curl', name: 'Cable Curl', kanji: '纜二頭彎', description: 'Cable curl for constant bicep tension.', category: 'strength',
@@ -2075,6 +2302,7 @@ export const exercises: Exercise[] = [
         tips: ['Constant cable tension', 'Keep body still', 'Elbows at sides'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Constant bicep tension', 'Bicep endurance', 'Definition and shape'],
+        imageUrl: 'https://wger.de/media/exercise-images/37/Cable-curl-1.png',
       },
       {
         id: 'incline-dumbbell-curl', name: 'Incline Dumbbell Curl', kanji: '傾斜彎', description: 'Lying back curl for stretched biceps.', category: 'strength',
@@ -2084,6 +2312,7 @@ export const exercises: Exercise[] = [
         tips: ['Greater stretch at bottom', 'Harder than standing curls', 'Lighter weight needed'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Full bicep stretch and contraction', 'Bicep length development', 'Incredible pump'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Incline%20Dumbbell%20Curl',
       },
       {
         id: 'drag-curl', name: 'Drag Curl', kanji: '引寄彎', description: 'Curl keeping bar close to body.', category: 'strength',
@@ -2093,6 +2322,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows drive back', 'Bar drags up body', 'More rear delt involvement'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Bicep and front delt', 'Unique bicep angle', 'Upper chest stretch'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Drag%20Curl',
       },
       {
         id: 'spider-curl', name: 'Spider Curl', kanji: '蜘蛛彎', description: 'Face-down incline curl for strict form.', category: 'strength',
@@ -2102,6 +2332,7 @@ export const exercises: Exercise[] = [
         tips: ['Can\'t use momentum', 'Maximizes bicep isolation', 'Focus on form over weight'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Strict bicep isolation', 'Greater stretch position', 'No cheating possible'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Spider%20Curl',
       },
       {
         id: 'bayesian-curl', name: 'Bayesian Curl', kanji: '湾岸彎', description: 'Cable curl with unique angle for biceps.', category: 'strength',
@@ -2111,6 +2342,7 @@ export const exercises: Exercise[] = [
         tips: ['Unique angle hits biceps differently', 'Elbow stays behind body', 'Constant tension'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Unique bicep growth stimulus', 'Constant tension', 'Deep stretch and contraction'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bayesian%20Curl',
       },
       {
         id: 'reverse-curl', name: 'Reverse Curl', kanji: '反手彎', description: 'Overhand curl for forearm extensors.', category: 'strength',
@@ -2120,6 +2352,7 @@ export const exercises: Exercise[] = [
         tips: ['Wrist stays straight throughout', 'Elbows fixed', 'Great forearm development'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Forearm extensor strength', 'Brachialis development', 'Grip strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Curl',
       },
       {
         id: 'wrist-curl', name: 'Wrist Curl', kanji: '手首彎', description: 'Wrist flexion for forearm size.', category: 'strength',
@@ -2129,6 +2362,7 @@ export const exercises: Exercise[] = [
         tips: ['Light weight high reps', 'Forearm on thighs only wrist moves', 'Full wrist ROM'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Forearm flexor mass', 'Grip strength', 'Wrist joint stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Wrist%20Curl',
       },
       {
         id: 'reverse-wrist-curl', name: 'Reverse Wrist Curl', kanji: '反手首彎', description: 'Wrist extension for forearm balance.', category: 'strength',
@@ -2138,6 +2372,7 @@ export const exercises: Exercise[] = [
         tips: ['Light weight to start', 'High reps for endurance', 'Balances wrist curl'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Forearm extensor strength', 'Balanced forearm development', 'Wrist stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Wrist%20Curl',
       },
       {
         id: 'farmer-walk', name: 'Farmer Walk', kanji: '農夫歩', description: 'Loaded carry for grip and forearms.', category: 'strength',
@@ -2147,6 +2382,7 @@ export const exercises: Exercise[] = [
         tips: ['Heavy as possible for distance', 'Don\'t lean or compensate', 'Posture upright'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 60,
         benefits: ['Incredible grip strength', 'Forearm mass', 'Core stability', 'Conditioning'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Farmer%20Walk',
       },
       {
         id: 'tricep-pushdown', name: 'Tricep Pushdown', kanji: '三頭下', description: 'Cable isolation for tricep lateral head.', category: 'strength',
@@ -2156,6 +2392,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows fixed don\'t flare', 'Squeeze at bottom', 'Body stationary'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Tricep mass and definition', 'Lockout strength for pressing', 'Tricep lateral head'],
+        imageUrl: 'https://wger.de/media/exercise-images/31/Tricep-pushdown-1.png',
       },
       {
         id: 'skull-crusher', name: 'Skull Crusher', kanji: '頭蓋碎', description: 'Lying tricep extension for all three heads.', category: 'strength',
@@ -2165,6 +2402,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep elbows narrow', 'Full stretch at bottom', 'Easy on elbows with EZ bar'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Tricep size all three heads', 'Lockout strength for bench press', 'Horseshoe tricep detail'],
+        imageUrl: 'https://wger.de/media/exercise-images/33/Skull-crusher-1.png',
       },
       {
         id: 'overhead-tricep-extension', name: 'Overhead Tricep Extension', kanji: '頭上三頭伸', description: 'Overhead extension for tricep long head.', category: 'strength',
@@ -2174,6 +2412,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows point up', 'Long head of triceps gets stretch', 'Lighter weight controlled'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Tricep long head development', 'Full arm size from behind', 'Overhead shoulder mobility'],
+        imageUrl: 'https://wger.de/media/exercise-images/32/Overhead-tricep-extension-1.png',
       },
       {
         id: 'close-grip-bench-press', name: 'Close Grip Bench Press', kanji: '狭握臥推', description: 'Tricep-focused narrow bench press.', category: 'strength',
@@ -2183,6 +2422,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows close to body', 'Narrower grip more tricep', 'Don\'t flare elbows'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Tricep strength and mass', 'Push movement lockout', 'Chest inner development'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Close%20Grip%20Bench%20Press',
       },
       {
         id: 'tricep-dip', name: 'Tricep Dip', kanji: '三頭下附', description: 'Bodyweight dip for tricep mass.', category: 'bodyweight',
@@ -2192,6 +2432,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep body upright to focus triceps', 'Don\'t go too deep stress shoulders', 'Can add weight for progression'],
         defaultSets: 3, defaultReps: '8-15', restSeconds: 60,
         benefits: ['Massive tricep development', 'Lower chest engagement', 'Pushing strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Tricep%20Dip',
       },
       {
         id: 'bench-dip', name: 'Bench Dip', kanji: '椅下附', description: 'Beginner tricep dip using bench.', category: 'bodyweight',
@@ -2201,6 +2442,7 @@ export const exercises: Exercise[] = [
         tips: ['Easier than parallel bar dips', 'Legs straighter for more challenge', 'Shoulder-friendly'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Tricep development', 'Beginner pressing strength', 'Excellent finisher'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bench%20Dip',
       },
       {
         id: 'kickback', name: 'Dumbbell Kickback', kanji: '亜鈴蹴戻', description: 'Isolated tricep extension bent over.', category: 'strength',
@@ -2210,6 +2452,7 @@ export const exercises: Exercise[] = [
         tips: ['Upper arm stationary', 'Light weight feel burn', 'Momentum-free'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Isolated tricep contraction', 'Easy to learn', 'Tricep detail and pump'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Kickback',
       },
       {
         id: 'cable-overhead-tricep-extension', name: 'Cable Overhead Tricep Extension', kanji: '纜頭上三頭', description: 'Cable overhead extension for constant tension.', category: 'strength',
@@ -2219,6 +2462,7 @@ export const exercises: Exercise[] = [
         tips: ['Constant cable tension', 'Full extension', 'Long head tricep'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Tricep long head stretch', 'Constant tension', 'Arm detail'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Overhead%20Tricep%20Extension',
       },
       {
         id: 'ez-bar-curl', name: 'EZ Bar Curl', kanji: 'EZ棒彎', description: 'EZ bar curl for wrist-friendly bicep.', category: 'strength',
@@ -2228,6 +2472,7 @@ export const exercises: Exercise[] = [
         tips: ['EZ bar easier on wrists', 'Full ROM', 'Controlled tempo'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Bicep mass', 'Comfortable for wrists', 'Arm size'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ez%20Bar%20Curl',
       },
       {
         id: 'close-grip-push-up', name: 'Close Grip Push Up', kanji: '狭握伏臥', description: 'Tricep-focused narrow hand push-up.', category: 'bodyweight',
@@ -2237,6 +2482,7 @@ export const exercises: Exercise[] = [
         tips: ['Hands under shoulders', 'Elbows close to body', 'Great alternative to bench dip'],
         defaultSets: 3, defaultReps: '10-20', restSeconds: 45,
         benefits: ['Tricep development', 'Chest inner development', 'No equipment needed'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Close%20Grip%20Push%20Up',
       },
       {
         id: '21s-curl', name: '21s Curl', kanji: '21回彎', description: '21 rep bicep curl for massive pump.', category: 'strength',
@@ -2246,6 +2492,7 @@ export const exercises: Exercise[] = [
         tips: ['Continuous tension', 'No rest between segments', 'Massive pump'],
         defaultSets: 3, defaultReps: '21 reps (7-7-7)', restSeconds: 60,
         benefits: ['Bicep pump and size', 'Endurance', 'High volume stimulus'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=21s%20Curl',
       },
       {
         id: 'reverse-pushdown', name: 'Reverse Tricep Pushdown', kanji: '反手三頭下', description: 'Overhand tricep extension for lateral head.', category: 'strength',
@@ -2255,6 +2502,7 @@ export const exercises: Exercise[] = [
         tips: ['Overhand targets lateral head', 'Elbows fixed', 'Light controlled weight'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Lateral tricep head', 'Tricep detail finish', 'Arm definition'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Pushdown',
       },
       {
         id: 'cable-kickback', name: 'Cable Tricep Kickback', kanji: '纜三頭蹴戻', description: 'Cable kickback for constant tricep tension.', category: 'strength',
@@ -2264,6 +2512,7 @@ export const exercises: Exercise[] = [
         tips: ['Upper arm stationary', 'Full extension', 'Constant cable tension'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Tricep contraction', 'Constant tension', 'Tricep detail'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Kickback',
       },
       {
         id: 'lying-tricep-extension-cable', name: 'Lying Tricep Extension Cable', kanji: '臥纜三頭', description: 'Lying tricep extension with cable.', category: 'strength',
@@ -2273,6 +2522,7 @@ export const exercises: Exercise[] = [
         tips: ['Constant cable resistance', 'Full stretch at bottom', 'All three tricep heads'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['All tricep heads', 'Constant tension', 'Bench press lockout strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lying%20Tricep%20Extension%20Cable',
       },
       {
         id: 'dumbbell-skull-crusher', name: 'Dumbbell Skull Crusher', kanji: '亜鈴頭蓋碎', description: 'Single arm dumbbell tricep extension lying.', category: 'strength',
@@ -2282,6 +2532,7 @@ export const exercises: Exercise[] = [
         tips: ['Arm angle 45 degrees', 'Lighter than barbell', 'Good for form'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Tricep isolation', 'Correction of imbalances', 'Horseshoe tricep'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Skull%20Crusher',
       },
       {
         id: 'preacher-dumbbell-curl', name: 'Preacher Dumbbell Curl', kanji: '説教臺亜鈴彎', description: 'Dumbbell preacher curl for peak isolation.', category: 'strength',
@@ -2291,6 +2542,7 @@ export const exercises: Exercise[] = [
         tips: ['Full stretch at bottom', 'Squeeze hard at top', 'Concentrated bicep work'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 60,
         benefits: ['Bicep peak isolation', 'Corrects size imbalances', 'Strict form'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Preacher%20Dumbbell%20Curl',
       },
       {
         id: 'cable-inverted-curl', name: 'Cable Inverted Curl', kanji: '纜反手彎', description: 'Cable curl from high pulley for variation.', category: 'strength',
@@ -2300,6 +2552,7 @@ export const exercises: Exercise[] = [
         tips: ['Unique angle for biceps', 'Constant tension', 'Elbow health'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Unique bicep angle', 'Arm detail', 'Constant tension'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Inverted%20Curl',
       },
       {
         id: 'one-arm-cable-curl', name: 'One Arm Cable Curl', kanji: '單手纜彎', description: 'Unilateral cable curl for balanced arms.', category: 'strength',
@@ -2309,6 +2562,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbow pinned', 'Constant tension', 'Correct size imbalances'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Corrects bicep imbalances', 'Peak contraction', 'Constant tension'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=One%20Arm%20Cable%20Curl',
       },
       {
         id: 'band-bicep-curl', name: 'Band Bicep Curl', kanji: '帯二頭彎', description: 'Resistance band curl for portable training.', category: 'bodyweight',
@@ -2318,6 +2572,7 @@ export const exercises: Exercise[] = [
         tips: ['Stand on band for more tension', 'Full ROM', 'Controlled tempo'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Portable bicep training', 'Joint-friendly', 'Light warm-up'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Bicep%20Curl',
       },
       {
         id: 'band-tricep-pushdown', name: 'Band Tricep Pushdown', kanji: '帯三頭下', description: 'Resistance band tricep pushdown.', category: 'bodyweight',
@@ -2327,6 +2582,7 @@ export const exercises: Exercise[] = [
         tips: ['Band anchored at head height', 'Full extension', 'Portable'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Portable tricep training', 'Constant tension', 'Joint-friendly'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Tricep%20Pushdown',
       },
       {
         id: 'ez-bar-skull-crusher', name: 'EZ Bar Skull Crusher', kanji: 'EZ棒頭蓋碎', description: 'EZ bar lying tricep extension for wrist comfort.', category: 'strength',
@@ -2336,6 +2592,7 @@ export const exercises: Exercise[] = [
         tips: ['EZ bar reduces wrist strain', 'Controlled negative', 'Full stretch at bottom'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['All tricep heads', 'Comfortable on wrists', 'Tricep mass builder'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ez%20Bar%20Skull%20Crusher',
       },
       {
         id: 'dumbbell-lying-extension', name: 'Dumbbell Lying Tricep Extension', kanji: '亜鈴臥三頭伸', description: 'Two-dumbbell lying tricep extension.', category: 'strength',
@@ -2345,6 +2602,7 @@ export const exercises: Exercise[] = [
         tips: ['Full stretch at bottom', 'Control each arm individually', 'Correct strength imbalances'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['All tricep head development', 'Balanced tricep strength', 'Arm mass'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Lying%20Extension',
       },
       {
         id: 'rope-pushdown', name: 'Rope Pushdown', kanji: '纜三頭下', description: 'Rope tricep pushdown for full range.', category: 'strength',
@@ -2354,6 +2612,7 @@ export const exercises: Exercise[] = [
         tips: ['Separate rope ends at bottom', 'Full contraction', 'Better ROM than bar'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Complete tricep contraction', 'Better range of motion', 'Tricep detail'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Rope%20Pushdown',
       },
       {
         id: 'v-bar-pushdown', name: 'V Bar Pushdown', kanji: 'V棒三頭下', description: 'V-bar tricep pushdown for lateral head.', category: 'strength',
@@ -2363,6 +2622,7 @@ export const exercises: Exercise[] = [
         tips: ['Narrow grip targets lateral tricep', 'Elbows fixed', 'Squeeze lockout'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Lateral tricep head', 'Tricep mass', 'Arm density'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=V%20Bar%20Pushdown',
       },
       {
         id: 'standing-dumbbell-curl', name: 'Standing Dumbbell Curl', kanji: '立亜鈴彎', description: 'Standing alternating dumbbell curl.', category: 'strength',
@@ -2372,6 +2632,7 @@ export const exercises: Exercise[] = [
         tips: ['Good posture', 'Wrist rotation', 'Full ROM'],
         defaultSets: 3, defaultReps: '10-12 each', restSeconds: 60,
         benefits: ['Bicep size', 'Forearm development', 'Arm detail'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Standing%20Dumbbell%20Curl',
       },
       {
         id: 'pulley-curl', name: 'Pulley Curl', kanji: '滑車彎', description: 'Low pulley curl for bicep tension.', category: 'strength',
@@ -2381,6 +2642,7 @@ export const exercises: Exercise[] = [
         tips: ['Step back for cable tension', 'Elbows stable', 'Full ROM'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Constant bicep tension', 'Bicep pump', 'Arms from all angles'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Pulley%20Curl',
       },
       {
         id: 'cable-hammer-curl', name: 'Cable Hammer Curl', kanji: '纜槌彎', description: 'Cable hammer curl for brachialis.', category: 'strength',
@@ -2390,6 +2652,7 @@ export const exercises: Exercise[] = [
         tips: ['Neutral grip throughout', 'Targets brachialis', 'Constant cable tension'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Brachialis thickness', 'Forearm strength', 'Arm size'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Hammer%20Curl',
       },
       {
         id: 'single-arm-tricep-pushdown', name: 'Single Arm Tricep Pushdown', kanji: '片手三頭下', description: 'One arm cable tricep extension.', category: 'strength',
@@ -2399,6 +2662,7 @@ export const exercises: Exercise[] = [
         tips: ['Focus each arm', 'Correct imbalances', 'Elbow pinned'],
         defaultSets: 3, defaultReps: '12-15 each', restSeconds: 45,
         benefits: ['Tricep imbalances corrected', 'Focused isolation', 'Arm definition'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Single%20Arm%20Tricep%20Pushdown',
       },
       {
         id: 'bench-press-tricep-focus', name: 'Close Grip Bench Press BB', kanji: '狭握臥推三頭', description: 'Barbell close grip for tricep weight.', category: 'strength',
@@ -2408,6 +2672,7 @@ export const exercises: Exercise[] = [
         tips: ['Narrower grip more tricep', 'Don\'t bounce bar', 'Control descent'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Heavy tricep strength', 'Lockout power', 'Push strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bench%20Press%20Tricep%20Focus',
       },
       {
         id: 'overhead-dumbbell-tricep', name: 'Overhead Dumbbell Tricep', kanji: '頭上亜鈴三頭', description: 'Single overhead dumbbell tricep extension.', category: 'strength',
@@ -2417,6 +2682,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows by ears', 'Light weight control', 'Deep stretch'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Long head tricep', 'Arm mass', 'Overhead stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Overhead%20Dumbbell%20Tricep',
       },
       {
         id: 'zottman-curl', name: 'Zottman Curl', kanji: 'ゾット彎', description: 'Curling supinated lowering pronated for full arm.', category: 'strength',
@@ -2426,6 +2692,7 @@ export const exercises: Exercise[] = [
         tips: ['Supinate up pronate down', 'Full forearm and bicep', 'Unique stimulus'],
         defaultSets: 3, defaultReps: '8-10', restSeconds: 60,
         benefits: ['Full arm development', 'Forearm and bicep combination', 'Arm density'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Zottman%20Curl',
       },
       {
         id: 'cable-pressdown', name: 'Cable Tricep Pressdown', kanji: '纜三頭押', description: 'Basic cable press for tricep.', category: 'strength',
@@ -2435,6 +2702,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows body', 'Controlled tempo', 'Light warm-up'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Tricep activation', 'Arm definition', 'Blood flow'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Pressdown',
       },
       {
         id: 'incline-hammer-curl', name: 'Incline Hammer Curl', kanji: '傾斜槌彎', description: 'Hammer curl on incline for stretch.', category: 'strength',
@@ -2444,6 +2712,7 @@ export const exercises: Exercise[] = [
         tips: ['Greater stretch bottom', 'Neutral grip', 'Brachialis focus'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Brachialis stretch', 'Forearm pump', 'Arm thickness'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Incline%20Hammer%20Curl',
       },
       {
         id: 'cable-concentration-curl', name: 'Cable Concentration Curl', kanji: '纜集中彎', description: 'Cable curl for peak contraction.', category: 'strength',
@@ -2453,6 +2722,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbow braced', 'Constant cable tension', 'Peak bicep contraction'],
         defaultSets: 3, defaultReps: '12-15 each', restSeconds: 45,
         benefits: ['Bicep peak', 'Isolation', 'Mind-muscle connection'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Concentration%20Curl',
       },
       {
         id: 'band-pushdown', name: 'Band Tricep Extension', kanji: '帯三頭伸', description: 'Band tricep extension alternative.', category: 'bodyweight',
@@ -2462,6 +2732,7 @@ export const exercises: Exercise[] = [
         tips: ['Anchor point above', 'Portable', 'Light tension'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Tricep endurance', 'Portable', 'Joint-friendly'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Pushdown',
       },
       {
         id: 'alternating-dumbbell-curl', name: 'Alternating Dumbbell Curl', kanji: '交互相手彎', description: 'Alternating single arm bicep curl.', category: 'strength',
@@ -2471,6 +2742,7 @@ export const exercises: Exercise[] = [
         tips: ['Good supination', 'Rhythmic tempo', 'Focus on each arm'],
         defaultSets: 3, defaultReps: '10-12 each', restSeconds: 45,
         benefits: ['Bicep imbalance correction', 'Arm symmetry', 'Control'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Alternating%20Dumbbell%20Curl',
       },
       {
         id: 'one-arm-concentration', name: 'One Arm Concentration Curl', kanji: '片手集中彎', description: 'Seated isolated dumbbell curl.', category: 'strength',
@@ -2480,6 +2752,7 @@ export const exercises: Exercise[] = [
         tips: ['Wrist supinate', 'Strict form', 'Peak concentration'],
         defaultSets: 3, defaultReps: '12-15 each', restSeconds: 45,
         benefits: ['Bicep peak', 'Isolation for detail', 'Arm shaping'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=One%20Arm%20Concentration',
       },
       {
         id: 'tricep-bench-press-grip', name: 'Tricep Bench Press Narrow', kanji: '三頭臥推狭握', description: 'Narrow grip barbell bench for triceps.', category: 'strength',
@@ -2489,6 +2762,7 @@ export const exercises: Exercise[] = [
         tips: ['Narrow grip 6-8 inches', 'Tricep focus', 'Press heavy'],
         defaultSets: 4, defaultReps: '8-10', restSeconds: 90,
         benefits: ['Tricep mass', 'Bench press lockout', 'Upper arm strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Tricep%20Bench%20Press%20Grip',
       },
       {
         id: 'forearm-roller', name: 'Forearm Roller', kanji: '前腕巻', description: 'Wrist roller for forearm endurance and grip.', category: 'strength',
@@ -2498,6 +2772,7 @@ export const exercises: Exercise[] = [
         tips: ['Arms extended', 'Slow controlled', 'Great finish'],
         defaultSets: 3, defaultReps: '1 full roll each direction', restSeconds: 60,
         benefits: ['Extreme grip endurance', 'Forearm strength', 'Wrist health'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Forearm%20Roller',
       },
       {
         id: 'wrist-roller-plate', name: 'Plate Wrist Curl', kanji: '板手首彎', description: 'Plate curl for extra forearm isolation.', category: 'strength',
@@ -2507,6 +2782,7 @@ export const exercises: Exercise[] = [
         tips: ['Fingers hold plate', 'Heavy grip work', 'Forearm pump'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Grip strength', 'Forearm endurance', 'Hand strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Wrist%20Roller%20Plate',
       },
       {
         id: 'behind-back-wrist-curl', name: 'Behind Back Wrist Curl', kanji: '背後手首彎', description: 'Barbell wrist curl behind back.', category: 'strength',
@@ -2516,6 +2792,7 @@ export const exercises: Exercise[] = [
         tips: ['Bar behind back', 'Full ROM', 'Unique forearm angle'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 30,
         benefits: ['Forearm flexor development', 'Grip endurance', 'Unique stretch'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Behind%20Back%20Wrist%20Curl',
       },
 
   // ----- CORE (29) -----
@@ -2527,6 +2804,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t let hips sag', 'Breathe steady', 'Progress hold time'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 30,
         benefits: ['Full core strength', 'Posture improvement', 'Stability for all lifts'],
+        imageUrl: 'https://wger.de/media/exercise-images/48/Plank-1.png',
       },
       {
         id: 'side-plank', name: 'Side Plank', kanji: '側平板', description: 'Lateral core stability hold.', category: 'bodyweight',
@@ -2536,6 +2814,7 @@ export const exercises: Exercise[] = [
         tips: ['Hips square forward', 'Reach top arm up for balance', 'Progress hold duration'],
         defaultSets: 3, defaultReps: '20-40 seconds per side', restSeconds: 30,
         benefits: ['Oblique and lateral core strength', 'Spinal stability', 'Hip abductor activation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Side%20Plank',
       },
       {
         id: 'crunch', name: 'Crunch', kanji: '腹蜷', description: 'Standard abdominal flexion exercise.', category: 'bodyweight',
@@ -2545,6 +2824,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t pull neck', 'Exhale at top', 'Controlled pace'],
         defaultSets: 3, defaultReps: '15-25', restSeconds: 30,
         benefits: ['Ab definition', 'Upper ab strength', 'Beginner core development'],
+        imageUrl: 'https://wger.de/media/exercise-images/49/Crunch-1.png',
       },
       {
         id: 'reverse-crunch', name: 'Reverse Crunch', kanji: '逆腹蜷', description: 'Hip lift for lower abs.', category: 'bodyweight',
@@ -2554,6 +2834,7 @@ export const exercises: Exercise[] = [
         tips: ['Initiate from abs not legs', 'Don\'t swing', 'Lower back stays on floor'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 30,
         benefits: ['Lower ab development', 'Full abdominal curl', 'Hip flexor coordination'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Crunch',
       },
       {
         id: 'bicycle-crunch', name: 'Bicycle Crunch', kanji: '自転車腹蜷', description: 'Twisting crunch for obliques.', category: 'bodyweight',
@@ -2563,6 +2844,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t pull neck', 'Twist from core', 'Controlled pace'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 30,
         benefits: ['Oblique definition', 'Full core activation', 'Rotational core strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bicycle%20Crunch',
       },
       {
         id: 'leg-raise-lying', name: 'Lying Leg Raise', kanji: '臥足挙', description: 'Lower abdominal raise.', category: 'bodyweight',
@@ -2572,6 +2854,7 @@ export const exercises: Exercise[] = [
         tips: ['Press lower back into floor', 'Control descent', 'Flex feet for more stretch'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Lower ab strength', 'Hip flexor endurance', 'Core stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Leg%20Raise%20Lying',
       },
       {
         id: 'hanging-leg-raise', name: 'Hanging Leg Raise', kanji: '懸垂足挙', description: 'Advanced hanging ab exercise.', category: 'bodyweight',
@@ -2581,6 +2864,7 @@ export const exercises: Exercise[] = [
         tips: ['No swinging', 'Initiate from hips', 'Point toes for difficulty'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Incredible lower ab development', 'Hip flexor strength', 'Grip endurance'],
+        imageUrl: 'https://wger.de/media/exercise-images/54/Hanging-leg-raise-1.png',
       },
       {
         id: 'decline-crunch', name: 'Decline Crunch', kanji: '下傾腹蜷', description: 'Weighted crunch on decline bench.', category: 'strength',
@@ -2590,6 +2874,7 @@ export const exercises: Exercise[] = [
         tips: ['Full spinal curl', 'Don\'t just lift shoulders', 'Exhale curling up'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Upper ab development', 'Resistance for growth', 'Definition'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Decline%20Crunch',
       },
       {
         id: 'cable-crunch', name: 'Cable Crunch', kanji: '纜腹蜷', description: 'Cable crunch for weighted ab resistance.', category: 'strength',
@@ -2599,6 +2884,7 @@ export const exercises: Exercise[] = [
         tips: ['Crunch weight with abs', 'Hips stay still', 'Spinal curl not hip'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Progressive ab overload', 'Upper ab mass', 'Core strength'],
+        imageUrl: 'https://wger.de/media/exercise-images/52/Cable-crunch-1.png',
       },
       {
         id: 'russian-twist', name: 'Russian Twist', kanji: '露西亜捻', description: 'Seated core rotation movement.', category: 'strength',
@@ -2608,6 +2894,7 @@ export const exercises: Exercise[] = [
         tips: ['Rotate from spine', 'Feet off ground for challenge', 'Breathe steady'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 30,
         benefits: ['Oblique strength', 'Rotational core power', 'Athletic core development'],
+        imageUrl: 'https://wger.de/media/exercise-images/50/Russian-twist-1.png',
       },
       {
         id: 'pallof-press', name: 'Pallof Press', kanji: '巴押', description: 'Anti-rotation cable for core stability.', category: 'strength',
@@ -2617,6 +2904,7 @@ export const exercises: Exercise[] = [
         tips: ['Core resists cable pull', 'Slow controlled press', 'Keep hips square'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 45,
         benefits: ['Anti-rotation core strength', 'Oblique stability', 'Postural strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Pallof%20Press',
       },
       {
         id: 'dead-bug', name: 'Dead Bug', kanji: '死虫', description: 'Core stability lying on back.', category: 'bodyweight',
@@ -2626,6 +2914,7 @@ export const exercises: Exercise[] = [
         tips: ['Lower back pressed to floor', 'Slow controlled movement', 'Core braced throughout'],
         defaultSets: 3, defaultReps: '8-10 per side', restSeconds: 30,
         benefits: ['Core stability and coordination', 'Lower back safety', 'Anti-extension strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dead%20Bug',
       },
       {
         id: 'bird-dog', name: 'Bird Dog', kanji: '鳥犬', description: 'Quadruped core stability exercise.', category: 'bodyweight',
@@ -2635,6 +2924,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t let hips rotate', 'Neck neutral', 'Slow controlled'],
         defaultSets: 3, defaultReps: '8-10 per side', restSeconds: 30,
         benefits: ['Core stability and balance', 'Posterior chain coordination', 'Lower back health'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bird%20Dog',
       },
       {
         id: 'v-up', name: 'V-Up', kanji: 'V起', description: 'Full core flexion V motion.', category: 'bodyweight',
@@ -2644,6 +2934,7 @@ export const exercises: Exercise[] = [
         tips: ['Power from core not neck', 'Straight legs for difficulty', 'Hands reach toward toes'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Full core development', 'Hip flexor strength', 'Core coordination'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=V%20Up',
       },
       {
         id: 'toes-to-bar', name: 'Toes to Bar', kanji: '棒趾触', description: 'Advanced hanging ab movement.', category: 'bodyweight',
@@ -2653,6 +2944,7 @@ export const exercises: Exercise[] = [
         tips: ['Initiate from core', 'Full ballistic movement', 'Requires lat strength'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Extreme ab development', 'Hip flexor and grip strength', 'Core power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Toes%20To%20Bar',
       },
       {
         id: 'ab-wheel-rollout', name: 'Ab Wheel Rollout', kanji: '腹輪転', description: 'Core anti-extension rollout.', category: 'strength',
@@ -2662,6 +2954,7 @@ export const exercises: Exercise[] = [
         tips: ['Core tight throughout', 'Don\'t let hips sag', 'Breathe out on pull back'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Extreme core strength', 'Lats and shoulder endurance', 'Spinal stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ab%20Wheel%20Rollout',
       },
       {
         id: 'jackknife', name: 'Jackknife', kanji: '折畳', description: 'Pike bodyweight core movement.', category: 'bodyweight',
@@ -2671,6 +2964,7 @@ export const exercises: Exercise[] = [
         tips: ['Core braced entire movement', 'Pike as high as possible', 'Controlled pace'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Lower ab development', 'Full core flexion', 'Hip mobility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Jackknife',
       },
       {
         id: 'mountain-climber', name: 'Mountain Climber', kanji: '山登', description: 'Dynamic plank for core and conditioning.', category: 'bodyweight',
@@ -2680,6 +2974,7 @@ export const exercises: Exercise[] = [
         tips: ['Hips stay low', 'Core tight throughout', 'Breathe steady'],
         defaultSets: 3, defaultReps: '20-30 each side', restSeconds: 30,
         benefits: ['Core stability dynamic', 'Hip flexor strength', 'Cardiovascular conditioning'],
+        imageUrl: 'https://wger.de/media/exercise-images/57/Mountain-climber-1.png',
       },
       {
         id: 'l-sit', name: 'L-Sit', kanji: 'L字', description: 'Advanced isometric core hold on bars.', category: 'bodyweight',
@@ -2689,6 +2984,7 @@ export const exercises: Exercise[] = [
         tips: ['Progress pike to L-sit', 'Core and hip flexor strength', 'Scapular depression'],
         defaultSets: 3, defaultReps: '10-30 seconds', restSeconds: 60,
         benefits: ['Extreme core strength', 'Hip flexor endurance', 'Tricep and shoulder stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=L%20Sit',
       },
       {
         id: 'hollow-hold', name: 'Hollow Hold', kanji: '凹保持', description: 'Foundational gymnastics core position.', category: 'bodyweight',
@@ -2698,6 +2994,7 @@ export const exercises: Exercise[] = [
         tips: ['Lower back pressed to floor', 'Legs lower more core work', 'Squeeze core entire hold'],
         defaultSets: 3, defaultReps: '20-60 seconds', restSeconds: 30,
         benefits: ['Foundational core for gymnastics', 'Core endurance', 'Posture alignment'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Hollow%20Hold',
       },
       {
         id: 'flutter-kick', name: 'Flutter Kick', kanji: '水蹴', description: 'Lying alternating leg raises.', category: 'bodyweight',
@@ -2707,6 +3004,7 @@ export const exercises: Exercise[] = [
         tips: ['Small kicks not large', 'Lower back stays down', 'Core tight throughout'],
         defaultSets: 3, defaultReps: '30-45 seconds', restSeconds: 30,
         benefits: ['Lower ab endurance', 'Hip flexor strength', 'Leg control'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Flutter%20Kick',
       },
       {
         id: 'windshield-wiper', name: 'Windshield Wiper', kanji: '拭掃', description: 'Lying leg rotation for obliques.', category: 'bodyweight',
@@ -2716,6 +3014,7 @@ export const exercises: Exercise[] = [
         tips: ['Arms wide for stability', 'Twist from core', 'Controlled movement'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 45,
         benefits: ['Oblique strength', 'Lower spine mobility', 'Advanced core control'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Windshield%20Wiper',
       },
       {
         id: 'dragon-flag', name: 'Dragon Flag', kanji: '龍旗', description: 'Advanced full body core leg raise.', category: 'bodyweight',
@@ -2725,6 +3024,7 @@ export const exercises: Exercise[] = [
         tips: ['Requires extreme core strength', 'Slow controlled descent', 'Progress from decline'],
         defaultSets: 3, defaultReps: '5-8', restSeconds: 90,
         benefits: ['Extreme core development', 'Full body tension', 'Lat and shoulder stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dragon%20Flag',
       },
       {
         id: 'standing-cable-rotation', name: 'Standing Cable Rotation', kanji: '立纜回旋', description: 'Rotational cable for oblique strength.', category: 'strength',
@@ -2734,6 +3034,7 @@ export const exercises: Exercise[] = [
         tips: ['Hips stable rotate from spine', 'Obliques control rotation', 'Smooth movement'],
         defaultSets: 3, defaultReps: '12-15 per side', restSeconds: 45,
         benefits: ['Rotational core strength', 'Oblique development', 'Athletic twisting power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Standing%20Cable%20Rotation',
       },
       {
         id: 'medicine-ball-slam', name: 'Medicine Ball Slam', kanji: '薬球叩', description: 'Full core power slam.', category: 'strength',
@@ -2743,6 +3044,7 @@ export const exercises: Exercise[] = [
         tips: ['Use legs and core together', 'Aggressive slam', 'Good conditioning'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 45,
         benefits: ['Core power', 'Full body conditioning', 'Explosive movement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Medicine%20Ball%20Slam',
       },
       {
         id: 'hanging-knee-raise', name: 'Hanging Knee Raise', kanji: '懸垂膝挙', description: 'Beginner hanging ab movement.', category: 'bodyweight',
@@ -2752,6 +3054,7 @@ export const exercises: Exercise[] = [
         tips: ['Control descent', 'Build grip strength', 'Progress to leg raises'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Lower ab development', 'Grip strength', 'Hip flexor endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Hanging%20Knee%20Raise',
       },
       {
         id: 'captains-chair-leg-raise', name: 'Captain\'s Chair Leg Raise', kanji: '艦長椅足挙', description: 'Vertical knee raise on dip station.', category: 'bodyweight',
@@ -2761,6 +3064,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t swing', 'Initiate from abs', 'Straight body throughout'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Lower ab targeting', 'Core stability', 'No grip fatigue'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Captains%20Chair%20Leg%20Raise',
       },
       {
         id: 'weighted-plank', name: 'Weighted Plank', kanji: '加重平板', description: 'Plank with added plate resistance.', category: 'strength',
@@ -2770,6 +3074,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t sag with added weight', 'Gradual weight increase', 'Core braced full hold'],
         defaultSets: 3, defaultReps: '20-45 seconds', restSeconds: 45,
         benefits: ['Progressive core overload', 'Enhanced stability', 'Spinal endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Weighted%20Plank',
       },
       {
         id: 'side-plank-hip-lift', name: 'Side Plank Hip Lift', kanji: '側平板臀挙', description: 'Dynamic side plank for oblique engagement.', category: 'bodyweight',
@@ -2779,6 +3084,7 @@ export const exercises: Exercise[] = [
         tips: ['Controlled dip', 'Don\'t rotate', 'Full range of motion'],
         defaultSets: 3, defaultReps: '10-12 per side', restSeconds: 30,
         benefits: ['Oblique strength', 'Hip stability', 'Core balance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Side%20Plank%20Hip%20Lift',
       },
 
   // ----- CARDIO (18) -----
@@ -2790,6 +3096,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t hold handrails', 'Look forward not down', 'Increase incline for intensity'],
         defaultSets: 3, defaultReps: '20-45 minutes', restSeconds: 0,
         benefits: ['Cardiovascular endurance', 'Calorie burn', 'Lower body endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Treadmill%20Run',
       },
       {
         id: 'outdoor-run', name: 'Outdoor Run', kanji: '屋外走', description: 'Natural running for cardiovascular fitness.', category: 'cardio',
@@ -2799,6 +3106,7 @@ export const exercises: Exercise[] = [
         tips: ['Land midfoot not heel', 'Arms at 90 degree swing', 'Progress distance gradually'],
         defaultSets: 3, defaultReps: '20-60 minutes', restSeconds: 0,
         benefits: ['Cardiovascular health', 'Lower body endurance', 'Mental clarity'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Outdoor%20Run',
       },
       {
         id: 'jump-rope', name: 'Jump Rope', kanji: '縄跳', description: 'Full body skipping cardio.', category: 'cardio',
@@ -2808,6 +3116,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly', 'Wrist motion not arm', 'Stay on balls of feet'],
         defaultSets: 3, defaultReps: '10-20 minutes', restSeconds: 0,
         benefits: ['Incredible calorie burn', 'Agility and coordination', 'Bone density'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Jump%20Rope',
       },
       {
         id: 'burpee', name: 'Burpee', kanji: '全蹲跳', description: 'Full body explosive cardio movement.', category: 'cardio',
@@ -2817,6 +3126,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly', 'Maintain pace', 'Modify by removing push-up'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 30,
         benefits: ['Full body conditioning', 'Cardiovascular endurance', 'Explosive power'],
+        imageUrl: 'https://wger.de/media/exercise-images/56/Burpee-1.png',
       },
       {
         id: 'jumping-jack', name: 'Jumping Jack', kanji: '跳躍', description: 'Classic whole-body cardio movement.', category: 'cardio',
@@ -2826,6 +3136,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly', 'Full range of motion', 'Warm-up staple'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 15,
         benefits: ['Cardiovascular warm-up', 'Coordination', 'Full body activation'],
+        imageUrl: 'https://wger.de/media/exercise-images/55/Jumping-jack-1.png',
       },
       {
         id: 'high-knees', name: 'High Knees', kanji: '高膝', description: 'High intensity running in place.', category: 'cardio',
@@ -2835,6 +3146,7 @@ export const exercises: Exercise[] = [
         tips: ['Land on balls of feet', 'Quick tempo', 'Torso upright'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 20,
         benefits: ['Cardio intensity', 'Hip flexor strength', 'Agility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=High%20Knees',
       },
       {
         id: 'battle-ropes', name: 'Battle Ropes', kanji: '戦縄', description: 'Intense wave exercises for conditioning.', category: 'cardio',
@@ -2844,6 +3156,7 @@ export const exercises: Exercise[] = [
         tips: ['Brace core whole time', 'Keep slight bend in knees', 'Arm movement from shoulders'],
         defaultSets: 3, defaultReps: '20-45 seconds', restSeconds: 30,
         benefits: ['High calorie burn', 'Shoulder endurance', 'Grip strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Battle%20Ropes',
       },
       {
         id: 'row-machine', name: 'Row Machine', kanji: '漕機', description: 'Full body cardiovascular rowing.', category: 'cardio',
@@ -2853,6 +3166,7 @@ export const exercises: Exercise[] = [
         tips: ['Power from legs not arms', 'Straight back', 'Don\'t round lower back'],
         defaultSets: 3, defaultReps: '15-30 minutes', restSeconds: 0,
         benefits: ['Full body conditioning', 'Cardiovascular endurance', 'Back and leg strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Row%20Machine',
       },
       {
         id: 'assault-bike', name: 'Assault Bike', kanji: '強襲自転車', description: 'Fan bike for high intensity cardio.', category: 'cardio',
@@ -2862,6 +3176,7 @@ export const exercises: Exercise[] = [
         tips: ['Push pull with arms', 'Legs constant pedal', 'Resistance increases with effort'],
         defaultSets: 3, defaultReps: '20-60 seconds', restSeconds: 30,
         benefits: ['Full body cardio', 'No impact on joints', 'Quick exhaustion'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Assault%20Bike',
       },
       {
         id: 'stair-climber', name: 'Stair Climber', kanji: '階段登', description: 'Stepping machine for lower body cardio.', category: 'cardio',
@@ -2871,6 +3186,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t lean forward on rails', 'Stride without bouncing', 'Good glute activation'],
         defaultSets: 3, defaultReps: '15-30 minutes', restSeconds: 0,
         benefits: ['Glute and quad endurance', 'Cardiovascular health', 'Calorie burn'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Stair%20Climber',
       },
       {
         id: 'hill-sprints', name: 'Hill Sprints', kanji: '坂走', description: 'Explosive uphill running intervals.', category: 'cardio',
@@ -2880,6 +3196,7 @@ export const exercises: Exercise[] = [
         tips: ['Lean into hill', 'Pump arms for power', 'Don\'t overstride'],
         defaultSets: 4, defaultReps: '30-60 seconds', restSeconds: 60,
         benefits: ['Extreme glute and hamstring power', 'Explosive sprint speed', 'Anaerobic conditioning'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Hill%20Sprints',
       },
       {
         id: 'lateral-shuffle', name: 'Lateral Shuffle', kanji: '側早足', description: 'Side to side agility cardio.', category: 'cardio',
@@ -2889,6 +3206,7 @@ export const exercises: Exercise[] = [
         tips: ['Stay low', 'Quick feet', 'Athletic position'],
         defaultSets: 3, defaultReps: '30 seconds', restSeconds: 20,
         benefits: ['Agility conditioning', 'Lateral movement speed', 'Lower body endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lateral%20Shuffle',
       },
       {
         id: 'sprint-intervals', name: 'Sprint Intervals', kanji: '全力間歇', description: 'Max intensity sprint repeat intervals.', category: 'cardio',
@@ -2898,6 +3216,7 @@ export const exercises: Exercise[] = [
         tips: ['Full recovery between sprints', 'Proper warm-up essential', 'Stretch after'],
         defaultSets: 4, defaultReps: '30-60 seconds', restSeconds: 120,
         benefits: ['Maximum cardiovascular improvement', 'Explosive speed', 'Metabolism boost'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Sprint%20Intervals',
       },
       {
         id: 'ski-erg', name: 'Ski Erg', kanji: '滑雪機', description: 'Nordic skiing machine for full body cardio.', category: 'cardio',
@@ -2907,6 +3226,7 @@ export const exercises: Exercise[] = [
         tips: ['Core engaged throughout', 'Full arm extension', 'Rhythmic motion'],
         defaultSets: 3, defaultReps: '15-30 minutes', restSeconds: 0,
         benefits: ['Upper body endurance', 'Full body conditioning', 'Low impact cardio'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ski%20Erg',
       },
       {
         id: 'fan-bike-sprints', name: 'Fan Bike Sprints', kanji: '扇車全力', description: 'Max effort fan bike intervals.', category: 'cardio',
@@ -2916,6 +3236,7 @@ export const exercises: Exercise[] = [
         tips: ['Stand for power surges', 'Push pull handlebar', 'Breathe through effort'],
         defaultSets: 4, defaultReps: '15-30 seconds', restSeconds: 45,
         benefits: ['Maximum calorie burn', 'Anaerobic capacity', 'Mental toughness'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Fan%20Bike%20Sprints',
       },
       {
         id: 'bear-crawl', name: 'Bear Crawl', kanji: '熊這', description: 'Full body crawling for cardio.', category: 'cardio',
@@ -2925,6 +3246,7 @@ export const exercises: Exercise[] = [
         tips: ['Hips level', 'Don\'t let knees drag', 'Great total body'],
         defaultSets: 3, defaultReps: '20-30 yards', restSeconds: 30,
         benefits: ['Full body endurance', 'Mobility and coordination', 'Core and shoulder stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bear%20Crawl',
       },
       {
         id: 'suicide-sprints', name: 'Suicide Sprints', kanji: '自殺走', description: 'Shuttle runs for agility and cardio.', category: 'cardio',
@@ -2934,6 +3256,7 @@ export const exercises: Exercise[] = [
         tips: ['Bend to touch line', 'Push off explosively', 'Track rest intervals'],
         defaultSets: 4, defaultReps: '5-10 minutes total', restSeconds: 0,
         benefits: ['Agility and speed', 'Cardiovascular power', 'Quick direction change'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Suicide%20Sprints',
       },
       {
         id: 'box-step-ups-cardio', name: 'Box Step Ups Cardio', kanji: '箱踏台', description: 'Step ups for cardio pace leg endurance.', category: 'cardio',
@@ -2943,6 +3266,7 @@ export const exercises: Exercise[] = [
         tips: ['Step all way up', 'Quick step up step down', 'Controlled landing'],
         defaultSets: 3, defaultReps: '15-20 each side', restSeconds: 20,
         benefits: ['Cardio endurance', 'Glute and leg conditioning', 'Balance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Box%20Step%20Ups%20Cardio',
       },
 
   // ----- FULL BODY (24) -----
@@ -2954,6 +3278,7 @@ export const exercises: Exercise[] = [
         tips: ['Hip drive explosive', 'Catch with soft knees', 'Press immediately'],
         defaultSets: 4, defaultReps: '5-8', restSeconds: 120,
         benefits: ['Full body power', 'Explosive hip drive', 'Overhead stability'],
+        imageUrl: 'https://wger.de/media/exercise-images/59/Clean-and-press-1.png',
       },
       {
         id: 'power-clean', name: 'Power Clean', kanji: '力掃', description: 'Explosive pull from floor to shoulders.', category: 'strength',
@@ -2963,6 +3288,7 @@ export const exercises: Exercise[] = [
         tips: ['Jump extension', 'Catch with elbows high', 'Full hip extension'],
         defaultSets: 4, defaultReps: '5-8', restSeconds: 120,
         benefits: ['Explosive power', 'Full body coordination', 'Olympic lifting base'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Power%20Clean',
       },
       {
         id: 'snatch', name: 'Snatch', kanji: '挙上', description: 'Olympic lift from floor to overhead in one motion.', category: 'strength',
@@ -2972,6 +3298,7 @@ export const exercises: Exercise[] = [
         tips: ['Requires extensive practice', 'Start with technique bar', 'Mobility essential'],
         defaultSets: 5, defaultReps: '3-5', restSeconds: 180,
         benefits: ['Peak explosive power', 'Full body coordination', 'Athletic performance'],
+        imageUrl: 'https://wger.de/media/exercise-images/60/Snatch-1.png',
       },
       {
         id: 'clean-and-jerk', name: 'Clean and Jerk', kanji: '押上跳', description: 'Two-motion Olympic lift.', category: 'strength',
@@ -2981,6 +3308,7 @@ export const exercises: Exercise[] = [
         tips: ['Dip and drive straight', 'Lockout overhead', 'Stable receiving position'],
         defaultSets: 5, defaultReps: '3-5', restSeconds: 180,
         benefits: ['Maximum power output', 'Full body strength', 'Athletic explosion'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Clean%20And%20Jerk',
       },
       {
         id: 'thruster', name: 'Thruster', kanji: '押蹲', description: 'Front squat to press overhead combo.', category: 'strength',
@@ -2990,6 +3318,7 @@ export const exercises: Exercise[] = [
         tips: ['Use squat momentum', 'Tight core', 'Full depth squat'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Full body conditioning', 'CrossFit staple', 'Leg and shoulder power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Thruster',
       },
       {
         id: 'dumbbell-thruster', name: 'Dumbbell Thruster', kanji: '片手押蹲', description: 'Dumbbell version of squat press.', category: 'strength',
@@ -2999,6 +3328,7 @@ export const exercises: Exercise[] = [
         tips: ['Dumbbells stay at shoulders', 'Explosive drive', 'Core braced'],
         defaultSets: 4, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Full body conditioning', 'Unilateral stability', 'Quad and shoulder strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dumbbell%20Thruster',
       },
       {
         id: 'burpee-box-jump', name: 'Burpee Box Jump', kanji: '全蹲跳箱', description: 'Burpee with box jump finish.', category: 'strength',
@@ -3008,6 +3338,7 @@ export const exercises: Exercise[] = [
         tips: ['Step down safely', 'Not jumping off box', 'Land softly on box'],
         defaultSets: 3, defaultReps: '8-10', restSeconds: 60,
         benefits: ['Full body explosive power', 'Cardiovascular conditioning', 'Leg power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Burpee%20Box%20Jump',
       },
       {
         id: 'tire-flip', name: 'Tire Flip', kanji: '重輪反', description: 'Large tire flipping for full body power.', category: 'strength',
@@ -3017,6 +3348,7 @@ export const exercises: Exercise[] = [
         tips: ['Use legs not back', 'Explosive hip drive', 'Full contact palms'],
         defaultSets: 4, defaultReps: '5-8 flips', restSeconds: 90,
         benefits: ['Full body strength', 'Explosive power', 'Mental toughness'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Tire%20Flip',
       },
       {
         id: 'sledgehammer-strike', name: 'Sledgehammer Strike', kanji: '大槌打', description: 'Swing sledgehammer on tire.', category: 'strength',
@@ -3026,6 +3358,7 @@ export const exercises: Exercise[] = [
         tips: ['Core rotation for power', 'Wrist control', 'Sustained interval'],
         defaultSets: 3, defaultReps: '10-15 each side', restSeconds: 60,
         benefits: ['Full body power', 'Cardiovascular conditioning', 'Grip strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Sledgehammer%20Strike',
       },
       {
         id: 'farmer-walk', name: 'Farmer Walk', kanji: '農走', description: 'Carrying heavy weights over distance.', category: 'strength',
@@ -3035,6 +3368,7 @@ export const exercises: Exercise[] = [
         tips: ['Heavy as possible', 'Walk straight not leaning', 'Don\'t exceed grip'],
         defaultSets: 3, defaultReps: '30-50 yards', restSeconds: 60,
         benefits: ['Grip strength', 'Total body endurance', 'Core stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Farmer%20Walk',
       },
       {
         id: 'suitcase-carry', name: 'Suitcase Carry', kanji: '片手農走', description: 'Single side weighted carry.', category: 'strength',
@@ -3044,6 +3378,7 @@ export const exercises: Exercise[] = [
         tips: ['Weight in one hand only', 'Core fights lean', 'Equal distance each side'],
         defaultSets: 3, defaultReps: '30 yards each side', restSeconds: 60,
         benefits: ['Anti-lateral flexion core', 'Grip strength', 'Shoulder stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Suitcase%20Carry',
       },
       {
         id: 'rack-carry', name: 'Rack Carry', kanji: '担運', description: 'Front loaded carry for core.', category: 'strength',
@@ -3053,6 +3388,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows high for rack', 'Upright posture', 'Brace core'],
         defaultSets: 3, defaultReps: '30 yards', restSeconds: 60,
         benefits: ['Full body tension', 'Core anti-extension', 'Leg and trunk endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Rack%20Carry',
       },
       {
         id: 'overhead-carry', name: 'Overhead Carry', kanji: '頭上運', description: 'Overhead loaded walking for stability.', category: 'strength',
@@ -3062,6 +3398,7 @@ export const exercises: Exercise[] = [
         tips: ['Lock elbows', 'Don\'t walk leaning', 'Breathe steady'],
         defaultSets: 3, defaultReps: '20-30 yards', restSeconds: 60,
         benefits: ['Overhead stability', 'Core strength', 'Shoulder endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Overhead%20Carry',
       },
       {
         id: 'zercher-carry', name: 'Zercher Carry', kanji: '腕曲運', description: 'Zercher hold loaded carry.', category: 'strength',
@@ -3071,6 +3408,7 @@ export const exercises: Exercise[] = [
         tips: ['Pad crook of elbows', 'Upright posture', 'Core engaged'],
         defaultSets: 3, defaultReps: '20-30 yards', restSeconds: 60,
         benefits: ['Full body conditioning', 'Core strength', 'Bicep endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Zercher%20Carry',
       },
       {
         id: 'human-flag', name: 'Human Flag', kanji: '人旗', description: 'Advanced full body isometric hold on pole.', category: 'bodyweight',
@@ -3080,6 +3418,7 @@ export const exercises: Exercise[] = [
         tips: ['Extreme upper body strength', 'Practice with supports', 'Progressive holds'],
         defaultSets: 3, defaultReps: '5-15 seconds', restSeconds: 120,
         benefits: ['Extreme full body strength', 'Shoulder stability', 'Impressive skill'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Human%20Flag',
       },
       {
         id: 'muscle-up', name: 'Muscle Up', kanji: '筋上', description: 'Transition from pull-up to dip on rings or bar.', category: 'bodyweight',
@@ -3089,6 +3428,7 @@ export const exercises: Exercise[] = [
         tips: ['Requires strong pull-up', 'False grip for rings', 'Momentum from kip'],
         defaultSets: 4, defaultReps: '5-8', restSeconds: 90,
         benefits: ['Extreme upper body strength', 'Pull and push combo', 'Transition skill'],
+        imageUrl: 'https://wger.de/media/exercise-images/68/Muscle-up-1.png',
       },
       {
         id: 'bar-muscle-up', name: 'Bar Muscle Up', kanji: '棒筋上', description: 'Bar version of muscle-up.', category: 'bodyweight',
@@ -3098,6 +3438,7 @@ export const exercises: Exercise[] = [
         tips: ['Requires high pull-up', 'Kip timing critical', 'Wrist roll aggressive'],
         defaultSets: 4, defaultReps: '3-6', restSeconds: 90,
         benefits: ['Upper body pulling pushing power', 'Full body coordination', 'Gymnastic skill'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bar%20Muscle%20Up',
       },
       {
         id: 'ring-muscle-up', name: 'Ring Muscle Up', kanji: '輪筋上', description: 'Ring version of muscle-up.', category: 'bodyweight',
@@ -3107,6 +3448,7 @@ export const exercises: Exercise[] = [
         tips: ['False grip essential', 'Slow controlled transition', 'Strict before kipping'],
         defaultSets: 4, defaultReps: '3-6', restSeconds: 90,
         benefits: ['Peak upper body strength', 'Full body control', 'Advanced gymnastic skill'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ring%20Muscle%20Up',
       },
       {
         id: 'get-up-turkish', name: 'Turkish Get Up', kanji: '土起', description: 'Full body get-up from lying to standing with weight.', category: 'strength',
@@ -3116,6 +3458,7 @@ export const exercises: Exercise[] = [
         tips: ['Eyes on kettlebell always', 'Slow deliberate steps', 'No jerky movements'],
         defaultSets: 3, defaultReps: '3-5 each side', restSeconds: 90,
         benefits: ['Full body stability', 'Overhead mobility', 'Shoulder and core coordination'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Get%20Up%20Turkish',
       },
       {
         id: 'devils-press', name: 'Devil\'s Press', kanji: '魔押', description: 'Dumbbell burpee with clean and press.', category: 'strength',
@@ -3125,6 +3468,7 @@ export const exercises: Exercise[] = [
         tips: ['Explosive movement', 'Cardiovascular demand', 'Full body intensity'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Extreme full body conditioning', 'Power endurance', 'Calorie burn'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Devils%20Press',
       },
       {
         id: 'wall-ball', name: 'Wall Ball', kanji: '壁球', description: 'Squat and throw ball to target.', category: 'strength',
@@ -3134,6 +3478,7 @@ export const exercises: Exercise[] = [
         tips: ['Squat depth full', 'Ball hits target height', 'Catch and go'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Full body coordination', 'Leg and shoulder power', 'Cardiovascular conditioning'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Wall%20Ball',
       },
       {
         id: 'sled-push', name: 'Sled Push', kanji: '橇押', description: 'Pushing weighted sled for conditioning.', category: 'strength',
@@ -3143,6 +3488,7 @@ export const exercises: Exercise[] = [
         tips: ['Drive through whole foot', 'Lean body drive', 'Don\'t round back'],
         defaultSets: 3, defaultReps: '20-40 yards', restSeconds: 60,
         benefits: ['Full body strength endurance', 'Leg power', 'Low impact conditioning'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Sled%20Push',
       },
       {
         id: 'sled-pull', name: 'Sled Pull', kanji: '橇引', description: 'Pulling weighted sled for posterior chain.', category: 'strength',
@@ -3152,6 +3498,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t round lower back', 'Build weight gradually', 'Good for glutes'],
         defaultSets: 3, defaultReps: '20-40 yards', restSeconds: 60,
         benefits: ['Posterior chain strength', 'Leg power', 'Low impact resistance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Sled%20Pull',
       },
       {
         id: 'goblet-squat-clean', name: 'Goblet Squat Clean', kanji: '杯掃', description: 'Dumbbell clean into front squat combo.', category: 'strength',
@@ -3161,6 +3508,7 @@ export const exercises: Exercise[] = [
         tips: ['Hinge at hips', 'Explosive clean', 'Full squat depth'],
         defaultSets: 3, defaultReps: '8-10', restSeconds: 60,
         benefits: ['Full body power', 'Squat strength', 'Coordination'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Goblet%20Squat%20Clean',
       },
 
   // ----- CALISTHENICS (30) -----
@@ -3172,6 +3520,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows 45 degrees', 'Brace core', 'Full range of motion'],
         defaultSets: 3, defaultReps: '10-20', restSeconds: 45,
         benefits: ['Chest development', 'Push endurance', 'Core stability'],
+        imageUrl: 'https://wger.de/media/exercise-images/9/Push-up-1.png',
       },
       {
         id: 'wide-push-up', name: 'Wide Push Up', kanji: '広腕立伏', description: 'Chest emphasis push-up with wider hands.', category: 'calisthenics',
@@ -3181,6 +3530,7 @@ export const exercises: Exercise[] = [
         tips: ['Emphasis on chest', 'Don\'t flare elbows excessively', 'Full chest stretch'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Chest stretch and contraction', 'Shoulder health', 'Pec development'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Wide%20Push%20Up',
       },
       {
         id: 'diamond-push-up', name: 'Diamond Push Up', kanji: '菱形腕立伏', description: 'Triceps focus close grip push-up.', category: 'calisthenics',
@@ -3190,6 +3540,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbows stay tucked', 'Full range', 'Triceps burn'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 45,
         benefits: ['Tricep hypertrophy', 'Inner chest development', 'Arm strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Diamond%20Push%20Up',
       },
       {
         id: 'archer-push-up', name: 'Archer Push Up', kanji: '弓手腕立伏', description: 'Advanced unilateral push-up variation.', category: 'calisthenics',
@@ -3199,6 +3550,7 @@ export const exercises: Exercise[] = [
         tips: ['Requires strong base', 'Dynamic movement', 'Great for strength'],
         defaultSets: 3, defaultReps: '5-8 each side', restSeconds: 60,
         benefits: ['Unilateral chest strength', 'Shoulder stability', 'Calisthenic skill'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Archer%20Push%20Up',
       },
       {
         id: 'pike-push-up', name: 'Pike Push Up', kanji: '山型腕立伏', description: 'Hip-up push-up for shoulder emphasis.', category: 'calisthenics',
@@ -3208,6 +3560,7 @@ export const exercises: Exercise[] = [
         tips: ['Hips high throughout', 'Bent knee if needed', 'Builds to handstand push-up'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 45,
         benefits: ['Shoulder strength', 'Overhead press prep', 'Upper body conditioning'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Pike%20Push%20Up',
       },
       {
         id: 'handstand-push-up', name: 'Handstand Push Up', kanji: '倒立腕立伏', description: 'Advanced inverted pressing.', category: 'calisthenics',
@@ -3217,6 +3570,7 @@ export const exercises: Exercise[] = [
         tips: ['Wall for support', 'Controlled descent', 'Scapular engagement'],
         defaultSets: 3, defaultReps: '5-10', restSeconds: 90,
         benefits: ['Extreme shoulder strength', 'Overhead press power', 'Balance and control'],
+        imageUrl: 'https://wger.de/media/exercise-images/66/Handstand-push-up-1.png',
       },
       {
         id: 'pull-up', name: 'Pull Up', kanji: '懸垂', description: 'Classic vertical pull bodyweight exercise.', category: 'calisthenics',
@@ -3226,6 +3580,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t kip', 'Engage lats', 'Full range of motion'],
         defaultSets: 3, defaultReps: '8-15', restSeconds: 60,
         benefits: ['Back width and strength', 'Bicep development', 'Grip strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Pull%20Up',
       },
       {
         id: 'chin-up', name: 'Chin Up', kanji: '順手懸垂', description: 'Underhand grip pull for bicep emphasis.', category: 'calisthenics',
@@ -3235,6 +3590,7 @@ export const exercises: Exercise[] = [
         tips: ['Underhand target biceps', 'Full extension', 'Drive elbows down'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Bicep development', 'Back thickness', 'Arm strength'],
+        imageUrl: 'https://wger.de/media/exercise-images/13/Chin-up-1.png',
       },
       {
         id: 'wide-grip-pull-up', name: 'Wide Grip Pull Up', kanji: '広懸垂', description: 'Back width emphasis pull variation.', category: 'calisthenics',
@@ -3244,6 +3600,7 @@ export const exercises: Exercise[] = [
         tips: ['Wider grip more lat engagement', 'Don\'t inhibit range', 'Full pull'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Lat width', 'Upper back development', 'V-taper'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Wide%20Grip%20Pull%20Up',
       },
       {
         id: 'commando-pull-up', name: 'Commando Pull Up', kanji: '懸垂裏手', description: 'Side grip pull-up hitting brachialis.', category: 'calisthenics',
@@ -3253,6 +3610,7 @@ export const exercises: Exercise[] = [
         tips: ['Find neutral grip', 'Pull to chest', 'Great for brachialis'],
         defaultSets: 3, defaultReps: '8-10 each side', restSeconds: 60,
         benefits: ['Brachialis peak development', 'Unilateral back work', 'Forearm strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Commando%20Pull%20Up',
       },
       {
         id: 'muscle-up-practice', name: 'Muscle Up Practice', kanji: '筋上練習', description: 'Progressive muscle up movement drill.', category: 'calisthenics',
@@ -3262,6 +3620,7 @@ export const exercises: Exercise[] = [
         tips: ['Use bands for assist', 'Practice transition', 'Progressive overload'],
         defaultSets: 4, defaultReps: '3-5', restSeconds: 90,
         benefits: ['Full body strength', 'Skill development', 'Upper body power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Muscle%20Up%20Practice',
       },
       {
         id: 'dip', name: 'Dip', kanji: '付立', description: 'Triceps and lower chest dip movement.', category: 'calisthenics',
@@ -3271,6 +3630,7 @@ export const exercises: Exercise[] = [
         tips: ['Lean forward for chest', 'Upright for triceps', 'Full lockout'],
         defaultSets: 3, defaultReps: '8-15', restSeconds: 60,
         benefits: ['Tricep hypertrophy', 'Lower chest development', 'Upper body strength'],
+        imageUrl: 'https://wger.de/media/exercise-images/65/Dip-1.png',
       },
       {
         id: 'ring-dip', name: 'Ring Dip', kanji: '輪付立', description: 'Dip on rings for greater instability.', category: 'calisthenics',
@@ -3280,6 +3640,7 @@ export const exercises: Exercise[] = [
         tips: ['Rings not flared', 'Turn out at top for advanced', 'Stability challenge'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Unstable pressing strength', 'Shoulder health', 'Upper body control'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ring%20Dip',
       },
       {
         id: 'pistol-squat', name: 'Pistol Squat', kanji: '拳銃蹲', description: 'Single leg bodyweight squat.', category: 'calisthenics',
@@ -3289,6 +3650,7 @@ export const exercises: Exercise[] = [
         tips: ['Heel down', 'Use support initially', 'Progressive depth'],
         defaultSets: 3, defaultReps: '5-10 each side', restSeconds: 90,
         benefits: ['Unilateral leg strength', 'Balance and mobility', 'Quad development'],
+        imageUrl: 'https://wger.de/media/exercise-images/67/Pistol-squat-1.png',
       },
       {
         id: 'shrimp-squat', name: 'Shrimp Squat', kanji: '海老蹲', description: 'Advanced single leg squat with rear foot hold.', category: 'calisthenics',
@@ -3298,6 +3660,7 @@ export const exercises: Exercise[] = [
         tips: ['Balance assistance optional', 'Requires ankle mobility', 'Quad dominant'],
         defaultSets: 3, defaultReps: '5-8 each side', restSeconds: 90,
         benefits: ['Deep quad development', 'Hip flexor stretch', 'Single leg power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Shrimp%20Squat',
       },
       {
         id: 'glute-ham-raise-floor', name: 'Floor Glute Ham Raise', kanji: '床臀筋起', description: 'Bodyweight hamstring curl on floor.', category: 'calisthenics',
@@ -3307,6 +3670,7 @@ export const exercises: Exercise[] = [
         tips: ['Anchored feet', 'Controlled descent', 'Posterior chain'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 45,
         benefits: ['Hamstring strength', 'Knee stability', 'Posterior chain'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Glute%20Ham%20Raise%20Floor',
       },
       {
         id: 'natural-glute-ham-raise', name: 'Natural Glute Ham Raise', kanji: '自然臀筋起', description: 'Bodyweight hamstring curl variation.', category: 'calisthenics',
@@ -3316,6 +3680,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t use lower back', 'Progressive range', 'Posterior chain'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Peak hamstring development', 'Glute activation', 'Lower back health'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Natural%20Glute%20Ham%20Raise',
       },
       {
         id: 'bridge', name: 'Bridge', kanji: '橋', description: 'Backward bending bodyweight mobility.', category: 'calisthenics',
@@ -3325,6 +3690,7 @@ export const exercises: Exercise[] = [
         tips: ['Warm up spine', 'Don\'t strain neck', 'Open shoulders'],
         defaultSets: 3, defaultReps: '20-45 seconds hold', restSeconds: 60,
         benefits: ['Spine mobility', 'Shoulder opening', 'Glute activation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bridge',
       },
       {
         id: 'crab-walk', name: 'Crab Walk', kanji: '蟹歩', description: 'Reverse table walk for endurance.', category: 'calisthenics',
@@ -3334,6 +3700,7 @@ export const exercises: Exercise[] = [
         tips: ['Hips elevated', 'Keep core tight', 'Opposite arm/leg'],
         defaultSets: 3, defaultReps: '20-30 yards', restSeconds: 30,
         benefits: ['Tricep endurance', 'Coordination', 'Hip mobility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Crab%20Walk',
       },
       {
         id: 'lizard-crawl', name: 'Lizard Crawl', kanji: '蜥蜴爬', description: 'Dynamic all-fours crawls for mobility.', category: 'calisthenics',
@@ -3343,6 +3710,7 @@ export const exercises: Exercise[] = [
         tips: ['Hips low', 'Long strides', 'Dynamic movement'],
         defaultSets: 3, defaultReps: '10-20 yards', restSeconds: 30,
         benefits: ['Full body mobility', 'Hip opening', 'Shoulder stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lizard%20Crawl',
       },
       {
         id: 'back-lever', name: 'Back Lever', kanji: '後水平', description: 'Straight body horizontal hold below bar.', category: 'calisthenics',
@@ -3352,6 +3720,7 @@ export const exercises: Exercise[] = [
         tips: ['Requires strong scapular', 'Progressive from tuck', 'Don\'t arch'],
         defaultSets: 3, defaultReps: '10-30 seconds', restSeconds: 90,
         benefits: ['Extreme back and core strength', 'Shoulder stability', 'Calisthenics mastery'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Back%20Lever',
       },
       {
         id: 'front-lever', name: 'Front Lever', kanji: '前水平', description: 'Straight body horizontal hold facing up.', category: 'calisthenics',
@@ -3361,6 +3730,7 @@ export const exercises: Exercise[] = [
         tips: ['Impossibly hard', 'Progressive tuck to full', 'Lat dominant'],
         defaultSets: 3, defaultReps: '5-20 seconds', restSeconds: 120,
         benefits: ['Peak lat strength', 'Core tension', 'Full body control'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Front%20Lever',
       },
       {
         id: 'planche', name: 'Planche', kanji: '前水平腕立', description: 'Horizontal body hold on hands without legs.', category: 'calisthenics',
@@ -3370,6 +3740,7 @@ export const exercises: Exercise[] = [
         tips: ['Progressive lean', 'Wrist prep essential', 'Requires extreme strength'],
         defaultSets: 3, defaultReps: '5-15 seconds', restSeconds: 120,
         benefits: ['Extreme shoulder strength', 'Wrist stability', 'Full body tension'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Planche',
       },
       {
         id: 'v-sit-planche', name: 'V-Sit Planche', kanji: 'V字水平', description: 'Advanced V body hold on hands.', category: 'calisthenics',
@@ -3379,6 +3750,7 @@ export const exercises: Exercise[] = [
         tips: ['Requires extreme core', 'Press down through palms', 'Hip flexor flexibility'],
         defaultSets: 3, defaultReps: '5-10 seconds', restSeconds: 120,
         benefits: ['Extreme core and shoulder strength', 'Full body mastery', 'Balance control'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=V%20Sit%20Planche',
       },
       {
         id: 'handstand', name: 'Handstand', kanji: '倒立', description: 'Vertical bodyweight hold on hands.', category: 'calisthenics',
@@ -3388,6 +3760,7 @@ export const exercises: Exercise[] = [
         tips: ['Wall for practice', 'Core tight', 'Not arched'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 60,
         benefits: ['Shoulder stability', 'Balance and control', 'Full body posture'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Handstand',
       },
       {
         id: 'handstand-walk', name: 'Handstand Walk', kanji: '倒立歩行', description: 'Walking on hands for control and strength.', category: 'calisthenics',
@@ -3397,6 +3770,7 @@ export const exercises: Exercise[] = [
         tips: ['Start against wall', 'Practice balance', 'Shoulder endurance'],
         defaultSets: 3, defaultReps: '10-30 yards', restSeconds: 60,
         benefits: ['Shoulder endurance', 'Balance control', 'Impressive skill'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Handstand%20Walk',
       },
       {
         id: 'tuck-jump', name: 'Tuck Jump', kanji: '抱膝跳', description: 'Explosive jumping squat for power.', category: 'calisthenics',
@@ -3406,6 +3780,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly', 'Explosive tuck', 'Absorb landing'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Explosive leg power', 'Plyometric ability', 'Vertical jump improvement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Tuck%20Jump',
       },
       {
         id: 'burpee-pull-up', name: 'Burpee Pull Up', kanji: '全蹲懸垂', description: 'Burpee with pull-up finishing combo.', category: 'calisthenics',
@@ -3415,6 +3790,7 @@ export const exercises: Exercise[] = [
         tips: ['Flow not pausing', 'Breathe deeply', 'Full extension pull-up'],
         defaultSets: 3, defaultReps: '8-10', restSeconds: 60,
         benefits: ['Full body conditioning', 'Back and chest endurance', 'Coordination'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Burpee%20Pull%20Up',
       },
       {
         id: 'decline-push-up', name: 'Decline Push Up', kanji: '下傾腕立伏', description: 'Feet elevated push-up for upper chest.', category: 'calisthenics',
@@ -3424,6 +3800,7 @@ export const exercises: Exercise[] = [
         tips: ['Higher box more difficulty', 'Upper chest emphasis', 'Full range'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 45,
         benefits: ['Upper chest development', 'Shoulder versatility', 'Progressive overload'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Decline%20Push%20Up',
       },
       {
         id: 'pseudo-planche-push-up', name: 'Pseudo Planche Push Up', kanji: '偽水平腕立伏', description: 'Forward lean push-up for serratus and shoulder strength.', category: 'calisthenics',
@@ -3433,6 +3810,7 @@ export const exercises: Exercise[] = [
         tips: ['Body leans forward', 'Wrist mobility needed', 'Progressive lean'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Serratus development', 'Front delt strength', 'Planche preparation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Pseudo%20Planche%20Push%20Up',
       },
 
   // ----- STRETCHING (31) -----
@@ -3444,6 +3822,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t bounce', 'Bend knee if needed', 'Focus on relaxed breath'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 15,
         benefits: ['Improved hamstring flexibility', 'Reduced injury risk', 'Lower back relief'],
+        imageUrl: 'https://wger.de/media/exercise-images/69/Hamstring-stretch-1.png',
       },
       {
         id: 'quad-stretch', name: 'Quad Stretch', kanji: '腿前伸', description: 'Standing quadricep stretch.', category: 'stretching',
@@ -3453,6 +3832,7 @@ export const exercises: Exercise[] = [
         tips: ['Knees touching', 'Don\'t pull too hard', 'Hold for deep stretch'],
         defaultSets: 3, defaultReps: '30-60 seconds each', restSeconds: 15,
         benefits: ['Quad flexibility', 'Hip flexor opening', 'Better squat depth'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Quad%20Stretch',
       },
       {
         id: 'hip-flexor-stretch', name: 'Hip Flexor Stretch', kanji: '股関節伸', description: 'Kneeling lunge for hip flexors.', category: 'stretching',
@@ -3462,6 +3842,7 @@ export const exercises: Exercise[] = [
         tips: ['Rear glute squeezed', 'Upright posture', 'Deep breathing'],
         defaultSets: 3, defaultReps: '30-60 seconds each', restSeconds: 15,
         benefits: ['Hip mobility', 'Better squat depth', 'Posture improvement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Hip%20Flexor%20Stretch',
       },
       {
         id: 'glute-stretch', name: 'Glute Stretch', kanji: '臀伸', description: 'Figure four seated glute stretch.', category: 'stretching',
@@ -3471,6 +3852,7 @@ export const exercises: Exercise[] = [
         tips: ['Foot flexed', 'Gentle pull', 'Breathe through'],
         defaultSets: 3, defaultReps: '30-60 seconds each', restSeconds: 15,
         benefits: ['Glute flexibility', 'Piriformis relief', 'Lower back comfort'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Glute%20Stretch',
       },
       {
         id: 'pigeon-pose', name: 'Pigeon Pose', kanji: '鳩姿勢', description: 'Kneeling hip opener stretch.', category: 'stretching',
@@ -3480,6 +3862,7 @@ export const exercises: Exercise[] = [
         tips: ['Hips square', 'Front glute stretched', 'Deep breaths'],
         defaultSets: 3, defaultReps: '30-60 seconds each', restSeconds: 15,
         benefits: ['Hip mobility', 'Glute flexibility', 'Lower back release'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Pigeon%20Pose',
       },
       {
         id: 'cat-cow', name: 'Cat Cow', kanji: '猫牛', description: 'Spine mobility flow movement.', category: 'stretching',
@@ -3489,6 +3872,7 @@ export const exercises: Exercise[] = [
         tips: ['Breathe with movement', 'Full spine wave', 'Relaxed'],
         defaultSets: 3, defaultReps: '10-15 cycles', restSeconds: 15,
         benefits: ['Spine mobility', 'Lower back relief', 'Posture improvement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cat%20Cow',
       },
       {
         id: 'childs-pose', name: 'Child\'s Pose', kanji: '子姿', description: 'Restorative hip and back stretch.', category: 'stretching',
@@ -3498,6 +3882,7 @@ export const exercises: Exercise[] = [
         tips: ['Knees wide if needed', 'Relaxed breathing', 'Rest any duration'],
         defaultSets: 3, defaultReps: '60 seconds', restSeconds: 0,
         benefits: ['Full body relaxation', 'Lower back stretch', 'Hip opening'],
+        imageUrl: 'https://wger.de/media/exercise-images/71/Childs-pose-1.png',
       },
       {
         id: 'downward-dog', name: 'Downward Dog', kanji: '下向犬', description: 'Inverted V stretch for posterior chain.', category: 'stretching',
@@ -3507,6 +3892,7 @@ export const exercises: Exercise[] = [
         tips: ['Pedal legs', 'Relax neck', 'Full full body stretch'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 15,
         benefits: ['Full body flexibility', 'Back health', 'Arm strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Downward%20Dog',
       },
       {
         id: 'forward-fold', name: 'Forward Fold', kanji: '前屈', description: 'Standing forward bend for hamstrings and back.', category: 'stretching',
@@ -3516,6 +3902,7 @@ export const exercises: Exercise[] = [
         tips: ['Bend knees if needed', 'Let head hang', 'Gentle release'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 15,
         benefits: ['Hamstring flexibility', 'Back release', 'Calm mind'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Forward%20Fold',
       },
       {
         id: 'butterfly-stretch', name: 'Butterfly Stretch', kanji: '蝴蝶伸', description: 'Seated groin and hip opener.', category: 'stretching',
@@ -3525,6 +3912,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t bounce knees', 'Elastic band on spine', 'Variation lean forward'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 15,
         benefits: ['Groin flexibility', 'Hip mobility', 'Adductor health'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Butterfly%20Stretch',
       },
       {
         id: 'shoulder-stretch', name: 'Shoulder Stretch', kanji: '肩伸', description: 'Cross body shoulder stretch.', category: 'stretching',
@@ -3534,6 +3922,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep shoulder down', 'Gentle pull', 'Relax trapezius'],
         defaultSets: 3, defaultReps: '30 seconds each', restSeconds: 15,
         benefits: ['Shoulder flexibility', 'Upper back release', 'Better posture'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Shoulder%20Stretch',
       },
       {
         id: 'tricep-stretch', name: 'Tricep Stretch', kanji: '上腕三頭筋伸', description: 'Overhead tricep stretch.', category: 'stretching',
@@ -3543,6 +3932,7 @@ export const exercises: Exercise[] = [
         tips: ['Elbow pointed up', 'Gentle pressure', 'Don\'t strain neck'],
         defaultSets: 3, defaultReps: '30 seconds each', restSeconds: 15,
         benefits: ['Tricep flexibility', 'Shoulder mobility', 'Arm recovery'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Tricep%20Stretch',
       },
       {
         id: 'chest-stretch', name: 'Chest Stretch', kanji: '胸伸', description: 'Doorway chest opener stretch.', category: 'stretching',
@@ -3552,6 +3942,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t rotate forward', 'Deep chest opening', 'Breathe deep'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 15,
         benefits: ['Pec flexibility', 'Posture improvement', 'Shoulder health'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Chest%20Stretch',
       },
       {
         id: 'lat-stretch', name: 'Lat Stretch', kanji: '広背筋伸', description: 'Side bend latissimus stretch.', category: 'stretching',
@@ -3561,6 +3952,7 @@ export const exercises: Exercise[] = [
         tips: ['Hips stable', 'Don\'t rotate', 'Maximum side bend'],
         defaultSets: 3, defaultReps: '30 seconds each', restSeconds: 15,
         benefits: ['Lat flexibility', 'Shoulder range of motion', 'Upper back relief'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lat%20Stretch',
       },
       {
         id: 'cobra-pose', name: 'Cobra Pose', kanji: '蛇姿勢', description: 'Back extension stretch.', category: 'stretching',
@@ -3570,6 +3962,7 @@ export const exercises: Exercise[] = [
         tips: ['Initiate with back muscles', 'Not just arms', 'Keep hips on floor'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 15,
         benefits: ['Spine mobility', 'Lower back relief', 'Chest opening'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cobra%20Pose',
       },
       {
         id: 'happy-baby', name: 'Happy Baby', kanji: '嬉赤子', description: 'Supine hip opener stretch.', category: 'stretching',
@@ -3579,6 +3972,7 @@ export const exercises: Exercise[] = [
         tips: ['Knees open wide', 'Rock gently', 'Relax fully'],
         defaultSets: 3, defaultReps: '60 seconds', restSeconds: 15,
         benefits: ['Hip opening', 'Groin flexibility', 'Lower back release'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Happy%20Baby',
       },
       {
         id: 'seated-forward-fold', name: 'Seated Forward Fold', kanji: '坐前屈', description: 'Seated hamstring and back stretch.', category: 'stretching',
@@ -3588,6 +3982,7 @@ export const exercises: Exercise[] = [
         tips: ['Don\'t round excessively', 'Bend knees if needed', 'Back straight'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 15,
         benefits: ['Hamstring flexibility', 'Back health', 'Calmness'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Seated%20Forward%20Fold',
       },
       {
         id: 'spinal-twist', name: 'Spinal Twist', kanji: '脊柱捻', description: 'Seated rotation for spine mobility.', category: 'stretching',
@@ -3597,6 +3992,7 @@ export const exercises: Exercise[] = [
         tips: ['Upright spine', 'Gentle twist', 'Look over shoulder'],
         defaultSets: 3, defaultReps: '30-60 seconds each', restSeconds: 15,
         benefits: ['Spine mobility', 'Core relaxation', 'Back health'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Spinal%20Twist',
       },
       {
         id: 'neck-stretch', name: 'Neck Stretch', kanji: '首伸', description: 'Gentle neck side stretch.', category: 'stretching',
@@ -3606,6 +4002,7 @@ export const exercises: Exercise[] = [
         tips: ['Very gentle', 'No sudden movements', 'Relax shoulders'],
         defaultSets: 3, defaultReps: '20-30 seconds each', restSeconds: 15,
         benefits: ['Neck tension release', 'Upper trap relief', 'Shoulder relaxation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Neck%20Stretch',
       },
       {
         id: 'standing-calf-stretch', name: 'Standing Calf Stretch', kanji: '立踵伸', description: 'Wall stretch for gastrocnemius.', category: 'stretching',
@@ -3615,6 +4012,7 @@ export const exercises: Exercise[] = [
         tips: ['Straight back leg', 'Heel firmly on floor', 'Slight lean into wall'],
         defaultSets: 3, defaultReps: '30-60 seconds each', restSeconds: 15,
         benefits: ['Calf flexibility', 'Achilles health', 'Lower leg recovery'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Standing%20Calf%20Stretch',
       },
       {
         id: 'worlds-greatest-stretch', name: 'World\'s Greatest Stretch', kanji: '世界一伸', description: 'Dynamic full body mobility flow.', category: 'stretching',
@@ -3624,6 +4022,7 @@ export const exercises: Exercise[] = [
         tips: ['Deep lunge position', 'Thoracic rotation', 'Full body opening'],
         defaultSets: 2, defaultReps: '5-6 each side', restSeconds: 20,
         benefits: ['Full body mobility', 'Hip opening', 'Thoracic spine movement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Worlds%20Greatest%20Stretch',
       },
       {
         id: 'psoas-stretch', name: 'Psoas Stretch', kanji: '腰筋伸', description: 'Deep hip flexor stretch for psoas.', category: 'stretching',
@@ -3633,6 +4032,7 @@ export const exercises: Exercise[] = [
         tips: ['Posterior tilt crucial', 'Don\'t arch lower back', 'Deep breathing'],
         defaultSets: 3, defaultReps: '45-60 seconds each', restSeconds: 15,
         benefits: ['Deep hip flexor release', 'Better posture', 'Lower back relief'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Psoas%20Stretch',
       },
       {
         id: 'wrist-stretch', name: 'Wrist Stretch', kanji: '手首伸', description: 'Wrist flexor and extensor stretch.', category: 'stretching',
@@ -3642,6 +4042,7 @@ export const exercises: Exercise[] = [
         tips: ['Gentle pressure', 'Not painful', 'Good for desk work'],
         defaultSets: 3, defaultReps: '30 seconds each', restSeconds: 15,
         benefits: ['Wrist flexibility', 'Carpal tunnel relief', 'Grip recovery'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Wrist%20Stretch',
       },
       {
         id: 'achilles-stretch', name: 'Achilles Stretch', kanji: '踵腱伸', description: 'Deep stretch for achilles tendon.', category: 'stretching',
@@ -3651,6 +4052,7 @@ export const exercises: Exercise[] = [
         tips: ['Hold rail for support', 'Slow stretch', 'Ankle mobility'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 15,
         benefits: ['Achilles tendon health', 'Ankle mobility', 'Lower leg health'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Achilles%20Stretch',
       },
       {
         id: 'deep-squat-hold', name: 'Deep Squat Hold', kanji: '深蹲保持', description: 'Restorative deep squat for hip mobility.', category: 'stretching',
@@ -3660,6 +4062,7 @@ export const exercises: Exercise[] = [
         tips: ['Heels down if possible', 'Widen stance as needed', 'Hold for time'],
         defaultSets: 3, defaultReps: '45-60 seconds', restSeconds: 15,
         benefits: ['Hip and ankle mobility', 'Deep squat positioning', 'Lower back release'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Deep%20Squat%20Hold',
       },
       {
         id: 'side-lying-quad-stretch', name: 'Side Lying Quad Stretch', kanji: '側臥腿前伸', description: 'Stretching quads lying on side.', category: 'stretching',
@@ -3669,6 +4072,7 @@ export const exercises: Exercise[] = [
         tips: ['Pelvis stable', 'Not arching back', 'Gentle pull'],
         defaultSets: 3, defaultReps: '30-45 seconds each', restSeconds: 15,
         benefits: ['Quad flexibility', 'Hip flexor release', 'Leg recovery'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Side%20Lying%20Quad%20Stretch',
       },
       {
         id: 'doorway-pec-stretch', name: 'Doorway Pec Stretch', kanji: '戸口胸伸', description: 'Two-arm doorway chest opener.', category: 'stretching',
@@ -3678,6 +4082,7 @@ export const exercises: Exercise[] = [
         tips: ['Full chest opening', 'Lean with torso', 'Breathe'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 15,
         benefits: ['Pec flexibility', 'Posture improvement', 'Shoulder health'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Doorway%20Pec%20Stretch',
       },
       {
         id: 'lying-figure-four', name: 'Lying Figure Four', kanji: '臥四字', description: 'Supine glute and piriformis release.', category: 'stretching',
@@ -3687,6 +4092,7 @@ export const exercises: Exercise[] = [
         tips: ['Foot flexed', 'Breathe deep stretch', 'Sciatica relief'],
         defaultSets: 3, defaultReps: '30-60 seconds each', restSeconds: 15,
         benefits: ['Glute flexibility', 'Sciatica relief', 'Lower back relaxation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lying%20Figure%20Four',
       },
       {
         id: 'kneeling-lat-stretch', name: 'Kneeling Lat Stretch', kanji: '跪広背伸', description: 'Deep lat side stretch from kneeling.', category: 'stretching',
@@ -3696,6 +4102,7 @@ export const exercises: Exercise[] = [
         tips: ['Hips back toward heels', 'Full lat stretch', 'Arms fully extended'],
         defaultSets: 3, defaultReps: '30-60 seconds', restSeconds: 15,
         benefits: ['Lat flexibility', 'Side body opening', 'Shoulder range'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Kneeling%20Lat%20Stretch',
       },
       {
         id: 'extended-triangle', name: 'Extended Triangle', kanji: '拡大三形', description: 'Side bend hamstring hip opener.', category: 'stretching',
@@ -3705,6 +4112,7 @@ export const exercises: Exercise[] = [
         tips: ['Hips square', 'Front knee not locked', 'Side bend not forward'],
         defaultSets: 3, defaultReps: '30-45 seconds each', restSeconds: 15,
         benefits: ['Full body flexibility', 'Hip opening', 'Leg strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Extended%20Triangle',
       },
       {
         id: 'reclined-bound-angle', name: 'Reclined Bound Angle', kanji: '仰臥蝶', description: 'Restorative supine hip opener.', category: 'stretching',
@@ -3714,6 +4122,7 @@ export const exercises: Exercise[] = [
         tips: ['Use pillows for support', 'Passive stretch', 'Relax fully'],
         defaultSets: 3, defaultReps: '60-90 seconds', restSeconds: 0,
         benefits: ['Groin flexibility', 'Hip opening', 'Deep relaxation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reclined%20Bound%20Angle',
       },
 
       // ===== STRENGTH (+20) — Cable/Machine/Isolation =====
@@ -3725,6 +4134,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your core braced throughout the lift', 'Do not let knees cave inward', 'Use safety stoppers for heavy sets'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Builds quadriceps size and strength', 'Provides guided stability for beginners', 'Allows safe training to failure without a spotter'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Smith%20Machine%20Squat',
       },
       {
         id: 'cable-twist-chop', name: 'Cable Twist Chop', kanji: '捻回斬', description: 'Rotational core exercise using a cable machine to target obliques.', category: 'strength',
@@ -3734,6 +4144,7 @@ export const exercises: Exercise[] = [
         tips: ['Rotate from your torso not your arms', 'Keep hips squared forward throughout', 'Breathe out on the rotation phase'],
         defaultSets: 3, defaultReps: '10-15 each side', restSeconds: 60,
         benefits: ['Develops rotational core power', 'Strengthens obliques and transverse abdominis', 'Improves anti-rotation stability for sports'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Twist%20Chop',
       },
       {
         id: 'machine-shrug-trap', name: 'Machine Shrug', kanji: '機械肩縮', description: 'Isolated trapezius exercise on a plate-loaded shrug machine.', category: 'strength',
@@ -3743,6 +4154,7 @@ export const exercises: Exercise[] = [
         tips: ['Do not roll shoulders — lift straight up and down', 'Use full range of motion', 'Keep neck relaxed and chin tucked'],
         defaultSets: 4, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Builds upper trap mass and strength', 'Improves shoulder stability and posture', 'Supports heavier deadlift and row performance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Machine%20Shrug%20Trap',
       },
       {
         id: 'cable-pull-in-fly', name: 'Cable Pull-In Fly', kanji: '引込飛', description: 'Scapular retraction fly pulling cables in from an extended position.', category: 'strength',
@@ -3752,6 +4164,7 @@ export const exercises: Exercise[] = [
         tips: ['Initiate the pull from your shoulder blades', 'Keep a slight bend in your elbows throughout', 'Do not use momentum to swing the weight'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 60,
         benefits: ['Targets rear delt heads often underdeveloped', 'Improves posture by strengthening rhomboids', 'Creates balanced shoulder development'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Pull%20In%20Fly',
       },
       {
         id: 'cable-oblique-crunch-side', name: 'Cable Oblique Crunch', kanji: '側腹捲上', description: 'Standing cable crunch with a lateral bend to target obliques.', category: 'strength',
@@ -3761,6 +4174,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep hips stationary and bend only at the waist', 'Do not lean forward or backward', 'Breathe out as you crunch down'],
         defaultSets: 3, defaultReps: '12-15 each side', restSeconds: 45,
         benefits: ['Isolates the external and internal obliques', 'Improves waist definition and core symmetry', 'Builds functional rotational strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Oblique%20Crunch%20Side',
       },
       {
         id: 'machine-bicep-preacher', name: 'Machine Preacher Curl', kanji: '機械二頭捲', description: 'Seated machine curl with an angled pad for strict bicep isolation.', category: 'strength',
@@ -3770,6 +4184,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your upper arms pressed against the pad throughout', 'Do not swing your body to generate momentum', 'Control the eccentric phase for maximum growth'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Eliminates cheating for strict bicep isolation', 'Builds peak bicep contraction and mind-muscle connection', 'Develops brachialis for thicker arm appearance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Machine%20Bicep%20Preacher',
       },
       {
         id: 'machine-tricep-extension', name: 'Machine Tricep Extension', kanji: '機械三頭伸', description: 'Seated dip-style machine targeting the triceps brachii.', category: 'strength',
@@ -3779,6 +4194,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep elbows tucked into the machine pad', 'Do not lock elbows hard at the bottom', 'Control the full range of motion'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Isolates all three triceps heads effectively', 'Builds arm size and pressing strength', 'Excellent finisher after heavy pressing work'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Machine%20Tricep%20Extension',
       },
       {
         id: 'incline-machine-curl', name: 'Incline Machine Curl', kanji: '傾斜機械捲', description: 'Seated incline bicep curl on a machine for deep stretch isolation.', category: 'strength',
@@ -3788,6 +4204,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your shoulders pinned back against the bench', 'Elbows should stay fixed in place', 'Do not let the weight stack touch between reps'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Stretches the long head of the biceps deeply', 'Improves bicep peak development', 'Forces strict form with no body momentum'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Incline%20Machine%20Curl',
       },
       {
         id: 'cable-sumo-walk', name: 'Cable Sumo Walk', kanji: '和式横歩', description: 'Lateral walk in a sumo stance with a cable for hip and glute activation.', category: 'strength',
@@ -3797,6 +4214,7 @@ export const exercises: Exercise[] = [
         tips: ['Stay in a partial squat position throughout', 'Keep tension on the cable between steps', 'Do not let your working leg drag'],
         defaultSets: 3, defaultReps: '10 steps each way', restSeconds: 45,
         benefits: ['Activates glute medius and minimus', 'Improves hip stability and lateral movement', 'Great glute warm-up before heavy leg work'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Sumo%20Walk',
       },
       {
         id: 'cable-rear-fly-bent', name: 'Cable Bent-Over Rear Fly', kanji: '屈後三角飛', description: 'Bent-over cable reverse fly targeting the posterior deltoid.', category: 'strength',
@@ -3806,6 +4224,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep a flat back with a slight bend in the knees', 'Pull with the rear delts not the arms', 'Focus on squeezing the shoulder blades together'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 60,
         benefits: ['Isolates the often-neglected rear delts', 'Improves shoulder balance and posture', 'Creates a capped shoulder appearance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Rear%20Fly%20Bent',
       },
       {
         id: 'smith-bent-row', name: 'Smith Machine Bent-Over Row', kanji: '機械屈背引', description: 'Barbell row performed in a Smith machine for controlled back training.', category: 'strength',
@@ -3815,6 +4234,7 @@ export const exercises: Exercise[] = [
         tips: ['Drive elbows back not up to engage the lats', 'Keep your torso angle fixed throughout', 'Use a hook grip or straps for heavier loads'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Builds lat thickness and width', 'Provides stable bar path for controlled reps', 'Reduces lower back strain compared to free-weight rows'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Smith%20Bent%20Row',
       },
       {
         id: 'smith-overhead-press', name: 'Smith Machine Overhead Press', kanji: '機械頭上押', description: 'Standing overhead press using Smith machine for guided pressing.', category: 'strength',
@@ -3824,6 +4244,7 @@ export const exercises: Exercise[] = [
         tips: ['Squeeze your glutes to stabilize the lower body', 'Keep wrists neutral and elbows slightly forward', 'Do not arch your lower back excessively'],
         defaultSets: 4, defaultReps: '8-10', restSeconds: 90,
         benefits: ['Builds overall shoulder mass and strength', 'Guided bar path reduces injury risk', 'Excellent for overloading the press safely'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Smith%20Overhead%20Press',
       },
       {
         id: 'smith-hip-thrust-glute', name: 'Smith Machine Hip Thrust', kanji: '機械臀推', description: 'Glute bridge variation using a Smith machine for targeted hip extension.', category: 'strength',
@@ -3833,6 +4254,7 @@ export const exercises: Exercise[] = [
         tips: ['Tuck your chin and keep ribs down throughout', 'Push through your heels not your toes', 'Keep the bar positioned in the hip crease'],
         defaultSets: 4, defaultReps: '10-15', restSeconds: 90,
         benefits: ['Isolates the glutes with heavy loading', 'Builds hip extension strength for athletic performance', 'Shapes and strengthens the posterior chain'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Smith%20Hip%20Thrust%20Glute',
       },
       {
         id: 'smith-calf-standing', name: 'Smith Machine Standing Calf Raise', kanji: '機械立踵上', description: 'Standing calf raise on a Smith machine for heavy gastrocnemius loading.', category: 'strength',
@@ -3842,6 +4264,7 @@ export const exercises: Exercise[] = [
         tips: ['Use a full range of motion — lower heels all the way', 'Perform slow and controlled reps', 'Point toes forward for balanced calf development'],
         defaultSets: 4, defaultReps: '15-20', restSeconds: 60,
         benefits: ['Builds massive gastrocnemius size and strength', 'Allows heavier calf loading than dumbbells', 'Improves ankle stability and push-off power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Smith%20Calf%20Standing',
       },
       {
         id: 'cable-pull-apart-rear', name: 'Cable Pull-Apart', kanji: '拉開', description: 'Horizontal cable pull-apart for scapular retraction and rear delt development.', category: 'strength',
@@ -3851,6 +4274,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep arms at shoulder height throughout', 'Squeeze the shoulder blades together maximally', 'Control the weight do not let it snap you forward'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Strengthens upper back posture muscles', 'Targets rhomboids and middle traps', 'Improves scapular control for pressing movements'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Pull%20Apart%20Rear',
       },
       {
         id: 'cable-cross-body-chest', name: 'Cable Cross-Body Chest Fly', kanji: '交叉胸飛', description: 'Single-arm cable fly crossing the body for deep chest contraction.', category: 'strength',
@@ -3860,6 +4284,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep a slight bend in your working arm', 'Do not rotate your torso during the movement', 'Focus on the chest squeeze not the arm movement'],
         defaultSets: 3, defaultReps: '10-12 each side', restSeconds: 60,
         benefits: ['Provides deep chest stretch and peak contraction', 'Targets the sternal head effectively', 'Corrects chest asymmetries with unilateral work'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Cross%20Body%20Chest',
       },
       {
         id: 'machine-incline-chest', name: 'Machine Incline Chest Press', kanji: '機械傾斜胸押', description: 'Seated machine incline press for upper chest development.', category: 'strength',
@@ -3869,6 +4294,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep shoulder blades pinned against the pad', 'Exhale on the pressing phase', 'Do not lock out elbows violently'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 90,
         benefits: ['Targets upper pectoral major effectively', 'Safer pressing without a spotter', 'Great for beginners learning chest engagement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Machine%20Incline%20Chest',
       },
       {
         id: 'cable-seated-row-close', name: 'Cable Close-Grip Seated Row', kanji: '狭把座位引', description: 'Seated cable row using a close-grip handle for mid-back thickness.', category: 'strength',
@@ -3878,6 +4304,7 @@ export const exercises: Exercise[] = [
         tips: ['Pull with your elbows not your arms', 'Maintain an upright chest throughout', 'Do not lean forward at the start of the pull'],
         defaultSets: 4, defaultReps: '10-12', restSeconds: 90,
         benefits: ['Builds middle back thickness and density', 'Improves posture through rhomboid strengthening', 'Targets the rear delts and mid-traps effectively'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Seated%20Row%20Close',
       },
       {
         id: 'smith-incline-chest', name: 'Smith Machine Incline Press', kanji: '機械斜胸押', description: 'Incline press on a Smith machine for guided upper chest development.', category: 'strength',
@@ -3887,6 +4314,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your elbows at 45 degrees to your torso', 'Pin your shoulder blades to the bench', 'Do not bounce the bar off the chest'],
         defaultSets: 4, defaultReps: '8-12', restSeconds: 90,
         benefits: ['Develops upper chest safely without a spotter', 'Guided bar path reduces shoulder strain', 'Complements flat bench for full chest development'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Smith%20Incline%20Chest',
       },
       {
         id: 'cable-standing-ab-crunch', name: 'Cable Standing Ab Crunch', kanji: '立腹卷', description: 'Standing cable crunch for direct rectus abdominis targeting.', category: 'strength',
@@ -3896,6 +4324,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your hips stationary and only move your torso', 'Do not pull with your arms — crunch with your abs', 'Exhale fully at the bottom of the crunch'],
         defaultSets: 3, defaultReps: '12-15', restSeconds: 45,
         benefits: ['Adds resistance to abdominal training', 'Builds six-pack definition effectively', 'Provides constant tension throughout the movement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cable%20Standing%20Ab%20Crunch',
       },
 
       // ===== BODYWEIGHT (+20) — Plyometric/Variations =====
@@ -3907,6 +4336,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly with knees tracking over toes', 'Look over your shoulder to guide the rotation', 'Start with a quarter rotation before attempting full 180'],
         defaultSets: 3, defaultReps: '8-10 each way', restSeconds: 60,
         benefits: ['Develops explosive lower body power', 'Improves rotational coordination and balance', 'Increases vertical jump height and reactivity'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Squat%20Jump%20Twist',
       },
       {
         id: 'lateral-lunge-walk', name: 'Walking Lateral Lunge', kanji: '側歩突', description: 'Dynamic lateral lunge stepping sideways for hip adductor mobility.', category: 'bodyweight',
@@ -3916,6 +4346,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your chest up and back straight', 'Do not let the bent knee go past the toes', 'Lower until the thigh is parallel to the floor'],
         defaultSets: 3, defaultReps: '10 each side', restSeconds: 45,
         benefits: ['Opens the hips and groin dynamically', 'Strengthens adductor muscles for groin injury prevention', 'Improves lateral movement and stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lateral%20Lunge%20Walk',
       },
       {
         id: 'curtsey-lunge-squat', name: 'Curtsey Lunge Squat', kanji: '屈礼蹲', description: 'Lunge stepping behind and across the body like a curtsey bow.', category: 'bodyweight',
@@ -3925,6 +4356,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your torso upright throughout the movement', 'Do not let the front knee cave inward', 'Sink into the glute of the front leg'],
         defaultSets: 3, defaultReps: '10-12 each side', restSeconds: 45,
         benefits: ['Targets the glute medius and deep hip rotators', 'Improves hip mobility and stability', 'Shapes the outer glute and upper thigh'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Curtsey%20Lunge%20Squat',
       },
       {
         id: 'plyo-lunge-switch', name: 'Plyometric Lunge Switch', kanji: '跳躍突替', description: 'Explosive alternating lunges with a midair leg switch.', category: 'bodyweight',
@@ -3934,6 +4366,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly to reduce joint impact', 'Keep your front knee aligned with your ankle', 'Swing your arms for momentum'],
         defaultSets: 3, defaultReps: '10-12 each side', restSeconds: 60,
         benefits: ['Develops explosive leg power and speed', 'Improves balance and coordination', 'Elevates heart rate for a conditioning effect'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Plyo%20Lunge%20Switch',
       },
       {
         id: 'single-leg-box-tap', name: 'Single-Leg Box Tap', kanji: '片足箱触', description: 'Quick box tap with one leg for reactive footwork and leg power.', category: 'bodyweight',
@@ -3943,6 +4376,7 @@ export const exercises: Exercise[] = [
         tips: ['Use a box 6-12 inches high', 'Stay on the ball of your standing foot', 'Keep the movement fast and reactive'],
         defaultSets: 3, defaultReps: '15 taps each side', restSeconds: 45,
         benefits: ['Improves foot speed and reactive strength', 'Strengthens the lower leg and ankle stabilizers', 'Builds single-leg power and balance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Single%20Leg%20Box%20Tap',
       },
       {
         id: 'explosive-push-up-clap', name: 'Explosive Clap Push-Up', kanji: '爆発拍手腕立', description: 'Plyometric push-up where hands leave the floor to clap.', category: 'bodyweight',
@@ -3952,6 +4386,7 @@ export const exercises: Exercise[] = [
         tips: ['Warm up thoroughly to prepare wrists and shoulders', 'Keep your body in a rigid straight line throughout', 'Land with slightly bent elbows to absorb the impact'],
         defaultSets: 3, defaultReps: '5-8', restSeconds: 90,
         benefits: ['Builds explosive upper body power', 'Develops chest and triceps fast-twitch fibers', 'Improves reactive strength for athletic performance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Explosive%20Push%20Up%20Clap',
       },
       {
         id: 'clapping-push-up-variation', name: 'Behind-Back Clap Push-Up', kanji: '背拍手腕立', description: 'Advanced push-up where hands lift and clap behind the back.', category: 'bodyweight',
@@ -3961,6 +4396,7 @@ export const exercises: Exercise[] = [
         tips: ['Build up to this with standard clap push-ups first', 'Keep your core braced and body straight', 'Land softly to reduce wrist and shoulder impact'],
         defaultSets: 3, defaultReps: '3-5', restSeconds: 120,
         benefits: ['Maximal explosive upper body power', 'Incredible shoulder and triceps strength', 'Advanced plyometric for elite athleticism'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Clapping%20Push%20Up%20Variation',
       },
       {
         id: 'spiderman-push-up-crawl', name: 'Spiderman Push-Up Crawl', kanji: '蜘蛛腕立這', description: 'Push-up with a knee-to-elbow drive mimicking a spider crawl.', category: 'bodyweight',
@@ -3970,6 +4406,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep hips low and do not pike up', 'Touch the knee to the elbow or as close as mobility allows', 'Breathe out on the push phase'],
         defaultSets: 3, defaultReps: '8-10 each side', restSeconds: 60,
         benefits: ['Combines upper body pressing with core rotation', 'Opens the hips and improves hip mobility', 'Engages obliques and transverse abdominis'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Spiderman%20Push%20Up%20Crawl',
       },
       {
         id: 'tuck-push-up-knee', name: 'Tuck Knee Push-Up', kanji: '屈膝腕立', description: 'Push-up with a knee tuck at the top for core and explosive power.', category: 'bodyweight',
@@ -3979,6 +4416,7 @@ export const exercises: Exercise[] = [
         tips: ['Land with soft elbows to absorb the impact', 'Keep the movement fluid and continuous', 'Engage your core for the tuck phase'],
         defaultSets: 3, defaultReps: '8-10', restSeconds: 60,
         benefits: ['Builds explosive pushing and tucking power', 'Strengthens the core and hip flexors dynamically', 'Elevates heart rate for metabolic conditioning'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Tuck%20Push%20Up%20Knee',
       },
       {
         id: 'reverse-plank-hold', name: 'Reverse Plank Hold', kanji: '逆板静止', description: 'Static hold on the back of the arms and heels for posterior chain.', category: 'bodyweight',
@@ -3988,6 +4426,7 @@ export const exercises: Exercise[] = [
         tips: ['Press your chest up toward the ceiling', 'Do not let your hips sag toward the floor', 'Actively squeeze the glutes and hamstrings'],
         defaultSets: 3, defaultReps: '30-45 seconds', restSeconds: 30,
         benefits: ['Strengthens the entire posterior chain', 'Opens the front of the body and improves posture', 'Builds shoulder stability in extension'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Reverse%20Plank%20Hold',
       },
       {
         id: 'high-plank-shoulder-tap', name: 'High Plank Shoulder Tap', kanji: '高板肩触', description: 'Plank with alternating hand-to-shoulder taps for anti-rotation stability.', category: 'bodyweight',
@@ -3997,6 +4436,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your hips as still as possible', 'Feet wider provides more stability', 'Move slow and controlled not fast and sloppy'],
         defaultSets: 3, defaultReps: '10-12 each side', restSeconds: 45,
         benefits: ['Builds anti-rotational core strength', 'Improves shoulder stability and control', 'Develops balance and proprioception'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=High%20Plank%20Shoulder%20Tap',
       },
       {
         id: 'plank-up-down-alternating', name: 'Plank Up-Down', kanji: '板上下', description: 'Alternating from forearms to hands in a plank position for dynamic stability.', category: 'bodyweight',
@@ -4006,6 +4446,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your hips level and do not rock side to side', 'Move one arm at a time in a controlled manner', 'Engage your core throughout the transition'],
         defaultSets: 3, defaultReps: '8-10 each side', restSeconds: 45,
         benefits: ['Strengthens the core and shoulders dynamically', 'Improves coordination and body control', 'Builds endurance in the shoulder stabilizers'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Plank%20Up%20Down%20Alternating',
       },
       {
         id: 'sprawlette-burpee', name: 'Sprawlette', kanji: '伏跳', description: 'Burpee variation where you sprawl forward then pop up explosively.', category: 'bodyweight',
@@ -4015,6 +4456,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly when jumping back to plank', 'Keep your core tight to protect the lower back', 'Breathe out on the explosive jump'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Full body conditioning movement', 'Builds explosive power in legs and upper body', 'Improves cardiovascular endurance and coordination'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Sprawlette%20Burpee',
       },
       {
         id: 'single-leg-jackknife', name: 'Single-Leg Jackknife', kanji: '単脚折畳', description: 'Core drill extending one leg while lifting the torso for a jackknife motion.', category: 'bodyweight',
@@ -4024,6 +4466,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep the extended leg hovering off the floor', 'Control the descent do not drop', 'Exhale as you crunch the knee to the chest'],
         defaultSets: 3, defaultReps: '10-12 each side', restSeconds: 45,
         benefits: ['Targets the entire abdominal wall', 'Improves hip flexor strength and mobility', 'Builds coordination in full body flexion patterns'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Single%20Leg%20Jackknife',
       },
       {
         id: 'russian-twist-weighted', name: 'Weighted Russian Twist', kanji: '重露捻', description: 'Seated torso rotation with a weight for oblique development.', category: 'bodyweight',
@@ -4033,6 +4476,7 @@ export const exercises: Exercise[] = [
         tips: ['Breathe steadily throughout the movement', 'Rotate from the ribcage not just the arms', 'Keep your lower back flat and engaged'],
         defaultSets: 3, defaultReps: '10-15 each side', restSeconds: 45,
         benefits: ['Develops rotational core strength', 'Targets the obliques effectively', 'Improves torso stability and mobility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Russian%20Twist%20Weighted',
       },
       {
         id: 'flutter-kick-small', name: 'Flutter Kick', kanji: '蹴動', description: 'Lying leg flutter kicks targeting the lower abdominals and hip flexors.', category: 'bodyweight',
@@ -4042,6 +4486,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep kicks small and controlled not large and sloppy', 'Press your lower back into the mat throughout', 'Point your toes to increase the difficulty'],
         defaultSets: 3, defaultReps: '30-45 seconds', restSeconds: 30,
         benefits: ['Targets the lower abdominal region', 'Strengthens hip flexors for athletic movement', 'Improves lower back stability through core engagement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Flutter%20Kick%20Small',
       },
       {
         id: 'bicycle-crunch-slow', name: 'Slow Bicycle Crunch', kanji: '遅自転車腹', description: 'Controlled bicycle crunch with an emphasis on form and full contraction.', category: 'bodyweight',
@@ -4051,6 +4496,7 @@ export const exercises: Exercise[] = [
         tips: ['Do not pull on your neck — let the abs do the work', 'Move slow and controlled not fast and sloppy', 'Keep the extended leg hovering off the floor'],
         defaultSets: 3, defaultReps: '10-12 each side', restSeconds: 45,
         benefits: ['Full abdominal activation including obliques', 'Improves coordination and body awareness', 'Builds core endurance and definition'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bicycle%20Crunch%20Slow',
       },
       {
         id: 'heel-tap-crunch', name: 'Heel Tap Crunch', kanji: '踵触腹', description: 'Lying crunch with alternating heel touches for oblique targeting.', category: 'bodyweight',
@@ -4060,6 +4506,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your chin off the chest throughout', 'Only reach as far as you can without straining', 'Breathe steadily and control each rep'],
         defaultSets: 3, defaultReps: '10-15 each side', restSeconds: 30,
         benefits: ['Targets the obliques specifically', 'Low impact on the lower back', 'Builds endurance in the lateral core muscles'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Heel%20Tap%20Crunch',
       },
       {
         id: 'crab-walk-forward', name: 'Crab Walk', kanji: '蟹歩', description: 'Reverse tabletop walking forward and backward for full body coordination.', category: 'bodyweight',
@@ -4069,6 +4516,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep hips lifted throughout the walk', 'Do not let your butt touch the floor', 'Breathe steadily and keep the core engaged'],
         defaultSets: 3, defaultReps: '10 steps each way', restSeconds: 45,
         benefits: ['Full body coordination and mobility', 'Strengthens the triceps and posterior chain', 'Improves hip mobility and body awareness'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Crab%20Walk%20Forward',
       },
       {
         id: 'donkey-kick-straight', name: 'Straight-Leg Donkey Kick', kanji: '直蹴上', description: 'Straight-leg variation of the donkey kick for glute isolation.', category: 'bodyweight',
@@ -4078,6 +4526,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep a flat back do not arch excessively', 'Flex the foot to maximize glute engagement', 'Do not swing the leg using momentum'],
         defaultSets: 3, defaultReps: '12-15 each side', restSeconds: 45,
         benefits: ['Isolates the gluteus maximus effectively', 'Builds glute strength and muscle activation', 'Improves hip extension control and stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Donkey%20Kick%20Straight',
       },
 
       // ===== CALISTHENICS (+25) — Skill-Based Bodyweight =====
@@ -4089,6 +4538,7 @@ export const exercises: Exercise[] = [
         tips: ['Only go as far as your shoulder mobility allows', 'Keep your chest up and elbows back', 'Do not kip or use momentum'],
         defaultSets: 3, defaultReps: '6-10', restSeconds: 90,
         benefits: ['Emphasizes lat width and upper back', 'Targets the rear delts and rotator cuff', 'Improves shoulder mobility over time'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Behind%20Neck%20Pull%20Up%20Wide',
       },
       {
         id: 'commando-pull-up-alternating', name: 'Alternating Commando Pull-Up', kanji: '交縦懸垂', description: 'Pull-up with an alternating side-to-side movement for increased difficulty.', category: 'calisthenics',
@@ -4098,6 +4548,7 @@ export const exercises: Exercise[] = [
         tips: ['Engage your lats to pull not just your arms', 'Keep your core tight to prevent swinging', 'Move in a controlled smooth rhythm'],
         defaultSets: 3, defaultReps: '6-8 each side', restSeconds: 90,
         benefits: ['Builds unilateral pulling strength', 'Develops grip and forearm endurance', 'Improves lat coordination and control'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Commando%20Pull%20Up%20Alternating',
       },
       {
         id: 'pull-up-hold-chin', name: 'Chin-Over-Bar Hold', kanji: '顎越停止', description: 'Static hold at the top of a pull-up for lat and grip endurance.', category: 'calisthenics',
@@ -4107,6 +4558,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your elbows pulled down and back', 'Do not let your shoulders shrug up', 'Start with 5-second holds and progress longer'],
         defaultSets: 3, defaultReps: '10-20 seconds', restSeconds: 60,
         benefits: ['Builds incredible isometric pull strength', 'Improves lock-off power for advanced moves', 'Develops grip and forearm endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Pull%20Up%20Hold%20Chin',
       },
       {
         id: 'negative-pull-up-slow', name: 'Slow Negative Pull-Up', kanji: '徐降懸垂', description: 'Eccentric-only pull-up focusing on the lowering phase for strength gains.', category: 'calisthenics',
@@ -4116,6 +4568,7 @@ export const exercises: Exercise[] = [
         tips: ['Control every inch of the descent', 'Do not drop or let go suddenly', 'Focus on the mind-muscle connection with the lats'],
         defaultSets: 3, defaultReps: '5-8', restSeconds: 90,
         benefits: ['Builds pull-up strength for beginners', 'Develops eccentric control and muscle tension', 'Increases time under tension for muscle growth'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Negative%20Pull%20Up%20Slow',
       },
       {
         id: 'band-assisted-dip-tricep', name: 'Band-Assisted Dip', kanji: '補助付腕立', description: 'Dip with resistance band assistance to build strength for unassisted reps.', category: 'calisthenics',
@@ -4125,6 +4578,7 @@ export const exercises: Exercise[] = [
         tips: ['Choose a band with the right assistance level', 'Keep your elbows pointed back not out', 'Control the full range of motion without bouncing'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Progressive path to unassisted dips', 'Builds triceps and chest pressing strength', 'Safer progression than jumping into full dips'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Assisted%20Dip%20Tricep',
       },
       {
         id: 'ring-dip-deep', name: 'Deep Ring Dip', kanji: '深輪腕立', description: 'Ring dip with an extra deep range of motion for full pectoral stretch.', category: 'calisthenics',
@@ -4134,6 +4588,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep rings turned out for shoulder safety', 'Do not go so deep that shoulders round forward', 'Warm up the rotator cuff before ring work'],
         defaultSets: 3, defaultReps: '6-10', restSeconds: 90,
         benefits: ['Full range pressing that builds extreme strength', 'Deep chest stretch at the bottom position', 'Develops incredible shoulder stability'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ring%20Dip%20Deep',
       },
       {
         id: 'parallel-bar-hold-static', name: 'Parallel Bar Static Hold', kanji: '平行棒静止', description: 'Isometric hold on parallel bars for triceps and shoulder endurance.', category: 'calisthenics',
@@ -4143,6 +4598,7 @@ export const exercises: Exercise[] = [
         tips: ['Press the hands down actively into the bars', 'Keep your shoulders down away from your ears', 'Point your feet to engage the core'],
         defaultSets: 3, defaultReps: '20-45 seconds', restSeconds: 60,
         benefits: ['Builds rock-solid shoulder stability', 'Develops triceps endurance for advanced skills', 'Foundational strength for ring work and planche'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Parallel%20Bar%20Hold%20Static',
       },
       {
         id: 'ring-row-wide-grip', name: 'Wide Ring Row', kanji: '広輪引', description: 'Inverted row on rings with a wide grip for upper back thickness.', category: 'calisthenics',
@@ -4152,6 +4608,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your body in a straight line from head to heels', 'Pull the rings to your chest not your face', 'The harder the angle the more advanced the row'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Builds upper back and rear delt thickness', 'Scalable difficulty by adjusting body angle', 'Improves scapular control and posture'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ring%20Row%20Wide%20Grip',
       },
       {
         id: 'wide-ring-row-feet', name: 'Ring Row Feet Elevated', kanji: '足上輪引', description: 'Ring row with feet elevated for increased pulling difficulty.', category: 'calisthenics',
@@ -4161,6 +4618,7 @@ export const exercises: Exercise[] = [
         tips: ['The higher the feet the harder the row', 'Keep hips from sagging by engaging the core', 'Pull the rings toward your lower chest for lat focus'],
         defaultSets: 3, defaultReps: '8-10', restSeconds: 90,
         benefits: ['Increases row difficulty without adding weight', 'Builds lat strength for pull-up progression', 'Challenging core stabilization during the pull'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Wide%20Ring%20Row%20Feet',
       },
       {
         id: 'tuck-front-lever-pulse', name: 'Tuck Front Lever Pulse', kanji: '屈前水平振', description: 'Pulsing hold in the tuck front lever position for isometric strength.', category: 'calisthenics',
@@ -4170,6 +4628,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your arms fully extended and locked', 'Point your toes for better body tension', 'Start with the hold before attempting pulses'],
         defaultSets: 3, defaultReps: '5-8 pulses', restSeconds: 90,
         benefits: ['Builds front lever strength and endurance', 'Develops lat and core tension control', 'Key progression toward the full front lever'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Tuck%20Front%20Lever%20Pulse',
       },
       {
         id: 'band-assisted-pistol-squat', name: 'Band-Assisted Pistol Squat', kanji: '補助銃蹲', description: 'Single-leg squat assisted by a resistance band for progression.', category: 'calisthenics',
@@ -4179,6 +4638,7 @@ export const exercises: Exercise[] = [
         tips: ['Use the band only as much as needed', 'Keep the working heel flat on the floor', 'Push your hips back as you descend'],
         defaultSets: 3, defaultReps: '5-8 each side', restSeconds: 90,
         benefits: ['Builds toward a full unassisted pistol squat', 'Develops single-leg strength and balance', 'Improves hip and ankle mobility for deep squats'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Band%20Assisted%20Pistol%20Squat',
       },
       {
         id: 'shrimp-squat-assist', name: 'Assisted Shrimp Squat', kanji: '補助海老蹲', description: 'Single-leg squat with the other leg held behind assisted by a support.', category: 'calisthenics',
@@ -4188,6 +4648,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your chest upright throughout the squat', 'Use the support hand only for light balance', 'Stretch the quad before attempting this movement'],
         defaultSets: 3, defaultReps: '5-8 each side', restSeconds: 90,
         benefits: ['Deep single-leg squat progression', 'Builds quadriceps strength and flexibility', 'Improves balance and body control'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Shrimp%20Squat%20Assist',
       },
       {
         id: 'deep-step-down-box', name: 'Deep Step Down', kanji: '深段下', description: 'Slow controlled step-down from a box for single-leg eccentric control.', category: 'calisthenics',
@@ -4197,6 +4658,7 @@ export const exercises: Exercise[] = [
         tips: ['Use a box 12-18 inches high', 'Keep the knee aligned over the foot', 'Go as slow as possible for maximum control'],
         defaultSets: 3, defaultReps: '8-10 each side', restSeconds: 60,
         benefits: ['Develops single-leg eccentric control', 'Strengthens stabilizers around the knee', 'Builds balance and proprioception'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Deep%20Step%20Down%20Box',
       },
       {
         id: 'rto-ring-dip', name: 'RTO Ring Dip', kanji: '外回輪腕立', description: 'Ring dip with rings turned out at the top for maximum shoulder engagement.', category: 'calisthenics',
@@ -4206,6 +4668,7 @@ export const exercises: Exercise[] = [
         tips: ['Master standard ring dips before attempting RTO', 'Rotate the rings at the top not at the bottom', 'Keep your shoulders pressed down throughout'],
         defaultSets: 3, defaultReps: '5-8', restSeconds: 120,
         benefits: ['Builds extreme shoulder and triceps strength', 'Develops wrist forearm and grip stability', 'Essential skill for advanced ring work'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Rto%20Ring%20Dip',
       },
       {
         id: 'ring-support-push', name: 'Ring Support Push', kanji: '輪支持押', description: 'Press from a deep ring dip bottom position to full support.', category: 'calisthenics',
@@ -4215,6 +4678,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep the rings close to your body throughout', 'Do not let the rings drift wide', 'Control the descent for maximum strength gains'],
         defaultSets: 3, defaultReps: '6-10', restSeconds: 90,
         benefits: ['Builds pressing strength for ring dips', 'Improves transition control from bottom to top', 'Develops stability throughout the full range'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ring%20Support%20Push',
       },
       {
         id: 'ring-push-up-decline', name: 'Decline Ring Push-Up', kanji: '傾輪腕立伏', description: 'Push-up on rings with feet elevated for increased upper chest emphasis.', category: 'calisthenics',
@@ -4224,6 +4688,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your body in a rigid plank line', 'Point the rings outward as you press', 'Lower until the rings touch your chest'],
         defaultSets: 3, defaultReps: '8-10', restSeconds: 60,
         benefits: ['Targets the upper chest strongly', 'Develops pushing strength for ring skills', 'Challenging core stabilization demand'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ring%20Push%20Up%20Decline',
       },
       {
         id: 'decline-ring-press', name: 'Low Ring Press', kanji: '低輪押', description: 'Press from a low ring position close to the floor into a support hold.', category: 'calisthenics',
@@ -4233,6 +4698,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your elbows tucked at 45 degrees', 'Do not flare the elbows out wide', 'Use the full range of motion for each rep'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Develops full range pressing strength', 'Builds chest and triceps with instability demand', 'Improves proprioception and ring control'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Decline%20Ring%20Press',
       },
       {
         id: 'ring-fly-chest', name: 'Ring Fly', kanji: '輪飛', description: 'Fly motion on rings for deep chest stretch and adduction strength.', category: 'calisthenics',
@@ -4242,6 +4708,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep a slight bend in your elbows throughout', 'Control the opening phase for maximum stretch', 'Squeeze the chest at the top of the fly'],
         defaultSets: 3, defaultReps: '8-12', restSeconds: 60,
         benefits: ['Deep chest stretch with constant tension', 'Targets the pectoral adduction function', 'Strengthens the shoulders stabilizers dynamically'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ring%20Fly%20Chest',
       },
       {
         id: 'ring-fall-out-open', name: 'Ring Fall Out', kanji: '輪開落', description: 'Advanced ring exercise falling forward and opening arms in a tuck position.', category: 'calisthenics',
@@ -4251,6 +4718,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your arms straight throughout the movement', 'Engage your core to prevent arching', 'Only lean as far as you can control'],
         defaultSets: 3, defaultReps: '5-8', restSeconds: 120,
         benefits: ['Builds incredible shoulder stability', 'Develops scapular control and strength', 'Foundation skill for advanced planche work'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ring%20Fall%20Out%20Open',
       },
       {
         id: 'handstand-wall-walk-up', name: 'Handstand Wall Walk', kanji: '壁歩逆立', description: 'Walking the feet up a wall into a handstand for controlled inversion practice.', category: 'calisthenics',
@@ -4260,6 +4728,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your arms straight and head neutral', 'Engage your core to maintain a straight line', 'Walk up only as high as you feel comfortable'],
         defaultSets: 3, defaultReps: '3-5 walks', restSeconds: 60,
         benefits: ['Builds handstand strength and confidence', 'Develops shoulder stability and overhead control', 'Improves body awareness in the inverted position'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Handstand%20Wall%20Walk%20Up',
       },
       {
         id: 'handstand-tuck-pike', name: 'Handstand Tuck to Pike', kanji: '屈伸逆立', description: 'Transitioning from a tucked handstand to a piked position and back.', category: 'calisthenics',
@@ -4269,6 +4738,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your shoulders fully open and pressed out', 'Control the tuck to avoid falling off balance', 'Practice with a spotter for safety'],
         defaultSets: 3, defaultReps: '5-8 transitions', restSeconds: 90,
         benefits: ['Develops handstand body control', 'Strengthens the core in the inverted position', 'Builds confidence for freestanding handstand work'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Handstand%20Tuck%20Pike',
       },
       {
         id: 'handstand-pirouette-turn', name: 'Handstand Pirouette Turn', kanji: '回転逆立', description: 'Spinning out of a handstand by turning one hand for a controlled exit.', category: 'calisthenics',
@@ -4278,6 +4748,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your body tight during the rotation', 'Look where you are going to spot the landing', 'Practice the motion from a stable handstand first'],
         defaultSets: 3, defaultReps: '5 turns each side', restSeconds: 60,
         benefits: ['Develops handstand dismount control', 'Builds spatial awareness and coordination', 'Essential skill for gymnastics and flow work'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Handstand%20Pirouette%20Turn',
       },
       {
         id: 'pull-up-clock-circle', name: 'Pull-Up Clock Circles', kanji: '時計懸垂', description: 'Moving the body in a full circle while hanging for lat and core control.', category: 'calisthenics',
@@ -4287,6 +4758,7 @@ export const exercises: Exercise[] = [
         tips: ['Control the circle with your lats not momentum', 'Keep the core braced throughout the movement', 'Move slow and deliberate for maximum tension'],
         defaultSets: 3, defaultReps: '5 each direction', restSeconds: 90,
         benefits: ['Builds dynamic lat strength and control', 'Develops core rotational stability', 'Improves shoulder mobility in the hanging position'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Pull%20Up%20Clock%20Circle',
       },
       {
         id: 'mixed-grip-pull-up-weighted', name: 'Mixed Grip Weighted Pull-Up', kanji: '混握加重懸垂', description: 'Pull-up with one overhand and one underhand grip for balanced development.', category: 'calisthenics',
@@ -4296,6 +4768,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your body straight without swinging', 'Switch the grip orientation between sets', 'Add weight only after mastering bodyweight reps'],
         defaultSets: 3, defaultReps: '6-10', restSeconds: 90,
         benefits: ['Balanced biceps and brachialis development', 'Reduces elbow strain compared to standard pull-ups', 'Builds pulling strength and grip endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Mixed%20Grip%20Pull%20Up%20Weighted',
       },
       {
         id: 'tucked-planche-hold', name: 'Tucked Planche Hold', kanji: '屈水平静止', description: 'Isometric hold balancing on straight arms with knees tucked to the chest.', category: 'calisthenics',
@@ -4305,6 +4778,7 @@ export const exercises: Exercise[] = [
         tips: ['Lean forward enough to balance not too far', 'Keep arms locked straight throughout the hold', 'Round your upper back for better leverage'],
         defaultSets: 3, defaultReps: '5-15 seconds', restSeconds: 90,
         benefits: ['Foundational planche strength and balance', 'Develops incredible shoulder and wrist stability', 'Builds core compression strength for advanced skills'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Tucked%20Planche%20Hold',
       },
 
       // ===== CARDIO (+20) — HIIT/Conditioning =====
@@ -4316,6 +4790,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly on the balls of your feet', 'Keep your core engaged for stability', 'Use your arms to drive the rhythm'],
         defaultSets: 3, defaultReps: '30 seconds', restSeconds: 30,
         benefits: ['Elevates heart rate quickly for warm-up', 'Improves coordination and rhythm', 'Low-impact full body movement'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Jumping%20Jack%20Cross',
       },
       {
         id: 'butt-kicker-hold', name: 'Butt Kickers', kanji: '蹴尻', description: 'Jogging in place while kicking heels toward the glutes.', category: 'cardio',
@@ -4325,6 +4800,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly and stay on the balls of your feet', 'Keep your knees pointing straight down', 'Pump your arms in rhythm with your legs'],
         defaultSets: 3, defaultReps: '30-45 seconds', restSeconds: 30,
         benefits: ['Activates the hamstrings dynamically', 'Improves running stride and leg turnover', 'Elevates heart rate for conditioning'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Butt%20Kicker%20Hold',
       },
       {
         id: 'bear-crawl-forward', name: 'Bear Crawl Forward', kanji: '熊這前進', description: 'Quadrupedal crawling forward for full body strength and cardio.', category: 'cardio',
@@ -4334,6 +4810,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your knees hovering just off the floor', 'Maintain a flat back do not round or arch', 'Breathe steadily and keep a consistent pace'],
         defaultSets: 3, defaultReps: '30 seconds', restSeconds: 45,
         benefits: ['Full body cardiovascular conditioning', 'Builds shoulder and core stability', 'Improves coordination and body awareness'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Bear%20Crawl%20Forward',
       },
       {
         id: 'battle-rope-alternating', name: 'Alternating Battle Rope Wave', kanji: '交戦綱波', description: 'Creating waves with battle ropes using alternating arm motions.', category: 'cardio',
@@ -4343,6 +4820,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your core tight and brace for stability', 'Generate power from your legs and hips', 'Use your full arm not just your wrists'],
         defaultSets: 3, defaultReps: '30-45 seconds', restSeconds: 45,
         benefits: ['Intense cardiovascular conditioning', 'Builds shoulder and arm endurance', 'Low impact high calorie burn exercise'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Battle%20Rope%20Alternating',
       },
       {
         id: 'kettlebell-swing-american', name: 'American Kettlebell Swing', kanji: '米鉄鐘振', description: 'Kettlebell swung overhead to full extension for total power.', category: 'cardio',
@@ -4352,6 +4830,7 @@ export const exercises: Exercise[] = [
         tips: ['Generate power from the hips not the arms', 'Keep the core braced to protect the lower back', 'Do not overextend the lower back at the top'],
         defaultSets: 4, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Explosive hip power development', 'Full body cardiorespiratory conditioning', 'Builds posterior chain strength and endurance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Kettlebell%20Swing%20American',
       },
       {
         id: 'rowing-machine-sprint', name: 'Rowing Machine Sprint', kanji: '漕機短走', description: 'High-intensity sprint intervals on the rowing ergometer.', category: 'cardio',
@@ -4361,6 +4840,7 @@ export const exercises: Exercise[] = [
         tips: ['Drive with your legs not your arms', 'Maintain a 1:2 work-to-rest ratio', 'Focus on powerful drives and controlled recoveries'],
         defaultSets: 3, defaultReps: '250 meter sprints', restSeconds: 60,
         benefits: ['Full body cardiovascular conditioning', 'Builds muscular endurance across all major groups', 'Low impact high calorie expenditure'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Rowing%20Machine%20Sprint',
       },
       {
         id: 'assault-bike-sprint', name: 'Assault Bike Sprint', kanji: '突風車短走', description: 'Maximal effort sprint on a fan-resistance stationary bike.', category: 'cardio',
@@ -4370,6 +4850,7 @@ export const exercises: Exercise[] = [
         tips: ['Pace yourself for the full interval', 'Use the arm drive to increase power output', 'Control your breathing during the sprint'],
         defaultSets: 3, defaultReps: '20-30 seconds', restSeconds: 60,
         benefits: ['Extreme cardiovascular conditioning', 'Full body engagement for high calorie burn', 'Builds anaerobic capacity and leg power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Assault%20Bike%20Sprint',
       },
       {
         id: 'jump-rope-speed', name: 'Speed Jump Rope', kanji: '速縄跳', description: 'Fast-paced jump rope for coordination and cardiovascular endurance.', category: 'cardio',
@@ -4379,6 +4860,7 @@ export const exercises: Exercise[] = [
         tips: ['Jump only high enough to clear the rope', 'Keep your elbows close to your sides', 'Land softly to reduce joint impact'],
         defaultSets: 3, defaultReps: '45-60 seconds', restSeconds: 30,
         benefits: ['Excellent cardiovascular conditioning', 'Improves foot speed and coordination', 'Burns high calories in a short time'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Jump%20Rope%20Speed',
       },
       {
         id: 'stair-climber-fast', name: 'Stair Climber Sprint', kanji: '速階段昇', description: 'High-speed interval on the stair climbing machine.', category: 'cardio',
@@ -4388,6 +4870,7 @@ export const exercises: Exercise[] = [
         tips: ['Do not grip the handles for support', 'Take full steps not partial ones', 'Keep your core engaged for balance'],
         defaultSets: 3, defaultReps: '60 seconds fast', restSeconds: 60,
         benefits: ['Builds glute and leg endurance', 'High calorie cardiovascular workout', 'Low impact joint-friendly conditioning'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Stair%20Climber%20Fast',
       },
       {
         id: 'shuttle-run-cone', name: 'Shuttle Run', kanji: '往復走', description: 'Short distance sprint back and forth between marked points.', category: 'cardio',
@@ -4397,6 +4880,7 @@ export const exercises: Exercise[] = [
         tips: ['Stay low during the turn for better acceleration', 'Use a quick plant step to change direction', 'Breathe rhythmically throughout the sprint'],
         defaultSets: 4, defaultReps: '20-yard shuttles', restSeconds: 45,
         benefits: ['Develops acceleration and deceleration', 'Improves agility and directional change', 'Builds anaerobic conditioning and speed'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Shuttle%20Run%20Cone',
       },
       {
         id: 'frog-jump-explosive', name: 'Explosive Frog Jump', kanji: '爆発蛙跳', description: 'Deep squat to explosive full extension jump mimicking a frog leap.', category: 'cardio',
@@ -4406,6 +4890,7 @@ export const exercises: Exercise[] = [
         tips: ['Land with soft knees to absorb the impact', 'Swing your arms to generate upward momentum', 'Keep your chest up on the landing'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Builds explosive leg power', 'Elevates heart rate quickly for conditioning', 'Develops lower body coordination and strength'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Frog%20Jump%20Explosive',
       },
       {
         id: 'sprawl-burpee-no-push', name: 'Sprawl Burpee (No Push)', kanji: '伏跳無腕立', description: 'Modified burpee without the push-up for faster repetitions.', category: 'cardio',
@@ -4415,6 +4900,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your core tight throughout the movement', 'Breathe out on the explosive jump', 'Remove the push-up to increase rep speed'],
         defaultSets: 3, defaultReps: '15-20', restSeconds: 45,
         benefits: ['Full body cardio conditioning', 'Higher rep volume than standard burpees', 'Improves coordination and explosive power'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Sprawl%20Burpee%20No%20Push',
       },
       {
         id: 'ice-skater-hop', name: 'Ice Skater Hop', kanji: '氷滑跳', description: 'Lateral hop from one leg to another mimicking speed skating motion.', category: 'cardio',
@@ -4424,6 +4910,7 @@ export const exercises: Exercise[] = [
         tips: ['Land softly and stay on the balls of your feet', 'Keep the hops low and controlled', 'Use your arms to maintain balance and rhythm'],
         defaultSets: 3, defaultReps: '10-12 each side', restSeconds: 45,
         benefits: ['Develops lateral power and stability', 'Improves hip and knee joint stability', 'Excellent glute medius activation and conditioning'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Ice%20Skater%20Hop',
       },
       {
         id: 'lateral-bound-continuous', name: 'Lateral Bound Continuous', kanji: '連続側跳', description: 'Continuous side-to-side jumping for lateral power and endurance.', category: 'cardio',
@@ -4433,6 +4920,7 @@ export const exercises: Exercise[] = [
         tips: ['Focus on distance not height', 'Land with bent knees for shock absorption', 'Use your arms to drive the lateral movement'],
         defaultSets: 3, defaultReps: '8-10 each way', restSeconds: 60,
         benefits: ['Develops explosive lateral power', 'Strengthens hip abductors and stabilizers', 'Builds single-leg landing control'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lateral%20Bound%20Continuous',
       },
       {
         id: 'dot-drill-agility', name: 'Dot Drill Agility', kanji: '点打敏捷', description: 'Agility drill jumping between five dots in a cross pattern.', category: 'cardio',
@@ -4442,6 +4930,7 @@ export const exercises: Exercise[] = [
         tips: ['Stay on the balls of your feet for quick movements', 'Use light quick touches not heavy landings', 'Increase speed as you become comfortable with the pattern'],
         defaultSets: 3, defaultReps: '30 seconds', restSeconds: 30,
         benefits: ['Improves foot speed and agility', 'Develops coordination and proprioception', 'Low impact quick-feet conditioning'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Dot%20Drill%20Agility',
       },
       {
         id: 'agility-ladder-icky', name: 'Agility Ladder Icky Shuffle', kanji: '梯子敏混', description: 'Advanced ladder footwork pattern alternating in-out steps.', category: 'cardio',
@@ -4451,6 +4940,7 @@ export const exercises: Exercise[] = [
         tips: ['Stay on the balls of your feet at all times', 'Keep your arms pumping in rhythm', 'Focus on clean foot placement not speed initially'],
         defaultSets: 3, defaultReps: '3-5 ladder lengths', restSeconds: 30,
         benefits: ['Develops elite foot speed and coordination', 'Improves neuromuscular connection with the feet', 'Builds agility and quickness for sports performance'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Agility%20Ladder%20Icky',
       },
       {
         id: 'medicine-ball-slam-overhead', name: 'Overhead Medicine Ball Slam', kanji: '頭上薬球叩', description: 'Explosive overhead ball slam for full body power and conditioning.', category: 'cardio',
@@ -4460,6 +4950,7 @@ export const exercises: Exercise[] = [
         tips: ['Use your whole body to slam not just your arms', 'Slam with maximum effort for power development', 'Keep your core tight to protect your lower back'],
         defaultSets: 3, defaultReps: '10-12', restSeconds: 60,
         benefits: ['Full body explosive power development', 'High intensity cardio conditioning', 'Builds rotational and vertical power transfer'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Medicine%20Ball%20Slam%20Overhead',
       },
       {
         id: 'shadow-box-combination', name: 'Shadow Boxing Combination', kanji: '影拳組合', description: 'Shadow boxing combining punches and footwork for cardio.', category: 'cardio',
@@ -4469,6 +4960,7 @@ export const exercises: Exercise[] = [
         tips: ['Rotate your hips into each punch for power', 'Keep your chin down and hands up', 'Move in and out with footwork for realism'],
         defaultSets: 3, defaultReps: '2-3 minute rounds', restSeconds: 60,
         benefits: ['Full body cardiovascular conditioning', 'Improves coordination and footwork', 'Builds muscular endurance in the upper body'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Shadow%20Box%20Combination',
       },
       {
         id: 'incline-walk-treadmill', name: 'Treadmill Incline Walk', kanji: '傾斜歩行機', description: 'Walking on a steep incline for low-impact cardio and glute activation.', category: 'cardio',
@@ -4478,6 +4970,7 @@ export const exercises: Exercise[] = [
         tips: ['Do not lean forward on the handrails', 'Take natural strides not exaggerated steps', 'Pump your arms to increase calorie burn'],
         defaultSets: 1, defaultReps: '20-30 minutes', restSeconds: 0,
         benefits: ['Low-impact steady-state cardio', 'Activates and strengthens the glutes', 'Improves cardiovascular endurance without joint stress'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Incline%20Walk%20Treadmill',
       },
       {
         id: 'wall-ball-target', name: 'Wall Ball', kanji: '壁球投', description: 'Medicine ball thrown at a wall target while performing a squat.', category: 'cardio',
@@ -4487,6 +4980,7 @@ export const exercises: Exercise[] = [
         tips: ['Throw high enough to catch cleanly', 'Use your legs to drive the ball upward', 'Keep your core tight during the catch'],
         defaultSets: 3, defaultReps: '10-15', restSeconds: 60,
         benefits: ['Full body explosive power and conditioning', 'Builds leg strength and arm coordination', 'High calorie burn in a short period'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Wall%20Ball%20Target',
       },
 
       // ===== STRETCHING (+15) — Mobility/Yoga =====
@@ -4498,6 +4992,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your tailbone heavy on the mat', 'Rock gently to massage the spine', 'Breathe into the hip crease for deeper release'],
         defaultSets: 2, defaultReps: '45-60 seconds', restSeconds: 15,
         benefits: ['Releases the adductors and groin', 'Massages the lower back through rocking', 'Calms the mind and promotes relaxation'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Happy%20Baby%20Rock',
       },
       {
         id: 'supine-twist-knee', name: 'Supine Spinal Twist', kanji: '仰臥背捻', description: 'Lying knee drop twist for spinal mobility and lower back release.', category: 'stretching',
@@ -4507,6 +5002,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep both shoulders flat on the mat', 'Only go as far as comfortable', 'Use your opposite hand to gently assist the stretch'],
         defaultSets: 2, defaultReps: '30-45 seconds each side', restSeconds: 15,
         benefits: ['Improves spinal mobility and rotation', 'Releases lower back tension', 'Lengthens the obliques and intercostals'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Supine%20Twist%20Knee',
       },
       {
         id: 'seated-forward-bend-strap', name: 'Seated Forward Bend with Strap', kanji: '座前屈帶', description: 'Forward fold with a strap around the feet for hamstring stretching.', category: 'stretching',
@@ -4516,6 +5012,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your spine long not rounded', 'Lead with your chest not your head', 'Only fold to the point of mild tension'],
         defaultSets: 2, defaultReps: '45-60 seconds', restSeconds: 15,
         benefits: ['Deep hamstring stretch with controlled tension', 'Improves forward fold range of motion', 'Reduces risk of lower back strain during folding'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Seated%20Forward%20Bend%20Strap',
       },
       {
         id: 'lizard-pose-low', name: 'Low Lizard Pose', kanji: '蜥蜴低姿勢', description: 'Deep hip opener with the front knee wide and forearms on the floor.', category: 'stretching',
@@ -4525,6 +5022,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep the back hip squared forward', 'Walk the front foot out wider for more intensity', 'Breathe into the hip crease of the back leg'],
         defaultSets: 2, defaultReps: '30-45 seconds each side', restSeconds: 15,
         benefits: ['Deep hip flexor and psoas release', 'Opens the groin and inner thigh', 'Improves hip mobility for squatting and lunging'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Lizard%20Pose%20Low',
       },
       {
         id: 'frog-pose-flat', name: 'Frog Pose', kanji: '蛙姿勢', description: 'Kneeling wide-legged pose for deep adductor and groin opening.', category: 'stretching',
@@ -4534,6 +5032,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your feet flexed to protect the knees', 'Only go as wide as your hips allow', 'Breathe deeply into the inner thigh stretch'],
         defaultSets: 2, defaultReps: '30-45 seconds', restSeconds: 20,
         benefits: ['Deep adductor and groin release', 'Improves hip abduction range of motion', 'Essential for side splits progression'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Frog%20Pose%20Flat',
       },
       {
         id: 'saddle-pose-reclining', name: 'Reclining Saddle Pose', kanji: '仰臥鞍', description: 'Supine quad stretch kneeling back with torso lowered to the floor.', category: 'stretching',
@@ -4543,6 +5042,7 @@ export const exercises: Exercise[] = [
         tips: ['Place a cushion under your back if needed', 'Do not force the lower back to the floor', 'Keep knees hip-width apart not touching'],
         defaultSets: 2, defaultReps: '30-45 seconds', restSeconds: 20,
         benefits: ['Deep quadriceps and hip flexor stretch', 'Opens the front of the body and shoulders', 'Improves knee flexion range of motion'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Saddle%20Pose%20Reclining',
       },
       {
         id: 'half-splits-forward', name: 'Half Splits Forward Fold', kanji: '半開前屈', description: 'Half front splits position with a forward fold for hamstrings.', category: 'stretching',
@@ -4552,6 +5052,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep the front foot flexed toward you', 'Square both hips to the front', 'Fold from the hips not the lower back'],
         defaultSets: 2, defaultReps: '30-45 seconds each side', restSeconds: 15,
         benefits: ['Deep hamstring and adductor stretch', 'Improves forward splits progression', 'Lengthens the posterior chain'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Half%20Splits%20Forward',
       },
       {
         id: 'sleeping-pigeon-fold', name: 'Sleeping Pigeon Pose', kanji: '眠鳩', description: 'Deep hip opener folding forward over a bent front leg.', category: 'stretching',
@@ -4561,6 +5062,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep the back hip squared and level', 'Place a block under the hip for comfort', 'Breathe into the tight glute area'],
         defaultSets: 2, defaultReps: '45-60 seconds each side', restSeconds: 15,
         benefits: ['Deep glute and piriformis release', 'Relieves lower back and sciatic tension', 'Promotes hip mobility and flexibility'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Sleeping%20Pigeon%20Fold',
       },
       {
         id: 'cross-body-shoulder-stretch', name: 'Cross-Body Shoulder Stretch', kanji: '交差肩伸', description: 'Pulling one arm across the body to stretch the posterior shoulder.', category: 'stretching',
@@ -4570,6 +5072,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep the shoulder of the stretched arm relaxed', 'Do not pull too aggressively', 'Maintain an upright posture throughout'],
         defaultSets: 2, defaultReps: '20-30 seconds each side', restSeconds: 10,
         benefits: ['Releases tight posterior shoulders', 'Improves shoulder range of motion', 'Reduces risk of rotator cuff injuries'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cross%20Body%20Shoulder%20Stretch',
       },
       {
         id: 'overhead-tricep-reach', name: 'Overhead Tricep Stretch', kanji: '頭上三頭伸', description: 'Reaching one arm overhead and bending to stretch the triceps.', category: 'stretching',
@@ -4579,6 +5082,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep the neck relaxed and long', 'Do not pull the elbow too aggressively', 'Keep your ribs from flaring out'],
         defaultSets: 2, defaultReps: '20-30 seconds each side', restSeconds: 10,
         benefits: ['Stretches the triceps brachii deeply', 'Improves overhead shoulder range of motion', 'Reduces triceps tightness after pressing work'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Overhead%20Tricep%20Reach',
       },
       {
         id: 'cat-cow-flow', name: 'Cat-Cow Flow', kanji: '猫牛流', description: 'Dynamic spinal flexion and extension in Tabletop for warm-up.', category: 'stretching',
@@ -4588,6 +5092,7 @@ export const exercises: Exercise[] = [
         tips: ['Move with your breath — inhale Cow exhale Cat', 'Initiate the movement from your tailbone', 'Keep shoulders stacked over wrists'],
         defaultSets: 2, defaultReps: '8-10 breaths', restSeconds: 0,
         benefits: ['Warms up the entire spine', 'Improves spinal mobility and flexibility', 'Relieves tension in the back and neck'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Cat%20Cow%20Flow',
       },
       {
         id: 'neck-release-side', name: 'Side Neck Release', kanji: '側頸解放', description: 'Gentle lateral neck stretch for releasing tension.', category: 'stretching',
@@ -4597,6 +5102,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your opposite shoulder relaxed down', 'Do not force the neck — gentle is effective', 'Breathe into the stretch'],
         defaultSets: 2, defaultReps: '20-30 seconds each side', restSeconds: 10,
         benefits: ['Releases neck and upper trap tension', 'Improves cervical range of motion', 'Alleviates stress-related neck tightness'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Neck%20Release%20Side',
       },
       {
         id: 'standing-quad-stretch-wall', name: 'Standing Quad Stretch', kanji: '立脚部伸', description: 'Standing quadriceps stretch using a wall for balance.', category: 'stretching',
@@ -4606,6 +5112,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep your standing knee soft not locked', 'Tuck your tailbone slightly to deepen the stretch', 'Keep your knees together'],
         defaultSets: 2, defaultReps: '20-30 seconds each side', restSeconds: 10,
         benefits: ['Stretches the quadriceps and hip flexors', 'Improves knee flexion range of motion', 'Reduces quad tightness after leg training'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Standing%20Quad%20Stretch%20Wall',
       },
       {
         id: 'piriformis-stretch-standing', name: 'Standing Piriformis Stretch', kanji: '立梨状筋伸', description: 'Standing stretch crossing one leg over the other for the piriformis.', category: 'stretching',
@@ -4615,6 +5122,7 @@ export const exercises: Exercise[] = [
         tips: ['Only sit back as far as comfortable', 'Keep the foot of the crossed leg flexed', 'Use a wall for balance if needed'],
         defaultSets: 2, defaultReps: '20-30 seconds each side', restSeconds: 10,
         benefits: ['Releases the piriformis muscle deeply', 'Relieves sciatic nerve tension', 'Improves hip external rotation range of motion'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Piriformis%20Stretch%20Standing',
       },
       {
         id: 'calf-stretch-wall', name: 'Wall Calf Stretch', kanji: '壁腓伸', description: 'Standing calf stretch against a wall for gastrocnemius and soleus.', category: 'stretching',
@@ -4624,6 +5132,7 @@ export const exercises: Exercise[] = [
         tips: ['Keep the back leg straight and heel down', 'Turn the back foot slightly inward for a twist', 'Also try bent knee version for soleus stretch'],
         defaultSets: 2, defaultReps: '20-30 seconds each side', restSeconds: 10,
         benefits: ['Stretches the gastrocnemius and soleus', 'Improves ankle dorsiflexion range of motion', 'Reduces risk of calf strains and plantar fasciitis'],
+        imageUrl: 'https://placehold.co/400x300/1a1a2e/e31e24?text=Calf%20Stretch%20Wall',
       },
 ];
 

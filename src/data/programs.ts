@@ -1,3 +1,5 @@
+export type EvidenceLevel = 'A' | 'B' | 'C';
+
 export interface TrainingProgram {
   id: string;
   name: string;
@@ -9,11 +11,13 @@ export interface TrainingProgram {
   equipment: string;
   description: string;
   scientificBasis: string;
+  evidenceLevel: EvidenceLevel;
   whatYouWillGain: string;
   sampleExercises: string[];
   targetMuscles: string[];
   provenBy: string;
   popularity: 'classic' | 'modern' | 'competitive';
+  recommendedDietProgramId?: string;
 }
 
 export const REAL_PROGRAMS: TrainingProgram[] = [
@@ -35,7 +39,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Deadlift', 'Overhead Press', 'Power Clean', 'Pull-ups'],
     targetMuscles: ['Quads', 'Hamstrings', 'Glutes', 'Chest', 'Shoulders', 'Back', 'Core'],
     provenBy: 'Mark Rippetoe, Starting Strength book, thousands of gym testimonials',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'stronglifts-5x5',
@@ -52,7 +58,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Barbell Row', 'Overhead Press', 'Deadlift'],
     targetMuscles: ['Quads', 'Glutes', 'Hamstrings', 'Chest', 'Back', 'Shoulders'],
     provenBy: 'Mehdi Hadim, StrongLifts.com, 500k+ users',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'greyskull-lp',
@@ -69,7 +77,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Deadlift', 'Overhead Press', 'Chin-ups', 'Barbell Curl'],
     targetMuscles: ['Full Body', 'Lats', 'Biceps', 'Chest', 'Shoulders', 'Quads'],
     provenBy: 'John Sheaffer, Greyskull Barbell Club',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: '531',
@@ -86,7 +96,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Deadlift', 'Overhead Press', 'Barbell Row', 'Chin-ups'],
     targetMuscles: ['Full Body', 'Quads', 'Chest', 'Back', 'Shoulders'],
     provenBy: 'Jim Wendler, EliteFTS, thousands of lifters',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'periodized-carb-cycling',
   },
   {
     id: 'madcow-5x5',
@@ -103,7 +115,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Barbell Row', 'Overhead Press', 'Deadlift'],
     targetMuscles: ['Quads', 'Glutes', 'Chest', 'Back', 'Shoulders', 'Hamstrings'],
     provenBy: 'Bill Starr, Glenn Pendlay, Madcow forum adaptation',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'periodized-carb-cycling',
   },
   {
     id: 'texas-method',
@@ -120,7 +134,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat (Volume)', 'Bench Press (Volume)', 'Power Clean', 'Light Squat', 'Heavy Deadlift'],
     targetMuscles: ['Quads', 'Glutes', 'Chest', 'Back', 'Shoulders', 'Hamstrings'],
     provenBy: 'Mark Rippetoe, Practical Programming for Strength Training',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'smolov',
@@ -137,7 +153,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat (various intensities)', 'Front Squat', 'Box Squat', 'Pause Squat'],
     targetMuscles: ['Quads', 'Glutes', 'Hamstrings', 'Lower Back', 'Core'],
     provenBy: 'Sergei Smolov, Russian weightlifting methodology',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'smolov-jr',
@@ -154,7 +172,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Competition Bench/Squat (each session)', 'Triceps Extensions', 'Leg Curls'],
     targetMuscles: ['Chest/Triceps/Shoulders OR Quads/Glutes (depending on lift)'],
     provenBy: 'Sergey Smolov, Russian weightlifting methodology',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'sheiko',
@@ -171,7 +191,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Pause Squat', 'Bench Press', 'Sumo/Conventional Deadlift', 'Board Press', 'Good Morning', 'Leg Curl'],
     targetMuscles: ['Full Body Powerlifting', 'Quads', 'Chest', 'Back', 'Glutes'],
     provenBy: 'Boris Sheiko, multiple IPF world champions',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'vertical-diet',
   },
   {
     id: 'westside-barbell',
@@ -188,7 +210,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Box Squat (varied heights)', 'Floor Press', 'Rack Pulls', 'Speed Deadlift', 'Good Morning', 'Reverse Hyper'],
     targetMuscles: ['Full Body', 'Posterior Chain', 'Chest', 'Shoulders', 'Quads'],
     provenBy: 'Louie Simmons, Westside Barbell Club, hundreds of world record holders',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'vertical-diet',
   },
   {
     id: 'bulgarian-method',
@@ -205,7 +229,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Snatch', 'Clean & Jerk', 'Front Squat', 'Back Squat', 'Push Press', 'Power Clean'],
     targetMuscles: ['Full Body', 'Explosive Power', 'Quads', 'Shoulders', 'Posterior Chain'],
     provenBy: 'Ivan Abadjiev, Bulgarian national weightlifting team (multiple Olympic gold medals)',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'german-volume-training',
@@ -222,7 +248,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['10x10 Squat', '10x10 Bench Press', '10x10 Barbell Row', 'Chin-ups', 'Leg Curls'],
     targetMuscles: ['Full Body', 'Chest', 'Quads', 'Back', 'Shoulders'],
     provenBy: 'Charles Poliquin, German national weightlifting team',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'kevin-levrone-diet',
   },
   {
     id: '5x5-strong',
@@ -239,7 +267,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Barbell Row', 'Overhead Press', 'Deadlift'],
     targetMuscles: ['Full Body', 'Chest', 'Quads', 'Back', 'Shoulders', 'Hamstrings'],
     provenBy: 'Reg Park, Bill Starr, general strength training literature',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'primal-blueprint',
   },
   {
     id: 'bill-starr-5x5',
@@ -256,7 +286,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Power Clean', 'Incline Bench', 'Pull-ups'],
     targetMuscles: ['Full Body', 'Quads', 'Chest', 'Shoulders', 'Back'],
     provenBy: 'Bill Starr, The Strongest Shall Survive, NFL teams',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'ice-cream-fitness-5x5',
@@ -273,7 +305,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Barbell Row', 'Overhead Press', 'Deadlift', 'Barbell Curl', 'Tricep Pushdown', 'Face Pull'],
     targetMuscles: ['Full Body', 'Biceps', 'Triceps', 'Delts', 'Chest', 'Quads', 'Back'],
     provenBy: 'Jason Blaha, ICF community',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'nsuns-lp',
@@ -290,7 +324,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press (heavy single)', 'Squat (heavy single)', 'Close Grip Bench', 'Sumo Deadlift', 'Barbell Row', 'Lat Pulldown'],
     targetMuscles: ['Full Body', 'Chest', 'Quads', 'Back', 'Shoulders', 'Triceps'],
     provenBy: 'Reddit r/Fitness community, 50,000+ users',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'aggressive-calorie-deficit',
   },
   {
     id: 'cap3',
@@ -307,7 +343,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Competition Squat', 'Front Squat', 'Bench Press', 'Close Grip Bench', 'Deadlift', 'Deficit Deadlift', 'Barbell Row'],
     targetMuscles: ['Full Body', 'Quads', 'Chest', 'Back', 'Hamstrings', 'Shoulders'],
     provenBy: 'nSuns, Reddit r/nSuns community',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'phul',
@@ -324,7 +362,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Barbell Row', 'Dumbbell Incline Press', 'Leg Press', 'Hammer Curl'],
     targetMuscles: ['Full Body', 'Chest', 'Quads', 'Back', 'Shoulders', 'Arms'],
     provenBy: 'Bodybuilding.com featured program, Brandon Morrison',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'phat',
@@ -341,7 +381,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Deadlift', 'Leg Press', 'Pull-ups', 'Seated Row', 'Incline Bench', 'Lateral Raise'],
     targetMuscles: ['Full Body', 'Chest', 'Back', 'Quads', 'Shoulders', 'Arms', 'Glutes'],
     provenBy: 'Dr. Layne Norton, PhD in Nutritional Sciences',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'aggressive-calorie-deficit',
   },
   {
     id: '531-bbb',
@@ -358,7 +400,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['5/3/1 Squat + 5x10 Squat', '5/3/1 Bench + 5x10 Bench', '5/3/1 Press + 5x10 Press', '5/3/1 Deadlift + 5x10 Deadlift'],
     targetMuscles: ['Full Body', 'Chest', 'Quads', 'Back', 'Shoulders', 'Glutes'],
     provenBy: 'Jim Wendler, 5/3/1: The Simplest and Most Effective Training System',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'rp-mass-diet',
   },
   {
     id: '531-fsl',
@@ -375,7 +419,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['5/3/1 Squat + FSL 5x5', '5/3/1 Bench + FSL 5x5', '5/3/1 Deadlift + FSL 5x5', 'Accessory Work'],
     targetMuscles: ['Full Body', 'Chest', 'Quads', 'Back'],
     provenBy: 'Jim Wendler, 5/3/1 Forever',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: '531-ssl',
@@ -392,7 +438,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['5/3/1 Squat + SSL 5x5', '5/3/1 Bench + SSL 5x5', '5/3/1 Deadlift + SSL 5x5'],
     targetMuscles: ['Full Body', 'Chest', 'Quads', 'Back'],
     provenBy: 'Jim Wendler, 5/3/1 Forever',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: '531-joker',
@@ -409,7 +457,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['5/3/1 Squat + Joker Sets', '5/3/1 Bench + Joker Sets', '5/3/1 Deadlift + Joker Sets', 'Accessory Work'],
     targetMuscles: ['Full Body', 'Chest', 'Quads', 'Back'],
     provenBy: 'Jim Wendler, 5/3/1 Forever',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: '531-pyramid',
@@ -426,7 +476,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Pyramid Squat sets', 'Pyramid Bench sets', 'Pyramid Deadlift sets', 'Assistance Work'],
     targetMuscles: ['Full Body', 'Chest', 'Quads', 'Back'],
     provenBy: 'Jim Wendler, 5/3/1 variations',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'jacked-tan-2',
@@ -443,7 +495,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Sumo Deadlift', 'Close Grip Bench', 'Barbell Row', 'Dumbbell OHP', 'Lateral Raise', 'Tricep Pushdown'],
     targetMuscles: ['Full Body', 'Chest', 'Quads', 'Back', 'Shoulders', 'Arms', 'Glutes', 'Hamstrings'],
     provenBy: 'Cody LeFever, GZCL methodology, Reddit r/GZCL',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'gzcl-method',
@@ -460,7 +514,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat (T1)', 'Bench Press (T1)', 'Front Squat (T2)', 'Incline Bench (T2)', 'Lateral Raise (T3)', 'Face Pull (T3)'],
     targetMuscles: ['Full Body', 'Customizable'],
     provenBy: 'Cody LeFever, Reddit r/GZCL community',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'flexible-dieting',
   },
   {
     id: 'gzlp',
@@ -477,7 +533,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Deadlift', 'Overhead Press', 'Lat Pulldown', 'Dumbbell Row', 'Leg Curl'],
     targetMuscles: ['Full Body', 'Chest', 'Quads', 'Back', 'Shoulders'],
     provenBy: 'Cody LeFever, Reddit r/GZCL',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'volumetrics-diet',
   },
   {
     id: 'juggernaut-method',
@@ -494,7 +552,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Competition Squat', 'Competition Bench', 'Competition Deadlift', 'Overhead Press', 'Front Squat', 'Barbell Row'],
     targetMuscles: ['Full Body', 'Quads', 'Chest', 'Back', 'Shoulders'],
     provenBy: 'Chad Wesley Smith, Juggernaut Training Systems',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'rp-mass-diet',
   },
   {
     id: 'cube-method',
@@ -511,7 +571,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Heavy Squat/Box Squat', 'Rep Bench/Incline Bench', 'Speed Deadlift/Deficit Deadlift', 'Good Morning', 'Barbell Row'],
     targetMuscles: ['Full Body', 'Quads', 'Chest', 'Back', 'Posterior Chain'],
     provenBy: 'Brandon Lilly, Cube Method book',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'eat-to-perform',
   },
   {
     id: 'conjugate-method',
@@ -528,7 +590,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Box Squat (varied heights)', 'Floor Press', 'Speed Bench with Bands', 'Rack Pull', 'Reverse Hyper', 'Good Morning'],
     targetMuscles: ['Full Body', 'Posterior Chain', 'Chest', 'Quads', 'Shoulders', 'Core'],
     provenBy: 'Louie Simmons, Westside Barbell, hundreds of world record holders',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'aggressive-calorie-deficit',
   },
 
   // ======================================================================
@@ -549,7 +613,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press', 'Overhead Press', 'Lateral Raise', 'Barbell Row', 'Pull-up', 'Barbell Curl', 'Barbell Squat', 'Romanian Deadlift'],
     targetMuscles: ['Full Body', 'Chest', 'Shoulders', 'Triceps', 'Back', 'Biceps', 'Quads', 'Glutes', 'Hamstrings'],
     provenBy: 'Reddit r/Fitness, Schoenfeld frequency research',
+  evidenceLevel: 'A',
     popularity: 'classic',
+    recommendedDietProgramId: 'carb-cycling',
   },
   {
     id: 'arnold-split',
@@ -566,7 +632,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Flat Bench Press', 'Barbell Row', 'Incline Bench', 'Pull-up', 'Overhead Press', 'Dumbbell Curl', 'Skull Crusher', 'Barbell Squat'],
     targetMuscles: ['Full Body', 'Chest', 'Back', 'Shoulders', 'Arms', 'Quads', 'Core'],
     provenBy: 'Arnold Schwarzenegger, multiple Mr. Olympia titles',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'bro-split',
@@ -583,7 +651,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press', 'Dumbbell Fly', 'Barbell Row', 'Lat Pulldown', 'Lateral Raise', 'Barbell Curl', 'Tricep Pushdown', 'Leg Press'],
     targetMuscles: ['Full Body', 'Chest', 'Back', 'Shoulders', 'Arms', 'Legs'],
     provenBy: 'Joe Weider, Muscle & Fitness magazine, traditional bodybuilding',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'upper-lower-split',
@@ -600,7 +670,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press', 'Barbell Row', 'Overhead Press', 'Pull-up', 'Barbell Squat', 'Romanian Deadlift', 'Leg Press', 'Dumbbell Curl'],
     targetMuscles: ['Full Body', 'Chest', 'Back', 'Shoulders', 'Arms', 'Quads', 'Hamstrings', 'Glutes'],
     provenBy: 'Dr. Brad Schoenfeld, Eric Helms, common bodybuilding practice',
+  evidenceLevel: 'A',
     popularity: 'modern',
+    recommendedDietProgramId: 'carb-cycling',
   },
   {
     id: 'full-body-3x',
@@ -617,7 +689,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Barbell Row', 'Romanian Deadlift', 'Overhead Press', 'Chin-up'],
     targetMuscles: ['Full Body', 'Chest', 'Back', 'Shoulders', 'Quads', 'Hamstrings', 'Glutes', 'Arms'],
     provenBy: 'Dr. Brad Schoenfeld, Eric Helms, Renaissance Periodization',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-paleo',
   },
   {
     id: 'german-body-comp',
@@ -634,7 +708,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat', 'Chin-up', 'Bench Press', 'Barbell Row', 'Dumbbell Clean', 'Push Press'],
     targetMuscles: ['Full Body', 'Systemic Conditioning'],
     provenBy: 'Charles Poliquin, Poliquin Performance Center',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'fst-7',
@@ -651,7 +727,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Leg Extension 7 sets', 'Hammer Curl 7 sets', 'Cable Crossover 7 sets', 'Tricep Pushdown 7 sets', 'Lateral Raise 7 sets'],
     targetMuscles: ['Customizable per muscle group'],
     provenBy: 'Hany Rambod, coached Jay Cutler, Phil Heath, Jeremy Buendia (15+ Mr. Olympia wins)',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'dc-training',
@@ -668,7 +746,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Smith Machine Press', 'Rack Pull', 'Pulldown', 'Dumbbell Press', 'Squat', 'Rest-Pause Curls', 'Stretching'],
     targetMuscles: ['Full Body', 'Customizable'],
     provenBy: 'Dante Trudel, IntenseMuscle.com, 1000s of users',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'rp-diet',
   },
   {
     id: 'mountain-dog',
@@ -685,7 +765,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Incline Bench', 'Pendulum Squat', 'Chest Supported Row', 'Banded Pull-apart', 'Giant Set Triceps', 'Myo-Rep Curls'],
     targetMuscles: ['Full Body', 'Customizable'],
     provenBy: 'John Meadows, multiple natural bodybuilding titles',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'y3t',
@@ -702,7 +784,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Machine Bench Press', 'T-Bar Row', 'Smith Machine Shoulder Press', 'Squat', 'Machine Curl'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Dorian Yates, 6x Mr. Olympia',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'hst',
@@ -719,7 +803,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat', 'Bench Press', 'Barbell Row', 'Overhead Press', 'Deadlift', 'Leg Press'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Bryan Haycock, thinkmuscle.com',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'myo-reps',
@@ -736,7 +822,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Dumbbell Press (activation + myo)', 'Barbell Row (activation + myo)', 'Squat (activation + myo)', 'Lateral Raise (activation + myo)'],
     targetMuscles: ['Full Body', 'Customizable'],
     provenBy: 'Borge Fagerli, Myo-Reps research',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'rest-pause',
@@ -753,7 +841,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat (rest-pause)', 'Bench Press (rest-pause)', 'Dumbbell Curl (rest-pause)', 'Leg Press (rest-pause)'],
     targetMuscles: ['Full Body', 'Customizable'],
     provenBy: 'Mike Mentzer, Dorian Yates, HIT research',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'drop-set-training',
@@ -770,7 +860,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Dumbbell Shoulder Press (drops)', 'Leg Extension (drops)', 'Cable Crossover (drops)', 'Preacher Curl (drops)'],
     targetMuscles: ['Target muscle being dropped'],
     provenBy: 'Joe Weider, bodybuilding tradition, sports science research',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'giant-sets',
@@ -787,7 +879,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press + Incline Fly + Cable Crossover + Push-up (Chest Giant Set)'],
     targetMuscles: ['Customizable per giant set target'],
     provenBy: 'Joe Weider, John Meadows, bodybuilding tradition',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'helms-3-week',
@@ -804,7 +898,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Pendlay Row', 'Romanian Deadlift', 'Overhead Press', 'Lat Pulldown'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Dr. Eric Helms, PhD, 3DMJ team',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'rp-male-physique',
@@ -821,7 +917,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Incline Bench', 'Chest Supported Row', 'Leg Press', 'Lateral Raise', 'Face Pull', 'Hammer Curl'],
     targetMuscles: ['Full Body', 'Customizable weak points'],
     provenBy: 'Dr. Mike Israetel, PhD, Renaissance Periodization',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'rp-female-physique',
@@ -838,7 +936,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Hip Thrust', 'Romanian Deadlift', 'Goblet Squat', 'Leg Press', 'Bulg Split Squat', 'Pull-up', 'Incline DB Press'],
     targetMuscles: ['Glutes', 'Hamstrings', 'Quads', 'Back', 'Shoulders', 'Core'],
     provenBy: 'Dr. Mike Israetel, PhD, Renaissance Periodization',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'nippard-ppl',
@@ -855,7 +955,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Flat Barbell Bench', 'Incline Dumbbell Bench', 'Lateral Raise', 'Face Pull', 'Pull-up', 'Barbell Row', 'Squat', 'RDL'],
     targetMuscles: ['Full Body', 'Chest', 'Back', 'Shoulders', 'Arms', 'Quads', 'Hamstrings', 'Glutes'],
     provenBy: 'Jeff Nippard, evidence-based fitness YouTuber',
+  evidenceLevel: 'A',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'nippard-upper-lower',
@@ -872,7 +974,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press', 'Barbell Row', 'Squat', 'RDL', 'Overhead Press', 'Chin-up', 'Leg Press', 'Lateral Raise'],
     targetMuscles: ['Full Body', 'Chest', 'Back', 'Shoulders', 'Arms', 'Legs'],
     provenBy: 'Jeff Nippard, evidence-based approach',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'nippard-full-body',
@@ -889,7 +993,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat', 'Bench Press', 'Barbell Row', 'RDL', 'Overhead Press', 'Chin-up', 'Lateral Raise'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Jeff Nippard, evidence-based fitness',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'athlean-ax1',
@@ -906,7 +1012,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press', 'Pull-up', 'Squat', 'Overhead Press', 'Dumbbell Row', 'Plank', 'Burpee Finisher'],
     targetMuscles: ['Full Body', 'Athletic conditioning', 'Core', 'Chest', 'Back', 'Legs', 'Shoulders'],
     provenBy: 'Jeff Cavaliere, Athlean-X (11M+ YouTube subscribers)',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'athlean-ax2',
@@ -923,7 +1031,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Incline Bench', 'Cluster Pull-ups', 'Pendlay Row', 'Plyo Push-ups', 'Sprint Intervals'],
     targetMuscles: ['Full Body', 'Athletic performance', 'Power', 'Conditioning'],
     provenBy: 'Jeff Cavaliere, Athlean-X',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'athlean-max-shred',
@@ -940,7 +1050,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Dumbbell Bench Press', 'Pull-up', 'Goblet Squat', 'Dumbbell Row', 'HIIT Sprints', 'Ice Cream Finisher'],
     targetMuscles: ['Full Body', 'Fat loss', 'Muscle preservation', 'Core'],
     provenBy: 'Jeff Cavaliere, Athlean-X',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'athlean-max-size',
@@ -957,7 +1069,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Dumbbell Fly (stretch)', 'Incline Bench', 'Pull-up', 'Barbell Row', 'Dumbbell Curl', 'Skull Crusher'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Jeff Cavaliere, Athlean-X',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'israetel-smr',
@@ -974,7 +1088,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Incline Bench', 'Chest Supported Row', 'Lateral Raise', 'Leg Press', 'Leg Curl', 'Cable Curl', 'Tricep Pushdown'],
     targetMuscles: ['Full Body', 'Individualized per muscle group'],
     provenBy: 'Dr. Mike Israetel, PhD, Renaissance Periodization',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'lyle-bulking',
@@ -991,7 +1107,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat', 'Bench Press', 'Barbell Row', 'Overhead Press', 'Deadlift', 'Chin-up', 'Leg Press'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Lyle McDonald, author of The Bulking Routine',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'lyle-cutting',
@@ -1008,7 +1126,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Deadlift', 'Overhead Press', 'Chin-up', 'Leg Press'],
     targetMuscles: ['Full Body', 'Muscle preservation focus'],
     provenBy: 'Lyle McDonald, author of The Rapid Fat Loss Handbook',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'gvs-5-day',
@@ -1025,7 +1145,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Incline Bench', 'Barbell Row', 'Seated DB Press', 'Barbell Curl', 'Squat', 'Lateral Raise', 'Tricep Pushdown'],
     targetMuscles: ['Chest', 'Back', 'Shoulders', 'Arms', 'Legs'],
     provenBy: 'Graham VanSprundel (GVS), YouTube fitness community',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'cbum-workout',
@@ -1042,7 +1164,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Machine Bench Press', 'Chest Supported Row', 'DB Shoulder Press', 'Squat', 'Preacher Curl', 'Tricep Pushdown', 'Leg Extension'],
     targetMuscles: ['Full Body', 'Classic proportions', 'Chest', 'Back', 'Shoulders', 'Arms', 'Legs'],
     provenBy: 'Chris Bumstead, 5x Mr. Olympia Classic Physique',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'ronnie-coleman',
@@ -1059,7 +1183,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat 800 lbs', 'Bench Press 500 lbs', 'Barbell Row 500 lbs', 'Deadlift 800 lbs', 'Dumbbell Curl 130s', 'Leg Press 2000+ lbs'],
     targetMuscles: ['Full Body', 'Extreme mass'],
     provenBy: 'Ronnie Coleman, 8x Mr. Olympia (1998-2005)',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'jay-cutler',
@@ -1076,7 +1202,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Flat Bench', 'Barbell Row', 'Incline Bench', 'Lat Pulldown', 'DB Shoulder Press', 'Barbell Curl', 'Squat', 'Leg Press'],
     targetMuscles: ['Full Body', 'Chest', 'Back', 'Shoulders', 'Arms', 'Legs'],
     provenBy: 'Jay Cutler, 4x Mr. Olympia (2006-2007, 2009-2010)',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'phil-heath',
@@ -1093,7 +1221,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Dumbbell Bench Press', 'Chest Supported Row', 'Side Lateral Raise', 'Leg Press', 'Cable Curl', 'Overhead Tricep Extension'],
     targetMuscles: ['Full Body', 'Symmetry-focused'],
     provenBy: 'Phil Heath, 7x Mr. Olympia (2011-2017)',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'kai-greene',
@@ -1110,7 +1240,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Incline Bench', 'Pec Deck Fly', 'Lateral Raise', 'Machine Squat', 'Hammer Curl', 'Rope Pushdown', 'Static Hold Deadlift'],
     targetMuscles: ['Full Body', 'Muscle detail and separation'],
     provenBy: 'Kai Greene, 3x Arnold Classic champion',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'flex-wheeler',
@@ -1127,7 +1259,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Flat Bench', 'Barbell Row', 'Lateral Raise', 'Leg Extension', 'Leg Curl', 'Dumbbell Curl', 'Cable Crunch'],
     targetMuscles: ['Full Body', 'Aesthetic proportions'],
     provenBy: 'Flex Wheeler, 4x Arnold Classic champion',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'lean-bulk',
   },
 
   // ======================================================================
@@ -1148,7 +1282,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Pause Squat', 'Competition Bench', 'Sumo/Conventional Deadlift', 'Board Press', 'Good Morning', 'Leg Curl', 'Tricep Extension'],
     targetMuscles: ['Quads', 'Glutes', 'Chest', 'Triceps', 'Hamstrings', 'Back', 'Full Body Powerlifting'],
     provenBy: 'Boris Sheiko, multiple IPF world champions',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'sheiko-advanced',
@@ -1165,7 +1301,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Competition Squat', 'Competition Bench', 'Competition Deadlift', 'Pause Bench', 'Deficit Deadlift', 'Front Squat', 'Board Press'],
     targetMuscles: ['Full Body Powerlifting', 'Competition lift specificity'],
     provenBy: 'Boris Sheiko, IPF world champions',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'smolov-squat',
@@ -1182,7 +1320,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat (all sessions)', 'Front Squat', 'Box Squat', 'Pause Squat', 'Good Morning', 'Leg Curl'],
     targetMuscles: ['Quads', 'Glutes', 'Hamstrings', 'Core', 'Lower Back'],
     provenBy: 'Sergey Smolov, Russian weightlifting sports science',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'smolov-bench',
@@ -1199,7 +1339,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press (all sessions)', 'Close Grip Bench', 'Board Press', 'Tricep Extension', 'Face Pull'],
     targetMuscles: ['Chest', 'Triceps', 'Front Delts'],
     provenBy: 'Sergey Smolov, adapted by powerlifting community',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'coan-phillippi-deadlift',
@@ -1216,7 +1358,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Conventional Deadlift', 'Sumo Deadlift', 'Deficit Deadlift', 'Rack Pull', 'Snatch Grip Deadlift', 'Good Morning', 'Barbell Row'],
     targetMuscles: ['Hamstrings', 'Glutes', 'Lower Back', 'Traps', 'Grip', 'Full Posterior Chain'],
     provenBy: 'Ed Coan (greatest powerlifter of all time), Matt Phillippi',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: '531-powerlifting',
@@ -1233,7 +1377,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat 5/3/1', 'Bench 5/3/1', 'Deadlift 5/3/1', 'Press 5/3/1', 'Front Squat', 'Close Grip Bench', 'Barbell Row'],
     targetMuscles: ['Full Body Powerlifting', 'Competition lifts'],
     provenBy: 'Jim Wendler, 5/3/1 for Powerlifting',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'westside-conjugate',
@@ -1250,7 +1396,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Box Squat (varied)', 'Floor Press', 'Speed Bench with Bands', 'Speed Deadlift with Bands', 'Rack Pull', 'Good Morning', 'Reverse Hyper', 'Belt Squat'],
     targetMuscles: ['Full Body Powerlifting', 'Posterior Chain', 'Chest', 'Quads'],
     provenBy: 'Louie Simmons, Westside Barbell, hundreds of world records',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'matt-wenning-conjugate',
@@ -1267,7 +1415,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Belt Squat', 'Box Squat', 'Floor Press', 'Reverse Hyper', 'Glute Ham Raise', 'Pull-through', 'Farmers Walk'],
     targetMuscles: ['Full Body Powerlifting', 'Posterior Chain', 'Core'],
     provenBy: 'Matt Wenning, 2500+ lb raw total',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'cube-boss',
@@ -1284,7 +1434,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat (Heavy/Reps/Speed)', 'Bench (Heavy/Reps/Speed)', 'Deadlift (Heavy/Reps/Speed)', 'Accessory Work'],
     targetMuscles: ['Full Body Powerlifting', 'Competition lifts'],
     provenBy: 'Brandon Lilly, Cube Method book',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'rts-general-gainz',
@@ -1301,7 +1453,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat (RPE 8 top)', 'Bench (RPE 8 top)', 'Deadlift (RPE 8 top)', 'Close Grip Bench', 'Front Squat', 'Barbell Row'],
     targetMuscles: ['Full Body Powerlifting', 'Competition lifts'],
     provenBy: 'Mike Tuchscherer, RTS, multiple USAPL champion',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'bulgarian-manual',
@@ -1318,7 +1472,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Daily Max Squat', 'Daily Max Bench', 'Daily Max Deadlift', 'Light Accessories'],
     targetMuscles: ['Full Body Powerlifting', 'Competition lifts'],
     provenBy: 'Ivan Abadjiev, Bulgarian weightlifting methodology (adapted for PL)',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'hepburn-method',
@@ -1335,7 +1491,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Deadlift (variation)', 'Overhead Press', 'Barbell Row', 'Pull-up'],
     targetMuscles: ['Full Body', 'Chest', 'Quads', 'Back', 'Shoulders'],
     provenBy: 'Doug Hepburn, 600+ lb bench press pioneer',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'ssi',
@@ -1352,7 +1510,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Pause Squat (at sticking point)', 'Board Press', 'Pin Press', 'Rack Pull (from sticking point)', 'Good Morning'],
     targetMuscles: ['Targeted to individual weak points'],
     provenBy: 'Powerlifting coaching methodology, Westside Barbell influence',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'kingpin-method',
@@ -1369,7 +1529,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Speed Squat with Bands', 'Max Effort Bench', 'Speed Deadlift with Chains', 'Box Squat', 'Board Press'],
     targetMuscles: ['Full Body Powerlifting', 'Explosive power'],
     provenBy: 'Powerlifting conjugate community',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'silent-mike-powerbuilding',
@@ -1386,7 +1548,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat', 'Bench Press', 'Deadlift', 'Barbell Row', 'Dumbbell Incline Press', 'Lateral Raise', 'Barbell Curl', 'Tricep Pushdown'],
     targetMuscles: ['Full Body', 'Strength and hypertrophy combined'],
     provenBy: 'Mike Vacanti (Silent Mike), YouTube fitness community',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'calgary-barbell',
@@ -1403,7 +1567,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Competition Squat', 'Competition Bench', 'Deadlift', 'Close Grip Bench', 'Front Squat', 'Barbell Row', 'Good Morning'],
     targetMuscles: ['Full Body Powerlifting', 'Competition lifts'],
     provenBy: 'Dr. Bryce Krawczyk, Calgary Barbell, multiple national champions',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'candito-linear',
@@ -1420,7 +1586,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Deadlift', 'Pause Squat', 'Barbell Row', 'Pull-up'],
     targetMuscles: ['Full Body Powerlifting', 'Competition lifts'],
     provenBy: 'Jonnie Candito, USAPL raw champion',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'candito-6-week',
@@ -1437,7 +1605,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Competition Squat', 'Competition Bench', 'Deadlift', 'Pause Squat', 'Close Grip Bench', 'Barbell Row', 'Leg Curl'],
     targetMuscles: ['Full Body Powerlifting', 'Competition lifts'],
     provenBy: 'Jonnie Candito, Candito Training HQ',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'candito-bench',
@@ -1454,7 +1624,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Competition Bench', 'Overhead Press', 'Close Grip Bench', 'Incline Bench', 'Tricep Extension', 'Face Pull'],
     targetMuscles: ['Chest', 'Triceps', 'Front Delts', 'Shoulder health'],
     provenBy: 'Jonnie Candito, Candito Training HQ',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'nuckols-beginner',
@@ -1471,7 +1643,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Deadlift', 'Barbell Row', 'Overhead Press', 'Pull-up'],
     targetMuscles: ['Full Body Powerlifting', 'Competition lifts'],
     provenBy: 'Greg Nuckols, Stronger by Science, M.S. Exercise Science',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'nuckols-intermediate',
@@ -1488,7 +1662,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Competition Squat', 'Competition Bench', 'Deadlift', 'Close Grip Bench', 'Front Squat', 'Barbell Row', 'Lateral Raise', 'Leg Curl'],
     targetMuscles: ['Full Body Powerlifting', 'Competition lifts'],
     provenBy: 'Greg Nuckols, Stronger by Science',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'nuckols-advanced',
@@ -1505,7 +1681,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Competition Squat', 'Competition Bench', 'Deadlift', 'Pause Squat', 'Board Press', 'Deficit Deadlift', 'Spoto Press'],
     targetMuscles: ['Full Body Powerlifting', 'Competition lifts', 'Weak point specific'],
     provenBy: 'Greg Nuckols, Stronger by Science',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'average-to-savage',
@@ -1522,7 +1700,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat', 'Bench', 'Deadlift', 'OHP', 'Front Squat', 'Close Grip Bench', 'Accessory Lifts'],
     targetMuscles: ['Full Body Powerlifting', 'All major muscle groups'],
     provenBy: 'Greg Nuckols, Stronger by Science, 10,000+ users',
+  evidenceLevel: 'A',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'rippler-program',
@@ -1539,7 +1719,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat (wave)', 'Bench (wave)', 'Deadlift (wave)', 'Close Grip Bench', 'Front Squat', 'Barbell Row', 'Leg Curl'],
     targetMuscles: ['Full Body Powerlifting', 'Competition lifts'],
     provenBy: 'Reddit r/Fitness powerlifting community',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'mag-ort-deadlift',
@@ -1556,7 +1738,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Deadlift (heavy singles + back-offs)', 'Deficit Deadlift', 'Rack Pull', 'Good Morning', 'Barbell Row'],
     targetMuscles: ['Posterior Chain', 'Hamstrings', 'Glutes', 'Lower Back', 'Grip'],
     provenBy: 'Powerlifting forum community, Mag/Ort originators',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
 
   // ======================================================================
@@ -1577,7 +1761,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Nautilus Machine Press', 'Nautilus Row', 'Nautilus Shoulder Press', 'Leg Press', 'Nautilus Curl', 'Nautilus Tricep Extension'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Mike Mentzer, Mr. Universe (1978-1979)',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'dorian-yates-blood-guts',
@@ -1594,7 +1780,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Smith Machine Press', 'T-Bar Row', 'Machine Shoulder Press', 'Squat', 'Dumbbell Curl', 'Tricep Machine'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Dorian Yates, 6x Mr. Olympia (1992-1997)',
+  evidenceLevel: 'C',
     popularity: 'competitive',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: '8x8-training',
@@ -1611,7 +1799,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Dumbbell Bench Press 8x8', 'Dumbbell Row 8x8', 'Dumbbell Shoulder Press 8x8', 'Squat 8x8', 'Barbell Curl 8x8'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Vince Gironda, trained multiple Mr. Olympia competitors',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: '6x6-training',
@@ -1628,7 +1818,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press 6x6', 'Barbell Row 6x6', 'Military Press 6x6', 'Squat 6x6', 'Barbell Curl 6x6', 'Close Grip Press 6x6'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Traditional bodybuilding, Vince Gironda variations',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: '10x10-german-volume',
@@ -1645,7 +1837,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['10x10 Squat + 10x10 Bench', '10x10 Row + 10x10 OHP', '10x10 Deadlift + 10x10 Pull-up'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'German national weightlifting team, Charles Poliquin',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'edt-training',
@@ -1662,7 +1856,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press + Barbell Row (PR block)', 'Squat + Leg Curl (PR block)', 'OHP + Pull-up (PR block)', 'Curl + Tricep Pushdown (PR block)'],
     targetMuscles: ['Full Body', 'Customizable'],
     provenBy: 'Charles Staley, EDT training system',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'super-squats',
@@ -1679,7 +1875,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat 1x20', 'Pullover 1x20', 'Standing Calf Raise', 'Stiff-Leg Deadlift', 'Barbell Curl', 'Bench Press'],
     targetMuscles: ['Quads', 'Glutes', 'Core', 'Full Body systemic'],
     provenBy: 'Randall Strossen, PhD, IronMind Enterprises',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'static-contraction',
@@ -1696,7 +1894,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Static Bench Hold (top 5 deg)', 'Static Squat Hold (top 5 deg)', 'Static Deadlift Hold (top 5 deg)', 'Static Press Hold'],
     targetMuscles: ['Full Body', 'Lockout strength'],
     provenBy: 'Pete Sisco, John Little, Precision Training',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'power-factor-training',
@@ -1713,7 +1913,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press (max power)', 'Barbell Row (max power)', 'Squat (max power)', 'Overhead Press (max power)'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Pete Sisco, John Little, Precision Training',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'hit-training',
@@ -1730,7 +1932,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Nautilus Leg Press', 'Nautilus Chest Press', 'Nautilus Row', 'Nautilus Shoulder Press', 'Nautilus Pulldown'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Arthur Jones, Nautilus Sports/Medical Industries',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'nautilus-training',
@@ -1747,7 +1951,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Nautilus Leg Extension', 'Nautilus Leg Curl', 'Nautilus Chest Press', 'Nautilus Pulldown', 'Nautilus Shoulder Press', 'Nautilus Abdominal'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Arthur Jones, Nautilus Sports/Medical Industries',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'hit-2000',
@@ -1764,7 +1970,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat (slow negative)', 'Bench Press (static hold)', 'Barbell Row (peak contraction)', 'Leg Press (10 sec negative)'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'HIT community, Arthur Jones proteges',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'max-ot',
@@ -1781,7 +1989,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Barbell Squat', 'Bench Press', 'Deadlift', 'Overhead Press', 'Barbell Row', 'Barbell Curl'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'AST Sports Science, Max-OT community',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'adonis-golden-ratio',
@@ -1798,7 +2008,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Lateral Raise', 'Pull-up', 'Bench Press', 'Barbell Row', 'Overhead Press', 'Dumbbell Curl', 'Tricep Pushdown'],
     targetMuscles: ['Shoulders', 'Lats', 'Chest', 'Waist', 'Arms'],
     provenBy: 'John Barban, Venus/Adonis Index research',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'v-taper-training',
@@ -1815,7 +2027,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Pull-up (wide grip)', 'Lateral Raise', 'Overhead Press', 'Barbell Row', 'Lat Pulldown', 'Plank', 'Face Pull'],
     targetMuscles: ['Lats', 'Side Delts', 'Rear Delts', 'Upper Back', 'Core'],
     provenBy: 'Bodybuilding aesthetics research, classic physique training',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'x-rep-training',
@@ -1832,7 +2046,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press + X-reps', 'Barbell Curl + X-reps', 'Leg Extension + X-reps', 'Lateral Raise + X-reps'],
     targetMuscles: ['Customizable'],
     provenBy: 'Dante Trudel, DC Training (DoggCrapp)',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'positional-flexion',
@@ -1849,7 +2065,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Incline Bench (upper pec)', 'Decline Fly (lower pec)', 'Overhead Extension (long head)', 'Preacher Curl (lower bicep)'],
     targetMuscles: ['Full Body', 'Complete muscle development'],
     provenBy: 'John Parillo, Parillo Performance',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'pof-training',
@@ -1866,7 +2084,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bench Press (mid-range)', 'Dumbbell Fly (stretch)', 'Cable Crossover (contracted)'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Jonathan Lawson, Steve Holman, Ironman Magazine',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'weider-principles',
@@ -1883,7 +2103,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['All major exercises with various Weider techniques applied'],
     targetMuscles: ['Full Body', 'All major muscle groups'],
     provenBy: 'Joe Weider, IFBB founder, Muscle & Fitness publisher',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
 
   // ======================================================================
@@ -1904,7 +2126,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Wall Push-up (Step 1)', 'Standard Push-up (Step 4)', 'Uneven Push-up (Step 7)', 'One-arm Push-up (Step 10)'],
     targetMuscles: ['Full Body', 'Push', 'Pull', 'Legs', 'Core', 'Bridge'],
     provenBy: 'Paul Wade, Convict Conditioning book',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-paleo',
   },
   {
     id: 'you-are-your-own-gym',
@@ -1921,7 +2145,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Incline Push-up', 'Chair Squat', 'Towel Row', 'Doorway Curl', 'Step-up', 'Lunge'],
     targetMuscles: ['Full Body', 'Functional fitness'],
     provenBy: 'Mark Lauren, US military physical training specialist',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'p90x',
@@ -1938,7 +2164,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Pull-up (various grips)', 'Diamond Push-ups', 'Squat and Press', 'Plyo Lunges', 'Yoga Poses', 'Kenpo Punches'],
     targetMuscles: ['Full Body', 'Cardio', 'Strength', 'Flexibility'],
     provenBy: 'Tony Horton, Beachbody, millions of users',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'insanity',
@@ -1955,7 +2183,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Suicide Drills', 'Sprint Intervals', 'Push-up Jacks', 'Power Squats', 'Mountain Climbers', 'Plank Hops'],
     targetMuscles: ['Full Body', 'Cardiovascular system', 'Fat loss'],
     provenBy: 'Shaun T, Beachbody, millions of users',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'crossfit-main-site',
@@ -1972,7 +2202,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Grace (30 C&J for time)', 'Fran (21-15-9 Thruster+Pull-up)', 'Murph (1 mile+100 pullups+200 pushups+300 squats)'],
     targetMuscles: ['Full Body', 'GPP', 'Cardiovascular', 'Strength endurance'],
     provenBy: 'Greg Glassman, CrossFit Inc., thousands of affiliates',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'bar-brothers-rr',
@@ -1989,7 +2221,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Pull-up', 'Dip', 'Push-up', 'Squat', 'L-sit', 'Chin-up', 'Muscle-up progression'],
     targetMuscles: ['Full Body', 'Calisthenics skills', 'Core', 'Upper body'],
     provenBy: 'Lazar Novovic, Bar Brothers, global street workout community',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'thenx-programs',
@@ -2006,7 +2240,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Planche Lean', 'Front Lever Tuck', 'Handstand Hold', 'Back Lever', 'Muscle-up', 'Human Flag'],
     targetMuscles: ['Full Body', 'Calisthenics skills', 'Core', 'Shoulders', 'Back'],
     provenBy: 'Chris Heria, Thenx, YouTube fitness community',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'reddit-bwf-rr',
@@ -2023,7 +2259,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Pull-up progression', 'Dip progression', 'Squat progression', 'Row progression', 'Push-up progression', 'L-sit progression'],
     targetMuscles: ['Full Body', 'Pull', 'Push', 'Legs', 'Core'],
     provenBy: 'Reddit r/bodyweightfitness community, 2M+ members',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'freeletics',
@@ -2040,7 +2278,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squats', 'Push-ups', 'Burpees', 'Mountain Climbers', 'Box Jumps', 'Straight-leg Sit-ups', 'Pull-ups (if available)'],
     targetMuscles: ['Full Body', 'Cardiovascular', 'Functional fitness'],
     provenBy: 'Freeletics GmbH, 50M+ users worldwide',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'madbarz',
@@ -2057,7 +2297,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Explosive Pull-ups', 'Diamond Push-ups', 'Pistol Squats', 'L-sit', 'Tuck Front Lever', 'Dips'],
     targetMuscles: ['Full Body', 'Upper body', 'Core', 'Legs'],
     provenBy: 'MadBarz app, global street workout community',
+  evidenceLevel: 'C',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'calimove',
@@ -2074,7 +2316,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Ring Push-up', 'Ring Row', 'Pull-up', 'Ring Dip', 'Squat', 'Front Lever progression'],
     targetMuscles: ['Full Body', 'Calisthenics skills', 'Shoulder stability', 'Core'],
     provenBy: 'Calimove, professional calisthenics coaches',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'gymnasticbodies',
@@ -2091,7 +2335,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Handstand Hold', 'Ring Support Hold', 'Hollow Body Hold', 'Ring Dips', 'Front Lever', 'Back Lever'],
     targetMuscles: ['Full Body', 'Gymnastics strength', 'Shoulders', 'Core', 'Upper body'],
     provenBy: 'Coach Chris Sommer, GymnasticBodies, multiple gymnasts trained',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'foundation-training',
@@ -2108,7 +2354,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Founder', 'Walking Founder', 'Extension', 'Hamstring Founder', 'Lunge Founder', 'Standing Founder'],
     targetMuscles: ['Posterior Chain', 'Spinal Erectors', 'Glutes', 'Hamstrings', 'Core'],
     provenBy: 'Dr. Eric Goodman, DC, Foundation Training',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'autoimmune-protocol',
   },
   {
     id: 'move-by-gmb',
@@ -2125,7 +2373,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bear Crawl', 'Frog Jump', 'Monkey Hop', 'Cat Crawl', 'Forward Roll', 'Balance Practice'],
     targetMuscles: ['Full Body', 'Mobility', 'Coordination', 'Core', 'Shoulders', 'Hips'],
     provenBy: 'Ryan Hurst, Andy Fossett, GMB Fitness',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'gmb-elements',
@@ -2142,7 +2392,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bear Crawl', 'Lateral Crawl', 'Single Leg Balance', 'Jump Sequence', 'Arm Circles', 'Bent Knee Fold'],
     targetMuscles: ['Full Body', 'Joints', 'Coordination', 'Core', 'Shoulders', 'Hips', 'Ankles'],
     provenBy: 'GMB Fitness, Ryan Hurst',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
 
   // ======================================================================
@@ -2163,7 +2415,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['60 sec run / 90 sec walk (Week 1)', '5 min run / 3 min walk (Week 5)', '20 min continuous run (Week 8)'],
     targetMuscles: ['Legs', 'Heart', 'Lungs', 'Full body conditioning'],
     provenBy: 'Josh Clark, CoolRunning.com, 5M+ graduates',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'south-beach-diet',
   },
   {
     id: 'hiit-100s',
@@ -2180,7 +2434,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['100 Push-ups', '100 Squats', '100 Lunges', '100 Rows', '100 Shoulder Press', '100 Crunches'],
     targetMuscles: ['Full Body', 'Fat loss', 'Muscular endurance'],
     provenBy: 'HIIT 100s community, fitness literature',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'tabata-protocol',
@@ -2197,7 +2453,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Bike Sprint 20s + 10s rest x8', 'Squat Jumps 20s + 10s rest x8', 'Kettlebell Swings 20s + 10s rest x8'],
     targetMuscles: ['Cardiovascular system', 'Anaerobic system', 'Full body (depending on exercise)'],
     provenBy: 'Dr. Izumi Tabata, 1996 peer-reviewed study',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'maf-method',
@@ -2214,7 +2472,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['MAF Run (HR 180-age max)', 'MAF Bike (same HR formula)', 'MAF Swim (closer to aerobic threshold)'],
     targetMuscles: ['Aerobic system', 'Heart', 'Slow-twitch muscle fibers'],
     provenBy: 'Dr. Phil Maffetone, training multiple endurance champions',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'polarized-training',
@@ -2231,7 +2491,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Long slow run (Zone 2)', 'HIIT intervals (Zone 5)', 'Recovery run (Zone 1)', 'Race pace work (limited)'],
     targetMuscles: ['Aerobic system', 'Cardiovascular', 'Slow and fast twitch fibers'],
     provenBy: 'Dr. Stephen Seiler, research on elite endurance athletes',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'norwegian-method',
@@ -2248,7 +2510,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Morning LT run (Zone 3-4)', 'Afternoon LT run (Zone 3-4)', 'Long Run (Zone 2)', 'Recovery (Zone 1)'],
     targetMuscles: ['Aerobic system', 'Lactate threshold', 'Cardiovascular'],
     provenBy: 'Jakob Ingebrigtsen, Gjert Ingebrigtsen, Norwegian Olympic program',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'running-order',
@@ -2265,7 +2529,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Long Run (Sat)', 'Speed Work (Tue)', 'Tempo Run (Thu)', 'Easy Run (Mon/Wed)'],
     targetMuscles: ['Legs', 'Cardiovascular system', 'Aerobic/Anaerobic'],
     provenBy: 'Running coaches, Runner\'s World, common running structure',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'galloway-run-walk',
@@ -2282,7 +2548,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Run 4 min / Walk 1 min repeats', 'Run 8 min / Walk 1 min (advanced)', 'Long Run with walk breaks'],
     targetMuscles: ['Legs', 'Cardiovascular', 'Mobility'],
     provenBy: 'Jeff Galloway, Olympic runner, 250,000+ marathon graduates',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'hiit-running',
@@ -2299,7 +2567,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['100m Sprint x 10', '400m Reps x 6', 'Hill Sprints x 8', 'Tabata Sprints x 8'],
     targetMuscles: ['Legs', 'Anaerobic system', 'Fast twitch fibers'],
     provenBy: 'Track coaching, sports science research',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'bike-intervals',
@@ -2316,7 +2586,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['30 sec sprint / 30 sec spin x 10', '3 min threshold / 3 min recovery x 5', 'Tabata on bike x 8'],
     targetMuscles: ['Quads', 'Hamstrings', 'Glutes', 'Calves', 'Cardiovascular'],
     provenBy: 'Cycling coaching, wattage-based training literature',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'rowing-intervals',
@@ -2333,7 +2605,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['500m repeats x 8', 'Tabata Rowing (20/10 x 8)', '2K test', 'Pyramid: 250-500-750-1000-750-500-250m'],
     targetMuscles: ['Full Body', 'Legs', 'Back', 'Core', 'Arms', 'Cardiovascular'],
     provenBy: 'Indoor rowing community, Concept2 training plans',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'carb-centric-nutrition',
   },
   {
     id: 'swim-training',
@@ -2350,7 +2624,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['500m freestyle', '100m repeats x 10', 'Kick set 8x50', 'Pull set with buoy', 'IM set: 4x100 each stroke'],
     targetMuscles: ['Full Body', 'Shoulders', 'Back', 'Core', 'Cardiovascular'],
     provenBy: 'US Masters Swimming, swimming coaching',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'jump-rope-programs',
@@ -2367,7 +2643,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Basic Bounce 3 min', 'Alternating Foot 2 min', 'Double Unders 1 min', 'High Knee 1 min', 'Boxer Step 2 min'],
     targetMuscles: ['Calves', 'Quads', 'Shoulders', 'Forearms', 'Cardiovascular'],
     provenBy: 'Boxing conditioning, CrossFit, jump rope community',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'stairmaster-programs',
@@ -2384,7 +2662,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Steady climb 30 min', 'Interval: 1 min fast / 1 min slow x 10', 'Pyramid: increasing steps per min'],
     targetMuscles: ['Glutes', 'Quads', 'Hamstrings', 'Calves', 'Cardiovascular'],
     provenBy: 'Gym cardio programming, sports conditioning',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'hiit-30-30',
@@ -2401,7 +2681,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Sprint 30s / Walk 30s x 15', 'Kettlebell Swings 30s / Rest 30s x 10', 'Burpees 30s / Rest 30s x 10'],
     targetMuscles: ['Full Body', 'Cardiovascular', 'Anaerobic system'],
     provenBy: 'HIIT research, exercise physiology literature',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
 
   // ======================================================================
@@ -2422,7 +2704,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Standing Hamstring Stretch', 'Lying Quad Stretch', 'Pigeon Hip Stretch', 'Calf Stretch', 'Chest Stretch', 'Overhead Triceps Stretch'],
     targetMuscles: ['Hamstrings', 'Quads', 'Hips', 'Calves', 'Chest', 'Shoulders'],
     provenBy: 'Phrakture (Reddit bodyweight fitness), Starting Stretching guide',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'molding-mobility',
@@ -2439,7 +2723,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Neck Rocks', 'Shoulder Circles', 'Spinal Waves', 'Hip Circles', 'Ankle Rotations', 'Wrist Prep'],
     targetMuscles: ['All joints', 'Shoulders', 'Hips', 'Spine', 'Ankles', 'Wrists'],
     provenBy: 'Phrakture, mobility community',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'limber-11',
@@ -2456,7 +2742,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Foam Roll IT Band', 'Lacrosse Ball Glute', 'Hip Flexor Stretch', 'Cradle Walk', 'World\'s Greatest Stretch', 'Inchworm'],
     targetMuscles: ['Hips', 'Hamstrings', 'IT Band', 'Glutes', 'Lower Back'],
     provenBy: 'Joe DeFranco, DeFranco\'s Gym, NFL combine training',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'agile-8',
@@ -2473,7 +2761,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Foam Roll Hip', 'Glute Stretch', 'Crossover Stretch', 'Leg Swings', 'Lunge and Twist'],
     targetMuscles: ['Hips', 'Glutes', 'Lower Back', 'Hamstrings'],
     provenBy: 'Joe DeFranco, DeFranco\'s Gym',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'romwod',
@@ -2490,7 +2780,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Child\'s Pose', 'Pigeon Pose', 'Shoulder Stretch with Band', 'Deep Squat Hold', 'Hip Flexor Lunge'],
     targetMuscles: ['Shoulders', 'Hips', 'Ankles', 'Thoracic Spine', 'Full Body'],
     provenBy: 'ROMWOD, CrossFit community',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'yoga-for-athletes',
@@ -2507,7 +2799,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Downward Dog', 'Pigeon Pose', 'Pyramid Pose', 'Half Split', 'Thread the Needle', 'Happy Baby'],
     targetMuscles: ['Hamstrings', 'Hips', 'Shoulders', 'Spine', 'Full Body'],
     provenBy: 'Yoga research, athletic coaches incorporating yoga',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'autoimmune-protocol',
   },
   {
     id: 'gowod',
@@ -2524,7 +2818,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['OH Band Stretch', 'Ankle Dorsiflexion', 'Thoracic Extension', 'Hip CARs', 'Couch Stretch'],
     targetMuscles: ['Customized to individual limitations'],
     provenBy: 'GOWOD, CrossFit community',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'pnf-stretching',
@@ -2541,7 +2837,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['PNF Hamstring Stretch (CR)', 'PNF Quad Stretch (CR)', 'PNF Pec Stretch (CR)', 'PNF Hip Flexor (CR)'],
     targetMuscles: ['Customizable', 'Maximum flexibility'],
     provenBy: 'Physical therapy research, athletic training',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'dynamic-warmup',
@@ -2558,7 +2856,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Walking Lunges', 'Leg Swings forward/back', 'Leg Swings lateral', 'Arm Circles', 'World\'s Greatest Stretch', 'Cat-Cow', 'Hip Openers'],
     targetMuscles: ['Full Body', 'Dynamic preparation'],
     provenBy: 'Exercise physiology research, athletic training consensus',
+  evidenceLevel: 'C',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
   {
     id: 'cool-down-routine',
@@ -2575,7 +2875,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Hamstring Stretch', 'Quad Stretch', 'Pigeon Pose', 'Child\'s Pose', 'Chest Opener', 'Figure 4 Stretch'],
     targetMuscles: ['Full Body', 'Trained muscles'],
     provenBy: 'Sports medicine, standard training practice',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'standard-calorie-deficit',
   },
 
   // ======================================================================
@@ -2596,7 +2898,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat 5/3/1', 'Box Jump', 'Sled Push', 'Broad Jump', 'Sprint 40 yards', 'Power Clean'],
     targetMuscles: ['Full Body', 'Power', 'Speed'],
     provenBy: 'Jim Wendler, football strength coaches',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'westside-for-skinny-bastards',
@@ -2613,7 +2917,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['ME Lower: Box Squat or Deadlift', 'DE Upper: Speed Bench', 'Glute Ham Raise', 'Pull-ups', 'Sled Drag'],
     targetMuscles: ['Full Body', 'Mass building'],
     provenBy: 'Joe DeFranco, DeFranco\'s Gym, thousands of high school athletes',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'tactical-athlete',
@@ -2630,7 +2936,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Ruck March 5 miles', 'Push-up/Sit-up Max', 'Obstacle Course', 'Farmer\'s Walk', 'Stair Climb with Load'],
     targetMuscles: ['Full Body', 'Grip', 'Cardiovascular', 'Load carriage'],
     provenBy: 'Military PT programs, SOF selection training',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'firefighter-fit',
@@ -2647,7 +2955,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Stair Climb 3 min with SCBA', 'Hose Drag', 'Sledgehammer Strikes', 'Victim Drag (Dummy)', 'Ladder Raise'],
     targetMuscles: ['Full Body', 'Cardiovascular', 'Grip', 'Shoulders'],
     provenBy: 'CPAT standards, fire department fitness research',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'strongman-prep',
@@ -2664,7 +2974,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Log Clean and Press', 'Axle Deadlift', 'Tire Flip', 'Farmer\'s Walk', 'Yoke Walk', 'Atlas Stone Load'],
     targetMuscles: ['Full Body', 'Grip', 'Trap', 'Core', 'Posterior Chain'],
     provenBy: 'Strongman competitions (World\'s Strongest Man, Arnold Strongman)',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'highland-games',
@@ -2681,7 +2993,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Stone Put (Braemar/Open)', 'Heavy Hammer Throw', 'Caber Toss (technique)', 'Weight Over Bar', 'Sheaf Toss'],
     targetMuscles: ['Full Body', 'Rotational power', 'Grip', 'Shoulders'],
     provenBy: 'Scottish Highland Games circuit',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'grappling-strong',
@@ -2698,7 +3012,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Deadlift', 'Pull-ups', 'Farmer\'s Walk', 'Neck Harness', 'Turkish Get-up', 'KB Swing'],
     targetMuscles: ['Full Body', 'Grip', 'Posterior Chain', 'Neck', 'Core'],
     provenBy: 'BJJ strength coaches, grappling research',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'mma-conditioning',
@@ -2715,7 +3031,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Heavy Bag Intervals', 'Sprawl to Shot Drills', 'Burpee to Jump', 'Kettlebell Snatch', 'Jump Rope Intervals'],
     targetMuscles: ['Full Body', 'Cardiovascular', 'Explosive power'],
     provenBy: 'MMA strength and conditioning coaches (Dewey Cooper, etc.)',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'boxing-conditioning',
@@ -2732,7 +3050,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Jump Rope 3 rounds', 'Heavy Bag 3x3 min', 'Speed Bag 3 min', 'Mitt Work 3x3 min', 'Shadow Box 3 rounds'],
     targetMuscles: ['Shoulders', 'Core', 'Legs', 'Cardiovascular'],
     provenBy: 'Boxing gyms worldwide, professional boxing training',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'rugby-strength',
@@ -2749,7 +3069,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Back Squat', 'Bench Press', 'Power Clean', 'Sled Push', 'Agility Drills', 'Sprint Intervals'],
     targetMuscles: ['Full Body', 'Power', 'Cardiovascular'],
     provenBy: 'Rugby S&C coaches, national team programs',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'soccer-conditioning',
@@ -2766,7 +3088,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Repeated Sprint Ability (RSA)', 'Yo-Yo Intermittent Test Prep', 'Agility Ladder', 'Cone Drills', 'Broad Jumps'],
     targetMuscles: ['Full Body', 'Legs', 'Cardiovascular', 'Agility'],
     provenBy: 'Professional soccer S&C, sports science research',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'basketball-athleticism',
@@ -2783,7 +3107,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Box Jump', 'Depth Jump', 'Lateral Bound', 'Defensive Slide Drill', 'Squat Jump', 'Crossover Step Agility'],
     targetMuscles: ['Legs', 'Core', 'Explosive power', 'Lateral stabilizers'],
     provenBy: 'NBA S&C, college basketball strength programs',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'ski-conditioning',
@@ -2800,7 +3126,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Wall Sit 2-5 min', 'Bulgarian Split Squat', 'Single Leg Bosu Balance', 'Lateral Lunge', 'Russian Twist'],
     targetMuscles: ['Quads', 'Hamstrings', 'Core', 'Glutes', 'Balance'],
     provenBy: 'Ski conditioning research, PSIA',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'surf-training',
@@ -2817,7 +3145,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Pulled-ups (paddling simulation)', 'Pop-up Practice', 'Landmine Rotation', 'Supermans', 'Breath Hold Training'],
     targetMuscles: ['Back', 'Shoulders', 'Core', 'Hips', 'Lungs'],
     provenBy: 'Surf fitness programs, ASP training',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
   {
     id: 'obstacle-course-race',
@@ -2834,7 +3164,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Trail Run 5-10 miles', 'Rope Climb', 'Monkey Bars', 'Farmer\'s Carry', 'Sled Pull', 'Bucket Carry'],
     targetMuscles: ['Grip', 'Full Body', 'Cardiovascular', 'Forearms'],
     provenBy: 'Spartan Race, OCR World Championships',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'high-protein-moderate-carb',
   },
 
   // ======================================================================
@@ -2855,7 +3187,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat 5/3/1 + 5x10', 'Bench 5/3/1 + 5x10', 'Dumbbell Row 4x12', 'Leg Press 4x15', 'Bicep Curl 3x12'],
     targetMuscles: ['Full Body', 'Strength + Hypertrophy'],
     provenBy: 'Jim Wendler, powerbuilding community',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'ph3',
@@ -2872,7 +3206,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Periodized Squat', 'Periodized Bench', 'Periodized Deadlift', 'Hypertrophy Accessories x50 reps per bodypart'],
     targetMuscles: ['Full Body', 'Peak strength and size'],
     provenBy: 'Layne Norton, PhD, powerlifting champion',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'gvc-powerbuilding',
@@ -2889,7 +3225,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Chest Power: Heavy Bench 5x5', 'Chest Pump: Incline DB 4x12', 'Back: Deadlift 5x5 + Rows 4x12', 'Legs: Squat + Leg Press'],
     targetMuscles: ['Full Body', 'Strength + Size'],
     provenBy: 'GVS (Greg Von Smith), powerbuilding programs',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'bullmastiff',
@@ -2906,7 +3244,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat RPE 8 x 5x5', 'Bench RPE 8 x 5x5', 'Deadlift RPE 8 x 3x5', 'OHP RPE 8 x 5x5', 'Row 4x10', 'Leg Press 4x12'],
     targetMuscles: ['Full Body', 'Strength + Size'],
     provenBy: 'Aleksander (Barbell Medicine community)',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'sbs-powerbuilding',
@@ -2923,7 +3263,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Comp Squat variation', 'Comp Bench variation', 'Comp Deadlift variation', 'Secondary lifts 4x8-12', 'Accessories 3x15-20'],
     targetMuscles: ['Full Body', 'Strength + Size'],
     provenBy: 'Stronger By Science (Greg Nuckols, Eric Trexler, et al.)',
+  evidenceLevel: 'A',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'juggernaut-powerbuilding',
@@ -2940,7 +3282,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Squat 10s wave', 'Bench 10s wave', 'Accessory: DB Press 4x12', 'Accessory: Row 4x12', 'Core work'],
     targetMuscles: ['Full Body', 'Strength + Size'],
     provenBy: 'Chad Wesley Smith, Juggernaut Training Systems',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'rp-powerbuilding',
@@ -2957,7 +3301,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Mesocycle Block specific', 'Compound lifts periodized', 'Accessories per mesocycle goal', 'Deload week protocol'],
     targetMuscles: ['Full Body', 'Cyclical strength + size'],
     provenBy: 'Dr. Mike Israetel, Renaissance Periodization',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'nsuns-cap3',
@@ -2974,7 +3320,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['ME Bench', 'DE Squat', 'Hypertrophy: Incline DB', 'Sumo Deadlift ME', 'Speed Deadlift DE'],
     targetMuscles: ['Full Body', 'Advanced strength, power, size'],
     provenBy: 'nSuns, r/Fitness community',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'vdip',
@@ -2991,7 +3339,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Mon (Strength): Squat 5x5', 'Wed (Power): Squat 8x3 explosive', 'Fri (Hypertrophy): Squat 4x12'],
     targetMuscles: ['Full Body', 'All rep ranges'],
     provenBy: 'DUP research, sports science literature',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'periodized-strength-hypertrophy',
@@ -3008,7 +3358,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Hypertrophy Block: Squat 4x12', 'Strength Block: Squat 5x3 heavy', 'Hypertrophy: Rows 4x15', 'Strength: Rows 5x5'],
     targetMuscles: ['Full Body', 'Block-specific adaptation'],
     provenBy: 'Block periodization research, ISS, Tudor Bompa',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'power-rep-day',
@@ -3025,7 +3377,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Upper Power: Bench 5x5, OHP 5x5', 'Lower Power: Squat 5x5, DL 5x3', 'Upper Reps: Incline DB 4x12, Cable Fly 4x15'],
     targetMuscles: ['Full Body', 'Strength + Size'],
     provenBy: 'Powerbuilding consensus programming',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'uppper-lower-powerbuilding',
@@ -3042,7 +3396,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Upper Power: Bench 5x5, Row 4x8', 'Lower Power: Squat 5x5', 'Upper Volume: DB Press 4x12, Cable Fly 4x15', 'Lower Volume: Leg Press 4x15'],
     targetMuscles: ['Full Body', 'Strength + Size per day'],
     provenBy: 'Standard bodybuilding/powerlifting split',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'torso-limb-powerbuilding',
@@ -3059,7 +3415,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Torso: Bench 5x5, Row 4x8, OHP 4x8', 'Limb: Squat 5x5, Leg Curl 4x12, Bicep Curl 3x12, Tricep Pushdown 3x12'],
     targetMuscles: ['Full Body', 'Torso strength, limb definition'],
     provenBy: 'Bodybuilding/powerlifting programming',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: 'push-pull-legs-powerbuilding',
@@ -3076,7 +3434,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Push A: Heavy Bench 5x5 + Volume Press', 'Pull A: Deadlift 5x3 + Rows 4x12', 'Legs A: Heavy Squat 5x5 + Leg Volume'],
     targetMuscles: ['Full Body', 'High frequency strength + size'],
     provenBy: 'Bodybuilding/powerlifting programming',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
   {
     id: '5-day-powerbuilding',
@@ -3093,7 +3453,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Chest: Bench 5x5, Incline DB 4x12', 'Back: Deadlift 5x3, Pull-ups 4xAMRAP', 'Legs: Squat 5x5, Leg Press 4x15', 'Shoulders: OHP 4x8, Lateral Raise 4x15'],
     targetMuscles: ['Full Body', 'Detailed split'],
     provenBy: 'Powerbuilding community, standard 5-day split',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'lean-bulk',
   },
 
   // ======================================================================
@@ -3114,7 +3476,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['10-min Brisk Walk (Week 1)', '30-min Brisk Walk (Week 4)', '60-min Walk (Week 8)', 'Nordic Pole Walk 45 min'],
     targetMuscles: ['Legs', 'Cardiovascular', 'Full body (with poles)'],
     provenBy: 'CDC, WHO, American Heart Association',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'primal-blueprint',
   },
   {
     id: 'posture-correction',
@@ -3131,7 +3495,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Chin Tucks (30 reps)', 'Wall Angels (3x12)', 'Thoracic Extension over foam roller', 'Glute Bridge (3x15)', 'Bird Dog (3x10 each)'],
     targetMuscles: ['Deep neck flexors', 'Upper back', 'Glutes', 'Core', 'Hip extensors'],
     provenBy: 'Posture research, physical therapy protocols',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'dash-diet',
   },
   {
     id: 'low-back-pain-therapy',
@@ -3148,7 +3514,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Prone Press-ups (x10)', 'Knee to Chest (30 sec each)', 'Cat-Camel (x10)', 'Pelvic Tilt (x10)', 'Dead Bug (3x10)'],
     targetMuscles: ['Lower back', 'Core', 'Hip flexors', 'Glutes'],
     provenBy: 'McKenzie Institute, clinical research',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'dash-diet',
   },
   {
     id: 'shoulder-health',
@@ -3165,7 +3533,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Band External Rotation (3x15)', 'Face Pulls (3x15)', 'YTWL Raises (3x10 each)', 'Scapular Push-ups (3x12)', 'PVC Pass Throughs (x10)'],
     targetMuscles: ['Rotator cuff', 'Scapular stabilizers', 'Rear delts', 'Traps'],
     provenBy: 'Sports medicine, physical therapy, overhead sports rehab',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'dash-diet',
   },
   {
     id: 'knee-health',
@@ -3182,7 +3552,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Terminal Knee Extension (3x15)', 'Clam Shells (3x15 each)', 'Step Downs (3x10 each)', 'Straight Leg Raise (3x12)', 'Quad/Hip Flexor Stretch'],
     targetMuscles: ['VMO (inner quad)', 'Glute medius', 'Hamstrings', 'Hip flexors'],
     provenBy: 'Physical therapy, ACL rehab research',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'dash-diet',
   },
   {
     id: 'functional-movement',
@@ -3199,7 +3571,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Deep Squat with PVC', 'Hurdle Step Drill', 'In-line Lunge', 'Shoulder Mobility Drill', 'Active Leg Raise'],
     targetMuscles: ['Full Body', 'Movement patterns'],
     provenBy: 'Functional Movement Systems (Cook, Burton, Hoogenboom)',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'dash-diet',
   },
   {
     id: 'senior-fitness',
@@ -3216,7 +3590,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Seated Leg Press (Band)', 'Chair Stands (x10)', 'Heel Raises (x15)', 'Seated Row (Band)', 'Single Leg Stance (30 sec)'],
     targetMuscles: ['Full Body', 'Balance', 'Bone density'],
     provenBy: 'CDC, NIH, WHO aging research',
+  evidenceLevel: 'A',
     popularity: 'classic',
+    recommendedDietProgramId: 'autoimmune-protocol',
   },
   {
     id: 'prenatal-workout',
@@ -3233,7 +3609,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Pelvic Tilts (x15)', 'Cat-Camel (x10)', 'Squat with Support (3x12)', 'Seated Row (3x15)', 'Walking 20 min'],
     targetMuscles: ['Full Body', 'Pelvic floor', 'Core'],
     provenBy: 'ACOG (American College of Obstetricians and Gynecologists)',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'dash-diet',
   },
   {
     id: 'recovery-mobility',
@@ -3250,7 +3628,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Foam Roll Quads/Hamstrings', 'Lacrosse Ball Glutes/Upper Back', 'Cat-Camel (x10)', 'World\'s Greatest Stretch', 'Brisk Walk 20 min'],
     targetMuscles: ['Full Body', 'Recovery'],
     provenBy: 'Sports medicine, exercise physiology',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'autoimmune-protocol',
   },
   {
     id: 'stress-relief',
@@ -3267,7 +3647,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Box Breathing (4-4-4-4) 5 min', 'Diaphragmatic Breathing 5 min', 'Progressive Relaxation 10 min', 'Neck Rolls and Shoulder Shrugs'],
     targetMuscles: ['Full Body', 'Nervous system'],
     provenBy: 'Harvard Medical School, NIH, stress research',
+  evidenceLevel: 'A',
     popularity: 'classic',
+    recommendedDietProgramId: 'low-fodmap',
   },
 
   // ======================================================================
@@ -3288,7 +3670,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Block Start Practice', 'Flying 30m Sprint', 'Speed Endurance: 150m x 3', 'Hurdle Mobility Drills', 'Plyometric Bounds'],
     targetMuscles: ['Legs', 'Explosive power', 'Fast twitch fibers'],
     provenBy: 'Track coaching, Olympic sprint programs',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'performance-diet',
   },
   {
     id: 'distance-running-plans',
@@ -3305,7 +3689,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Tempo Run 20 min', '400m Repeats x 8', 'Long Run (race distance or longer)', 'Easy Recovery Run', 'Strides (100m fast)'],
     targetMuscles: ['Legs', 'Cardiovascular', 'Aerobic/Anaerobic'],
     provenBy: 'Jack Daniels, Pfitzinger, Hansons, running coaches',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'carb-centric-nutrition',
   },
   {
     id: 'triathlon-training',
@@ -3322,7 +3708,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Open Water Swim', 'Threshold Bike 40 min', 'Brick: Bike 30 min then Run 15 min', 'Long Run 90 min', 'Transition Practice'],
     targetMuscles: ['Full Body', 'Swim/ Bike/ Run endurance'],
     provenBy: 'Triathlon coaches, IRONMAN programs',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'carb-centric-nutrition',
   },
   {
     id: 'baseball-softball',
@@ -3339,7 +3727,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Medicine Ball Rotational Throw', 'Band External Rotation (3x15)', 'Cable Chop', 'Split Squat', 'Landmine Press', 'Sled Sprint'],
     targetMuscles: ['Rotational power', 'Rotator cuff', 'Core', 'Legs'],
     provenBy: 'MLB S&C coaches, sports science research',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'performance-diet',
   },
   {
     id: 'tennis-conditioning',
@@ -3356,7 +3746,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Side Shuffle with Racquet', 'Split Step and Sprint', 'Medicine Ball Forehand/Backhand', 'Lateral Bound', 'Suicides on Court'],
     targetMuscles: ['Legs', 'Core', 'Shoulders', 'Lateral stabilizers'],
     provenBy: 'Tennis S&C coaches, USTA training',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'performance-diet',
   },
   {
     id: 'golf-fitness',
@@ -3373,7 +3765,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Cable Rotation (3x12 each)', 'Hip Circle Stretch', 'Thoracic Spine Rotation Drill', 'Dead Bug (3x10)', 'Farmer\'s Carry (grip strength)'],
     targetMuscles: ['Rotational core', 'Hips', 'Thoracic spine', 'Grip'],
     provenBy: 'Golf fitness research, PGA coaches',
+  evidenceLevel: 'B',
     popularity: 'modern',
+    recommendedDietProgramId: 'performance-diet',
   },
   {
     id: 'hockey-strength',
@@ -3390,7 +3784,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Lateral Lunge (hockey stance)', 'Single Leg Squat', 'Slide Board Lateral Power', 'Cable Rotation', 'Sprint 30s / Rest 30s x 10'],
     targetMuscles: ['Full Body', 'Lateral power', 'Hip mobility', 'Cardiovascular'],
     provenBy: 'NHL S&C coaches, hockey sports science',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'performance-diet',
   },
   {
     id: 'volleyball-pyometrics',
@@ -3407,7 +3803,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Box Jump (3x5)', 'Depth Jump (3x5)', 'Broad Jump (3x5)', 'Squat (5x5)', 'Lateral Bound (3x8 each)', 'Medicine Ball Spike Throw'],
     targetMuscles: ['Legs', 'Explosive power', 'Core', 'Shoulders'],
     provenBy: 'College volleyball S&C, sports science',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'performance-diet',
   },
   {
     id: 'martial-arts-conditioning',
@@ -3424,7 +3822,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Round Kick Drills 3x3 min', 'Sprawl to Shot x10', 'Burpee to Jump x10', 'Kettlebell Snatch (3x12 each)', 'Neck Harness (3x15)'],
     targetMuscles: ['Full Body', 'Core', 'Neck', 'Cardiovascular'],
     provenBy: 'Combat sports conditioning research',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'performance-diet',
   },
   {
     id: 'rock-climbing-training',
@@ -3441,7 +3841,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Hangboard Repeaters (7:3 on:off x 6)', 'Pull-ups (weighted)', 'Lock-off Hold (5s each arm)', 'Front Lever (hold)', 'Campus Board Ladders'],
     targetMuscles: ['Fingers', 'Forearms', 'Lats', 'Core', 'Shoulders'],
     provenBy: 'Rock climbing training research, coaches (Bechter, Anderson)',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'performance-diet',
   },
   {
     id: 'dance-fitness',
@@ -3458,7 +3860,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Plié to Relevé (3x15)', 'Grand Battement (leg swings)', 'Sauté Jumps (3x10)', 'Arabesque Balance Hold', 'Core: Plank to Pike'],
     targetMuscles: ['Full Body', 'Flexibility', 'Balance', 'Core'],
     provenBy: 'Dance medicine, ABT NSCA program',
+  evidenceLevel: 'B',
     popularity: 'classic',
+    recommendedDietProgramId: 'performance-diet',
   },
   {
     id: 'cycling-performance',
@@ -3475,7 +3879,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Endurance Ride 3+ hours Zone 2', 'Sweet Spot 2x20 min', 'VO2max 5x5 min', 'Sprint 30s x 8', 'Group Ride (race simulation)'],
     targetMuscles: ['Quads', 'Hamstrings', 'Glutes', 'Cardiovascular'],
     provenBy: 'Cycling coaching (Joe Friel, TrainingPeaks)',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'carb-centric-nutrition',
   },
   {
     id: 'swimming-performance',
@@ -3492,7 +3898,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['5000m distance set', '100m repeats on 1:30', 'IM set: 4x100 each stroke', 'Kick set 10x50', 'Drill: Fist Freestyle', 'Pace work at race speed'],
     targetMuscles: ['Full Body', 'Shoulders', 'Back', 'Core', 'Cardiovascular'],
     provenBy: 'USA Swimming, college swim programs',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'performance-diet',
   },
   {
     id: 'rugby-league-conditioning',
@@ -3509,7 +3917,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Shuttle Runs (suicides)', 'Contact Pad Drills', 'Scrum Simulation (sled work)', 'Sprint 40m x 10', 'Ruck Practice (bodyweight)'],
     targetMuscles: ['Full Body', 'Contact readiness', 'Cardiovascular'],
     provenBy: 'Rugby S&C coaches, international rugby programs',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'performance-diet',
   },
   {
     id: 'cricket-fitness',
@@ -3526,7 +3936,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Cable Rotation (batting)', 'Single Arm Band Press (bowling shoulder)', 'Lateral Fielding Drills', 'Deep Squat (batting balance)', 'Suicides (fielding)'],
     targetMuscles: ['Rotational core', 'Shoulders', 'Legs', 'Agility'],
     provenBy: 'Cricket S&C coaches, ECB, CA',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'performance-diet',
   },
   {
     id: 'lacrosse-conditioning',
@@ -3543,7 +3955,9 @@ export const REAL_PROGRAMS: TrainingProgram[] = [
     sampleExercises: ['Medicine Ball Rotational Throw', 'Sprint/Shuttle Drills', 'Lateral Lunge with Stick', 'Overhead Slam (shot power)', 'Agility Ladder Crossover'],
     targetMuscles: ['Full Body', 'Rotational power', 'Legs', 'Core'],
     provenBy: 'College lacrosse S&C, MLL/PLL training',
+  evidenceLevel: 'B',
     popularity: 'competitive',
+    recommendedDietProgramId: 'performance-diet',
   },
 ];
 

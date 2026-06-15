@@ -52,6 +52,6 @@ const ThreeDCard = React.memo(function ThreeDCard({
       {children}
     </motion.div>
   );
-}
+});
 
 export default ThreeDCard;

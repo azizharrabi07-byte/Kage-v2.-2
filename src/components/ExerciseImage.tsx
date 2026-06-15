@@ -23,6 +23,28 @@ function ExerciseImage({ exercise, isLight = false, className = '' }: ExerciseIm
     [category],
   );
 
+  // Use real image if available, otherwise show generated placeholder
+  if (exercise.imageUrl) {
+    return (
+      <div
+        className={`relative overflow-hidden rounded-xl ${className}`}
+        style={{ aspectRatio: '400 / 300', minHeight: '200px' }}
+      >
+        <img
+          src={exercise.imageUrl}
+          alt={exercise.name}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+          <p className="font-bold text-lg">{exercise.name}</p>
+          <p className="text-sm opacity-80">{exercise.kanji} • {exercise.muscleGroup}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`relative overflow-hidden rounded-xl ${className}`}

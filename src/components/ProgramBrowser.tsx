@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Search, ChevronDown, ChevronUp, Dumbbell, Clock, BarChart3, Target, Flame, Sparkles, X } from 'lucide-react';
 import { REAL_PROGRAMS } from '../data/programs';
 import type { TrainingProgram } from '../data/programs';
+import { getDietById } from '../data/dietPrograms';
 
 interface ProgramBrowserProps {
   isLight: boolean;
   onSelectProgram?: (program: TrainingProgram) => void;
+  programs?: TrainingProgram[];
 }
 
 const CATEGORY_FILTERS: { label: string; value: string; match: (p: TrainingProgram) => boolean }[] = [
@@ -67,6 +69,37 @@ function DifficultyBadge({ difficulty, isLight }: { difficulty: string; isLight:
   );
 }
 
+const EVIDENCE_LABELS: Record<string, string> = {
+  A: 'Meta-Analysis',
+  B: 'Research-Backed',
+  C: 'Foundational',
+};
+
+const EVIDENCE_COLORS: Record<string, string> = {
+  A: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30',
+  B: 'text-blue-400 bg-blue-500/10 border-blue-500/30',
+  C: 'text-zinc-400 bg-zinc-500/10 border-zinc-500/30',
+};
+
+const EVIDENCE_COLORS_LIGHT: Record<string, string> = {
+  A: 'text-emerald-700 bg-emerald-100 border-emerald-200',
+  B: 'text-blue-700 bg-blue-100 border-blue-200',
+  C: 'text-stone-500 bg-stone-100 border-stone-200',
+};
+
+function EvidenceBadge({ level, isLight }: { level: string; isLight: boolean }) {
+  return (
+    <span
+      className={`px-1.5 py-0.5 rounded text-[7px] font-mono font-bold border tracking-wider ${
+        isLight ? EVIDENCE_COLORS_LIGHT[level] : EVIDENCE_COLORS[level]
+      }`}
+      title={EVIDENCE_LABELS[level] || level}
+    >
+      E-{level}
+    </span>
+  );
+}
+
 function CategoryBadge({ category, isLight }: { category: string; isLight: boolean }) {
   const label = CATEGORY_LABELS[category] || category;
   return (
@@ -104,7 +137,10 @@ function ProgramCard({
         <h3 className={`text-sm font-bold leading-tight ${isLight ? 'text-stone-800' : 'text-white'}`}>
           {program.name}
         </h3>
-        <DifficultyBadge difficulty={program.difficulty} isLight={isLight} />
+        <div className="flex items-center gap-1 shrink-0">
+          <EvidenceBadge level={program.evidenceLevel} isLight={isLight} />
+          <DifficultyBadge difficulty={program.difficulty} isLight={isLight} />
+        </div>
       </div>
       <p className={`text-[10px] font-mono leading-relaxed mb-3 line-clamp-2 ${isLight ? 'text-stone-500' : 'text-zinc-400'}`}>
         {program.goal}
@@ -127,9 +163,25 @@ function ProgramCard({
         </span>
       </div>
       <div className={`mt-2 pt-2 border-t ${isLight ? 'border-stone-100' : 'border-white/5'}`}>
-        <span className={`text-[8px] font-mono italic ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>
-          Proven by: {program.provenBy.length > 50 ? program.provenBy.slice(0, 50) + '…' : program.provenBy}
-        </span>
+        <div className="flex items-center justify-between">
+          <span className={`text-[8px] font-mono italic ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>
+            {program.provenBy.length > 50 ? program.provenBy.slice(0, 50) + '…' : program.provenBy}
+          </span>
+          {program.recommendedDietProgramId && (() => {
+            const diet = getDietById(program.recommendedDietProgramId!);
+            if (!diet) return null;
+            const catLabel = diet.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+            return (
+              <span className={`px-1.5 py-0.5 rounded text-[7px] font-mono font-bold border shrink-0 tracking-wider ${
+                isLight
+                  ? 'text-orange-600 bg-orange-50 border-orange-200'
+                  : 'text-orange-300 bg-orange-500/10 border-orange-500/30'
+              }`}>
+                DIET {catLabel}
+              </span>
+            );
+          })()}
+        </div>
       </div>
       <div className="mt-2 flex items-center gap-1">
         {program.popularity === 'classic' && <Sparkles className="w-3 h-3 text-amber-400" />}
@@ -172,6 +224,7 @@ function DetailPanel({
               <h3 className={`text-lg font-bold ${isLight ? 'text-stone-800' : 'text-white'}`}>
                 {program.name}
               </h3>
+              <EvidenceBadge level={program.evidenceLevel} isLight={isLight} />
               <DifficultyBadge difficulty={program.difficulty} isLight={isLight} />
               <CategoryBadge category={program.category} isLight={isLight} />
             </div>
@@ -191,13 +244,14 @@ function DetailPanel({
         </div>
 
         {/* Info Row */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
-            { icon: Clock, label: 'Duration', value: program.duration },
-            { icon: BarChart3, label: 'Frequency', value: program.frequency },
-            { icon: Dumbbell, label: 'Equipment', value: program.equipment.length > 30 ? program.equipment.slice(0, 30) + '…' : program.equipment },
-            { icon: Flame, label: 'Style', value: program.popularity.charAt(0).toUpperCase() + program.popularity.slice(1) },
-          ].map((item) => (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { icon: Clock, label: 'Duration', value: program.duration },
+              { icon: BarChart3, label: 'Frequency', value: program.frequency },
+              { icon: Dumbbell, label: 'Equipment', value: program.equipment.length > 30 ? program.equipment.slice(0, 30) + '…' : program.equipment },
+              { icon: Flame, label: 'Style', value: program.popularity.charAt(0).toUpperCase() + program.popularity.slice(1) },
+              { icon: Sparkles, label: 'Evidence', value: `Level ${program.evidenceLevel} — ${EVIDENCE_LABELS[program.evidenceLevel] || program.evidenceLevel}` },
+            ].map((item) => (
             <div key={item.label} className={`rounded-lg p-3 ${isLight ? 'bg-white border border-stone-200' : 'bg-zinc-800/50 border border-white/5'}`}>
               <div className="flex items-center gap-1.5 mb-1">
                 <item.icon className={`w-3 h-3 ${isLight ? 'text-rose-500' : 'text-rose-400'}`} />
@@ -239,6 +293,35 @@ function DetailPanel({
             {program.whatYouWillGain}
           </p>
         </div>
+
+        {/* Recommended Diet */}
+        {program.recommendedDietProgramId && (() => {
+          const diet = getDietById(program.recommendedDietProgramId!);
+          if (!diet) return null;
+          return (
+            <div>
+              <h4 className={`text-xs font-bold font-mono mb-2 flex items-center gap-1.5 ${isLight ? 'text-stone-700' : 'text-zinc-200'}`}>
+                <Flame className="w-3.5 h-3.5 text-orange-400" />
+                RECOMMENDED DIET
+              </h4>
+              <div className={`rounded-lg p-3 border ${isLight ? 'bg-orange-50 border-orange-200' : 'bg-orange-500/5 border-orange-500/20'}`}>
+                <p className={`text-[12px] font-bold mb-1 ${isLight ? 'text-stone-800' : 'text-white'}`}>
+                  {diet.name}
+                </p>
+                <p className={`text-[9px] font-mono leading-relaxed mb-2 ${isLight ? 'text-stone-500' : 'text-zinc-400'}`}>
+                  {diet.goal}
+                </p>
+                <div className={`text-[8px] font-mono ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>
+                  <span className="font-bold">Macros: </span>
+                  {diet.typicalMacros.protein} · {diet.typicalMacros.carbs} · {diet.typicalMacros.fat}
+                </div>
+                <div className={`mt-1 text-[8px] font-mono italic ${isLight ? 'text-stone-400' : 'text-zinc-500'}`}>
+                  {diet.provenBy.slice(0, 80)}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Sample Exercises */}
         <div>
@@ -303,15 +386,17 @@ function DetailPanel({
   );
 }
 
-function ProgramBrowser({ isLight, onSelectProgram }: ProgramBrowserProps) {
+function ProgramBrowser({ isLight, onSelectProgram, programs }: ProgramBrowserProps) {
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState<'all' | 'beginner' | 'intermediate' | 'advanced'>('all');
   const [selectedProgram, setSelectedProgram] = useState<TrainingProgram | null>(null);
 
+  const sourcePrograms = programs || REAL_PROGRAMS;
+
   const filteredPrograms = useMemo(() => {
     const catFilter = CATEGORY_FILTERS.find((f) => f.value === categoryFilter) || CATEGORY_FILTERS[0];
-    let results = REAL_PROGRAMS.filter(catFilter.match);
+    let results = sourcePrograms.filter(catFilter.match);
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();

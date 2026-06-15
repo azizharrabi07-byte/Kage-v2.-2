@@ -129,6 +129,7 @@ export interface Exercise {
   tips: string[];
   videoUrl?: string;
   imagePlaceholder: string;
+  imageUrl?: string;
 }
 
 export interface ExercisePR {

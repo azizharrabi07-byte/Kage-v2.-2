@@ -54,8 +54,8 @@ export function generatePrograms(params: GenParams): WorkoutProgram[] {
   const names = PROGRAM_NAMES[goal];
 
   const filtered = ALL_TRAINING_EXERCISES.filter(ex => {
-    if (equipment === 'none' && ex.equipment !== 'Bodyweight' && ex.equipment !== 'bodyweight' && ex.equipment !== 'None') return false;
-    if (equipment === 'minimal' && (ex.equipment === 'None' || ex.equipment === 'bodyweight')) return false;
+    if (equipment === 'none' && ex.equipment !== 'Bodyweight') return false;
+    if (equipment === 'minimal' && ex.equipment === 'Bodyweight') return false;
     return true;
   });
 

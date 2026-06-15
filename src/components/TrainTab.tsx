@@ -22,6 +22,7 @@ export interface TrainTabProps {
   soundSafe: (type: 'clash' | 'tap' | 'chime' | 'hum') => void;
   MOCK_PROGRAMS: WorkoutProgram[];
   MOCK_TRAINING_PLANS: { id: string; name: string; description: string; duration: string; difficulty: number; equipmentNeeded: boolean }[];
+  GENERATED_ZERO_EQUIP_PROGRAMS: WorkoutProgram[];
   userPrograms: UserProgram[];
   trainingSubTab: 'eq' | 'zero';
   setTrainingSubTab: (t: 'eq' | 'zero') => void;
@@ -51,6 +52,7 @@ function TrainTab({
   soundSafe,
   MOCK_PROGRAMS: _MOCK_PROGRAMS,
   MOCK_TRAINING_PLANS: _MOCK_TRAINING_PLANS,
+  GENERATED_ZERO_EQUIP_PROGRAMS,
   userPrograms,
   trainingSubTab,
   setTrainingSubTab,
@@ -75,6 +77,28 @@ function TrainTab({
   workouts,
 }: TrainTabProps) {
   const [buildMode, setBuildMode] = useState<'builder' | 'library'>('builder');
+
+  // Convert generated WorkoutProgram to TrainingProgram format for ProgramBrowser
+  const convertedZeroEquipPrograms = useMemo(() => 
+    GENERATED_ZERO_EQUIP_PROGRAMS.map(p => ({
+      id: p.id,
+      name: p.nameEnglish || p.nameKanji,
+      category: 'strength' as const,
+      goal: p.description,
+      difficulty: p.difficulty === 1 ? 'beginner' as const : p.difficulty <= 3 ? 'intermediate' as const : 'advanced' as const,
+      duration: p.duration,
+      frequency: `${p.workoutCount} days`,
+      equipment: 'Bodyweight Only',
+      description: p.description,
+      scientificBasis: 'Procedurally generated based on strength training principles',
+      evidenceLevel: 'B' as const,
+      whatYouWillGain: 'Strength and muscle through progressive bodyweight training',
+      sampleExercises: p.moves.map(m => m.name),
+      targetMuscles: ['Full Body'],
+      provenBy: 'KAGE Program Generator',
+      popularity: 'modern' as const,
+    }))
+  , [GENERATED_ZERO_EQUIP_PROGRAMS]);
 
   const handleSelectProgram = useCallback((program: { id: string; name: string; difficulty: string; duration: string; sampleExercises: string[]; equipment: string; description: string }) => {
     soundSafe('clash');
@@ -244,6 +268,7 @@ function TrainTab({
             <ProgramBrowser
               isLight={isLight}
               onSelectProgram={handleSelectProgram}
+              programs={trainingSubTab === 'zero' ? convertedZeroEquipPrograms : undefined}
             />
           </div>
         </div>

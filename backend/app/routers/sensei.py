@@ -1,6 +1,6 @@
-import os
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
+from app.config import settings
 from app.middleware.auth import get_current_user
 
 router = APIRouter()
@@ -24,7 +24,7 @@ class ChatResponse(BaseModel):
 
 @router.post("/chat", response_model=ChatResponse)
 async def chat(body: ChatRequest, user: dict = Depends(get_current_user)):
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = settings.gemini_api_key
     if not api_key:
         raise HTTPException(status_code=500, detail="GEMINI_API_KEY not configured")
 

@@ -1,7 +1,6 @@
 """Application configuration via environment variables using pydantic-settings."""
 
 from pydantic_settings import BaseSettings
-from typing import Optional
 
 
 class Settings(BaseSettings):
@@ -10,6 +9,7 @@ class Settings(BaseSettings):
     supabase_url: str
     supabase_service_key: str
     supabase_jwt_secret: str
+    gemini_api_key: str = ""
     dev_bypass_auth: bool = False
     cors_origins: str = "*"
 

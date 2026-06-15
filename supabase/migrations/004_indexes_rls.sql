@@ -6,9 +6,10 @@
 -- INDEXES
 -- ============================================================================
 
--- exercises (index only columns that exist — skip target/muscle_group if absent)
+-- All indexes — each checks the column exists before creating to avoid 42703 errors
 DO $$
 BEGIN
+  -- exercises
   IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='exercises' AND column_name='category') THEN
     EXECUTE 'CREATE INDEX IF NOT EXISTS idx_exercises_category ON exercises(category)';
   END IF;
@@ -18,47 +19,83 @@ BEGIN
   IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='exercises' AND column_name='muscle_group') THEN
     EXECUTE 'CREATE INDEX IF NOT EXISTS idx_exercises_muscle_group ON exercises(muscle_group)';
   END IF;
+
+  -- workout_sessions
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='workout_sessions' AND column_name='user_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_workout_sessions_user_id ON workout_sessions(user_id)';
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='workout_sessions' AND column_name='started_at') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_workout_sessions_started_at ON workout_sessions(started_at DESC)';
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='workout_sessions' AND column_name='template_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_workout_sessions_template_id ON workout_sessions(template_id)';
+  END IF;
+
+  -- session_exercises
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='session_exercises' AND column_name='session_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_session_exercises_session_id ON session_exercises(session_id)';
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='session_exercises' AND column_name='exercise_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_session_exercises_exercise_id ON session_exercises(exercise_id)';
+  END IF;
+
+  -- workout_sets
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='workout_sets' AND column_name='session_exercise_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_workout_sets_session_exercise_id ON workout_sets(session_exercise_id)';
+  END IF;
+
+  -- progression
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='progression' AND column_name='user_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_progression_user_id ON progression(user_id)';
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='progression' AND column_name='total_xp') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_progression_total_xp ON progression(total_xp DESC)';
+  END IF;
+
+  -- personal_records
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='personal_records' AND column_name='user_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_personal_records_user_id ON personal_records(user_id)';
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='personal_records' AND column_name='exercise_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_personal_records_exercise_id ON personal_records(exercise_id)';
+  END IF;
+
+  -- user_achievements
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='user_achievements' AND column_name='user_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_user_achievements_user_id ON user_achievements(user_id)';
+  END IF;
+
+  -- battles
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='battles' AND column_name='challenger_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_battles_challenger_id ON battles(challenger_id)';
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='battles' AND column_name='opponent_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_battles_opponent_id ON battles(opponent_id)';
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='battles' AND column_name='status') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_battles_status ON battles(status)';
+  END IF;
+
+  -- xp_breakdown
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='xp_breakdown' AND column_name='user_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_xp_breakdown_user_id ON xp_breakdown(user_id)';
+  END IF;
+
+  -- body_measurements
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='body_measurements' AND column_name='user_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_body_measurements_user_id ON body_measurements(user_id)';
+  END IF;
+
+  -- workout_templates
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='workout_templates' AND column_name='user_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_workout_templates_user_id ON workout_templates(user_id)';
+  END IF;
+
+  -- template_exercises
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='template_exercises' AND column_name='template_id') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_template_exercises_template_id ON template_exercises(template_id)';
+  END IF;
 END $$;
-
--- workout_sessions
-CREATE INDEX IF NOT EXISTS idx_workout_sessions_user_id ON workout_sessions(user_id);
-CREATE INDEX IF NOT EXISTS idx_workout_sessions_started_at ON workout_sessions(started_at DESC);
-CREATE INDEX IF NOT EXISTS idx_workout_sessions_template_id ON workout_sessions(template_id);
-
--- session_exercises
-CREATE INDEX IF NOT EXISTS idx_session_exercises_session_id ON session_exercises(session_id);
-CREATE INDEX IF NOT EXISTS idx_session_exercises_exercise_id ON session_exercises(exercise_id);
-
--- workout_sets
-CREATE INDEX IF NOT EXISTS idx_workout_sets_session_exercise_id ON workout_sets(session_exercise_id);
-
--- progression
-CREATE INDEX IF NOT EXISTS idx_progression_user_id ON progression(user_id);
-CREATE INDEX IF NOT EXISTS idx_progression_total_xp ON progression(total_xp DESC);
-
--- personal_records
-CREATE INDEX IF NOT EXISTS idx_personal_records_user_id ON personal_records(user_id);
-CREATE INDEX IF NOT EXISTS idx_personal_records_exercise_id ON personal_records(exercise_id);
-
--- user_achievements
-CREATE INDEX IF NOT EXISTS idx_user_achievements_user_id ON user_achievements(user_id);
-
--- battles
-CREATE INDEX IF NOT EXISTS idx_battles_challenger_id ON battles(challenger_id);
-CREATE INDEX IF NOT EXISTS idx_battles_opponent_id ON battles(opponent_id);
-CREATE INDEX IF NOT EXISTS idx_battles_status ON battles(status);
-
--- xp_breakdown
-CREATE INDEX IF NOT EXISTS idx_xp_breakdown_user_id ON xp_breakdown(user_id);
-
--- body_measurements
-CREATE INDEX IF NOT EXISTS idx_body_measurements_user_id ON body_measurements(user_id);
-
--- workout_templates
-CREATE INDEX IF NOT EXISTS idx_workout_templates_user_id ON workout_templates(user_id);
-
--- template_exercises
-CREATE INDEX IF NOT EXISTS idx_template_exercises_template_id ON template_exercises(template_id);
 
 -- ============================================================================
 -- RLS POLICIES

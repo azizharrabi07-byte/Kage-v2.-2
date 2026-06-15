@@ -1,6 +1,16 @@
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {Toaster} from 'react-hot-toast';
 import App from './App.tsx';
+import Login from './pages/Login.tsx';
+import WorkoutLog from './pages/WorkoutLog.tsx';
+import Profile from './pages/Profile.tsx';
+import SenseiChat from './pages/SenseiChat.tsx';
+import Programs from './pages/Programs.tsx';
+import Battles from './pages/Battles.tsx';
+import ProtectedRoute from './components/ProtectedRoute.tsx';
+import ErrorBoundary from './components/ErrorBoundary.tsx';
 import './index.css';
 import { registerSW } from './utils/pwa';
 
@@ -27,8 +37,32 @@ window.addEventListener('unhandledrejection', (e) => {
   document.body.prepend(el);
 });
 
+const RouterApp = () => (
+  <ErrorBoundary>
+    <BrowserRouter>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: { background: '#1A1A2E', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', fontFamily: 'monospace', fontSize: '12px' },
+          success: { iconTheme: { primary: '#10B981', secondary: '#fff' } },
+          error: { iconTheme: { primary: '#EF4444', secondary: '#fff' } },
+        }}
+      />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/workout" element={<ProtectedRoute><WorkoutLog /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        <Route path="/sensei" element={<ProtectedRoute><SenseiChat /></ProtectedRoute>} />
+        <Route path="/programs" element={<ProtectedRoute><Programs /></ProtectedRoute>} />
+        <Route path="/battles" element={<ProtectedRoute><Battles /></ProtectedRoute>} />
+        <Route path="/*" element={<App />} />
+      </Routes>
+    </BrowserRouter>
+  </ErrorBoundary>
+);
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <RouterApp />
   </StrictMode>,
 );

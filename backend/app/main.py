@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database import get_supabase
-from app.routers import auth, exercises, workouts, progression, prs, measurements
+from app.routers import auth, exercises, workouts, progression, prs, measurements, programs, progress, sensei, battles
 
 app = FastAPI(title="KAGE API", description="KAGE fitness app backend", version="1.0.0")
 
@@ -21,6 +21,10 @@ app.include_router(workouts.session_router, prefix="/api/workout-sessions", tags
 app.include_router(progression.router, prefix="/api/progression", tags=["progression"])
 app.include_router(prs.router, prefix="/api/personal-records", tags=["personal-records"])
 app.include_router(measurements.router, prefix="/api/body-measurements", tags=["body-measurements"])
+app.include_router(programs.router, prefix="/api/programs", tags=["programs"])
+app.include_router(progress.router, prefix="/api/progress", tags=["progress"])
+app.include_router(sensei.router, prefix="/api/sensei", tags=["sensei"])
+app.include_router(battles.router, prefix="/api/battles", tags=["battles"])
 
 
 @app.get("/api/health")

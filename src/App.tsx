@@ -56,9 +56,10 @@ import StatsBoard from './components/StatsBoard';
 import LeaderboardBoard from './components/LeaderboardBoard';
 import ParallaxHero from './components/ParallaxHero';
 import ErrorBoundary from './components/ErrorBoundary';
-import { auth, db, handleFirestoreError, OperationType } from './firebase';
-import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged, User as FirebaseUser, signOut } from 'firebase/auth';
-import { doc, getDoc, setDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { supabase } from './lib/supabaseClient';
+import { Toaster as HotToaster } from 'react-hot-toast';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { useAuthStore } from './stores/authStore';
 
 const EpicLanding = React.lazy(() => import('./components/EpicLanding'));
 const HomeTab = React.lazy(() => import('./components/HomeTab'));
@@ -235,8 +236,9 @@ const INITIAL_MOCK_LEADERBOARD: LeaderboardUser[] = [
 ];
 
 export default function App() {
-  const [user, setUser] = useState<FirebaseUser | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
+  const user = useAuthStore((s) => s.user);
+  const authLoading = !useAuthStore((s) => s.initialized);
+  const initialize = useAuthStore((s) => s.initialize);
 
   // Navigation State
   const [currentTab, setCurrentTab] = useState<TabName>('家');
@@ -407,34 +409,10 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Listen to auth
+  // Initialize Supabase auth
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (u) => {
-      setUser(u);
-      setAuthLoading(false);
-      if (u) {
-        try {
-          const userRef = doc(db, "users", u.uid);
-          const snap = await getDoc(userRef);
-          if (!snap.exists()) {
-            await setDoc(userRef, {
-              uid: u.uid,
-              name: u.displayName || 'Unknown Warrior',
-              level: 1,
-              streak: 0,
-              honorPoints: 0,
-              avatar: '👺',
-              createdAt: serverTimestamp(),
-              updatedAt: serverTimestamp()
-            });
-          }
-        } catch (e) {
-          console.error("Auth init error:", e);
-        }
-      }
-    });
-    return () => unsub();
-  }, []);
+    initialize();
+  }, [initialize]);
 
   // Listen to user data
   useEffect(() => {
@@ -723,43 +701,28 @@ Keep it to 3-4 short sentences. Be direct and authoritative like a martial arts 
     return <div className="min-h-screen bg-[#0A0A0F] flex items-center justify-center"><div className="text-rose-500 animate-pulse font-mono tracking-widest text-sm">INITIALIZING KAGE...</div></div>;
   }
 
-  // Guest user for local development
-  const guestUser: FirebaseUser = {
-    uid: 'guest-001',
-    displayName: 'Guest Warrior',
-    email: 'guest@kage.dojo',
-    emailVerified: true,
-    isAnonymous: false,
-    photoURL: null,
-    phoneNumber: null,
-    providerData: [],
-    metadata: {} as Record<string, unknown>,
-    tenantId: null,
-    delete: async () => {},
-    getIdToken: async () => 'guest-token',
-    getIdTokenResult: async () => ({ token: 'guest-token', signInProvider: null, expirationTime: '', issuedAtTime: '', authTime: '', claims: {} }),
-    reload: async () => {},
-    toJSON: () => ({}),
-  } as FirebaseUser;
-
   if (!user) {
     return (
       <ErrorBoundary>
         <Suspense fallback={<LazyFallback isLight={false} />}>
           <EpicLanding
             onGoogleLogin={async () => {
-              try {
-                await signInWithPopup(auth, new GoogleAuthProvider());
-              } catch (err: unknown) {
-                const firebaseErr = err as { code?: string };
-                if (firebaseErr.code === 'auth/popup-closed-by-user' || firebaseErr.code === 'auth/cancelled-popup-request') {
-                  console.log('Login cancelled by user.');
-                } else {
-                  console.error('Login error:', err);
-                }
+              const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
+              if (error) console.error('Login error:', error);
+            }}
+            onGuestLogin={async () => {
+              const { error } = await supabase.auth.signInWithPassword({
+                email: 'guest@kage.dojo',
+                password: 'guest123456',
+              });
+              if (error) {
+                const { error: signUpError } = await supabase.auth.signUp({
+                  email: 'guest@kage.dojo',
+                  password: 'guest123456',
+                });
+                if (signUpError) console.error('Guest login failed:', signUpError);
               }
             }}
-            onGuestLogin={() => setUser(guestUser)}
           />
         </Suspense>
       </ErrorBoundary>
@@ -815,7 +778,7 @@ Keep it to 3-4 short sentences. Be direct and authoritative like a martial arts 
         </div>
         <div className="flex items-center gap-3">
           <button 
-            onClick={() => signOut(auth)}
+            onClick={() => supabase.auth.signOut()}
             className={`text-[10px] font-mono border px-2 py-1 rounded transition-all duration-200 cursor-pointer active:scale-95 focus-visible:ring-2 focus-visible:ring-rose-500/50 focus-visible:outline-none ${isLight ? 'border-stone-300 text-stone-500 hover:bg-stone-200' : 'border-zinc-700 text-zinc-400 hover:bg-zinc-800'}`}
           >
             LOGOUT

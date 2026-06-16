@@ -1,10 +1,28 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database import get_supabase
 from app.routers import auth, exercises, workouts, progression, prs, measurements, programs, progress, sensei, battles
 
-app = FastAPI(title="KAGE API", description="KAGE fitness app backend", version="1.0.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    if settings.supabase_url and settings.supabase_service_key:
+        try:
+            supabase = get_supabase()
+            supabase.table("exercises").select("id", count="exact").limit(1).execute()
+        except Exception as e:
+            print(f"Supabase connection check: {e}")
+    yield
+
+
+app = FastAPI(
+    title="KAGE API",
+    description="KAGE fitness app backend",
+    version="1.0.0",
+    lifespan=lifespan,
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -30,12 +48,3 @@ app.include_router(battles.router, prefix="/api/battles", tags=["battles"])
 @app.get("/api/health")
 async def health():
     return {"status": "ok", "version": "1.0.0"}
-
-
-@app.on_event("startup")
-async def startup():
-    try:
-        supabase = get_supabase()
-        supabase.table("exercises").select("id", count="exact").limit(1).execute()
-    except Exception as e:
-        print(f"Supabase connection check: {e}")

@@ -5,13 +5,21 @@
 -- ============================================================================
 -- 1. Change exercises.id from UUID to TEXT
 -- ============================================================================
--- First drop dependent FK constraints
+-- Drop dependent FK constraints
 ALTER TABLE IF EXISTS program_exercises DROP CONSTRAINT IF EXISTS program_exercises_exercise_id_fkey;
 ALTER TABLE IF EXISTS session_exercises DROP CONSTRAINT IF EXISTS session_exercises_exercise_id_fkey;
 ALTER TABLE IF EXISTS workout_sets DROP CONSTRAINT IF EXISTS workout_sets_exercise_id_fkey;
 ALTER TABLE IF EXISTS personal_records DROP CONSTRAINT IF EXISTS personal_records_exercise_id_fkey;
 ALTER TABLE IF EXISTS template_exercises DROP CONSTRAINT IF EXISTS template_exercises_exercise_id_fkey;
 
+-- Change FK column types to match (UUID → TEXT) before changing parent
+ALTER TABLE IF EXISTS program_exercises ALTER COLUMN exercise_id TYPE TEXT USING exercise_id::text;
+ALTER TABLE IF EXISTS session_exercises ALTER COLUMN exercise_id TYPE TEXT USING exercise_id::text;
+ALTER TABLE IF EXISTS workout_sets ALTER COLUMN exercise_id TYPE TEXT USING exercise_id::text;
+ALTER TABLE IF EXISTS personal_records ALTER COLUMN exercise_id TYPE TEXT USING exercise_id::text;
+ALTER TABLE IF EXISTS template_exercises ALTER COLUMN exercise_id TYPE TEXT USING exercise_id::text;
+
+-- Now change the parent column
 ALTER TABLE IF EXISTS exercises ALTER COLUMN id TYPE TEXT;
 ALTER TABLE IF EXISTS exercises ALTER COLUMN id DROP DEFAULT;
 
@@ -39,6 +47,7 @@ ALTER TABLE IF EXISTS exercises ADD COLUMN IF NOT EXISTS benefits JSONB DEFAULT 
 -- 3. Change programs.id from UUID to TEXT
 -- ============================================================================
 ALTER TABLE IF EXISTS program_exercises DROP CONSTRAINT IF EXISTS program_exercises_program_id_fkey;
+ALTER TABLE IF EXISTS program_exercises ALTER COLUMN program_id TYPE TEXT USING program_id::text;
 ALTER TABLE IF EXISTS programs ALTER COLUMN id TYPE TEXT;
 ALTER TABLE IF EXISTS programs ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE IF EXISTS program_exercises ADD CONSTRAINT program_exercises_program_id_fkey FOREIGN KEY (program_id) REFERENCES programs(id) ON DELETE CASCADE;

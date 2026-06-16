@@ -19,6 +19,17 @@ class CompleteBattleRequest(BaseModel):
     winner_id: str
 
 
+@router.get("")
+async def list_battles(user: dict = Depends(get_current_user)):
+    supabase = get_supabase()
+    battles = supabase.table("battles") \
+        .select("*") \
+        .or_(f"challenger_id.eq.{user['sub']},opponent_id.eq.{user['sub']}") \
+        .order("created_at", desc=True) \
+        .execute()
+    return battles.data or []
+
+
 @router.post("/create")
 async def create_battle(body: CreateBattleRequest, user: dict = Depends(get_current_user)):
     supabase = get_supabase()

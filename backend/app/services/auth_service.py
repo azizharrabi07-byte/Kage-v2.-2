@@ -13,8 +13,7 @@ def signup(email: str, password: str, name: str) -> dict:
 
     supabase.table("profiles").upsert({
         "id": user.id,
-        "email": email,
-        "name": name,
+        "username": name or email.split("@")[0],
     }).execute()
 
     supabase.table("progression").insert({
@@ -37,8 +36,8 @@ def login(email: str, password: str) -> dict:
     if not user:
         raise ValueError("Invalid credentials")
 
-    profile = supabase.table("profiles").select("id, email, name").eq("id", user.id).single().execute()
-    user_data = profile.data if profile.data else {"id": user.id, "email": email, "name": ""}
+    profile = supabase.table("profiles").select("id, username, level, xp").eq("id", user.id).single().execute()
+    user_data = profile.data if profile.data else {"id": user.id, "username": email.split("@")[0]}
 
     token = _make_token(user.id, email)
     return {"access_token": token, "token_type": "bearer", "user": user_data}
@@ -47,7 +46,7 @@ def login(email: str, password: str) -> dict:
 def get_profile(user_id: str) -> dict | None:
     supabase = get_supabase()
     try:
-        profile = supabase.table("profiles").select("id, email, name").eq("id", user_id).single().execute()
+        profile = supabase.table("profiles").select("id, username, level, xp").eq("id", user_id).single().execute()
         return profile.data
     except Exception:
         return None

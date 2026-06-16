@@ -30,8 +30,9 @@ class UserProfile(BaseModel):
     """Public user profile returned by GET /api/auth/me."""
 
     id: str
-    email: str
-    name: str
+    username: str | None = None
+    level: int = 1
+    xp: int = 0
 
 
 class ErrorResponse(BaseModel):

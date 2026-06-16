@@ -24,7 +24,6 @@ def signup(email: str, password: str, name: str) -> dict:
         "rank_index": 0,
         "streak": 0,
         "workouts_completed": 0,
-        "lock_in_sessions": 0,
     }).execute()
 
     token = _make_token(user.id, email)

@@ -7,11 +7,11 @@ router = APIRouter()
 
 @router.get("")
 async def list_exercises(
-    category: str | None = Query(None),
+    muscle_group: str | None = Query(None, alias="muscle_group"),
     search: str | None = Query(None),
     user: dict = Depends(get_current_user),
 ):
-    return exercise_service.list_exercises(category, search)
+    return exercise_service.list_exercises(muscle_group, search)
 
 
 @router.get("/{exercise_id}")

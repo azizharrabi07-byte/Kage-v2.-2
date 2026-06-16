@@ -8,7 +8,7 @@ router = APIRouter()
 @router.get("")
 async def list_prs(exercise_id: str | None = Query(None), user: dict = Depends(get_current_user)):
     supabase = get_supabase()
-    query = supabase.table("personal_records").select("*, exercises(name, target, kanji)").eq("user_id", user["sub"]).order("achieved_at", desc=True)
+    query = supabase.table("personal_records").select("*").eq("user_id", user["sub"]).order("achieved_at", desc=True)
     if exercise_id:
         query = query.eq("exercise_id", exercise_id)
     result = query.execute()

@@ -1,11 +1,11 @@
 from app.database import get_supabase
 
 
-def list_exercises(category: str | None = None, search: str | None = None) -> list[dict]:
+def list_exercises(muscle_group: str | None = None, search: str | None = None) -> list[dict]:
     supabase = get_supabase()
     query = supabase.table("exercises").select("*").order("name")
-    if category:
-        query = query.eq("category", category)
+    if muscle_group:
+        query = query.eq("muscle_group", muscle_group)
     if search:
         query = query.ilike("name", f"%{search}%")
     result = query.execute()

@@ -3,8 +3,11 @@ from app.database import get_supabase
 
 def get_progression(user_id: str) -> dict | None:
     supabase = get_supabase()
-    result = supabase.table("progression").select("*").eq("user_id", user_id).single().execute()
-    return result.data
+    try:
+        result = supabase.table("progression").select("*").eq("user_id", user_id).single().execute()
+        return result.data
+    except Exception:
+        return None
 
 
 def add_xp(user_id: str, category: str, amount: int, source: str = "workout") -> dict:
@@ -24,7 +27,7 @@ def add_xp(user_id: str, category: str, amount: int, source: str = "workout") ->
     new_total = (current.get("total_xp") or 0) + amount
     new_level = (new_total // 1000) + 1
 
-    update_data = {"total_xp": new_total, "level": new_level, "updated_at": "now()"}
+    update_data = {"total_xp": new_total, "level": new_level}
     supabase.table("progression").update(update_data).eq("user_id", user_id).execute()
 
     return {**update_data, "xp_gained": amount, "leveled_up": new_level > (current.get("level") or 1)}

@@ -12,6 +12,7 @@ Run these SQL files **in order** in the Supabase SQL Editor. Each is **idempoten
 | 4 | `004_indexes_rls.sql` | Indexes + RLS for tables that already exist (skips missing tables/columns safely) |
 | 5 | `005_core_backend_tables.sql` | Missing core tables: `workout_templates`, `template_exercises`, `session_exercises`, `progression`, `personal_records`, `xp_breakdown`, `body_measurements` — each with own indexes + RLS |
 | 6 | `006_nutrition_bounties.sql` | `nutrition_logs`, `bounties`, `user_bounties` + 10 seed bounties |
+| 7 | `007_missing_columns.sql` | Adds `started_at`, `template_id`, `total_xp` to `workout_sessions` and other missing columns |
 
 ## Notes
 

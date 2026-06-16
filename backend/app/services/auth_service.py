@@ -47,8 +47,11 @@ def login(email: str, password: str) -> dict:
 
 def get_profile(user_id: str) -> dict | None:
     supabase = get_supabase()
-    profile = supabase.table("profiles").select("id, email, name").eq("id", user_id).single().execute()
-    return profile.data
+    try:
+        profile = supabase.table("profiles").select("id, email, name").eq("id", user_id).single().execute()
+        return profile.data
+    except Exception:
+        return None
 
 
 def _make_token(user_id: str, email: str) -> str:

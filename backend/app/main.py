@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database import get_supabase
-from app.routers import auth, exercises, workouts, progression, prs, measurements, programs, progress, sensei, battles, nutrition, bounties
+from app.routers import auth, exercises, workouts, progression, prs, measurements, programs, progress, sensei, battles, nutrition, bounties, diet_programs, leaderboard
 
 
 @asynccontextmanager
@@ -45,6 +45,8 @@ app.include_router(sensei.router, prefix="/api/sensei", tags=["sensei"])
 app.include_router(battles.router, prefix="/api/battles", tags=["battles"])
 app.include_router(nutrition.router, prefix="/api/nutrition-logs", tags=["nutrition"])
 app.include_router(bounties.router, prefix="/api/bounties", tags=["bounties"])
+app.include_router(diet_programs.router, prefix="/api/diet-programs", tags=["diet"])
+app.include_router(leaderboard.router, prefix="/api/leaderboard", tags=["leaderboard"])
 
 
 @app.get("/api/health")

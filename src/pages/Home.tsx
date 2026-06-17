@@ -18,6 +18,7 @@ export default function Home() {
         <NavCard to="/programs" label="PROGRAMS" sub="Find your path" />
         <NavCard to="/sensei" label="SENSEI" sub="AI coach" />
         <NavCard to="/battles" label="BATTLES" sub="Compete" />
+        <NavCard to="/leaderboard" label="RANKINGS" sub="Leaderboard" />
         <NavCard to="/profile" label="PROFILE" sub="Your stats" />
       </div>
     </div>

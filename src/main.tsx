@@ -1,18 +1,20 @@
-import {StrictMode} from 'react';
+import {StrictMode, Suspense, lazy} from 'react';
 import {createRoot} from 'react-dom/client';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {Toaster} from 'react-hot-toast';
 import App from './App.tsx';
 import Login from './pages/Login.tsx';
-import WorkoutLog from './pages/WorkoutLog.tsx';
-import Profile from './pages/Profile.tsx';
-import SenseiChat from './pages/SenseiChat.tsx';
-import Programs from './pages/Programs.tsx';
-import Battles from './pages/Battles.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
 import './index.css';
 import { registerSW } from './utils/pwa';
+
+const WorkoutLog = lazy(() => import('./pages/WorkoutLog.tsx'));
+const Profile = lazy(() => import('./pages/Profile.tsx'));
+const SenseiChat = lazy(() => import('./pages/SenseiChat.tsx'));
+const Programs = lazy(() => import('./pages/Programs.tsx'));
+const Battles = lazy(() => import('./pages/Battles.tsx'));
+const Leaderboard = lazy(() => import('./pages/Leaderboard.tsx'));
 
 registerSW();
 
@@ -50,11 +52,12 @@ const RouterApp = () => (
       />
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/workout" element={<ProtectedRoute><WorkoutLog /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path="/sensei" element={<ProtectedRoute><SenseiChat /></ProtectedRoute>} />
-        <Route path="/programs" element={<ProtectedRoute><Programs /></ProtectedRoute>} />
-        <Route path="/battles" element={<ProtectedRoute><Battles /></ProtectedRoute>} />
+        <Route path="/workout" element={<ProtectedRoute><Suspense fallback={null}><WorkoutLog /></Suspense></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Suspense fallback={null}><Profile /></Suspense></ProtectedRoute>} />
+        <Route path="/sensei" element={<ProtectedRoute><Suspense fallback={null}><SenseiChat /></Suspense></ProtectedRoute>} />
+        <Route path="/programs" element={<ProtectedRoute><Suspense fallback={null}><Programs /></Suspense></ProtectedRoute>} />
+        <Route path="/battles" element={<ProtectedRoute><Suspense fallback={null}><Battles /></Suspense></ProtectedRoute>} />
+        <Route path="/leaderboard" element={<ProtectedRoute><Suspense fallback={null}><Leaderboard /></Suspense></ProtectedRoute>} />
         <Route path="/*" element={<App />} />
       </Routes>
     </BrowserRouter>

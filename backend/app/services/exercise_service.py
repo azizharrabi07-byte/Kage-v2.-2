@@ -1,21 +1,51 @@
 from app.database import get_supabase
 
 
-def list_exercises(muscle_group: str | None = None, search: str | None = None) -> list[dict]:
+def list_exercises(
+    muscle_group: str | None = None,
+    equipment: str | None = None,
+    difficulty: str | None = None,
+    category: str | None = None,
+    search: str | None = None,
+    limit: int = 100,
+    offset: int = 0,
+) -> list[dict]:
     supabase = get_supabase()
     query = supabase.table("exercises").select("*").order("name")
     if muscle_group:
         query = query.eq("muscle_group", muscle_group)
+    if equipment:
+        query = query.eq("equipment", equipment)
+    if difficulty:
+        query = query.eq("difficulty", difficulty)
+    if category:
+        query = query.eq("category", category)
     if search:
         query = query.ilike("name", f"%{search}%")
-    result = query.execute()
+    result = query.range(offset, offset + limit - 1).execute()
     return result.data or []
 
 
 def get_exercise(exercise_id: str) -> dict | None:
     supabase = get_supabase()
-    result = supabase.table("exercises").select("*").eq("id", exercise_id).single().execute()
-    return result.data
+    try:
+        result = supabase.table("exercises").select("*").eq("id", exercise_id).single().execute()
+        return result.data
+    except Exception:
+        return None
+
+
+def get_random_exercise(equipment: str | None = None) -> dict | None:
+    supabase = get_supabase()
+    query = supabase.table("exercises").select("*")
+    if equipment:
+        query = query.eq("equipment", equipment)
+    result = query.order("id").limit(10).execute()
+    items = result.data or []
+    if not items:
+        return None
+    import random
+    return random.choice(items)
 
 
 def list_templates(user_id: str | None = None) -> list[dict]:
@@ -34,7 +64,6 @@ def create_template(user_id: str, data: dict) -> dict:
     template = {
         "user_id": user_id,
         "name": data["name"],
-        "kanji": data.get("kanji", ""),
         "description": data.get("description", ""),
         "difficulty": data.get("difficulty", "intermediate"),
         "duration": data.get("duration", 30),

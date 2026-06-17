@@ -707,20 +707,32 @@ Keep it to 3-4 short sentences. Be direct and authoritative like a martial arts 
         <Suspense fallback={<LazyFallback isLight={false} />}>
           <EpicLanding
             onGoogleLogin={async () => {
-              const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
-              if (error) console.error('Login error:', error);
+              try {
+                const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
+                if (error) {
+                  const { default: toast } = await import('react-hot-toast');
+                  toast.error('Google login not enabled. Use email/password or sign up.');
+                }
+              } catch {
+                const { default: toast } = await import('react-hot-toast');
+                toast.error('Google login unavailable. Use email/password.');
+              }
             }}
-            onGuestLogin={async () => {
-              const { error } = await supabase.auth.signInWithPassword({
-                email: 'guest@kage.dojo',
-                password: 'guest123456',
-              });
+            onEmailLogin={async (email, password) => {
+              const { error } = await supabase.auth.signInWithPassword({ email, password });
               if (error) {
-                const { error: signUpError } = await supabase.auth.signUp({
-                  email: 'guest@kage.dojo',
-                  password: 'guest123456',
-                });
-                if (signUpError) console.error('Guest login failed:', signUpError);
+                const { default: toast } = await import('react-hot-toast');
+                toast.error(error.message || 'Login failed');
+              }
+            }}
+            onEmailSignUp={async (email, password) => {
+              const { error } = await supabase.auth.signUp({ email, password });
+              if (error) {
+                const { default: toast } = await import('react-hot-toast');
+                toast.error(error.message || 'Sign up failed');
+              } else {
+                const { default: toast } = await import('react-hot-toast');
+                toast.success('Account created! Check your email to confirm, or try logging in.');
               }
             }}
           />

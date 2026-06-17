@@ -870,7 +870,11 @@ function TestimonialsSection() {
    FINAL CTA / LOGIN CARD
    ========================================================================= */
 
-function LoginCard({ onGoogleLogin, onGuestLogin }: { onGoogleLogin: () => void; onGuestLogin: () => void }) {
+function LoginCard({ onGoogleLogin, onEmailLogin, onEmailSignUp }: {
+  onGoogleLogin: () => void;
+  onEmailLogin: (email: string, password: string) => void;
+  onEmailSignUp: (email: string, password: string) => void;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0.5);
   const y = useMotionValue(0.5);
@@ -882,6 +886,11 @@ function LoginCard({ onGoogleLogin, onGuestLogin }: { onGoogleLogin: () => void;
   const glareX = useTransform(sx, [0, 1], ['0%', '100%']);
   const glareY = useTransform(sy, [0, 1], ['0%', '100%']);
 
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [showSignUp, setShowSignUp] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   function handleMove(e: React.MouseEvent) {
     const el = ref.current;
     if (!el) return;
@@ -892,6 +901,20 @@ function LoginCard({ onGoogleLogin, onGuestLogin }: { onGoogleLogin: () => void;
     y.set(cy);
   }
   function handleLeave() { x.set(0.5); y.set(0.5); }
+
+  const handleSubmit = async () => {
+    if (!loginEmail || !loginPassword) return;
+    setLoading(true);
+    try {
+      if (showSignUp) {
+        await onEmailSignUp(loginEmail, loginPassword);
+      } else {
+        await onEmailLogin(loginEmail, loginPassword);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Section className="py-24 px-6" id="enter">
@@ -964,12 +987,59 @@ function LoginCard({ onGoogleLogin, onGuestLogin }: { onGoogleLogin: () => void;
                 transition={{ duration: 0.5, delay: 0.4 }}
                 className="space-y-3"
               >
+                {/* Email/Password Inputs */}
+                <div className="space-y-2">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={loginEmail}
+                    onChange={(e) => setLoginEmail(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-900/60 border border-zinc-700/50 text-white text-sm font-mono placeholder-zinc-600 focus:outline-none focus:border-rose-500 transition-colors"
+                  />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-900/60 border border-zinc-700/50 text-white text-sm font-mono placeholder-zinc-600 focus:outline-none focus:border-rose-500 transition-colors"
+                  />
+                </div>
+
                 <button
-                  onClick={onGoogleLogin}
-                  className="group relative w-full py-3.5 rounded-xl font-bold font-mono text-sm tracking-wider text-white overflow-hidden transition-all duration-300 cursor-pointer"
+                  onClick={handleSubmit}
+                  disabled={loading || !loginEmail || !loginPassword}
+                  className="group relative w-full py-3.5 rounded-xl font-bold font-mono text-sm tracking-wider text-white overflow-hidden transition-all duration-300 cursor-pointer disabled:opacity-50"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-rose-600 to-rose-500 group-hover:from-rose-500 group-hover:to-rose-400 transition-all duration-300" />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%)] bg-[length:250%_250%] group-hover:bg-[position:100%_100%]" />
+                  <span className="relative z-10">
+                    {loading ? '...' : showSignUp ? 'JOIN DOJO' : 'ENTER DOJO'}
+                  </span>
+                </button>
+
+                <p className="text-[10px] text-zinc-600 font-mono">
+                  {showSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+                  <button
+                    onClick={() => setShowSignUp(!showSignUp)}
+                    className="text-rose-400 hover:text-rose-300 cursor-pointer"
+                  >
+                    {showSignUp ? 'Log in' : 'Sign up'}
+                  </button>
+                </p>
+
+                <div className="relative my-4">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-zinc-800" />
+                  </div>
+                  <div className="relative flex justify-center">
+                    <span className="bg-[#1A1A24]/80 px-3 text-[10px] text-zinc-600 font-mono">OR</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={onGoogleLogin}
+                  className="group relative w-full py-3 rounded-xl font-bold font-mono text-xs tracking-wider text-zinc-300 overflow-hidden transition-all duration-300 border border-zinc-700/50 hover:border-zinc-600 cursor-pointer"
+                >
+                  <div className="absolute inset-0 bg-zinc-800/40 group-hover:bg-zinc-700/40 transition-colors duration-300" />
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     <svg className="w-4 h-4" viewBox="0 0 24 24">
                       <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
@@ -977,16 +1047,19 @@ function LoginCard({ onGoogleLogin, onGuestLogin }: { onGoogleLogin: () => void;
                       <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
                       <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
                     </svg>
-                    ENTER DOJO (GOOGLE)
+                    CONTINUE WITH GOOGLE
                   </span>
                 </button>
 
                 <button
-                  onClick={onGuestLogin}
-                  className="group relative w-full py-3 rounded-xl font-bold font-mono text-xs tracking-wider text-zinc-300 overflow-hidden transition-all duration-300 border border-zinc-700/50 hover:border-zinc-600 cursor-pointer"
+                  onClick={() => {
+                    setLoginEmail('guest@kage.dojo');
+                    setLoginPassword('guest123456');
+                    setTimeout(() => onEmailLogin('guest@kage.dojo', 'guest123456'), 100);
+                  }}
+                  className="w-full py-2 rounded-lg text-[10px] text-zinc-600 font-mono hover:text-zinc-400 transition-colors cursor-pointer"
                 >
-                  <div className="absolute inset-0 bg-zinc-800/40 group-hover:bg-zinc-700/40 transition-colors duration-300" />
-                  <span className="relative z-10">GUEST ENTRY (OFFLINE DEMO)</span>
+                  GUEST DEMO
                 </button>
               </motion.div>
 
@@ -1033,7 +1106,11 @@ function Footer() {
    MAIN LANDING COMPONENT
    ========================================================================= */
 
-export default function EpicLanding({ onGoogleLogin, onGuestLogin }: { onGoogleLogin: () => void; onGuestLogin: () => void }) {
+export default function EpicLanding({ onGoogleLogin, onEmailLogin, onEmailSignUp }: {
+  onGoogleLogin: () => void;
+  onEmailLogin: (email: string, password: string) => void;
+  onEmailSignUp: (email: string, password: string) => void;
+}) {
   return (
     <div className="min-h-screen bg-[#0A0A0F] overflow-x-hidden">
       {/* Floating Ghost Geometries (full page) */}
@@ -1055,7 +1132,7 @@ export default function EpicLanding({ onGoogleLogin, onGuestLogin }: { onGoogleL
       <TestimonialsSection />
 
       {/* Final CTA */}
-      <LoginCard onGoogleLogin={onGoogleLogin} onGuestLogin={onGuestLogin} />
+      <LoginCard onGoogleLogin={onGoogleLogin} onEmailLogin={onEmailLogin} onEmailSignUp={onEmailSignUp} />
 
       {/* Footer */}
       <Footer />

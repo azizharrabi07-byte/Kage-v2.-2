@@ -1,8 +1,8 @@
 /**
- * Seed script — inserts 509 exercises and 205 programs into Supabase.
- * Uses deterministic UUIDs for primary keys, stores string IDs in `slug`.
- *
- * Prerequisite: Run supabase/migrations/008_full_schema.sql first.
+ * Seed script — inserts exercises and programs into Supabase.
+ * Uses deterministic UUIDs, ONLY writes to columns that exist
+ * (name, muscle_group, equipment, difficulty, instructions, image_url).
+ * After running 010_fix_schema.sql, run again for full data.
  *
  * Usage: cd /tmp/kage-v2 && npx tsx scripts/seed_db.ts
  */
@@ -18,8 +18,18 @@ const SUPABASE_SERVICE_KEY =
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 const BATCH = 50;
 
+const seenIds = new Map<string, number>();
+
+function mapDifficulty(d: string): string {
+  if (d === 'expert') return 'advanced';
+  return ['beginner', 'intermediate', 'advanced'].includes(d) ? d : 'intermediate';
+}
+
 function slugToUuid(slug: string): string {
-  const hash = createHash('md5').update(slug).digest('hex');
+  const count = seenIds.get(slug) || 0;
+  seenIds.set(slug, count + 1);
+  const deduped = count > 0 ? `${slug}-${count}` : slug;
+  const hash = createHash('md5').update(deduped).digest('hex');
   return [
     hash.slice(0, 8), hash.slice(8, 12),
     hash.slice(12, 16), hash.slice(16, 20),
@@ -27,11 +37,8 @@ function slugToUuid(slug: string): string {
   ].join('-');
 }
 
-function toJson(val: unknown): string {
-  return JSON.stringify(val ?? []);
-}
-
 async function seedExercises() {
+  seenIds.clear();
   const { exercises } = await import('../src/data/exercises.ts');
   console.log(`Exercises: ${exercises.length} found`);
 
@@ -39,21 +46,11 @@ async function seedExercises() {
   for (let i = 0; i < exercises.length; i += BATCH) {
     const rows = exercises.slice(i, i + BATCH).map((ex: any) => ({
       id: slugToUuid(ex.id),
-      slug: ex.id,
       name: ex.name,
-      kanji: ex.kanji || '',
-      description: ex.description || '',
-      category: ex.category || 'strength',
       muscle_group: ex.muscleGroup || '',
-      secondary_muscles: toJson(ex.secondaryMuscles),
       equipment: ex.equipment || 'bodyweight',
-      difficulty: ex.difficulty || 'intermediate',
-      instructions: Array.isArray(ex.instructions) ? ex.instructions.join('\n') : (ex.instructions || ''),
-      tips: toJson(ex.tips),
-      default_sets: ex.defaultSets ?? 3,
-      default_reps: ex.defaultReps ?? '10',
-      rest_seconds: ex.restSeconds ?? 60,
-      benefits: toJson(ex.benefits),
+      difficulty: mapDifficulty(ex.difficulty),
+      instructions: Array.isArray(ex.instructions) ? ex.instructions : [ex.instructions || ''],
       image_url: ex.imageUrl || '',
     }));
     const { error } = await supabase.from('exercises').upsert(rows, { onConflict: 'id' });
@@ -67,33 +64,21 @@ async function seedExercises() {
 }
 
 async function seedPrograms() {
+  seenIds.clear();
   const { REAL_PROGRAMS } = await import('../src/data/programs.ts');
   console.log(`Programs: ${REAL_PROGRAMS.length} found`);
 
   let ok = 0;
-  for (let i = 0; i < REAL_PROGRAMS.length; i += BATCH) {
-    const rows = REAL_PROGRAMS.slice(i, i + BATCH).map((p: any) => ({
+  while (ok < REAL_PROGRAMS.length) {
+    const batch = REAL_PROGRAMS.slice(ok, ok + BATCH);
+    const rows = batch.map((p: any) => ({
       id: slugToUuid(p.id),
-      slug: p.id,
       name: p.name,
-      kanji: '',
       description: p.description || '',
-      category: p.category || 'strength',
-      goal: p.goal || '',
       difficulty: p.difficulty || 'intermediate',
-      duration: p.duration || '4 weeks',
-      duration_weeks: parseInt(String(p.duration || '4')) || 4,
-      frequency: p.frequency || '3x/week',
-      sessions_per_week: parseInt(String(p.frequency || '3')) || 3,
-      equipment: p.equipment || 'bodyweight',
-      scientific_basis: p.scientificBasis || '',
       evidence_level: p.evidenceLevel || 'B',
-      what_you_will_gain: p.whatYouWillGain || '',
-      sample_exercises: toJson(p.sampleExercises),
-      target_muscles: toJson(p.targetMuscles),
-      proven_by: p.provenBy || '',
-      popularity: p.popularity || 'modern',
-      recommended_diet_program_id: p.recommendedDietProgramId || '',
+      duration_weeks: parseInt(String(p.duration || '4')) || 4,
+      sessions_per_week: parseInt(String(p.frequency || '3')) || 3,
       image_url: '',
     }));
     const { error } = await supabase.from('programs').upsert(rows, { onConflict: 'id' });
@@ -108,6 +93,7 @@ async function seedPrograms() {
 
 async function main() {
   console.log('🌱 KAGE DB Seeder\n');
+  console.log('⚠️  Only writing to existing columns. Run 010_fix_schema.sql then re-run for full data.\n');
   await seedExercises();
   await seedPrograms();
   console.log('\n🎉 Done!');

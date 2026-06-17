@@ -1,16 +1,26 @@
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
+import { useTheme } from '../lib/theme';
 
 export default function Home() {
   const profile = useAuthStore((s) => s.profile);
+  const { isLight, toggle } = useTheme();
 
   return (
     <div className="p-4 max-w-lg mx-auto space-y-6">
-      <div className="text-center py-8">
-        <h1 className="text-3xl font-black text-white font-mono">KAGE</h1>
-        <p className="text-zinc-500 text-xs font-mono mt-2">
-          Welcome{profile?.name ? `, ${profile.name}` : ''}
-        </p>
+      <div className="flex justify-between items-center py-4">
+        <div>
+          <h1 className="text-3xl font-black text-white font-mono">KAGE</h1>
+          <p className="text-zinc-500 text-xs font-mono mt-1">
+            Welcome{profile?.name ? `, ${profile.name}` : ' Warrior'}
+          </p>
+        </div>
+        <button
+          onClick={toggle}
+          className="px-3 py-1.5 rounded-lg bg-zinc-800 text-zinc-400 font-mono text-[10px] hover:bg-zinc-700 transition-colors cursor-pointer"
+        >
+          {isLight ? '🌙 DARK' : '☀ LIGHT'}
+        </button>
       </div>
 
       <div className="grid grid-cols-2 gap-3">

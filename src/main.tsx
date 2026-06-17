@@ -6,6 +6,8 @@ import App from './App.tsx';
 import Login from './pages/Login.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
+import BottomNav from './components/BottomNav.tsx';
+import { ThemeProvider } from './lib/theme.tsx';
 import './index.css';
 import { registerSW } from './utils/pwa';
 
@@ -40,28 +42,31 @@ window.addEventListener('unhandledrejection', (e) => {
 });
 
 const RouterApp = () => (
-  <ErrorBoundary>
-    <BrowserRouter>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          style: { background: '#1A1A2E', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', fontFamily: 'monospace', fontSize: '12px' },
-          success: { iconTheme: { primary: '#10B981', secondary: '#fff' } },
-          error: { iconTheme: { primary: '#EF4444', secondary: '#fff' } },
-        }}
-      />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/workout" element={<ProtectedRoute><Suspense fallback={null}><WorkoutLog /></Suspense></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><Suspense fallback={null}><Profile /></Suspense></ProtectedRoute>} />
-        <Route path="/sensei" element={<ProtectedRoute><Suspense fallback={null}><SenseiChat /></Suspense></ProtectedRoute>} />
-        <Route path="/programs" element={<ProtectedRoute><Suspense fallback={null}><Programs /></Suspense></ProtectedRoute>} />
-        <Route path="/battles" element={<ProtectedRoute><Suspense fallback={null}><Battles /></Suspense></ProtectedRoute>} />
-        <Route path="/leaderboard" element={<ProtectedRoute><Suspense fallback={null}><Leaderboard /></Suspense></ProtectedRoute>} />
-        <Route path="/*" element={<App />} />
-      </Routes>
-    </BrowserRouter>
-  </ErrorBoundary>
+  <ThemeProvider>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: { background: '#1A1A2E', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', fontFamily: 'monospace', fontSize: '12px' },
+            success: { iconTheme: { primary: '#10B981', secondary: '#fff' } },
+            error: { iconTheme: { primary: '#EF4444', secondary: '#fff' } },
+          }}
+        />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/workout" element={<ProtectedRoute><Suspense fallback={null}><WorkoutLog /></Suspense></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Suspense fallback={null}><Profile /></Suspense></ProtectedRoute>} />
+          <Route path="/sensei" element={<ProtectedRoute><Suspense fallback={null}><SenseiChat /></Suspense></ProtectedRoute>} />
+          <Route path="/programs" element={<ProtectedRoute><Suspense fallback={null}><Programs /></Suspense></ProtectedRoute>} />
+          <Route path="/battles" element={<ProtectedRoute><Suspense fallback={null}><Battles /></Suspense></ProtectedRoute>} />
+          <Route path="/leaderboard" element={<ProtectedRoute><Suspense fallback={null}><Leaderboard /></Suspense></ProtectedRoute>} />
+          <Route path="/*" element={<App />} />
+        </Routes>
+        <BottomNav />
+      </BrowserRouter>
+    </ErrorBoundary>
+  </ThemeProvider>
 );
 
 createRoot(document.getElementById('root')!).render(

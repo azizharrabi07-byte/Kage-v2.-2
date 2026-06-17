@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import apiClient from '../services/apiClient';
 import { useAuthStore } from '../stores/authStore';
+import WorkoutChart from '../components/WorkoutChart';
 
 interface ProgressData {
   xp: number;
@@ -66,6 +67,8 @@ export default function Profile() {
           ))}
         </div>
       )}
+
+      <WorkoutChart />
 
       {data?.recentSessions && data.recentSessions.length > 0 && (
         <div className="space-y-2">

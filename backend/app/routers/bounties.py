@@ -30,7 +30,7 @@ async def claim_bounty(bounty_id: str, user: dict = Depends(get_current_user)):
         .select("id") \
         .eq("user_id", user["sub"]) \
         .eq("bounty_id", bounty_id) \
-        .maybe_single() \
+        .limit(1) \
         .execute()
     if existing.data:
         return {"error": "Already claimed"}
@@ -52,8 +52,11 @@ async def complete_bounty(bounty_id: str, user: dict = Depends(get_current_user)
         .eq("bounty_id", bounty_id) \
         .execute()
     if result.data:
-        bounty = supabase.table("bounties").select("xp_reward").eq("id", bounty_id).single().execute()
-        if bounty.data:
+        try:
+            bounty = supabase.table("bounties").select("xp_reward").eq("id", bounty_id).single().execute()
+        except Exception:
+            bounty = type('obj', (object,), {'data': None})()
+        if hasattr(bounty, 'data') and bounty.data:
             xp = bounty.data.get("xp_reward", 0)
             try:
                 supabase.rpc("add_xp", {"p_user_id": user["sub"], "p_amount": xp}).execute()

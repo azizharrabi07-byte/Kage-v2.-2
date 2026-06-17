@@ -6,6 +6,14 @@ from app.middleware.auth import get_current_user
 router = APIRouter()
 
 
+def _run_query(query):
+    try:
+        result = query.execute()
+        return result.data or []
+    except Exception:
+        return []
+
+
 @router.get("")
 async def list_programs(
     category: str | None = Query(None),
@@ -18,7 +26,8 @@ async def list_programs(
     supabase = get_supabase()
     query = supabase.table("programs").select("*").order("name")
     if category:
-        query = query.eq("category", category)
+        try: query = query.eq("category", category)
+        except: pass
     if difficulty:
         query = query.eq("difficulty", difficulty)
     if goal:
@@ -27,8 +36,7 @@ async def list_programs(
         query = query.eq("equipment", equipment)
     if search:
         query = query.ilike("name", f"%{search}%")
-    result = query.execute()
-    return result.data or []
+    return _run_query(query)
 
 
 @router.get("/random")
@@ -43,8 +51,7 @@ async def random_program(
         query = query.eq("equipment", equipment)
     if goal:
         query = query.ilike("goal", f"%{goal}%")
-    result = query.execute()
-    items = result.data or []
+    items = _run_query(query)
     if not items:
         raise HTTPException(status_code=404, detail="No programs match your criteria")
     return random.choice(items)
@@ -53,14 +60,20 @@ async def random_program(
 @router.get("/{program_id}")
 async def get_program(program_id: str, user: dict = Depends(get_current_user)):
     supabase = get_supabase()
-    prog = supabase.table("programs").select("*").eq("id", program_id).single().execute()
-    if not prog.data:
+    try:
+        prog = supabase.table("programs").select("*").eq("id", program_id).single().execute()
+        if not prog.data:
+            raise HTTPException(status_code=404, detail="Program not found")
+        return prog.data
+    except HTTPException:
+        raise
+    except Exception:
         raise HTTPException(status_code=404, detail="Program not found")
-    return prog.data
 
 
 @router.get("/{program_id}/exercises")
 async def get_program_exercises(program_id: str, user: dict = Depends(get_current_user)):
     supabase = get_supabase()
-    ex = supabase.table("program_exercises").select("*").eq("program_id", program_id).order("sort_order").execute()
-    return ex.data or []
+    return _run_query(
+        supabase.table("program_exercises").select("*").eq("program_id", program_id).order("sort_order")
+    )

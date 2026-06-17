@@ -15,15 +15,19 @@ def list_exercises(
     if muscle_group:
         query = query.eq("muscle_group", muscle_group)
     if equipment:
-        query = query.eq("equipment", equipment)
+        col = "equipment"
+        query = query.eq(col, equipment)
     if difficulty:
         query = query.eq("difficulty", difficulty)
     if category:
         query = query.eq("category", category)
     if search:
         query = query.ilike("name", f"%{search}%")
-    result = query.range(offset, offset + limit - 1).execute()
-    return result.data or []
+    try:
+        result = query.range(offset, offset + limit - 1).execute()
+        return result.data or []
+    except Exception:
+        return []
 
 
 def get_exercise(exercise_id: str) -> dict | None:
@@ -40,12 +44,15 @@ def get_random_exercise(equipment: str | None = None) -> dict | None:
     query = supabase.table("exercises").select("*")
     if equipment:
         query = query.eq("equipment", equipment)
-    result = query.order("id").limit(10).execute()
-    items = result.data or []
-    if not items:
+    try:
+        result = query.limit(10).execute()
+        items = result.data or []
+        if not items:
+            return None
+        import random
+        return random.choice(items)
+    except Exception:
         return None
-    import random
-    return random.choice(items)
 
 
 def list_templates(user_id: str | None = None) -> list[dict]:
@@ -55,8 +62,11 @@ def list_templates(user_id: str | None = None) -> list[dict]:
         query = query.or_(f"is_custom.eq.false,user_id.eq.{user_id}")
     else:
         query = query.eq("is_custom", False)
-    result = query.execute()
-    return result.data or []
+    try:
+        result = query.execute()
+        return result.data or []
+    except Exception:
+        return []
 
 
 def create_template(user_id: str, data: dict) -> dict:

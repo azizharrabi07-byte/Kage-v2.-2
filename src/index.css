@@ -133,3 +133,18 @@
   animation: gradient-shift 20s ease-in-out infinite;
   transform: translate3d(0, 0, 0);
 }
+
+/* Bottom nav padding */
+body { padding-bottom: 60px; }
+
+/* Light mode overrides */
+.light body,
+.light .bg-void { background: #F8F5F0; }
+.light .text-white { color: #1A1A24; }
+.light .text-zinc-400 { color: #6B7280; }
+.light .text-zinc-500 { color: #9CA3AF; }
+.light .bg-kachi { background: #FFF; }
+.light .border-white\\/10 { border-color: rgba(0,0,0,0.08); }
+.light .border-zinc-800 { border-color: rgba(0,0,0,0.1); }
+.light .bg-zinc-900 { background: #FFF; }
+.light .bg-zinc-900\\/80 { background: rgba(255,255,255,0.8); }

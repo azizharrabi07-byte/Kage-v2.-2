@@ -17,6 +17,10 @@ const SenseiChat = lazy(() => import('./pages/SenseiChat.tsx'));
 const Programs = lazy(() => import('./pages/Programs.tsx'));
 const Battles = lazy(() => import('./pages/Battles.tsx'));
 const Leaderboard = lazy(() => import('./pages/Leaderboard.tsx'));
+const NutritionLog = lazy(() => import('./pages/NutritionLog.tsx'));
+const BountiesPage = lazy(() => import('./pages/BountiesPage.tsx'));
+const DietPrograms = lazy(() => import('./pages/DietPrograms.tsx'));
+const SettingsPage = lazy(() => import('./pages/Settings.tsx'));
 
 registerSW();
 
@@ -60,8 +64,12 @@ const RouterApp = () => (
           <Route path="/sensei" element={<ProtectedRoute><Suspense fallback={null}><SenseiChat /></Suspense></ProtectedRoute>} />
           <Route path="/programs" element={<ProtectedRoute><Suspense fallback={null}><Programs /></Suspense></ProtectedRoute>} />
           <Route path="/battles" element={<ProtectedRoute><Suspense fallback={null}><Battles /></Suspense></ProtectedRoute>} />
-          <Route path="/leaderboard" element={<ProtectedRoute><Suspense fallback={null}><Leaderboard /></Suspense></ProtectedRoute>} />
-          <Route path="/*" element={<App />} />
+        <Route path="/leaderboard" element={<ProtectedRoute><Suspense fallback={null}><Leaderboard /></Suspense></ProtectedRoute>} />
+        <Route path="/nutrition" element={<ProtectedRoute><Suspense fallback={null}><NutritionLog /></Suspense></ProtectedRoute>} />
+        <Route path="/bounties" element={<ProtectedRoute><Suspense fallback={null}><BountiesPage /></Suspense></ProtectedRoute>} />
+        <Route path="/diet" element={<ProtectedRoute><Suspense fallback={null}><DietPrograms /></Suspense></ProtectedRoute>} />
+        <Route path="/settings" element={<ProtectedRoute><Suspense fallback={null}><SettingsPage /></Suspense></ProtectedRoute>} />
+        <Route path="/*" element={<App />} />
         </Routes>
         <BottomNav />
       </BrowserRouter>

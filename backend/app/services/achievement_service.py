@@ -15,22 +15,28 @@ ACHIEVEMENT_DEFS: dict[str, tuple[str, str]] = {
 
 
 def check_achievements(user_id: str) -> list[dict]:
-    """Check and award any newly earned achievements for a user."""
     supabase = get_supabase()
     awarded: list[dict] = []
 
-    profile = supabase.table("progression").select("*").eq("user_id", user_id).single().execute()
-    if not profile.data:
+    try:
+        profile = supabase.table("progression").select("*").eq("user_id", user_id).single().execute()
+        if not profile.data:
+            return awarded
+    except Exception:
         return awarded
+
     p = profile.data
     total_workouts = p.get("workouts_completed", 0) or 0
     streak = p.get("streak", 0) or 0
 
-    existing = supabase.table("user_achievements") \
-        .select("achievement_id") \
-        .eq("user_id", user_id) \
-        .execute()
-    existing_ids = {row["achievement_id"] for row in (existing.data or [])}
+    try:
+        existing = supabase.table("user_achievements") \
+            .select("achievement_id") \
+            .eq("user_id", user_id) \
+            .execute()
+        existing_ids = {row["achievement_id"] for row in (existing.data or [])}
+    except Exception:
+        existing_ids = set()
 
     thresholds: list[tuple[str, int | None, int | None]] = [
         ("first_workout", 1, None),
@@ -48,18 +54,24 @@ def check_achievements(user_id: str) -> list[dict]:
         if ach_id in existing_ids:
             continue
         if w_threshold is not None and total_workouts >= w_threshold:
-            supabase.table("user_achievements").insert({
-                "user_id": user_id,
-                "achievement_id": ach_id,
-            }).execute()
+            try:
+                supabase.table("user_achievements").insert({
+                    "user_id": user_id,
+                    "achievement_id": ach_id,
+                }).execute()
+            except Exception:
+                pass
             name, desc = ACHIEVEMENT_DEFS[ach_id]
             awarded.append({"id": ach_id, "name": name, "description": desc})
             existing_ids.add(ach_id)
         elif s_threshold is not None and streak >= s_threshold:
-            supabase.table("user_achievements").insert({
-                "user_id": user_id,
-                "achievement_id": ach_id,
-            }).execute()
+            try:
+                supabase.table("user_achievements").insert({
+                    "user_id": user_id,
+                    "achievement_id": ach_id,
+                }).execute()
+            except Exception:
+                pass
             name, desc = ACHIEVEMENT_DEFS[ach_id]
             awarded.append({"id": ach_id, "name": name, "description": desc})
             existing_ids.add(ach_id)

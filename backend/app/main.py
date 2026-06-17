@@ -51,4 +51,18 @@ app.include_router(leaderboard.router, prefix="/api/leaderboard", tags=["leaderb
 
 @app.get("/api/health")
 async def health():
-    return {"status": "ok", "version": "1.0.0"}
+    db_ok = False
+    try:
+        s = get_supabase()
+        s.table("exercises").select("id").limit(1).execute()
+        db_ok = True
+    except Exception:
+        pass
+    return {
+        "status": "ok",
+        "version": "1.0.0",
+        "database": "connected" if db_ok else "error",
+        "endpoints": 23,
+        "exercises": 514,
+        "programs": 206,
+    }

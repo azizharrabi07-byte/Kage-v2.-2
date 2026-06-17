@@ -1,6 +1,6 @@
 /**
  * Seed script — inserts 509 exercises and 205 programs into Supabase.
- * Uses string IDs matching the frontend data files.
+ * Uses deterministic UUIDs for primary keys, stores string IDs in `slug`.
  *
  * Prerequisite: Run supabase/migrations/008_full_schema.sql first.
  *
@@ -8,6 +8,7 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
+import { createHash } from 'crypto';
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://onkubggcahallhxdnttj.supabase.co';
 const SUPABASE_SERVICE_KEY =
@@ -16,6 +17,15 @@ const SUPABASE_SERVICE_KEY =
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 const BATCH = 50;
+
+function slugToUuid(slug: string): string {
+  const hash = createHash('md5').update(slug).digest('hex');
+  return [
+    hash.slice(0, 8), hash.slice(8, 12),
+    hash.slice(12, 16), hash.slice(16, 20),
+    hash.slice(20, 32),
+  ].join('-');
+}
 
 function toJson(val: unknown): string {
   return JSON.stringify(val ?? []);
@@ -28,7 +38,8 @@ async function seedExercises() {
   let ok = 0;
   for (let i = 0; i < exercises.length; i += BATCH) {
     const rows = exercises.slice(i, i + BATCH).map((ex: any) => ({
-      id: ex.id,
+      id: slugToUuid(ex.id),
+      slug: ex.id,
       name: ex.name,
       kanji: ex.kanji || '',
       description: ex.description || '',
@@ -62,7 +73,8 @@ async function seedPrograms() {
   let ok = 0;
   for (let i = 0; i < REAL_PROGRAMS.length; i += BATCH) {
     const rows = REAL_PROGRAMS.slice(i, i + BATCH).map((p: any) => ({
-      id: p.id,
+      id: slugToUuid(p.id),
+      slug: p.id,
       name: p.name,
       kanji: '',
       description: p.description || '',

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query, Depends
+from fastapi import APIRouter, HTTPException, Query, Depends
 from app.middleware.auth import get_current_user
 from app.database import get_supabase
 
@@ -8,8 +8,11 @@ router = APIRouter()
 @router.get("")
 async def list_measurements(limit: int = Query(10), user: dict = Depends(get_current_user)):
     supabase = get_supabase()
-    result = supabase.table("body_measurements").select("*").eq("user_id", user["sub"]).order("measured_at", desc=True).limit(limit).execute()
-    return result.data or []
+    try:
+        result = supabase.table("body_measurements").select("*").eq("user_id", user["sub"]).order("measured_at", desc=True).limit(limit).execute()
+        return result.data or []
+    except Exception:
+        return []
 
 
 @router.post("")
@@ -25,5 +28,8 @@ async def create_measurement(body: dict, user: dict = Depends(get_current_user))
         "thigh_cm": body.get("thigh_cm"),
         "notes": body.get("notes", ""),
     }
-    result = supabase.table("body_measurements").insert(measurement).execute()
-    return result.data[0] if result.data else measurement
+    try:
+        result = supabase.table("body_measurements").insert(measurement).execute()
+        return result.data[0] if result.data else measurement
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Failed to save measurement: {e}")

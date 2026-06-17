@@ -24,7 +24,7 @@ async def get_progress_stats(user: dict = Depends(get_current_user)):
     achievements_data = []
     try:
         achievements = supabase.table("user_achievements") \
-            .select("*, achievements(name, description)") \
+            .select("achievement_id") \
             .eq("user_id", user_id) \
             .execute()
         achievements_data = achievements.data or []
@@ -35,7 +35,7 @@ async def get_progress_stats(user: dict = Depends(get_current_user)):
     total_count = 0
     try:
         sessions = supabase.table("workout_sessions") \
-            .select("id, created_at, notes", count="exact") \
+            .select("id, created_at, notes, xp_earned", count="exact") \
             .eq("user_id", user_id) \
             .order("created_at", desc=True) \
             .limit(5) \

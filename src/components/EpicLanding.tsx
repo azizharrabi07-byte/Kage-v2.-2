@@ -1117,7 +1117,7 @@ export default function EpicLanding({ onGoogleLogin, onEmailLogin, onEmailSignUp
       <FloatingGhosts />
 
       {/* Hero Section */}
-      <HeroSection onEnter={onGoogleLogin} />
+      <HeroSection onEnter={() => document.getElementById('enter')?.scrollIntoView({ behavior: 'smooth' })} />
 
       {/* What is KAGE */}
       <WhatSection />

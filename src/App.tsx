@@ -719,20 +719,31 @@ Keep it to 3-4 short sentences. Be direct and authoritative like a martial arts 
               }
             }}
             onEmailLogin={async (email, password) => {
-              const { error } = await supabase.auth.signInWithPassword({ email, password });
-              if (error) {
-                const { default: toast } = await import('react-hot-toast');
-                toast.error(error.message || 'Login failed');
+              const { default: toast } = await import('react-hot-toast');
+              try {
+                const { error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) {
+                  const msg = typeof error === 'object' ? (error as Record<string, unknown>).message || JSON.stringify(error) : String(error);
+                  toast.error(msg || 'Login failed. Check your credentials.');
+                }
+              } catch (err: unknown) {
+                toast.error(err instanceof Error ? err.message : 'Connection error during login');
               }
             }}
             onEmailSignUp={async (email, password) => {
-              const { error } = await supabase.auth.signUp({ email, password });
-              if (error) {
-                const { default: toast } = await import('react-hot-toast');
-                toast.error(error.message || 'Sign up failed');
-              } else {
-                const { default: toast } = await import('react-hot-toast');
-                toast.success('Account created! Check your email to confirm, or try logging in.');
+              const { default: toast } = await import('react-hot-toast');
+              try {
+                const { data, error } = await supabase.auth.signUp({ email, password });
+                if (error) {
+                  const msg = typeof error === 'object' ? (error as Record<string, unknown>).message || JSON.stringify(error) : String(error);
+                  toast.error(msg || 'Sign up failed. Try a different email or enable email confirmations in Supabase.');
+                } else if (data?.user?.identities?.length === 0) {
+                  toast.error('Account already exists. Try logging in.');
+                } else {
+                  toast.success('Account created! Check your email to confirm, or try logging in.');
+                }
+              } catch (err: unknown) {
+                toast.error(err instanceof Error ? err.message : 'Connection error during sign up');
               }
             }}
           />
@@ -774,9 +785,6 @@ Keep it to 3-4 short sentences. Be direct and authoritative like a martial arts 
       </div>
       {/* Animated Gradient Background Overlay */}
       <div className={`fixed inset-0 pointer-events-none transition-opacity duration-700 ${isLight ? 'bg-animate-light opacity-50' : 'bg-animate-dark opacity-60'}`} />
-
-      {/* DIAGNOSTIC - remove after fixing */}
-      <div className="fixed top-0 left-0 z-[99999] bg-rose-600 text-white text-[8px] font-mono px-2 py-0.5">KAGE APP MOUNTED</div>
       <div className={`fixed inset-0 pointer-events-none transition-opacity duration-500 ${isLight ? 'bg-gradient-to-b from-stone-100/80 via-stone-100/50 to-stone-100' : 'bg-gradient-to-b from-transparent via-[#0A0A0F]/30 to-[#0A0A0F]/80'}`} />
       <div className={`fixed inset-0 pointer-events-none transition-opacity duration-500 ${isLight ? 'opacity-[0.02]' : 'opacity-[0.03]'} bg-[linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] bg-[size:48px_48px]`} />
 

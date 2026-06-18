@@ -44,4 +44,11 @@ ALTER TABLE IF EXISTS programs ADD COLUMN IF NOT EXISTS kanji TEXT DEFAULT '';
 -- ============================================================================
 ALTER TABLE IF EXISTS personal_records DROP CONSTRAINT IF EXISTS personal_records_user_id_exercise_name_key;
 ALTER TABLE IF EXISTS personal_records DROP CONSTRAINT IF EXISTS personal_records_user_id_exercise_id_key;
-ALTER TABLE IF EXISTS personal_records ADD CONSTRAINT IF NOT EXISTS personal_records_user_id_exercise_id_key UNIQUE(user_id, exercise_id);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'personal_records_user_id_exercise_id_key'
+  ) THEN
+    ALTER TABLE personal_records ADD CONSTRAINT personal_records_user_id_exercise_id_key UNIQUE(user_id, exercise_id);
+  END IF;
+END $$;

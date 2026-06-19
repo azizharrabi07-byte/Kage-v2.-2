@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const NAV_ITEMS = [
   { path: '/', label: 'HOME', icon: '⌂' },
   { path: '/workout', label: 'TRAIN', icon: '⚔' },
-  { path: '/programs', label: 'PROGRAMS', icon: '⊞' },
-  { path: '/sensei', label: 'SENSEI', icon: '◉' },
-  { path: '/profile', label: 'PROFILE', icon: '◎' },
+  { path: '/diet', label: 'DIET', icon: '🥗' },
+  { path: '/dojo', label: 'DOJO', icon: '🔥' },
+  { path: '/soul', label: 'SOUL', icon: '◎' },
 ];
 
 export default function BottomNav() {

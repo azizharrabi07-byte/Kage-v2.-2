@@ -2,10 +2,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { path: '/', label: 'HOME', icon: '⌂' },
-  { path: '/workout', label: 'TRAIN', icon: '⚔' },
-  { path: '/diet', label: 'DIET', icon: '🥗' },
+  { path: '/train', label: 'TRAIN', icon: '⚔' },
   { path: '/dojo', label: 'DOJO', icon: '🔥' },
-  { path: '/soul', label: 'SOUL', icon: '◎' },
+  { path: '/legacy', label: 'LEGACY', icon: '📜' },
 ];
 
 export default function BottomNav() {
@@ -24,7 +23,7 @@ export default function BottomNav() {
             <button
               key={item.path}
               onClick={() => navigate(item.path)}
-              className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg transition-colors cursor-pointer ${
+              className={`flex flex-col items-center gap-0.5 px-4 py-1 rounded-lg transition-colors cursor-pointer ${
                 active ? 'text-rose-400' : 'text-zinc-600 hover:text-zinc-400'
               }`}
             >

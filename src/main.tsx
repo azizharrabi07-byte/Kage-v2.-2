@@ -11,15 +11,9 @@ import './index.css';
 import { registerSW } from './utils/pwa';
 
 const HomeDashboard = lazy(() => import('./pages/HomeDashboard.tsx'));
-const WorkoutLog = lazy(() => import('./pages/WorkoutLog.tsx'));
-const SenseiChat = lazy(() => import('./pages/SenseiChat.tsx'));
-const Programs = lazy(() => import('./pages/Programs.tsx'));
-const Battles = lazy(() => import('./pages/Battles.tsx'));
-const Leaderboard = lazy(() => import('./pages/Leaderboard.tsx'));
-const NutritionLog = lazy(() => import('./pages/NutritionLog.tsx'));
-const BountiesPage = lazy(() => import('./pages/BountiesPage.tsx'));
-const DietPrograms = lazy(() => import('./pages/DietPrograms.tsx'));
-const SoulPage = lazy(() => import('./pages/SoulPage.tsx'));
+const TrainPage = lazy(() => import('./pages/TrainPage.tsx'));
+const DojoPage = lazy(() => import('./pages/DojoPage.tsx'));
+const LegacyPage = lazy(() => import('./pages/LegacyPage.tsx'));
 
 registerSW();
 
@@ -38,13 +32,9 @@ const RouterApp = () => (
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<ProtectedRoute><Suspense fallback={null}><HomeDashboard /></Suspense></ProtectedRoute>} />
-          <Route path="/workout" element={<ProtectedRoute><Suspense fallback={null}><WorkoutLog /></Suspense></ProtectedRoute>} />
-          <Route path="/programs" element={<ProtectedRoute><Suspense fallback={null}><Programs /></Suspense></ProtectedRoute>} />
-          <Route path="/nutrition" element={<ProtectedRoute><Suspense fallback={null}><NutritionLog /></Suspense></ProtectedRoute>} />
-          <Route path="/diet" element={<ProtectedRoute><Suspense fallback={null}><DietPrograms /></Suspense></ProtectedRoute>} />
-          <Route path="/sensei" element={<ProtectedRoute><Suspense fallback={null}><SenseiChat /></Suspense></ProtectedRoute>} />
+          <Route path="/train" element={<ProtectedRoute><Suspense fallback={null}><TrainPage /></Suspense></ProtectedRoute>} />
           <Route path="/dojo" element={<ProtectedRoute><Suspense fallback={null}><DojoPage /></Suspense></ProtectedRoute>} />
-          <Route path="/soul" element={<ProtectedRoute><Suspense fallback={null}><SoulPage /></Suspense></ProtectedRoute>} />
+          <Route path="/legacy" element={<ProtectedRoute><Suspense fallback={null}><LegacyPage /></Suspense></ProtectedRoute>} />
           <Route path="/*" element={<ProtectedRoute><Suspense fallback={null}><HomeDashboard /></Suspense></ProtectedRoute>} />
         </Routes>
         <BottomNav />

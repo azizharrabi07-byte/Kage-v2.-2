@@ -870,10 +870,11 @@ function TestimonialsSection() {
    FINAL CTA / LOGIN CARD
    ========================================================================= */
 
-function LoginCard({ onGoogleLogin, onEmailLogin, onEmailSignUp }: {
+function LoginCard({ onGoogleLogin, onEmailLogin, onEmailSignUp, onDevLogin }: {
   onGoogleLogin: () => void;
   onEmailLogin: (email: string, password: string) => void;
   onEmailSignUp: (email: string, password: string) => void;
+  onDevLogin: () => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0.5);
@@ -1052,14 +1053,10 @@ function LoginCard({ onGoogleLogin, onEmailLogin, onEmailSignUp }: {
                 </button>
 
                 <button
-                  onClick={() => {
-                    setLoginEmail('guest@kage.dojo');
-                    setLoginPassword('guest123456');
-                    setTimeout(() => onEmailLogin('guest@kage.dojo', 'guest123456'), 100);
-                  }}
+                  onClick={onDevLogin}
                   className="w-full py-2 rounded-lg text-[10px] text-zinc-600 font-mono hover:text-zinc-400 transition-colors cursor-pointer"
                 >
-                  GUEST DEMO
+                  GUEST DEMO (OFFLINE)
                 </button>
               </motion.div>
 
@@ -1106,10 +1103,11 @@ function Footer() {
    MAIN LANDING COMPONENT
    ========================================================================= */
 
-export default function EpicLanding({ onGoogleLogin, onEmailLogin, onEmailSignUp }: {
+export default function EpicLanding({ onGoogleLogin, onEmailLogin, onEmailSignUp, onDevLogin }: {
   onGoogleLogin: () => void;
   onEmailLogin: (email: string, password: string) => void;
   onEmailSignUp: (email: string, password: string) => void;
+  onDevLogin: () => void;
 }) {
   return (
     <div className="min-h-screen bg-[#0A0A0F] overflow-x-hidden">
@@ -1132,7 +1130,7 @@ export default function EpicLanding({ onGoogleLogin, onEmailLogin, onEmailSignUp
       <TestimonialsSection />
 
       {/* Final CTA */}
-      <LoginCard onGoogleLogin={onGoogleLogin} onEmailLogin={onEmailLogin} onEmailSignUp={onEmailSignUp} />
+      <LoginCard onGoogleLogin={onGoogleLogin} onEmailLogin={onEmailLogin} onEmailSignUp={onEmailSignUp} onDevLogin={onDevLogin} />
 
       {/* Footer */}
       <Footer />

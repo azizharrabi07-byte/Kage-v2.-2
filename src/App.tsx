@@ -414,19 +414,7 @@ export default function App() {
     initialize();
   }, [initialize]);
 
-  // Listen to user data
-  useEffect(() => {
-    if (!user) return;
-    const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
-      if (doc.exists()) {
-        const data = doc.data();
-        if (typeof data.streak === 'number') setStreak(data.streak);
-      }
-    }, (error) => {
-      handleFirestoreError(error, OperationType.GET, `users/${user.uid}`);
-    });
-    return () => unsub();
-  }, [user]);
+
 
   // Persist shadow mode
   useEffect(() => {
@@ -676,13 +664,9 @@ Keep it to 3-4 short sentences. Be direct and authoritative like a martial arts 
     setStreak(newStreak);
     if (user) {
       try {
-        await setDoc(doc(db, "users", user.uid), { 
-          streak: newStreak, 
-          updatedAt: serverTimestamp() 
-        }, { merge: true });
-      } catch (e) {
-        console.error("Failed to sync streak", e);
-      }
+        const supabase = (await import('./lib/supabaseClient')).supabase;
+        await supabase.from('progression').update({ streak: newStreak }).eq('user_id', user.id);
+      } catch {}
     }
   };
 
@@ -706,6 +690,7 @@ Keep it to 3-4 short sentences. Be direct and authoritative like a martial arts 
       <ErrorBoundary>
         <Suspense fallback={<LazyFallback isLight={false} />}>
           <EpicLanding
+            onDevLogin={() => useAuthStore.getState().devLogin()}
             onGoogleLogin={async () => {
               try {
                 const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });

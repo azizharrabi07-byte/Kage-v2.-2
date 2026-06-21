@@ -1,107 +1,108 @@
 import { useState, useEffect } from 'react';
-import apiClient from '../services/apiClient';
+import { get, post } from '../services/api';
 import toast from 'react-hot-toast';
 
-interface Scroll {
-  id: string; week_number: number;
-  content: { scenes: { title: string; text: string }[] };
-  shared: boolean; created_at: string;
-}
-
-interface Progress { xp: number; level: number; streak: number; workoutsCompleted: number; }
-
 export default function LegacyPage() {
-  const [scrolls, setScrolls] = useState<Scroll[]>([]);
-  const [currentScroll, setCurrentScroll] = useState<Scroll | null>(null);
-  const [progress, setProgress] = useState<Progress | null>(null);
+  const [stats, setStats] = useState({ level: 1, xp: 0, streak: 0, workoutsCompleted: 0 });
+  const [oracle, setOracle] = useState<any>(null);
+  const [scrolls, setScrolls] = useState<any[]>([]);
+  const [currentScroll, setCurrentScroll] = useState<any>(null);
   const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
-    apiClient.get('/api/legacy/scrolls').then((r) => {
-      setScrolls(r.data ?? []);
-      if (r.data?.length > 0) setCurrentScroll(r.data[0]);
+    get('/api/progress/stats').then(setStats).catch(() => {});
+    get('/api/legacy/oracle').then(setOracle).catch(() => {});
+    get('/api/legacy/scrolls').then((r) => {
+      setScrolls(r ?? []);
+      if (r?.length > 0) setCurrentScroll(r[0]);
     }).catch(() => {});
-    apiClient.get('/api/progress/stats').then((r) => setProgress(r.data)).catch(() => {});
   }, []);
 
   const handleGenerate = async () => {
     setGenerating(true);
     try {
-      const r = await apiClient.post('/api/legacy/scrolls/generate');
-      setCurrentScroll(r.data);
-      setScrolls((prev) => [r.data, ...prev]);
-      toast.success('Your legacy scroll has been written!');
-    } catch { toast.error('Failed to generate scroll'); }
+      const r = await post('/api/legacy/scrolls/generate');
+      setCurrentScroll(r);
+      setScrolls((prev) => [r, ...prev]);
+      toast.success('Scroll generated!');
+    } catch { toast.error('Failed'); }
     finally { setGenerating(false); }
   };
 
   const handleShare = async () => {
     if (!currentScroll) return;
     try {
-      await apiClient.post(`/api/legacy/scrolls/${currentScroll.id}/share`);
+      await post(`/api/legacy/scrolls/${currentScroll.id}/share`);
       toast.success('Scroll shared!');
-      setCurrentScroll({ ...currentScroll, shared: true });
-    } catch { toast.error('Failed to share'); }
+    } catch { toast.error('Failed'); }
   };
+
+  const xpPct = stats.level > 0 ? ((stats.xp % 500) / 500) * 100 : 0;
 
   return (
     <div className="p-4 max-w-lg mx-auto space-y-4 pb-20">
       <h1 className="text-white text-lg font-bold font-mono">LEGACY</h1>
 
-      {/* Progress Summary */}
-      {progress && (
-        <div className="flex justify-around rounded-xl bg-zinc-900/80 border border-zinc-800 p-3">
-          <div className="text-center"><p className="text-amber-400 text-lg font-bold font-mono">{progress.level}</p><p className="text-zinc-600 text-[8px] font-mono">LEVEL</p></div>
-          <div className="text-center"><p className="text-white text-lg font-bold font-mono">{progress.xp}</p><p className="text-zinc-600 text-[8px] font-mono">XP</p></div>
-          <div className="text-center"><p className="text-rose-400 text-lg font-bold font-mono">🔥{progress.streak}</p><p className="text-zinc-600 text-[8px] font-mono">STREAK</p></div>
+      {/* Profile Card */}
+      <div className="rounded-xl bg-[#1a1a2e] border-l-4 border-[#e94560] p-4">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-[#ffd700] text-xl font-bold font-mono">LV.{stats.level}</span>
+          <span className="text-zinc-500 text-xs font-mono">{stats.xp} / {(stats.level) * 500} XP</span>
+        </div>
+        <div className="w-full h-2 rounded-full bg-zinc-800 overflow-hidden">
+          <div className="h-full rounded-full bg-gradient-to-r from-[#e94560] to-[#ff6b35]" style={{ width: `${Math.min(xpPct, 100)}%` }} />
+        </div>
+        <div className="flex justify-around mt-3 text-center">
+          <div><p className="text-white text-sm font-bold font-mono">{stats.streak}</p><p className="text-zinc-600 text-[8px] font-mono">STREAK</p></div>
+          <div><p className="text-white text-sm font-bold font-mono">{stats.workoutsCompleted}</p><p className="text-zinc-600 text-[8px] font-mono">WORKOUTS</p></div>
+        </div>
+      </div>
+
+      {/* Oracle */}
+      {oracle && (
+        <div className={`rounded-xl p-4 ${oracle.safe ? 'bg-[#1a1a2e] border-l-4 border-[#4caf50]' : 'bg-[#1a1a2e] border-l-4 border-[#e94560]'}`}>
+          <p className="text-[10px] font-mono font-bold tracking-widest mb-1" style={{ color: oracle.safe ? '#4caf50' : '#e94560' }}>🔮 ORACLE PROPHECY</p>
+          <p className="text-zinc-300 text-[10px] font-mono leading-relaxed">{oracle.warning}</p>
+          {oracle.risk_level > 0 && <p className="text-[#e94560] text-[9px] font-mono mt-1">Risk: {oracle.risk_level}%</p>}
         </div>
       )}
 
-      {/* Current Scroll */}
-      {currentScroll?.content?.scenes && (
-        <div className="rounded-xl bg-gradient-to-b from-amber-900/20 to-zinc-900/80 border border-amber-500/20 p-6 space-y-4">
+      {/* Scroll */}
+      {currentScroll?.content?.chapters ? (
+        <div className="rounded-xl bg-[#1a1a2e] border border-zinc-800 p-6 space-y-4">
           <div className="text-center">
-            <span className="text-amber-400 text-[10px] font-mono tracking-widest">WEEK {currentScroll.week_number}</span>
-            <h2 className="text-white text-lg font-black font-mono mt-1">LEGACY SCROLL</h2>
+            <span className="text-[#ffd700] text-[10px] font-mono tracking-widest">WEEK {currentScroll.week_number} · LEGACY SCROLL</span>
+            <h2 className="text-white text-base font-black font-mono mt-1">{currentScroll.content.title}</h2>
           </div>
-
-          <div className="space-y-4">
-            {currentScroll.content.scenes.map((scene, i) => (
-              <div key={i}>
-                <h3 className="text-rose-400 text-xs font-mono font-bold mb-1">
-                  {['⚔', '🔥', '✨'][i]} {scene.title}
-                </h3>
-                <p className="text-zinc-300 text-[10px] font-mono leading-relaxed">{scene.text}</p>
-              </div>
-            ))}
-          </div>
-
+          {currentScroll.content.chapters.map((ch: any, i: number) => (
+            <div key={i}>
+              <h3 className="text-[#e94560] text-xs font-mono font-bold mb-1">{['⚔', '🔥', '✨'][i]} {ch.scene}</h3>
+              <p className="text-zinc-400 text-[10px] font-mono leading-relaxed">{ch.text}</p>
+            </div>
+          ))}
           <button onClick={handleShare}
-            className="w-full py-2 rounded-lg bg-amber-600/20 border border-amber-500/30 text-amber-400 font-mono text-[10px] font-bold hover:bg-amber-600/30 cursor-pointer">
-            {currentScroll.shared ? '✓ SHARED' : '📤 SHARE YOUR SCROLL'}
+            className="w-full py-2 rounded-lg bg-[#ffd700]/20 border border-[#ffd700]/30 text-[#ffd700] font-mono text-[10px] font-bold hover:opacity-80 cursor-pointer">
+            {currentScroll.shared ? '✓ SHARED' : '📤 SHARE SCROLL'}
           </button>
         </div>
-      )}
-
-      {!currentScroll && (
-        <div className="text-center py-12 space-y-4">
+      ) : (
+        <div className="text-center py-8 space-y-3">
           <p className="text-zinc-500 text-sm font-mono">No scrolls yet</p>
           <button onClick={handleGenerate} disabled={generating}
-            className="px-6 py-3 rounded-xl bg-amber-600 text-white font-mono text-xs font-bold hover:bg-amber-500 disabled:opacity-50 cursor-pointer">
-            {generating ? 'WRITING...' : '📜 GENERATE YOUR LEGACY'}
+            className="px-6 py-3 rounded-xl bg-[#e94560] text-white font-mono text-xs font-bold hover:opacity-90 disabled:opacity-50 cursor-pointer">
+            {generating ? 'WRITING...' : '📜 GENERATE SCROLL'}
           </button>
         </div>
       )}
 
-      {/* Scroll Archive */}
+      {/* Previous Scrolls */}
       {scrolls.length > 1 && (
         <div className="space-y-1">
-          <p className="text-zinc-500 text-[10px] font-mono font-bold">ARCHIVE</p>
+          <p className="text-zinc-500 text-[10px] font-mono font-bold">PREVIOUS SCROLLS</p>
           {scrolls.slice(1).map((s) => (
             <button key={s.id} onClick={() => setCurrentScroll(s)}
-              className="w-full text-left p-3 rounded-lg bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer">
+              className="w-full text-left p-3 rounded-lg bg-[#1a1a2e] border border-zinc-800 hover:border-zinc-700 cursor-pointer">
               <span className="text-zinc-400 text-xs font-mono">Week {s.week_number}</span>
-              <span className="text-zinc-600 text-[9px] font-mono ml-2">{new Date(s.created_at).toLocaleDateString()}</span>
             </button>
           ))}
         </div>
